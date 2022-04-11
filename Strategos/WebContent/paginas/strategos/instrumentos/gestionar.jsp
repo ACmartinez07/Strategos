@@ -194,7 +194,7 @@
 	}
 	
 	function reporteProyectosAsociados(){
-		
+		abrirVentanaModal('<html:rewrite action="/instrumentos/reporteProyectosAsociados" />', "reporteProyectosAsociados", 600, 380);
 	}
 	
 </script>
@@ -246,7 +246,7 @@
 					<vgcinterfaz:menuBotones id="menuEvaluacionIniciativas" key="menu.evaluacion">						
 						<vgcinterfaz:botonMenu key="jsp.gestionariniciativas.menu.reportes.resumido" onclick="reporteInstrumentosEjecucion();" permisoId="INSTRUMENTOS" />
 						<vgcinterfaz:botonMenu key="jsp.gestionariniciativas.menu.reportes.detallado" onclick="reporteInstrumentosEjecucionDetalle();" permisoId="INSTRUMENTOS" />
-						<vgcinterfaz:botonMenu key="jsp.reporte.instrumentos.proyectos.asociados" onclick="reporteProyectosAsociados()" permisoId="INSTRUMENTOS" />
+						<vgcinterfaz:botonMenu key="jsp.reporte.instrumentos.proyectos.asociados" onclick="reporteProyectosAsociados();" permisoId="INSTRUMENTOS" />
 					</vgcinterfaz:menuBotones>
 				</vgcinterfaz:contenedorMenuHorizontalItem>
 

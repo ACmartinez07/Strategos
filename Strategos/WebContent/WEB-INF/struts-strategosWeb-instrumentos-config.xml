@@ -16,8 +16,7 @@
 		<form-bean name="seleccionarOrganizacionForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.SelectorOrganizacionForm" />
 		<form-bean name="editarCooperantesForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.EditarCooperantesForm" />
 		<form-bean name="editarTiposConvenioForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.EditarTiposConvenioForm" />
-		
-		
+		<form-bean name="ProyectosAsociadosForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.ProyectosAsociadosForm" />
 	</form-beans>
 
 	<!-- Definiciones: Global Forward -->
@@ -37,6 +36,7 @@
 		<forward name="editarInstrumentos" path="/paginas/strategos/instrumentos/editarInstrumentos.jsp" />
 		<forward name="reporteInstrumentoEjecucion" path="/paginas/strategos/instrumentos/resumidaEjecucion.jsp" />
 		<forward name="reporteInstrumentoEjecucionDetalle" path="/paginas/strategos/instrumentos/resumidaEjecucionDetalle.jsp" />
+		<forward name="reporteProyectosAsociados" path="/paginas/strategos/instrumentos/reporteProyectosAsociados.jsp" />
 								
 	</global-forwards>
 
@@ -160,6 +160,9 @@
 		
 		<!-- Mapeo del Action: Generar Reporte Detalle Xls de la Ejecucion-->
 		<action path="/instrumentos/reporteInstrumentoDetalleXls" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteInstrumentoXls"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte Proyectos Asociados-->
+		<action path="/instrumentos/reporteProyectosAsociados" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteProyectosAsociadosAction" scope="request" name="ProyectosAsociadosForm" parameter="reporteProyectosAsociados"></action>
 
 
 		<!-- Mapeo del Action: Seleccionar Organizacion -->

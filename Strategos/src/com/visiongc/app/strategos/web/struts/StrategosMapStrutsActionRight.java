@@ -357,6 +357,9 @@ public class StrategosMapStrutsActionRight implements MapStrutsActionRight
 	    actionRight = new StrutsActionRight("instrumentos.reporteinstrumentodetallexls", false, false, "INSTRUMENTOS");
 	    this.mapa.put("instrumentos.reporteinstrumentodetallexls", actionRight);
 	    
+	    actionRight = new StrutsActionRight("instrumentos.proyectosasociados", false, false, "INSTRUMENTOS");
+	    this.mapa.put("instrumentos.reporteproyectosasociados", actionRight);
+	    
 	
 	    
 	    actionRight = new StrutsActionRight("instrumentos.crearconvenio", false, false, "INSTRUMENTOS");
@@ -1356,7 +1359,7 @@ public class StrategosMapStrutsActionRight implements MapStrutsActionRight
   			} 
   			catch (Exception e) 
   			{
-  				throw new ChainedRuntimeException("El mapeo de acciones a permisos no está configurado correctamente.", e);
+  				throw new ChainedRuntimeException("El mapeo de acciones a permisos no estï¿½ configurado correctamente.", e);
   			}
   		}
 
