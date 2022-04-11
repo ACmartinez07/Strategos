@@ -21,10 +21,33 @@
 		
 		<%-- Funciones JavaScript locales de la pagina Jsp --%>
 		<script type="text/javascript">
-			
+			var _setCloseParent = false;
+		
+		
 			function cancelar() 
 			{
 				window.close();						
+			}
+		
+			function generarReporte() 
+			{
+		 		 if(!<%= session.getAttribute("isAdmin") %> && document.reporteForm.alcance.value == 3 ){
+		 			 alert ('Este reporte  solo puede ser ejecutado desde una cuenta Administrador');
+		 	 	}else{
+					var url = '&alcance=' + document.reporteForm.alcance.value;	
+						url = url + '&instrumentoId=' +	document.reporteForm.id.value;
+						url = url + '&nombre=' +	document.reporteForm.nombre.value;
+						url = url + '&anio=' +	document.reporteForm.ano.value;
+						url = url + '&cooperante=' +	document.reporteForm.cooperanteId.value;
+						url = url + '&tipoconvenio=' +	document.reporteForm.tipoCooperanteId.value;
+										
+					if (document.reporteForm.tipoReporte[0].checked)
+						abrirReporte('<html:rewrite action="/instrumentos/reporteInstrumentoDetallePdf"/>?'+url);
+	    	 	
+					else if (document.reporteForm.tipoReporte[1].checked)
+						abrirReporte('<html:rewrite action="/instrumentos/reporteInstrumentoDetalleXls"/>?'+url);
+		 	 	}
+		 		cancelar();
 			}
 			
 		</script>
@@ -55,13 +78,17 @@
 							
 							<tr>
 								<td colspan="3">
-									
+									<html:radio property="alcance" value="1">
+										<vgcutil:message key="jsp.pagina.instrumentos.reporte.titulo.instrumento" />
+									</html:radio>
 								</td>
 							</tr>
 							
 							<tr>
 								<td colspan="3">
-									
+									<html:radio property="alcance" value="4">
+										<vgcutil:message key="jsp.pagina.instrumentos.reporte.titulo.todos" />
+									</html:radio>
 								</td>
 							</tr>
 							
@@ -103,10 +130,13 @@
 						</vgcinterfaz:panelContenedorTitulo>
 
 						<table class="panelContenedor panelContenedorTabla">
-														
-							<tr >
-							<td><vgcutil:message key="reporte.framework.usuarios.organizacion.tiporeporte" /></td>
-																			 
+																				
+							<tr>
+								<td><vgcutil:message key="reporte.framework.usuarios.organizacion.tiporeporte" /></td>
+								<td colspan="3">
+									<html:radio property="tipoReporte" value="1" /><vgcutil:message key="jsp.reportes.plan.meta.reporte.tipo.pdf" />&nbsp;&nbsp;&nbsp;
+									<html:radio property="tipoReporte" value="2" /><vgcutil:message key="jsp.reportes.plan.meta.reporte.tipo.excel" />
+								</td>
 							</tr>
 							<tr>
 								<td colspan="3">

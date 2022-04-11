@@ -194,7 +194,24 @@
 	}
 	
 	function reporteProyectosAsociados(){
-		abrirVentanaModal('<html:rewrite action="/instrumentos/reporteProyectosAsociados" />', "reporteProyectosAsociados", 600, 380);
+url = '&instrumentoId=' + document.gestionarInstrumentosForm.seleccionados.value;
+		
+		var filtroNombre = document.getElementById('nombreCorto');
+		if (filtroNombre != null)
+			url = url + '&nombreCorto=' + filtroNombre.value;
+		var anio = document.getElementById('anio');
+		if (anio != null)
+			url = url + '&anio=' + anio.value;
+		var estatus = document.getElementById('estatus');
+		if (estatus != null)
+			url = url + '&estatus=' + estatus.value;	
+		var convenio = document.getElementById('selectTipoConvenio');
+		if (convenio != null)
+			url = url + '&con=' + convenio.value;	
+		var cooperativo = document.getElementById('selectCooperante');
+		if (cooperativo != null)
+			url = url + '&cop=' + cooperativo.value;
+    	abrirVentanaModal('<html:rewrite action="/instrumentos/reporteProyectosAsociados" />?' + url, "reporteProyectosAsociados", 490, 450);		
 	}
 	
 </script>
