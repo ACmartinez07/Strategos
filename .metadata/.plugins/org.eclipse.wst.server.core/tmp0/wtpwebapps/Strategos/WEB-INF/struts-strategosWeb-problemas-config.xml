@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (10/11/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarProblemasForm" type="com.visiongc.app.strategos.web.struts.problemas.forms.GestionarProblemasForm" />
+		<form-bean name="editarProblemaForm" type="com.visiongc.app.strategos.web.struts.problemas.forms.EditarProblemaForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarProblema" path="/paginas/strategos/problemas/editarProblema.jsp" />
+		<forward name="gestionarProblemasAction" path="/problemas/gestionarProblemas.action" />
+		<forward name="copiarProblema" path="/paginas/strategos/problemas/copiarProblema.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Problemas -->
+		<action path="/problemas/gestionarProblemas" type="com.visiongc.app.strategos.web.struts.problemas.actions.GestionarProblemasAction" scope="session" name="gestionarProblemasForm" parameter="exploradorProblemas" >
+			<forward name="exploradorProblemas" path="/paginas/strategos/problemas/exploradorProblemas.jsp" />	
+		</action>		              
+
+		<!-- Mapeo del Action: Crear Problema -->
+		<action path="/problemas/crearProblema" type="com.visiongc.app.strategos.web.struts.problemas.actions.EditarProblemaAction" scope="request" name="editarProblemaForm" parameter="editarProblema"></action>
+
+		<!-- Mapeo del Action: Modificar Problema -->
+		<action path="/problemas/modificarProblema" type="com.visiongc.app.strategos.web.struts.problemas.actions.EditarProblemaAction" scope="request" name="editarProblemaForm" parameter="editarProblema"></action>
+
+		<!-- Mapeo del Action: Ver Problema -->
+		<action path="/problemas/verProblema" type="com.visiongc.app.strategos.web.struts.problemas.actions.EditarProblemaAction" scope="request" name="editarProblemaForm" parameter="editarProblema"></action>
+		
+		<!-- Mapeo del Action: Copiar Problema -->
+		<action path="/problemas/copiarProblema" type="com.visiongc.app.strategos.web.struts.problemas.actions.CopiarProblemaAction" scope="request" name="editarProblemaForm" parameter="copiarProblema"></action>		
+		
+		<!-- Mapeo del Action: Guardar Problema -->
+		<action path="/problemas/guardarProblema" type="com.visiongc.app.strategos.web.struts.problemas.actions.GuardarProblemaAction" name="editarProblemaForm" scope="request" input="editarProblema" validate="true" parameter="editarProblema">
+			<forward name="crearProblema" path="/problemas/crearProblema.action" />
+		</action>
+		
+			<!-- Mapeo del Action: Guardar Copia Problema -->
+		<action path="/problemas/guardarCopiaProblema" type="com.visiongc.app.strategos.web.struts.problemas.actions.GuardarProblemaAction" name="editarProblemaForm" scope="request" input="editarProblema" validate="true" parameter="copiarProblema"></action>
+		
+		<!-- Mapeo del Action: Guardar Problema Solo Lectura -->
+		<action path="/problemas/guardarProblemaSoloLectura" type="com.visiongc.app.strategos.web.struts.problemas.actions.GuardarProblemaSoloLecturaAction" name="editarProblemaForm" scope="request"></action>
+	
+		<!-- Mapeo del Action: Cancelar Guardar Problema -->
+		<action path="/problemas/cancelarGuardarProblema" type="com.visiongc.app.strategos.web.struts.problemas.actions.GuardarProblemaAction" name="editarProblemaForm" scope="request" parameter="editarProblema"></action>
+
+		<!-- Mapeo del Action: Eliminar Problema -->
+		<action path="/problemas/eliminarProblema" type="com.visiongc.app.strategos.web.struts.problemas.actions.EliminarProblemaAction"></action>        
+        
+		<!-- Mapeo del Action: Propiedades Problema -->
+		<action path="/problemas/propiedadesProblema" type="com.visiongc.app.strategos.web.struts.problemas.actions.MostrarPropiedadesProblemaAction" name="editarProblemaForm" scope="request" parameter="propiedadesProblema">
+			<forward name="propiedadesProblema" path="/paginas/strategos/problemas/propiedadesProblema.jsp" />
+		</action>
+		
+		<!-- Mapeo del Action: Generar Reporte Problemas -->
+		<action path="/problemas/generarReporteProblemas" type="com.visiongc.app.strategos.web.struts.problemas.actions.ReporteProblemasAction"></action>
+
+	</action-mappings>
+
+</struts-config>

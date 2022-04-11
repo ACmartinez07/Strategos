@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (13/06/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarPaginasForm" type="com.visiongc.app.strategos.web.struts.presentaciones.paginas.forms.GestionarPaginasForm" />
+		<form-bean name="editarPaginaForm" type="com.visiongc.app.strategos.web.struts.presentaciones.paginas.forms.EditarPaginaForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarPagina" path="/paginas/strategos/presentaciones/paginas/editarPagina.jsp" />
+		<forward name="propiedadesPagina" path="/paginas/strategos/presentaciones/paginas/propiedadesPagina.jsp" />
+		<forward name="gestionarPaginasAction" path="/presentaciones/paginas/gestionarPaginas.action" />
+		<forward name="exploradorPresentaciones" path="/paginas/strategos/presentaciones/exploradorPresentaciones.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+		
+		<!-- Mapeo del Action: Gestionar Paginas -->
+		<action path="/presentaciones/paginas/gestionarPaginas" type="com.visiongc.app.strategos.web.struts.presentaciones.paginas.actions.GestionarPaginasAction" scope="session" name="gestionarPaginasForm" parameter="exploradorPresentaciones"></action>		              
+
+		<!-- Mapeo del Action: Crear Pagina -->
+		<action path="/presentaciones/paginas/crearPagina" type="com.visiongc.app.strategos.web.struts.presentaciones.paginas.actions.EditarPaginaAction" scope="session" name="editarPaginaForm" parameter="editarPagina"></action>
+
+		<!-- Mapeo del Action: Modificar Pagina -->
+		<action path="/presentaciones/paginas/modificarPagina" type="com.visiongc.app.strategos.web.struts.presentaciones.paginas.actions.EditarPaginaAction" scope="session" name="editarPaginaForm" parameter="editarPagina"></action>
+
+		<!-- Mapeo del Action: Modificar Pagina -->
+		<action path="/presentaciones/paginas/verPagina" type="com.visiongc.app.strategos.web.struts.presentaciones.paginas.actions.EditarPaginaAction" scope="session" name="editarPaginaForm" parameter="editarPagina"></action>
+
+		<!-- Mapeo del Action: Guardar Pagina -->
+		<action path="/presentaciones/paginas/guardarPagina" type="com.visiongc.app.strategos.web.struts.presentaciones.paginas.actions.GuardarPaginaAction" name="editarPaginaForm" scope="session" input="editarPagina" validate="true" parameter="editarPagina">
+			<forward name="crearPagina" path="/presentaciones/paginas/crearPagina.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Pagina -->
+		<action path="/presentaciones/paginas/cancelarGuardarPagina" type="com.visiongc.app.strategos.web.struts.presentaciones.paginas.actions.GuardarPaginaAction" name="editarPaginaForm" scope="session" parameter="editarPagina"></action>
+
+		<!-- Mapeo del Action: Eliminar Pagina -->
+		<action path="/presentaciones/paginas/eliminarPagina" type="com.visiongc.app.strategos.web.struts.presentaciones.paginas.actions.EliminarPaginaAction"></action>
+
+		<!-- Mapeo del Action: Propiedades Pagina -->
+		<action path="/presentaciones/paginas/propiedadesPagina" type="com.visiongc.app.strategos.web.struts.presentaciones.paginas.actions.MostrarPropiedadesPaginaAction" name="editarPaginaForm" scope="request" parameter="propiedadesPagina"></action>
+
+		<!-- Mapeo del Action: Mover Pagina (Arriba o Abajo) -->
+		<action path="/presentaciones/paginas/cambiarOrdenPagina" type="com.visiongc.app.strategos.web.struts.presentaciones.paginas.actions.CambiarOrdenPaginaAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Paginas -->
+		<action path="/presentaciones/paginas/generarReportePaginas" type="com.visiongc.app.strategos.web.struts.presentaciones.paginas.actions.ReportePaginasAction"></action>
+	</action-mappings>
+
+</struts-config>

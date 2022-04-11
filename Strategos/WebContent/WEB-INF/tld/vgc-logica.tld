@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib
+        PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+        "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<!-- Creado por: Kerwin Arias (11/06/2012) -->
+
+<taglib>
+	<tlib-version>1.0.0.0</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>vgc-logica</short-name>
+	<uri>http://www.visiongc.net</uri>
+	<description>Libreria de tags de lógica Vision GC (11/06/2012)</description>
+
+	<tag>
+		<name>tamanoColeccionMayorQue</name>
+		<tag-class>com.visiongc.framework.web.struts.taglib.logica.TamanoColeccionMayorQueTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>Realiza una comparación lógica del tamaño de una colección contra un valor fijo</description>
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>property</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>tamanoColeccionMenorQue</name>
+		<tag-class>com.visiongc.framework.web.struts.taglib.logica.TamanoColeccionMenorQueTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>Realiza una comparación lógica del tamaño de una colección contra un valor fijo</description>
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>property</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>tamanoColeccionIgual</name>
+		<tag-class>com.visiongc.framework.web.struts.taglib.logica.TamanoColeccionIgualTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>Realiza una comparación lógica del tamaño de una colección contra un valor fijo</description>
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>property</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+</taglib>

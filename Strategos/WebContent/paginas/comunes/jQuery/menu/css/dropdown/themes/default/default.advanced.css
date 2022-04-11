@@ -1,0 +1,27 @@
+@import "default.css";
+
+
+/* -- Base style extension -- */
+
+ul.dropdown li a {
+ display: block;
+ padding: 7px 10px;
+}
+
+
+/* -- Base style override -- */
+
+ul.dropdown li {
+ padding: 0;
+}
+
+
+/* -- Base style reinitiate: post-override activities -- */
+
+ul.dropdown li.dir {
+ padding: 7px 20px 7px 10px;
+}
+
+ul.dropdown ul li.dir {
+ padding-right: 15px;
+}

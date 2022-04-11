@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (19/08/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarUsuariosForm" type="com.visiongc.framework.web.struts.forms.usuarios.GestionarUsuariosForm" />
+		<form-bean name="seleccionarUsuariosForm" type="com.visiongc.framework.web.struts.forms.usuarios.SeleccionarUsuariosForm" />
+		<form-bean name="gestionarGruposForm" type="com.visiongc.framework.web.struts.forms.grupos.GestionarGruposForm" />
+		<form-bean name="gestionarSesionesUsuarioForm" type="com.visiongc.framework.web.struts.sesionesusuario.forms.GestionarSesionesUsuarioForm" />
+		<form-bean name="gestionarBloqueosForm" type="com.visiongc.framework.web.struts.bloqueos.forms.GestionarBloqueosForm" />
+		<form-bean name="gestionarBloqueosLecturaForm" type="com.visiongc.framework.web.struts.bloqueos.forms.GestionarBloqueosLecturaForm" />
+		<form-bean name="editarUsuarioForm" type="com.visiongc.framework.web.struts.forms.usuarios.EditarUsuarioForm" />
+		<form-bean name="cambiarClaveUsuarioForm" type="com.visiongc.framework.web.struts.forms.usuarios.CambiarClaveUsuarioForm" />
+		<form-bean name="editarGrupoForm" type="com.visiongc.framework.web.struts.forms.grupos.EditarGrupoForm" />
+		<form-bean name="configurarInicioSesionForm" type="com.visiongc.framework.web.struts.iniciosesion.forms.ConfigurarInicioSesionForm" />
+		<form-bean name="reporteUsuariosForm" type="com.visiongc.framework.web.struts.forms.usuarios.ReporteUsuariosForm"/>
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="gestionarGruposAction" path="/framework/grupos/gestionarGrupos.action" />
+		<forward name="gestionarUsuariosAction" path="/framework/usuarios/gestionarUsuarios.action" />
+		<forward name="editarUsuario" path="/paginas/framework/usuarios/editarUsuario.jsp" />
+		<forward name="cambiarClaveUsuario" path="/paginas/framework/usuarios/cambiarClaveUsuario.jsp" />
+		<forward name="propiedadesUsuario" path="/paginas/framework/usuarios/propiedadesUsuario.jsp" />
+		<forward name="editarGrupo" path="/paginas/framework/grupos/editarGrupo.jsp" />
+		<forward name="propiedadesGrupo" path="/paginas/framework/grupos/propiedadesGrupo.jsp" />
+		<forward name="gestionarBloqueosLecturaAction" path="/framework/bloqueos/gestionarBloqueosLectura.action" />
+		<forward name="configurarInicioSesionAction" path="/framework/iniciosesion/configurarInicioSesion.action" />
+		<forward name="reporteUsuariosOrganizacion" path="/paginas/framework/usuarios/reporteOrganizacion.jsp" />
+		<forward name="reporteUsuariosGrupo" path="/paginas/framework/usuarios/reporteUsuariosGrupo.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings type="org.apache.struts.config.SecureActionConfig">
+
+		<!-- Mapeo del Action: Gestionar Usuarios -->
+		<action path="/framework/usuarios/gestionarUsuarios" type="com.visiongc.framework.web.struts.actions.usuarios.GestionarUsuariosAction" scope="request" name="gestionarUsuariosForm" parameter="gestionarUsuarios">
+			<set-property property="secure" value="false" />
+			<forward name="gestionarUsuarios" path="/paginas/framework/usuarios/gestionarUsuarios.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Gestionar Usuarios -->
+		<action path="/framework/usuarios/seleccionarUsuarios" type="com.visiongc.framework.web.struts.actions.usuarios.SeleccionarUsuariosAction" scope="request" name="seleccionarUsuariosForm">
+			<set-property property="secure" value="false" />
+			<forward name="exito" path="/paginas/framework/usuarios/seleccionarUsuarios.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Usuario -->
+		<action path="/framework/usuarios/crearUsuario" type="com.visiongc.framework.web.struts.actions.usuarios.EditarUsuarioAction" name="editarUsuarioForm" scope="request" parameter="editarUsuario">
+			<set-property property="secure" value="true" />
+		</action>
+
+		<!-- Mapeo del Action: Modificar Usuario -->
+		<action path="/framework/usuarios/modificarUsuario" type="com.visiongc.framework.web.struts.actions.usuarios.EditarUsuarioAction" name="editarUsuarioForm" scope="request" parameter="editarUsuario">
+			<set-property property="secure" value="true" />
+			<forward name="noencontrado" path="/framework/usuarios/gestionarUsuarios.action" />
+		</action>
+
+		<!-- Mapeo del Action: Copiar Usuario -->
+		<action path="/framework/usuarios/copiarUsuario" type="com.visiongc.framework.web.struts.actions.usuarios.EditarUsuarioAction" name="editarUsuarioForm" scope="request" parameter="editarUsuario">
+			<set-property property="secure" value="true" />
+			<forward name="notfound" path="/framework/usuarios/gestionarUsuarios.action" />
+		</action>
+
+		<!-- Mapeo del Action: Guardar Usuario -->
+		<action path="/framework/usuarios/guardarUsuario" type="com.visiongc.framework.web.struts.actions.usuarios.GuardarUsuarioAction" name="editarUsuarioForm" scope="request" validate="true" input="editarUsuario" parameter="editarUsuario">
+			<set-property property="secure" value="true" />
+			<forward name="crearUsuario" path="/framework/usuarios/crearUsuario.action" />
+		</action>
+
+		<!-- Mapeo del Action: Guardar Usuario (Cancelar) -->
+		<action path="/framework/usuarios/cancelarGuardarUsuario" type="com.visiongc.framework.web.struts.actions.usuarios.GuardarUsuarioAction" name="editarUsuarioForm" scope="request">
+			<set-property property="secure" value="true" />
+		</action>
+
+		<!-- Mapeo del Action: Cambiar Clave Usuario -->
+		<action path="/framework/usuarios/cambiarClaveUsuario" type="com.visiongc.framework.web.struts.actions.usuarios.CambiarClaveUsuarioAction" name="cambiarClaveUsuarioForm" scope="request" parameter="cambiarClaveUsuario">
+			<set-property property="secure" value="true" />
+		</action>
+
+		<!-- Mapeo del Action: Cambiar Clave Usuario -->
+		<action path="/framework/usuarios/guardarClaveUsuario" type="com.visiongc.framework.web.struts.actions.usuarios.GuardarClaveUsuarioAction" name="cambiarClaveUsuarioForm" scope="request" validate="true" input="cambiarClaveUsuario" parameter="cambiarClaveUsuario">
+			<set-property property="secure" value="true" />
+		</action>
+
+		<!-- Mapeo del Action: Cambiar Clave Usuario (Cancelar) -->
+		<action path="/framework/usuarios/cancelarGuardarClaveUsuario" type="com.visiongc.framework.web.struts.actions.usuarios.GuardarClaveUsuarioAction" name="cambiarClaveUsuarioForm" scope="request">
+			<set-property property="secure" value="true" />
+		</action>
+
+		<!-- Mapeo del Action: Propiedades Usuario -->
+		<action path="/framework/usuarios/propiedadesUsuario" type="com.visiongc.framework.web.struts.actions.usuarios.MostrarPropiedadesUsuarioAction" name="editarUsuarioForm" scope="request" parameter="propiedadesUsuario"></action>
+
+		
+		<!-- Mapeo del Action: Eliminar Usuario -->
+		<action path="/framework/usuarios/eliminarUsuario" type="com.visiongc.framework.web.struts.actions.usuarios.EliminarUsuarioAction">
+			<set-property property="secure" value="false" />
+			<forward name="exito" path="/framework/usuarios/gestionarUsuarios.action" />
+		</action>
+		
+		<!-- Mapeo del Action: Reporte de Usuarios Organizacion -->
+		<action path="/framework/usuarios/reporteUsuariosOrganizacion" type="com.visiongc.framework.web.struts.actions.usuarios.ReporteUsuariosOrganizacionAction" scope="request" name="reporteUsuariosForm"  parameter="reporteUsuariosOrganizacion"></action>
+		
+		<!-- Mapeo del Action: Reporte de Usuarios Organizacion Pdf-->
+		<action path="/framework/usuarios/reporteUsuariosOrganizacionPdf" type="com.visiongc.framework.web.struts.actions.usuarios.ReporteUsuariosOrganizacionPdfAction" ></action>
+		
+		<!-- Mapeo del Action: Reporte de Usuarios Organizacion Excel-->
+		<action path="/framework/usuarios/reporteUsuariosOrganizacionExcel" type="com.visiongc.framework.web.struts.actions.usuarios.ReporteUsuariosOrganizacionExcelAction" ></action>
+
+		<!-- Mapeo del Action: Reporte de Usuario Detallado -->
+		<action path="/framework/usuarios/reporteUsuarioDetallado" type="com.visiongc.framework.web.struts.actions.usuarios.ReporteUsuarioDetalladoAction"></action>
+		
+			
+		<!-- Mapeo del Action: Reporte de Usuarios Resumido -->
+		<action path="/framework/usuarios/reporteUsuariosResumido" type="com.visiongc.framework.web.struts.actions.usuarios.ReporteUsuariosResumidoAction"></action>
+
+		<!-- Mapeo del Action: Reporte de Usuarios Detallado Excel -->
+		<action path="/framework/usuarios/reporteUsuarioDetalladoExcel" type="com.visiongc.framework.web.struts.actions.usuarios.ReporteUsuarioDetalladoExcelAction">
+			<set-property property="secure" value="false" />
+			<forward name="exito" path="/framework/usuarios/gestionarUsuarios.action" />
+		</action>
+		
+		<!-- Mapeo del Action: Reporte de Usuarios Resumido Excel -->
+		<action path="/framework/usuarios/reporteUsuariosResumidoExcel" type="com.visiongc.framework.web.struts.actions.usuarios.ReporteUsuariosResumidoExcelAction">
+			<set-property property="secure" value="false" />
+			<forward name="exito" path="/framework/usuarios/gestionarUsuarios.action" />
+		</action>
+		
+		<!-- Mapeo del Action: Activar / Inactivar Usuarios -->
+		<action path="/framework/usuarios/activarUsuarios" type="com.visiongc.framework.web.struts.actions.usuarios.ActivarUsuariosAction">
+			<set-property property="secure" value="false" />
+			<forward name="exito" path="/framework/administracion.action" />	
+		</action>
+	
+		
+		<!-- Mapeo del Action: Gestionar Grupos -->
+		<action path="/framework/grupos/gestionarGrupos" type="com.visiongc.framework.web.struts.actions.grupos.GestionarGruposAction" scope="request" name="gestionarGruposForm" parameter="gestionarGrupos">
+			<set-property property="secure" value="false" />
+			<forward name="gestionarGrupos" path="/paginas/framework/grupos/gestionarGrupos.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Grupo -->
+		<action path="/framework/grupos/crearGrupo" type="com.visiongc.framework.web.struts.actions.grupos.EditarGrupoAction" name="editarGrupoForm" scope="session" parameter="editarGrupo">
+			<set-property property="secure" value="false" />
+		</action>
+
+		<!-- Mapeo del Action: Modificar Grupo -->
+		<action path="/framework/grupos/modificarGrupo" type="com.visiongc.framework.web.struts.actions.grupos.EditarGrupoAction" name="editarGrupoForm" scope="session" parameter="editarGrupo">
+			<set-property property="secure" value="false" />
+			<forward name="noencontrado" path="/framework/grupos/gestionarGrupos.action" />
+		</action>
+
+		<!-- Mapeo del Action: Copiar Grupo -->
+		<action path="/framework/grupos/copiarGrupo" type="com.visiongc.framework.web.struts.actions.grupos.EditarGrupoAction" name="editarGrupoForm" scope="session" parameter="editarGrupo">
+			<set-property property="secure" value="false" />
+			<forward name="notfound" path="/framework/grupos/gestionarGrupos.action" />
+		</action>
+
+		<!-- Mapeo del Action: Guardar Grupo -->
+		<action path="/framework/grupos/guardarGrupo" type="com.visiongc.framework.web.struts.actions.grupos.GuardarGrupoAction" name="editarGrupoForm" scope="session" validate="true" parameter="editarGrupo" input="editarGrupo">
+			<set-property property="secure" value="false" />
+			<forward name="crearGrupo" path="/framework/grupos/crearGrupo.action" />
+		</action>
+
+		<!-- Mapeo del Action: Guardar Grupo (Cancelar) -->
+		<action path="/framework/grupos/cancelarGuardarGrupo" type="com.visiongc.framework.web.struts.actions.grupos.GuardarGrupoAction" name="editarGrupoForm" scope="session">
+			<set-property property="secure" value="false" />
+		</action>
+
+		<!-- Mapeo del Action: Propiedades Grupo -->
+		<action path="/framework/grupos/propiedadesGrupo" type="com.visiongc.framework.web.struts.actions.grupos.MostrarPropiedadesGrupoAction" name="editarGrupoForm" scope="request" parameter="propiedadesGrupo"></action>
+
+		<!-- Mapeo del Action: Eliminar Grupo -->
+		<action path="/framework/grupos/eliminarGrupo" type="com.visiongc.framework.web.struts.actions.grupos.EliminarGrupoAction">
+			<set-property property="secure" value="false" />
+			<forward name="exito" path="/framework/grupos/gestionarGrupos.action" />
+		</action>
+
+		<!-- Mapeo del Action: Reporte Lista de Grupos -->
+		<action path="/framework/grupos/reporteGrupos" type="com.visiongc.framework.web.struts.actions.grupos.ReporteGruposAction"></action>
+
+		<!-- Mapeo del Action: Configuracion Inicio de Sesion -->
+		<action path="/framework/iniciosesion/configurarInicioSesion" type="com.visiongc.framework.web.struts.iniciosesion.actions.ConfigurarInicioSesionAction" scope="request" name="configurarInicioSesionForm" parameter="configurarInicioSesion">
+			<set-property property="secure" value="false" />
+			<forward name="configurarInicioSesion" path="/paginas/framework/iniciosesion/configurarInicioSesion.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Gestionar Sesiones de Usuarios -->
+		<action path="/framework/sesionesusuario/gestionarSesionesUsuario" type="com.visiongc.framework.web.struts.sesionesusuario.actions.GestionarSesionesUsuarioAction" scope="request" name="gestionarSesionesUsuarioForm" parameter="gestionarSesionesUsuario">
+			<set-property property="secure" value="false" />
+			<forward name="gestionarSesionesUsuario" path="/paginas/framework/sesionesusuario/gestionarSesionesUsuario.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Eliminar Bloqueos de Sesión de Usuario -->
+		<action path="/framework/sesionesusuario/eliminarBloqueosPorSesionUsuario" type="com.visiongc.framework.web.struts.sesionesusuario.actions.EliminarBloqueosPorSesionUsuarioAction">
+			<set-property property="secure" value="false" />
+		</action>
+
+		<!-- Mapeo del Action: Gestionar Bloqueos -->
+		<action path="/framework/bloqueos/gestionarBloqueos" type="com.visiongc.framework.web.struts.bloqueos.actions.GestionarBloqueosAction" scope="session" name="gestionarBloqueosForm" parameter="gestionarBloqueosLecturaAction">
+			<set-property property="secure" value="false" />
+		</action>
+
+		<!-- Mapeo del Action: Gestionar Bloqueos de Lectura -->
+		<action path="/framework/bloqueos/gestionarBloqueosLectura" type="com.visiongc.framework.web.struts.bloqueos.actions.GestionarBloqueosLecturaAction" scope="session" name="gestionarBloqueosLecturaForm" parameter="exploradorBloqueos">
+			<set-property property="secure" value="false" />
+			<forward name="exploradorBloqueos" path="/paginas/framework/bloqueos/exploradorBloqueos.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Eliminar Bloqueos de Sesión de Usuario -->
+		<action path="/framework/bloqueos/eliminarBloqueo" type="com.visiongc.framework.web.struts.bloqueos.actions.EliminarBloqueoAction">
+			<set-property property="secure" value="false" />
+		</action>
+		
+		
+		<!-- Mapeo del Action: Reporte usuario por grupo -->
+		<action path="/framework/usuarios/reporteGrupo" type="com.visiongc.framework.web.struts.actions.usuarios.ReporteUsuarioGrupoAction" scope="request" name="reporteUsuariosForm" parameter="reporteUsuariosGrupo"></action>
+		
+		<!-- Mapeo del Action: Reporte usuario por grupo pdf-->
+		<action path="/framework/usuarios/reporteGrupoPdf" type="com.visiongc.framework.web.struts.actions.usuarios.ReporteUsuarioGrupoPdfAction"></action>
+		
+		<!-- Mapeo del Action: Reporte usuario por grupo xls-->
+		<action path="/framework/usuarios/reporteGrupoXls" type="com.visiongc.framework.web.struts.actions.usuarios.ReporteUsuarioGrupoExcelAction"></action>
+
+
+	</action-mappings>
+
+</struts-config>

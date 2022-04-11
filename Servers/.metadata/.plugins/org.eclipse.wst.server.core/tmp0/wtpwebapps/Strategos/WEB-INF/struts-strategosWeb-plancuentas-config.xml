@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (26/10/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="editarCuentaForm" type="com.visiongc.app.strategos.web.struts.plancuentas.forms.EditarCuentaForm" />
+		<form-bean name="seleccionarCuentasForm" type="com.visiongc.framework.web.struts.forms.SelectorArbolForm" />
+		<form-bean name="definirMascaraCuentasForm" type="com.visiongc.app.strategos.web.struts.plancuentas.forms.DefinirMascaraCuentasForm" />
+		<form-bean name="gestionarCuentasForm" type="com.visiongc.app.strategos.web.struts.plancuentas.forms.GestionarCuentasForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarCuenta" path="/paginas/strategos/plancuentas/editarCuenta.jsp" />		
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Registros -->
+		<action path="/plancuentas/gestionarCuentas" type="com.visiongc.app.strategos.web.struts.plancuentas.actions.GestionarCuentasAction" scope="session" name="gestionarCuentasForm" parameter="gestionarCuentas">
+			<forward name="gestionarCuentas" path="/paginas/strategos/plancuentas/gestionarCuentas.jsp" />
+		</action>
+
+		<!-- Mapeo del Action:  Crear Cuenta Cuenta -->
+		<action path="/plancuentas/crearCuenta" type="com.visiongc.app.strategos.web.struts.plancuentas.actions.EditarCuentaAction" scope="request" name="editarCuentaForm" parameter="editarCuenta"></action>
+
+		<!-- Mapeo del Action: Modificar Cuenta -->
+		<action path="/plancuentas/modificarCuenta" type="com.visiongc.app.strategos.web.struts.plancuentas.actions.EditarCuentaAction" scope="request" name="editarCuentaForm" validate="false" parameter="editarCuenta"></action>
+
+		<!-- Mapeo del Action: Guardar Cuenta -->
+		<action path="/plancuentas/guardarCuenta" type="com.visiongc.app.strategos.web.struts.plancuentas.actions.GuardarCuentaAction" name="editarCuentaForm" scope="request" input="editarCuenta" validate="true" parameter="editarCuenta">
+			<forward name="crearCuenta" path="/plancuentas/crearCuenta.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Cuenta -->
+		<action path="/plancuentas/cancelarGuardarCuenta" type="com.visiongc.app.strategos.web.struts.plancuentas.actions.GuardarCuentaAction" name="editarCuentaForm" scope="request" parameter="editarCuenta"></action>
+
+		<!-- Mapeo del Action: Eliminar Cuenta -->
+		<action path="/plancuentas/eliminarCuenta" type="com.visiongc.app.strategos.web.struts.plancuentas.actions.EliminarCuentaAction"></action>
+
+		<!-- Mapeo del Action: Definir Mascara Cuentas -->
+		<action path="/plancuentas/definirMascaraCuentas" type="com.visiongc.app.strategos.web.struts.plancuentas.actions.DefinirMascaraCuentasAction" scope="request" name="definirMascaraCuentasForm" validate="false" parameter="definirMascaraCuentas">
+			<forward name="definirMascaraCuentas" path="/paginas/strategos/plancuentas/definirMascaraCuentas.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Guardar Mascara Cuentas -->
+		<action path="/plancuentas/guardarMascaraCuentas" type="com.visiongc.app.strategos.web.struts.plancuentas.actions.GuardarMascaraCuentasAction" name="definirMascaraCuentasForm" scope="request" input="definirMascaraCuentas" validate="true" parameter="gestionarCuentas">
+			<forward name="gestionarCuentas" path="/plancuentas/gestionarCuentas.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Mascara Cuentas -->
+		<action path="/plancuentas/cancelarGuardarMascaraCuentas" type="com.visiongc.app.strategos.web.struts.plancuentas.actions.GuardarMascaraCuentasAction" name="definirMascaraCuentasForm" scope="request" parameter="gestionarCuentas">
+			<forward name="gestionarCuentas" path="/plancuentas/gestionarCuentas.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Cuentas -->
+		<action path="/plancuentas/seleccionarCuentas" type="com.visiongc.app.strategos.web.struts.plancuentas.actions.SeleccionarCuentasAction" scope="session" name="seleccionarCuentasForm" parameter="seleccionarCuentas">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarCuentas" path="/paginas/strategos/plancuentas/seleccionarCuentas.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Generar Reporte de Cuentas -->
+		<action path="/plancuentas/generarReporteCuentas" type="com.visiongc.app.strategos.web.struts.plancuentas.actions.ReporteCuentasAction"></action>
+
+	</action-mappings>
+
+</struts-config>
+

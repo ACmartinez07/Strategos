@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (09/09/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="reporteForm" type="com.visiongc.app.strategos.web.struts.reportes.forms.ReporteForm" />
+		<form-bean name="configurarVistaDatosForm" type="com.visiongc.app.strategos.web.struts.vistasdatos.forms.ConfigurarVistaDatosForm" />
+		<form-bean name="seleccionarTiempoForm" type="com.visiongc.app.strategos.web.struts.vistasdatos.forms.SeleccionarTiempoForm" />
+		<form-bean name="seleccionarAtributoForm" type="com.visiongc.app.strategos.web.struts.vistasdatos.forms.SeleccionarAtributoForm" />
+		<form-bean name="seleccionarVariableForm" type="com.visiongc.app.strategos.web.struts.vistasdatos.forms.SeleccionarVariableForm" />
+		<form-bean name="seleccionarIndicadorForm" type="com.visiongc.app.strategos.web.struts.vistasdatos.forms.SeleccionarIndicadorForm" />
+		<form-bean name="seleccionarOrganizacionForm" type="com.visiongc.app.strategos.web.struts.vistasdatos.forms.SeleccionarOrganizacionForm" />
+		<form-bean name="seleccionarPlanForm" type="com.visiongc.app.strategos.web.struts.vistasdatos.forms.SeleccionarPlanForm" />
+		<form-bean name="gestionarVistasDatosForm" type="com.visiongc.app.strategos.web.struts.vistasdatos.forms.GestionarVistasDatosForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+	    <forward name="configurarVistaDatos" path="/paginas/strategos/vistasdatos/configurarVistaDatos.jsp" /> 
+		<forward name="listarDimensiones" path="/paginas/strategos/vistasdatos/listarDimensiones.jsp" />
+		<forward name="visualizarDatos" path="/paginas/strategos/vistasdatos/visualizarDatos.jsp" />
+		<forward name="listarMiembros" path="/paginas/strategos/vistasdatos/listarDimensiones.jsp" />
+		<forward name="gestionarVistaDatos" path="/paginas/strategos/vistasdatos/gestionarVistasDatos.jsp" />
+		<forward name="propiedadesVistasDatos" path="/paginas/strategos/vistasdatos/propiedadesVistasDatos.jsp" />
+		<forward name="editarReporteTranversal" path="/paginas/strategos/vistasdatos/editarReporteTranversal.jsp" />
+		<forward name="seleccionarVista" path="/paginas/strategos/vistasdatos/vistas.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Configurar Vista Datos -->
+		<action path="/vistasdatos/configurarVistaDatos" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.ConfigurarVistaDatosAction" scope="session" name="configurarVistaDatosForm" parameter="listarDimensionesAction">
+		    <forward name="listarDimensionesAction" path="/vistasdatos/listarDimensiones.action" />
+		</action>
+
+		<!-- Mapeo del Action: Modificar Configurar Vista Datos -->
+		<action path="/vistasdatos/modificarConfigurarVistaDatos" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.ConfigurarVistaDatosAction" scope="session" name="configurarVistaDatosForm" parameter="listarDimensionesAction">
+		    <forward name="listarDimensionesAction" path="/vistasdatos/listarDimensiones.action" />
+		</action>
+
+		<!-- Mapeo del Action: Ver Configurar Vista Datos -->
+		<action path="/vistasdatos/verConfigurarVistaDatos" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.ConfigurarVistaDatosAction" scope="session" name="configurarVistaDatosForm" parameter="listarDimensionesAction">
+		    <forward name="listarDimensionesAction" path="/vistasdatos/listarDimensiones.action" />
+		</action>
+
+		<!-- Mapeo del Action: Listar Dimensiones -->
+		<action path="/vistasdatos/listarDimensiones" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.ListarDimensionesAction" scope="session" name="configurarVistaDatosForm" parameter="visualizarDatosAction">
+		    <forward name="visualizarDatosAction" path="/vistasdatos/visualizarDatos.action" />
+		</action>
+
+		<!-- Mapeo del Action: Visualizar Datos -->
+		<action path="/vistasdatos/visualizarDatos" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.VisualizarDatosAction" scope="session" name="configurarVistaDatosForm" parameter="listarMiembrosAction">
+		    <forward name="listarMiembrosAction" path="/vistasdatos/listarMiembros.action" />
+		</action>
+
+		<!-- Mapeo del Action: Listar Miembros -->
+		<action path="/vistasdatos/listarMiembros" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.ListarMiembrosAction" scope="session" name="configurarVistaDatosForm" parameter="configurarVistaDatos"></action>		
+		
+		<!-- Mapeo del Action: Seleccionar Tiempo -->
+		<action path="/vistasdatos/seleccionarTiempo" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.SeleccionarTiempoAction" scope="session" name="seleccionarTiempoForm" parameter="seleccionarTiempo">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarTiempo" path="/paginas/strategos/vistasdatos/seleccionarTiempo.jsp" />
+		</action>
+		
+		<!-- Mapeo del Action: Seleccionar Atributo -->
+		<action path="/vistasdatos/seleccionarAtributo" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.SeleccionarAtributoAction" scope="session" name="seleccionarAtributoForm" parameter="seleccionarAtributo">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarAtributo" path="/paginas/strategos/vistasdatos/seleccionarAtributo.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Variable -->
+		<action path="/vistasdatos/seleccionarVariable" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.SeleccionarVariableAction" scope="session" name="seleccionarVariableForm" parameter="seleccionarVariable">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarVariable" path="/paginas/strategos/vistasdatos/seleccionarVariable.jsp" />
+		</action>	
+
+		<!-- Mapeo del Action: Seleccionar Indicador -->
+		<action path="/vistasdatos/seleccionarIndicador" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.SeleccionarIndicadorAction" scope="session" name="seleccionarIndicadorForm" parameter="seleccionarIndicador">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarIndicador" path="/paginas/strategos/vistasdatos/seleccionarIndicador.jsp" />
+		</action>	
+
+		<!-- Mapeo del Action: Seleccionar Organizacion -->
+		<action path="/vistasdatos/seleccionarOrganizacion" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.SeleccionarOrganizacionAction" scope="session" name="seleccionarOrganizacionForm" parameter="seleccionarOrganizacion">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarOrganizacion" path="/paginas/strategos/vistasdatos/seleccionarOrganizacion.jsp" />
+		</action>	
+
+		<!-- Mapeo del Action: Seleccionar Plan -->
+		<action path="/vistasdatos/seleccionarPlan" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.SeleccionarPlanAction" scope="session" name="seleccionarPlanForm" parameter="seleccionarPlan">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarPlan" path="/paginas/strategos/vistasdatos/seleccionarPlan.jsp" />
+		</action>	
+		
+		<!-- Mapeo del Action: Mostrar Vista Datos -->
+		<action path="/vistasdatos/mostrarVistaDatos" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.MostrarVistaDatosAction" scope="session" name="configurarVistaDatosForm" parameter="mostrarVistaDatos">
+		    <forward name="mostrarVistaDatos" path="/paginas/strategos/vistasdatos/mostrarVistaDatos.jsp" />
+		</action>
+		
+		<!-- Mapeo del Action: Guardar Configuracion Vista Datos -->
+		<action path="/vistasdatos/guardarConfiguracionVistaDatos" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.GuardarConfiguracionVistaDatosAction" name="configurarVistaDatosForm" scope="session" input="configurarVistaDatos" validate="false" parameter="configurarVistaDatos">
+			<forward name="exito" path="/vistasdatos/gestionarVistaDatos.action?reload=true" />
+		</action>
+		
+		<!-- Mapeo del Action: Guardar Mostrar Vista Datos -->
+		<action path="/vistasdatos/guardarMostrarVistaDatos" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.GuardarConfiguracionVistaDatosAction" name="configurarVistaDatosForm" scope="session" input="mostrarVistaDatos" validate="false" parameter="mostrarVistaDatos">
+			<forward name="mostrarVistaDatos" path="/paginas/strategos/vistasdatos/mostrarVistaDatos.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Pantalla de Iniciativas Resumida-->
+		<action path="/vistasdatos/seleccionarVista" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.SeleccionarVistaAction" scope="request" name="reporteForm" parameter="seleccionarVista"></action>
+		
+		
+		<!-- Mapeo del Action: Guardar Mostrar Vista Datos -->
+		<action path="/vistasdatos/gestionarVistaDatos" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.GestionarVistaDatosAction" name="gestionarVistasDatosForm" scope="session" parameter="gestionarVistaDatos"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte Vista Datos -->
+		<action path="/vistasdatos/generarReporteVistas" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.ReporteVistaDatosAction"></action>
+
+		<!-- Mapeo del Action: Generar la pagina de propiedades -->
+		<action path="/vistasdatos/propiedades" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.PropiedadesVistaDatosAction" name="configurarVistaDatosForm" scope="request" parameter="propiedadesVistasDatos"></action>
+		
+		<!-- Mapeo del Action: Eliminar -->
+		<action path="/vistasdatos/eliminar" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.EliminarVistaDatosAction"></action>
+		
+		<!-- Mapeo del Action: Imprimir Vista de Datos -->
+		<action path="/vistasdatos/imprimir" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.ImprimirVistaDatosPDFAction"></action>
+
+		<!-- Mapeo del Action: Imprimir Vista de Datos -->
+		<action path="/vistasdatos/exportarXLS" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.ImprimirVistaDatosXLSAction"></action>
+		
+		<!-- Mapeo del Action: Crear Reporte Transversal -->
+		<action path="/vistasdatos/editarReporteTranversal" type="com.visiongc.app.strategos.web.struts.vistasdatos.actions.ConfigurarVistaDatosTransversalAction" name="reporteForm" scope="session" parameter="editarReporteTranversal"></action>
+	</action-mappings>
+
+</struts-config>

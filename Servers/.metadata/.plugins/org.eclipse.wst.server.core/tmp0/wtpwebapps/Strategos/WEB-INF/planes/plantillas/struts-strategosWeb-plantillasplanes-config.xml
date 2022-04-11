@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config SYSTEM "../../struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (16/06/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarPlantillasPlanesForm" type="com.visiongc.app.strategos.web.struts.planes.plantillas.forms.GestionarPlantillasPlanesForm" />
+		<form-bean name="editarPlantillaPlanesForm" type="com.visiongc.app.strategos.web.struts.planes.plantillas.forms.EditarPlantillaPlanesForm" />
+		<form-bean name="seleccionarPlantillasPlanesForm" type="com.visiongc.framework.web.struts.forms.SelectorListaForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarPlantillaPlanes" path="/paginas/strategos/planes/plantillas/editarPlantillaPlanes.jsp" />		
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Plantillas de Planes -->
+		<action path="/planes/plantillas/gestionarPlantillasPlanes" type="com.visiongc.app.strategos.web.struts.planes.plantillas.actions.GestionarPlantillasPlanesAction" scope="session" name="gestionarPlantillasPlanesForm" parameter="gestionarPlantillasPlanes">
+			<forward name="gestionarPlantillasPlanes" path="/paginas/strategos/planes/plantillas/gestionarPlantillasPlanes.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Plantilla de Planes -->
+		<action path="/planes/plantillas/crearPlantillaPlanes" type="com.visiongc.app.strategos.web.struts.planes.plantillas.actions.EditarPlantillaPlanesAction" scope="request" name="editarPlantillaPlanesForm" parameter="editarPlantillaPlanes"></action>
+
+		<!-- Mapeo del Action: Modificar Plantilla de Planes -->
+		<action path="/planes/plantillas/modificarPlantillaPlanes" type="com.visiongc.app.strategos.web.struts.planes.plantillas.actions.EditarPlantillaPlanesAction" scope="request" name="editarPlantillaPlanesForm" parameter="editarPlantillaPlanes"></action>
+
+		<!-- Mapeo del Action: Ver Plantilla de Planes -->
+		<action path="/planes/plantillas/verPlantillaPlanes" type="com.visiongc.app.strategos.web.struts.planes.plantillas.actions.EditarPlantillaPlanesAction" scope="request" name="editarPlantillaPlanesForm" parameter="editarPlantillaPlanes"></action>
+
+		<!-- Mapeo del Action: Guardar Plantilla de Planes -->
+		<action path="/planes/plantillas/guardarPlantillaPlanes" type="com.visiongc.app.strategos.web.struts.planes.plantillas.actions.GuardarPlantillaPlanesAction" name="editarPlantillaPlanesForm" scope="request" input="editarPlantillaPlanes" validate="true" parameter="editarPlantillaPlanes">
+			<forward name="crearPlantillaPlanes" path="/planes/plantillas/crearPlantillaPlanes.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Plantilla de Planes -->
+		<action path="/planes/plantillas/cancelarGuardarPlantillaPlanes" type="com.visiongc.app.strategos.web.struts.planes.plantillas.actions.GuardarPlantillaPlanesAction" name="editarPlantillaPlanesForm" scope="request" parameter="editarPlantillaPlanes"></action>
+
+		<!-- Mapeo del Action: Eliminar Plantilla de Planes -->
+		<action path="/planes/plantillas/eliminarPlantillaPlanes" type="com.visiongc.app.strategos.web.struts.planes.plantillas.actions.EliminarPlantillaPlanesAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte de Plantillas de Planes -->
+		<action path="/planes/plantillas/generarReportePlantillasPlanes" type="com.visiongc.app.strategos.web.struts.planes.plantillas.actions.ReportePlantillasPlanesAction"></action>
+
+		<!-- Mapeo del Action: Seleccionar Plantillas de Planes -->
+		<action path="/planes/plantillas/seleccionarPlantillasPlanes" type="com.visiongc.app.strategos.web.struts.planes.plantillas.actions.SeleccionarPlantillasPlanesAction" scope="request" name="seleccionarPlantillasPlanesForm" parameter="seleccionarPlantillasPlanes">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarPlantillasPlanes" path="/paginas/strategos/planes/plantillas/seleccionarPlantillasPlanes.jsp" />
+		</action>		
+
+	</action-mappings>
+
+</struts-config>

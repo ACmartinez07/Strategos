@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (23/09/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="editarMedicionesForm" type="com.visiongc.app.strategos.web.struts.mediciones.forms.EditarMedicionesForm" />
+		<form-bean name="protegerLiberarMedicionesForm" type="com.visiongc.app.strategos.web.struts.mediciones.forms.ProtegerLiberarMedicionesForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="configurarEdicionMediciones" path="/paginas/strategos/mediciones/configurarEdicionMediciones.jsp" />
+		<forward name="editarMediciones" path="/paginas/strategos/mediciones/editarMediciones.jsp" />
+		<forward name="protegerLiberarMediciones" path="/paginas/strategos/mediciones/protegerLiberarMediciones.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Seleccionar Periodo Mediciones -->
+		<action path="/mediciones/configurarEdicionMediciones" type="com.visiongc.app.strategos.web.struts.mediciones.actions.ConfigurarEdicionMedicionesAction" scope="session" name="editarMedicionesForm" parameter="configurarEdicionMediciones"></action>
+
+		<!-- Mapeo del Action: Seleccionar Periodo Mediciones -->
+		<action path="/mediciones/cancelarConfigurarEdicionMediciones" type="com.visiongc.app.strategos.web.struts.mediciones.actions.ConfigurarEdicionMedicionesAction" scope="session" name="editarMedicionesForm"></action>
+
+		<!-- Mapeo del Action: Editar Mediciones -->
+		<action path="/mediciones/editarMediciones" type="com.visiongc.app.strategos.web.struts.mediciones.actions.EditarMedicionesAction" scope="session" name="editarMedicionesForm" parameter="editarMediciones"></action>
+
+		<!-- Mapeo del Action: Guardar Mediciones -->
+		<action path="/mediciones/guardarMediciones" type="com.visiongc.app.strategos.web.struts.mediciones.actions.GuardarMedicionesAction" name="editarMedicionesForm" scope="session" input="editarMediciones" parameter="editarMediciones"></action>
+
+		<action path="/mediciones/cancelarGuardarMediciones" type="com.visiongc.app.strategos.web.struts.mediciones.actions.GuardarMedicionesAction" name="editarMedicionesForm" scope="session"></action>
+
+		<!-- Mapeo del Action: Proteger/Liberar Mediciones -->
+		<action path="/mediciones/protegerLiberar" type="com.visiongc.app.strategos.web.struts.mediciones.actions.ProtegerLiberarMedicionesAction" name="protegerLiberarMedicionesForm" scope="session" input="protegerLiberarMediciones" parameter="protegerLiberarMediciones"></action>
+
+		<!-- Mapeo del Action: Salvar Proteger/Liberar Mediciones -->
+		<action path="/mediciones/protegerLiberarSalvar" type="com.visiongc.app.strategos.web.struts.mediciones.actions.ProtegerLiberarMedicionesSalvarAction" name="protegerLiberarMedicionesForm" scope="session" parameter="protegerLiberarMediciones"></action>
+		
+		<!-- Mapeo del Action: Imprimir Mediciones en PDF -->
+		<action path="/mediciones/imprimirMediciones" type="com.visiongc.app.strategos.web.struts.mediciones.actions.ImprimirMedicionesPDFAction"></action>
+
+		<!-- Mapeo del Action: Imprimir Mediciones en XLS -->
+		<action path="/mediciones/exportarXLSMediciones" type="com.visiongc.app.strategos.web.struts.mediciones.actions.ImprimirMedicionesXLSAction"></action>
+		
+
+	</action-mappings>
+
+</struts-config>

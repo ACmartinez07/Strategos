@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+	<!-- Modificado por: Kerwin Arias (01/10/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean    -->
+	<form-beans>
+		<form-bean name="gestionarInstrumentosForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.GestionarInstrumentosForm" />
+		<form-bean name="gestionarCooperantesForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.GestionarCooperantesForm" />
+		<form-bean name="gestionarConveniosForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.GestionarConveniosForm" />
+		<form-bean name="editarInstrumentosForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.EditarInstrumentosForm" />
+		<form-bean name="seleccionarConveniosForm" type="com.visiongc.framework.web.struts.forms.SelectorListaForm" />
+		<form-bean name="seleccionarCooperantesForm" type="com.visiongc.framework.web.struts.forms.SelectorListaForm" />
+		<form-bean name="seleccionarOrganizacionForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.SelectorOrganizacionForm" />
+		<form-bean name="editarCooperantesForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.EditarCooperantesForm" />
+		<form-bean name="editarTiposConvenioForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.EditarTiposConvenioForm" />
+		
+		
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<!-- 
+		<forward name="editarPortafolioGrafico" path="/paginas/strategos/portafolios/editarPortafolioGrafico.jsp" />-->
+		
+		<forward name="gestionarInstrumentosIniciativasAction" path="/instrumentos/gestionarInstrumentosIniciativas.action" />
+		<forward name="gestionarInstrumentosIndicadoresIniciativasAction" path="/instrumentos/gestionarInstrumentosIndicadoresIniciativas.action" />
+		
+		<forward name="exploradorInstrumentos" path="/paginas/strategos/instrumentos/explorador.jsp" />		
+		<forward name="exploradorCooperantes" path="/paginas/strategos/instrumentos/cooperantes/gestionarCooperante.jsp" />	
+		<forward name="exploradorConvenios" path="/paginas/strategos/instrumentos/tiposconvenio/gestionarConvenios.jsp" />	
+		
+		<forward name="editarConvenios" path="/paginas/strategos/instrumentos/tiposconvenio/editarConvenios.jsp" />
+		<forward name="editarCooperantes" path="/paginas/strategos/instrumentos/cooperantes/editarCooperantes.jsp" />
+		<forward name="editarInstrumentos" path="/paginas/strategos/instrumentos/editarInstrumentos.jsp" />
+		<forward name="reporteInstrumentoEjecucion" path="/paginas/strategos/instrumentos/resumidaEjecucion.jsp" />
+		<forward name="reporteInstrumentoEjecucionDetalle" path="/paginas/strategos/instrumentos/resumidaEjecucionDetalle.jsp" />
+								
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Portafolios -->	
+		
+		<action path="/instrumentos/gestionarInstrumentos" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.GestionarInstrumentosAction" scope="session" name="gestionarInstrumentosForm" parameter="gestionarInstrumentosIniciativasAction"></action>
+		
+		<!-- Mapeo del Action: Gestionar Iniciativa -->
+		<action path="/instrumentos/gestionarInstrumentosIniciativas" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.GestionarIniciativasAction" scope="session" name="gestionarIniciativasForm" parameter="gestionarInstrumentosIndicadoresIniciativasAction"></action>
+		
+		<!-- Mapeo del Action: Gestionar Indicadores -->
+		<action path="/instrumentos/gestionarInstrumentosIndicadoresIniciativas" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.GestionarIndicadoresIniciativaAction" scope="session" name="gestionarIndicadoresIniciativaForm" parameter="exploradorInstrumentos"></action>
+			
+		<action path="/instrumentos/gestionarCooperantes" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.GestionarCooperantesAction" scope="session" name="gestionarCooperantesForm" parameter="exploradorCooperantes"></action>
+		
+		<action path="/instrumentos/gestionarConvenios" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.GestionarConveniosAction" scope="session" name="gestionarConveniosForm" parameter="exploradorConvenios"></action>
+		
+		<!-- Mapeo del Action: Asociar Iniciativa a un Instrumento -->
+		<action path="/instrumentos/asociarIniciativa" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.AsociarIniciativaInstrumentoAction"></action>
+		
+		<!-- Mapeo del Action: Desasociar Iniciativa de un Instrumento -->
+		<action path="/instrumentos/desasociarIniciativa" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.DesasociarIniciativaInstrumentoAction"></action>
+			
+		<!-- Convenios -->
+		
+		<!-- Mapeo del Action: Crear Categoria de Medicion -->
+		<action path="/instrumentos/crearConvenio" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.EditarConveniosAction" scope="request" name="editarTiposConvenioForm" parameter="editarConvenios"></action>
+
+		<!-- Mapeo del Action: Modificar Categoria de Medicion -->
+		<action path="/instrumentos/modificarConvenio" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.EditarConveniosAction" scope="request" name="editarTiposConvenioForm" parameter="editarConvenios"></action>
+
+		<!-- Mapeo del Action: Guardar Categoria de Medicion -->
+		<action path="/instrumentos/guardarConvenio" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.GuardarConveniosAction" name="editarTiposConvenioForm" scope="request" input="editarConvenios" validate="true" parameter="editarConvenios">
+			<forward name="crearConvenio" path="/instrumentos/crearConvenio.action" />
+		</action>
+		
+			<!-- Mapeo del Action: Cancelar Guardar Categoria de Medicion -->
+		<action path="/instrumentos/cancelarGuardarConvenio" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.GuardarConveniosAction" name="editarTiposConvenioForm" scope="request" parameter="editarConvenios"></action>
+
+		<!-- Mapeo del Action: Seleccionar Categorias de Medicion -->
+		<action path="/instrumentos/seleccionarConvenio" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.SeleccionarConveniosAction" scope="request" name="seleccionarConveniosForm" parameter="seleccionarConvenios">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarConvenios" path="/paginas/strategos/instrumentos/tiposconvenio/seleccionarConvenios.jsp" />
+		</action>
+		
+		<!-- Mapeo del Action: Eliminar Portafolio -->
+		<action path="/instrumentos/eliminarConvenio" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.EliminarConvenioAction"></action>
+	
+		<!-- Cooperantes -->
+		
+				
+		<!-- Mapeo del Action: Crear Categoria de Medicion -->
+		<action path="/instrumentos/crearCooperante" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.EditarCooperantesAction" scope="request" name="editarCooperantesForm" parameter="editarCooperantes"></action>
+
+		<!-- Mapeo del Action: Modificar Categoria de Medicion -->
+		<action path="/instrumentos/modificarCooperante" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.EditarCooperantesAction" scope="request" name="editarCooperantesForm" parameter="editarCooperantes"></action>
+
+		<!-- Mapeo del Action: Guardar Categoria de Medicion -->
+		<action path="/instrumentos/guardarCooperante" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.GuardarCooperantesAction" name="editarCooperantesForm" scope="request" input="editarCooperantes" validate="true" parameter="editarCooperantes">
+			<forward name="crearCooperantes" path="/instrumentos/crearCooperante.action" />
+		</action>
+		
+			<!-- Mapeo del Action: Cancelar Guardar Categoria de Medicion -->
+		<action path="/instrumentos/cancelarGuardarCooperante" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.GuardarCooperantesAction" name="editarCooperantesForm" scope="request" parameter="editarCooperantes"></action>
+
+		<!-- Mapeo del Action: Seleccionar Categorias de Medicion -->
+		<action path="/instrumentos/seleccionarCooperante" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.SeleccionarCoooperanteAction" scope="request" name="seleccionarCooperantesForm" parameter="seleccionarCooperantes">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarCooperantes" path="/paginas/strategos/instrumentos/cooperantes/seleccionarCooperantes.jsp" />
+		</action>
+		
+		<!-- Mapeo del Action: Eliminar Portafolio -->
+		<action path="/instrumentos/eliminarCooperante" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.EliminarCooperanteAction"></action>
+		
+		<!-- Instrumentos -->
+		
+				
+		<!-- Mapeo del Action: Crear Categoria de Medicion -->
+		<action path="/instrumentos/crearInstrumento" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.EditarInstrumentosAction" scope="request" name="editarInstrumentosForm" parameter="editarInstrumentos"></action>
+
+		<!-- Mapeo del Action: Modificar Categoria de Medicion -->
+		<action path="/instrumentos/modificarInstrumento" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.EditarInstrumentosAction" scope="request" name="editarInstrumentosForm" parameter="editarInstrumentos"></action>
+
+		<!-- Mapeo del Action: Guardar Categoria de Medicion -->
+		<action path="/instrumentos/guardarInstrumento" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.GuardarInstrumentosAction" name="editarInstrumentosForm" scope="request" input="editarInstrumentos" validate="true" parameter="editarInstrumentos">
+			<forward name="crearInstrumento" path="/instrumentos/crearInstrumento.action" />
+		</action>
+		
+			<!-- Mapeo del Action: Cancelar Guardar Categoria de Medicion -->
+		<action path="/instrumentos/cancelarGuardarInstrumento" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.GuardarInstrumentosAction" name="editarInstrumentosForm" scope="request" parameter="editarInstrumentos"></action>
+
+		<!-- Mapeo del Action: Seleccionar Categorias de Medicion -->
+		<action path="/instrumentos/seleccionarInstrumento" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.SeleccionarCoooperanteAction" scope="request" name="seleccionarInstrumentosForm" parameter="seleccionarInstrumentos">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarInstrumentos" path="/paginas/strategos/instrumentos/cooperantes/seleccionarCooperantes.jsp" />
+		</action>
+		
+		<!-- Mapeo del Action: Eliminar Portafolio -->
+		<action path="/instrumentos/eliminarInstrumento" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.EliminarInstrumentoAction"></action>
+	
+		<!-- Mapeo del Action: Generar Reporte de Resumido Pdf de la Iniciativa Ejecucion-->
+		<action path="/instrumentos/reporteBasicoPdf" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteInstrumentoPdf"></action>
+			
+		<!-- Mapeo del Action: Pantalla de Instrumentos Resumido Ejecucion-->
+		<action path="/instrumentos/resumidaEjecucion" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteInstrumentoEjecucionAction" scope="request" name="reporteForm" parameter="reporteInstrumentoEjecucion"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte Resumido Pdf de la Ejecucion-->
+		<action path="/instrumentos/reporteInstrumentoPdf" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteInstrumentoDetallePdf"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte Resumido Xls de la Ejecucion-->
+		<action path="/instrumentos/reporteInstrumentoXls" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteInstrumentoDetalleXls"></action>
+
+		<!-- Mapeo del Action: Pantalla de Instrumentos Detalle Ejecucion-->
+		<action path="/instrumentos/resumidaEjecucionDetalle" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteInstrumentoEjecucionDetalleAction" scope="request" name="reporteForm" parameter="reporteInstrumentoEjecucionDetalle"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte Detalle Pdf de la Ejecucion-->
+		<action path="/instrumentos/reporteInstrumentoDetallePdf" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteInstrumentosPdf"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte Detalle Xls de la Ejecucion-->
+		<action path="/instrumentos/reporteInstrumentoDetalleXls" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteInstrumentoXls"></action>
+
+
+		<!-- Mapeo del Action: Seleccionar Organizacion -->
+		<action path="/instrumentos/seleccionarOrganizacion" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.SeleccionarOrganizacionAction" scope="session" name="seleccionarOrganizacionForm" parameter="seleccionarOrganizacion">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarOrganizacion" path="/paginas/strategos/instrumentos/seleccionarOrganizacion.jsp" />
+		</action>
+				
+	</action-mappings>
+
+</struts-config>

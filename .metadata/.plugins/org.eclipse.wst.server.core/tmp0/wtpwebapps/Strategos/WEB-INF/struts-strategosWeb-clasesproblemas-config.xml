@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (07/11/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="editarClaseProblemasForm" type="com.visiongc.app.strategos.web.struts.problemas.clasesproblemas.forms.EditarClaseProblemasForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarClaseProblemas" path="/paginas/strategos/problemas/clasesproblemas/editarClaseProblemas.jsp" />
+		<forward name="copiarClaseProblemas" path="/paginas/strategos/problemas/clasesproblemas/copiarClaseProblemas.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Clases de Problemas -->
+		<action path="/problemas/clasesproblemas/gestionarClasesProblemas" type="com.visiongc.app.strategos.web.struts.problemas.clasesproblemas.actions.GestionarClasesProblemasAction" parameter="gestionarProblemasAction" ></action>				      
+
+		<!-- Mapeo del Action: Crear Clase Problemas -->
+		<action path="/problemas/clasesproblemas/crearClaseProblemas" type="com.visiongc.app.strategos.web.struts.problemas.clasesproblemas.actions.EditarClaseProblemasAction" scope="request" name="editarClaseProblemasForm" parameter="editarClaseProblemas"></action>
+
+		<!-- Mapeo del Action: Modificar Clase Problemas -->
+		<action path="/problemas/clasesproblemas/modificarClaseProblemas" type="com.visiongc.app.strategos.web.struts.problemas.clasesproblemas.actions.EditarClaseProblemasAction" scope="request" name="editarClaseProblemasForm" parameter="editarClaseProblemas"></action>
+
+		<!-- Mapeo del Action: Ver Clase Problemas -->
+		<action path="/problemas/clasesproblemas/verClaseProblemas" type="com.visiongc.app.strategos.web.struts.problemas.clasesproblemas.actions.EditarClaseProblemasAction" scope="request" name="editarClaseProblemasForm" parameter="editarClaseProblemas"></action>
+
+		<!-- Mapeo del Action: Copiar Clase Problemas -->
+		<action path="/problemas/clasesproblemas/copiarClaseProblemas" type="com.visiongc.app.strategos.web.struts.problemas.clasesproblemas.actions.CopiarClaseProblemaAction" scope="request" name="editarClaseProblemasForm" parameter="copiarClaseProblemas"></action>		
+		
+		<!-- Mapeo del Action: Guardar Clase Problemas -->
+		<action path="/problemas/clasesproblemas/guardarClaseProblemas" type="com.visiongc.app.strategos.web.struts.problemas.clasesproblemas.actions.GuardarClaseProblemasAction" name="editarClaseProblemasForm" scope="request" input="editarClaseProblemas" validate="true" parameter="editarClaseProblemas">
+			<forward name="crearClaseProblemas" path="/problemas/clasesproblemas/crearClaseProblemas.action" />			
+		</action>
+
+		<!-- Mapeo del Action: Guardar Copia Problema -->
+		<action path="/problemas/clasesproblemas/guardarCopiaClaseProblemas" type="com.visiongc.app.strategos.web.struts.problemas.clasesproblemas.actions.GuardarClaseProblemasAction" name="editarClaseProblemasForm" scope="request" input="editarClaseProblemas" validate="true" parameter="copiarClaseProblemas"></action>
+		
+		<!-- Mapeo del Action: Cancelar Guardar Clase Problemas -->
+		<action path="/problemas/clasesproblemas/cancelarClaseProblemas" type="com.visiongc.app.strategos.web.struts.problemas.clasesproblemas.actions.GuardarClaseProblemasAction" name="editarClaseProblemasForm" scope="request" parameter="editarClaseProblemas"></action>
+
+		<!-- Mapeo del Action: Propiedades Clase Problemas -->
+		<action path="/problemas/clasesproblemas/propiedadesClaseProblemas" type="com.visiongc.app.strategos.web.struts.problemas.clasesproblemas.actions.MostrarPropiedadesClaseProblemasAction" name="editarClaseProblemasForm" scope="request" parameter="propiedadesClaseProblemas">
+			<forward name="propiedadesClaseProblemas" path="/paginas/strategos/problemas/clasesproblemas/propiedadesClaseProblemas.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Eliminar Clase Problemas -->
+		<action path="/problemas/clasesproblemas/eliminarClaseProblemas" type="com.visiongc.app.strategos.web.struts.problemas.clasesproblemas.actions.EliminarClaseProblemasAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Clase Problemas -->
+		<action path="/problemas/clasesproblemas/generarReporteClasesProblemas" type="com.visiongc.app.strategos.web.struts.problemas.clasesproblemas.actions.ReporteClasesProblemasAction"></action>
+		
+	</action-mappings>
+</struts-config>

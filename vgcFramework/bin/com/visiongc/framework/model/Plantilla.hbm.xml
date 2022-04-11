@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Modificado por: Kerwin Arias (28/08/2012) -->
+
+<hibernate-mapping>
+	<!-- 
+		Created by the Middlegen Hibernate plugin 2.1
+		
+		http://boss.bekk.no/boss/middlegen/
+		http://www.hibernate.org/
+	-->
+	<class name="com.visiongc.framework.model.Plantilla" table="afw_plantilla">
+
+		<id name="plantillaId" type="java.lang.Long" column="plantilla_id">
+			<generator class="assigned" />
+		</id>
+
+		<property name="objetoId" type="java.lang.Long" column="objeto_id" />
+		<property name="usuarioId" type="java.lang.Long" column="usuario_id" />
+		<property name="nombre" type="java.lang.String" column="nombre" length="100" />
+		<property name="descripcion" type="java.lang.String" column="descripcion" length="2000" />
+		<property name="publico" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="publico" />
+		<property name="tipo" type="java.lang.String" column="tipo" length="20" />
+		<property name="xml" type="java.lang.String" column="xml" />
+
+		<!-- Associations -->
+
+	</class>
+
+</hibernate-mapping>

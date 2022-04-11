@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (11/06/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="editarActividadForm" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.forms.EditarActividadForm" />
+		<form-bean name="gestionarActividadesForm" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.forms.GestionarActividadesForm" />
+		<form-bean name="gestionarGanttForm" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.forms.GestionarGanttForm" />
+		<form-bean name="asignarPesosActividadForm" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.forms.AsignarPesosActividadForm" />
+		<form-bean name="seleccionarActividadForm" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.forms.SeleccionarActividadForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarActividad" path="/paginas/strategos/planificacionseguimiento/actividades/editarActividad.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Actividades-->
+		<action path="/planificacionseguimiento/actividades/gestionarActividades" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.GestionarActividadesAction" scope="session" name="gestionarActividadesForm" parameter="gestionarActividades">
+			<forward name="gestionarActividades" path="/paginas/strategos/planificacionseguimiento/actividades/gestionarActividades.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Actividad-->
+		<action path="/planificacionseguimiento/actividades/crearActividad" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.EditarActividadAction" scope="session" name="editarActividadForm" parameter="editarActividad"></action>
+
+		<!-- Mapeo del Action: Modificar Actividad-->
+		<action path="/planificacionseguimiento/actividades/modificarActividad" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.EditarActividadAction" scope="session" name="editarActividadForm" parameter="editarActividad"></action>
+
+		<!-- Mapeo del Action: Ver Actividad-->
+		<action path="/planificacionseguimiento/actividades/verActividad" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.EditarActividadAction" scope="session" name="editarActividadForm" parameter="editarActividad"></action>
+
+		<action path="/planificacionseguimiento/actividades/editarActividadFuncion" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.EditarActividadFuncionAction"></action>
+
+		<!-- Mapeo del Action: Guardar Actividad-->
+		<action path="/planificacionseguimiento/actividades/guardarActividad" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.GuardarActividadAction" name="editarActividadForm" scope="session" input="editarActividad" validate="true" parameter="editarActividad">
+			<forward name="crearActividad" path="/planificacionseguimiento/actividades/crearActividad.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Actividad-->
+		<action path="/planificacionseguimiento/actividades/cancelarGuardarActividad" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.GuardarActividadAction" name="editarActividadForm" scope="session" parameter="editarActividad"></action>
+
+		<!-- Mapeo del Action: Eliminar Actividad-->
+		<action path="/planificacionseguimiento/actividades/eliminarActividad" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.EliminarActividadAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte actividades -->
+		<action path="/planificacionseguimiento/actividades/generarReporteActividades" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.ReporteActividadesAction"></action>
+
+		<!-- Mapeo del Action: Propiedades Actividad -->
+		<action path="/planificacionseguimiento/actividades/propiedadesActividad" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.MostrarPropiedadesActividadAction" name="editarActividadForm" scope="request" parameter="propiedadesActividad">
+			<forward name="propiedadesActividad" path="/paginas/strategos/planificacionseguimiento/actividades/propiedadesActividad.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Gestionar Gantt -->
+		<action path="/planificacionseguimiento/actividades/gestionarGantt" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.GestionarGanttAction" scope="session" name="gestionarGanttForm" parameter="gestionarGantt">
+			<forward name="gestionarGantt" path="/paginas/strategos/planificacionseguimiento/actividades/gestionarGantt.jsp" />
+		</action>
+		
+		<!-- Mapeo del Action: Editar Pesos de Actividades -->
+		<action path="/planificacionseguimiento/actividades/asignarPesosActividad" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.AsignarPesosActividadAction" scope="session" name="asignarPesosActividadForm" parameter="asignarPesosActividad">
+			<forward name="asignarPesosActividad" path="/paginas/strategos/planificacionseguimiento/actividades/asignarPesosActividad.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Gestionar planificacion y seguimiento-->
+		<action path="/planificacionseguimiento/gestionarPlanificacionSeguimientos" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.GestionarPlanificacionSeguimientosAction" parameter="gestionarActividades" name="gestionarActividadesForm" scope="session">
+			<forward name="gestionarActividades" path="/planificacionseguimiento/actividades/gestionarActividades.action" />
+		</action>
+
+		<action path="/planificacionseguimiento/actividades/asociarIniciativa" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.AsociarIniciativaAction" scope="session" name="gestionarActividadesForm" parameter="gestionarActividades"></action>		
+
+		<!-- Mapeo del Action: Seleccionar Actividades -->
+		<action path="/actividades/selector/seleccionarActividad" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.SeleccionarActividadAction" scope="session" name="seleccionarActividadForm" parameter="seleccionarActividadOrganizacionesAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarActividadOrganizacionesAction" path="/actividades/selector/seleccionarActividadOrganizaciones.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Organizaciones -->
+		<action path="/actividades/selector/seleccionarActividadOrganizaciones" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.SeleccionarActividadOrganizacionesAction" scope="session" name="seleccionarActividadForm" parameter="seleccionarActividadPlanesAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarActividadPlanesAction" path="/actividades/selector/seleccionarActividadPlanes.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Planes -->
+		<action path="/actividades/selector/seleccionarActividadPlanes" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.SeleccionarActividadPlanesAction" scope="session" name="seleccionarActividadForm" parameter="seleccionarActividadIniciativasAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarActividadIniciativasAction" path="/actividades/selector/seleccionarActividadIniciativas.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Iniciativas -->
+		<action path="/actividades/selector/seleccionarActividadIniciativas" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.SeleccionarActividadIniciativasAction" scope="session" name="seleccionarActividadForm" parameter="seleccionarActividadActividadesAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarActividadActividadesAction" path="/actividades/selector/seleccionarActividadActividades.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Actividad Actividades -->
+		<action path="/actividades/selector/seleccionarActividadActividades" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.actions.SeleccionarActividadActividadesAction" scope="session" name="seleccionarActividadForm" parameter="seleccionarActividad">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarActividad" path="/paginas/strategos/planificacionseguimiento/actividades/selector/seleccionarActividad.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Enviar Correo -->
+		<action path="/planificacionseguimiento/actividades/enviarEmail" type="com.visiongc.app.strategos.web.struts.email.actions.ValidarEmailAction"></action>
+
+	</action-mappings>
+
+</struts-config>

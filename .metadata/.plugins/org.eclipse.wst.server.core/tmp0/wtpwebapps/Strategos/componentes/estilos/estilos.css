@@ -1,0 +1,1024 @@
+/**
+* Descripción: Hoja de Estilo de Strategos Plus v.1.0 
+* Modificado por: Kerwin Arias 01/10/2008
+*/
+
+/* Autor: Kerwin Arias | F. creación: 10/09/2007 | Categoría: Comunes */
+/* =========================================================================== */
+.tabla {
+	border-spacing:3px;				/* 'cellspacing' equivalente */
+	border-collapse: separate; 		/* 'cellspacing' equivalente */
+	padding: 3px;					/* 'cellpadding' equivalente */
+	width: 100%;
+}
+
+.tablaSpacing0Padding0Width100 {
+	border-spacing:0px;				/* 'cellspacing' equivalente */
+	border-collapse: separate; 		/* 'cellspacing' equivalente */
+	padding: 0px;					/* 'cellpadding' equivalente */
+	width: 100%;
+}
+
+.tablaSpacing0Padding0Width100Collapse{
+	border-spacing:0px;				/* 'cellspacing' equivalente */
+	border-collapse: collapse; 		/* 'cellspacing' equivalente */
+	padding: 0px;					/* 'cellpadding' equivalente */
+	width: 100%;	
+}
+
+.tablaImagenes {
+	border-spacing:3px;				/* 'cellspacing' equivalente */
+	border-collapse: separate; 		/* 'cellspacing' equivalente */
+	padding: 3px;					/* 'cellpadding' equivalente */
+	width: 100%;
+	bgcolor:dddddd;
+}
+
+.tablainsumo{
+	border-spacing:0px;				/* 'cellspacing' equivalente */
+	border-collapse: separate; 		/* 'cellspacing' equivalente */
+	padding: 0px;					/* 'cellpadding' equivalente */
+	width: 100%;
+	height:200px;
+}
+
+.bordeFichaDatostabla{
+	border-spacing:0px;				/* 'cellspacing' equivalente */
+	border-collapse: separate; 		/* 'cellspacing' equivalente */
+	padding: 3px;					/* 'cellpadding' equivalente */
+	width: 100%;	
+}
+
+.fichaDatostablaGeneral{
+	border-spacing:0px;				/* 'cellspacing' equivalente */
+	border-collapse: separate; 		/* 'cellspacing' equivalente */
+	padding: 3px;					/* 'cellpadding' equivalente */
+	width: 100%;
+	height:100%;
+	border-width:0px; 
+	text-align:center;	
+}
+
+.tabFichaDatostabla{
+	border-spacing:0px;				/* 'cellspacing' equivalente */
+	border-collapse: separate; 		/* 'cellspacing' equivalente */
+	padding: 3px;					/* 'cellpadding' equivalente */
+	width: 100%;
+	height:100%;	
+}
+
+.tabTablaPrincipal
+{
+	border-spacing:0px;				/* 'cellspacing' equivalente */
+	border-collapse: separate; 		/* 'cellspacing' equivalente */
+	padding: 2px;					/* 'cellpadding' equivalente */
+	height:100%;	
+	font-family:Verdana;
+	font-size:11;
+	color:#666666;
+	text-decoration:none;
+}
+
+.tabtablainsumo
+{
+	padding: 0px;					/* 'cellpadding' equivalente */
+	border-spacing:0px;				/* 'cellspacing' equivalente */
+	border-collapse: separate; 		/* 'cellspacing' equivalente */
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;
+	font-family:Verdana;
+	font-size:11;
+	color:#666666;
+	text-decoration:none;
+	width: 100%;
+	height:128px;
+}
+
+.tabtablainsumoSerie
+{
+	width: 450px;
+}
+
+.tabtablaImagenes 
+{
+	border-spacing:3px;				/* 'cellspacing' equivalente */
+	border-collapse: separate; 		/* 'cellspacing' equivalente */
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;
+	padding: 3px;					/* 'cellpadding' equivalente */
+	width: 100%;
+}
+
+.cuerpo { /* Todos los body de las páginas */
+	background: #ffffff;
+	margin-bottom:0px;
+	margin-left:0px;
+	margin-right:0px;
+	margin-top:0px;
+	scrollbar-face-color:#F3F3F3;
+	scrollbar-highlight-color:#333333;
+	scrollbar-arrow-color:#333333;
+	scrollbar-base-color:#F3F3F3;
+	scrollbar-dark-shadow-color:#F3F3F3;
+	scrollbar-track-color:#CCCCCC;
+	scrollbar-shadow-color:#F3F3F3;
+}
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 10/09/2007 | Categoría: Bienvenida */
+/* ============================================================================== */
+
+.contenedorBienvenida { /* Tabla principal de la página de bienvenida */
+	width:100%;
+	height:100%;
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;
+	font-size:11px;
+	color:#000000;
+	font-family:Verdana;
+	text-decoration:none;
+	text-align:center;
+}
+
+.mouseEncimaBienvenida { /* Evento over de la página de bienvenida*/
+	font-size:11px;
+	color:#000000;
+	font-family:Verdana;
+	text-decoration:underline;
+}
+
+.mouseFueraBienvenida { /* Evento out de la página de bienvenida */
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+	text-decoration:none;
+}
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 10/09/2007 | Categoría: Contenedor Principal */
+/* ======================================================================================== */
+
+.contenedorPrincipal { /* Contenedor principal */
+	width:100%;
+	height:100%;
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;	
+}
+
+.barraSuperiorPrincipal /* Barra superior del contenedor principal */ 
+{ 
+	height:30px;
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;
+	background-color:#FFFFFF;
+}
+
+.barraSuperiorPrincipalLogin /* Barra superior del contenedor principal */ 
+{ 
+	height:30px;
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;
+	background-color:#FFCC33;
+}
+
+
+.barraAplicacionPrincipal { /* Barra de aplicación del contenedor principal */
+	height:30px;
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;
+	background-color:#FFCC33;
+}
+
+.mouseEncimaBarraAplicacionPrincipal { /* Evento over de la barra de aplicación del contenedor principal */
+	font-size:11px;
+	color:#000000;
+	font-family:Verdana;
+	text-decoration:underline;
+}
+
+.mouseFueraBarraAplicacionPrincipal { /* Evento out de la barra de aplicación del contenedor principal */
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+	text-decoration:none;
+}
+
+.barraNavegacionPrincipal { /* Barra de navegación del contenedor principal  */
+	height:20px;
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;
+	padding:3px;
+	background-color:#666666;
+	font-size:11px;
+	color:#FFFFFF;
+	font-family:Verdana;
+	text-decoration:none;
+	text-align:right;
+}
+
+.mouseEncimaBarraNavegacionPrincipal { /* Evento over de la barra de navegación del contenedor principal */
+	font-size:11px;
+	color:#FFFFFF;
+	font-family:Verdana;
+	text-decoration:underline;
+}
+
+.mouseFueraBarraNavegacionPrincipal { /* Evento out de la barra de navegación del contenedor principal */
+	font-size:11px;
+	color:#FFFFFF;
+	font-family:Verdana;
+	text-decoration:none;
+}
+
+.barraInferiorPrincipal 
+{ /* Barra inferior del contenedor principal*/
+	height:25px;
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;
+	background-color:#FFCC33;
+	font-family:Verdana;
+	font-size:11px;
+	color:#666666;
+	text-align:right;
+}
+
+.barraInferiorIdentificacion 
+{ /* Barra inferior del contenedor principal*/
+	height:25px;
+	background-color:#FFCC33;
+	font-family:Verdana;
+	font-size:11px;
+	color:#666666;
+	text-align:right;
+}
+
+.barraIzquierdaPrincipal { /* Barra izquierda del contenedor principal*/
+	width:100%;
+	height:100%;
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;		
+}
+
+.mouseEncimaBarraIzquierdaPrincipal { /* Evento over de la barra izquierda del contenedor principal */
+	font-size:11px;
+	color:#000000;
+	font-family:Verdana;
+	text-decoration:underline;
+}
+
+.mouseFueraBarraIzquierdarincipal { /* Evento out de la barra izquierda del contenedor principal */
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+	text-decoration:none;
+}
+
+/* Autor: Kerwin Arias        | F. creación: 09/04/2008 | Categoría: Objetos HTML          */
+/* ========================================================================================= */
+.formaHtml{ 
+	width:100%;
+	height:100%;
+}
+
+.formaHtmlGestionar{
+	margin:0px;
+}
+
+.formaHtmlCompleta{
+	width:100%;
+	height:100%;
+	margin:0px;
+}
+
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 10/09/2007 | Categoría: Contenedor Formulario */
+/* ========================================================================================= */
+
+.bordeContenedorForma{ /* Borde del formulario o forma */
+	width:100%;
+	height:100%;	
+}
+
+.bordeContenedorFormaComplemento
+{
+	border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.contenedorForma { /* Contenedor formulario o forma */
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;
+	background-color:#FFFFFF;	
+}
+
+.barraSuperiorForma { /* Barra superior de la forma */
+	height:25px;
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;
+	background-color:#FFCC33;
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+}
+
+.mouseEncimaBarraSuperiorForma { /* Evento over de la barra superior de la forma */
+	font-size:11px;
+	color:#000000;
+	font-family:Verdana;
+	text-decoration:underline;
+}
+
+.mouseFueraBarraSuperiorForma { /*  Evento out de la barra superior de la forma*/
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+	text-decoration:none;
+}
+
+.barraMenusForma { /* Barra de menús de la forma */
+	height:20px;
+	background-color:#666666;
+}
+
+.mouseEncimaBarraMenusForma { /* Evento over de la barra de menús de la forma */
+	font-size:11px;
+	color:#FFFFFF;
+	font-family:Verdana;
+	text-decoration:underline;
+}
+
+.mouseFueraBarraMenusForma { /* Evento over de la barra de menús de la forma */
+	font-size:11px;
+	color:#FFFFFF;
+	font-family:Verdana;
+	text-decoration:none;
+}
+
+.barraFiltrosForma { /* Barra de filtros de la forma */
+	background-color:#F3F3F3;
+	font-family:Verdana;
+	font-size:11px;
+	color:#666666;
+}
+
+.barraInferiorForma { /* Barra inferior de la forma */
+	height: 20px;
+	background-color: #666666;
+	text-align: right;
+	font-size: 11px;
+	color: #FFFFFF;
+	font-family: Verdana;
+	text-decoration: none;
+}
+
+.mouseEncimaBarraInferiorForma { /* Evento over de la barra inferior de la forma */
+	font-size:11px;
+	color:#FFFFFF;
+	font-family:Verdana;
+	text-decoration:underline;
+}
+
+.mouseFueraBarraInferiorForma { /* Evento over de la barra inferior de la forma */
+	font-size:11px;
+	color:#FFFFFF;
+	font-family:Verdana;
+	text-decoration:none;
+}
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 10/09/2007 | Categoría: List View */
+/* ============================================================================= */
+
+.listView { /* List view */	
+	font-size:11px;
+	color:#FFFFFF;
+	font-family:Verdana;
+	text-decoration:none;
+}
+
+.encabezadoListView { /* Encabezado del list view */
+	font-family:Verdana;
+	font-size:11;
+	color:#FFFFFF;
+	text-decoration:none;
+	background-color:#666666;	
+}
+
+.mouseFueraEncabezadoListView { /* Evento out del encabezado del list view */
+	font-family:Verdana;
+	font-size:11;
+	color:#FFFFFF;
+	text-decoration:none;	
+}
+
+.mouseEncimaEncabezadoListView { /* Evento over del encabezado del list view */
+	font-family:Verdana;
+	font-size:11;
+	color:#FFFFFF;
+	text-decoration:underline;
+}
+
+.mouseEncimaCuerpoListView { /* Evento over del cuerpo del list view */
+	font-family:Verdana;
+	font-size:11;
+	background-color:#F3F3F3;
+	cursor:pointer;
+	color:#666666;
+}
+
+.mouseFueraCuerpoListView { /* Evento out del cuerpo del list view */
+	font-family:Verdana;
+	font-size:11;
+	background-color:#FFFFFF;
+	color:#666666;
+}
+
+/* Agregado por: Kerwin Arias (05/03/2012) */
+.cuerpoListViewFilaSeleccionada { /* Fila seleccionada del cuerpo del list view */
+	font-family:Verdana;
+	font-size:11;
+	background-color:#FFFFCC;
+	color:#666666;
+}
+
+/* Agregado por: Kerwin Arias (05/03/2012) */
+.cuerpoListViewCeldaSeleccionadaError { /* Celda seleccionada con error */
+	font-family:Verdana;
+	font-size:11;
+	background-color:#FFFFCC;
+	color:#666666;
+}
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 10/09/2007 | Categoría: Tree View */
+/* ============================================================================= */
+
+.treeViewContenedor {
+	background-color:#FFFFFF;
+	font-family:Verdana;
+	font-size:11px;
+	color:#666666;	
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;	
+}
+
+.treeView {
+	background-color:#FFFFFF;
+	font-family:Verdana;
+	font-size:11px;
+	color:#666666;	
+}
+
+/* Estilo de nodo de treeview seleccionado (26/09/2012) */
+.treeViewSeleccionado {
+	background-color:#cccccc;
+	font-family:Verdana;
+	font-size:11px;
+	color:#666666;
+	font-weight: bold;	
+}
+
+.mouseEncimaCuerpoTreeView { /* Evento over del cuerpo del tree view */
+	background-color:#F3F3F3;
+	cursor:pointer;	
+	font-family:Verdana;
+	font-size:11px;
+	color:#666666;
+	text-decoration:none;	
+}
+
+.mouseFueraCuerpoTreeView { /* Evento out del cuerpo del tree view */
+	background-color:#FFFFFF;
+	color:#666666;
+	font-family:Verdana;
+	font-size:11px;
+	text-decoration:none;	
+}
+
+/* Autor: Kerwin Arias        | F. creación: 07/05/2008 | Categoría: Calendario     */
+/* ================================================================================== */
+
+.tablaCalendario {
+	background-color:#333333;
+}
+
+.encabezadoMesCalendario {
+	height:25px;
+	background-color:#FFCC33;
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+}
+
+.encabezadoAnoCalendario { 
+	height:25px;
+	background-color:#FFCC33;
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+}
+
+.encabezadoDiaSemanaCalendario { 
+	height:25px;
+	background-color:#666666;
+	font-size:11px;
+	color:#FFFFFF;
+	font-family:Verdana;
+}
+
+.diaSeleccionadoCalendario {
+	background-color:#DDDDFF;
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+}
+
+.finSemanaCalendario {
+	background-color:#DDFFDD;
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+}
+
+.diaLaborableCalendario {
+	background-color:#FFFFFF;
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+}
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 18/09/2007 | Categoría: Ficha de Datos */
+/* ================================================================================== */
+
+.bordeFichaDatos
+{ /* Borde de la ficha de datos */
+	font-family:Verdana;
+	font-size:11;
+	color:#666666;
+	text-decoration:none;
+}
+
+.formatoBarraInferior
+{	font-family:Verdana;
+	font-size:11;
+	color:#ffffff;
+	text-decoration:none;
+}
+
+.bordeFichaDatosIngreso{ /* Borde de la ficha de datos solo del JSP Ingreso*/
+	width:100%;
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;
+	font-family:Verdana;
+	font-size:11;
+	color:#666666;
+	text-decoration:none;
+}
+
+.trazaPila{ /* Traza de pila de error */
+	width:100%;	
+	font-family:Verdana;
+	font-size:11;
+	color:#666666;
+	text-decoration:none;
+	background:#F3F3F3;
+}
+
+.cuadroTexto { /* Cuadros de texto */
+	font-weight:normal;
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+	text-decoration:none;
+	border-style:solid;
+	border-width:1px;
+	border-color:#CCCCCC;	
+}
+
+.cuadroTextoTitle { /* Cuadros de texto */
+	font-weight:normal;
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+	text-decoration:none;
+}
+
+.cuadroCombinado { /* Cuadros combinados */
+	font-weight:normal;
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+	text-decoration:none;
+	border-style:solid;
+	border-width:1px;
+	border-color:#CCCCCC;
+}
+
+.contenedorBotonesSeleccion { /* Contenedores de los botones de selección multiple y simple */	
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;
+	font-family:Verdana;
+	font-size:11;
+	color:#666666;
+	text-decoration:none;
+}
+
+.contenedorTextoSeleccion { /* Contenedores de los botones de selección multiple y simple */	
+	font-family:Verdana;
+	font-size:11;
+	color:#666666;
+	text-decoration:none;
+}
+
+.botonSeleccionSimple { /* Botones de radio o selección simple */
+	border-color:#CCCCCC;
+}
+
+.botonSeleccionMultiple { /* Botones de selección múltiple */
+	border-color:#CCCCCC;
+}
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 05/11/2007 | Categoría: Paginador */
+/* ============================================================================= */
+
+.paginador{ /* Paginador */	
+	font-size:11px;
+	color:#FFFFFF;
+	font-family:Verdana;
+	text-decoration:none;
+}
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 16/04/2007 | Categoría: Generico */
+/* ============================================================================ */
+
+.barraTituloGenerica  {
+	background-color: #666666;	
+	font-size: 11px;
+	color: #FFFFFF;
+	font-family: Verdana;
+	text-decoration: none;	
+}
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 22/04/2008 | Categoría: Pestañas */
+/* ============================================================================ */
+
+
+.tabPestana {
+	font-size: 11px;
+	color: #666666;
+	font-family: Verdana;	
+	height: 20px;
+	border-style: solid;
+	border-width: 1px;
+	border-bottom-width:0px;
+	border-color: #666666;	
+	background-color:#FFFFFF;
+	cursor: pointer;
+	text-align: center;	
+}
+
+.tabPestanaSeleccionada {
+	font-size: 11px;
+	color: #FFFFFF;
+	font-family: Verdana;		
+	height: 20px;
+	font-weight:bold;
+	border-style: solid;
+	border-width: 1px;
+	border-bottom-width: 0px;
+	border-color: #666666;
+	background-color:#666666;
+	cursor: default;
+	text-align: center;
+}
+
+.tabPestanaBlanco {
+	font-size: 11px;
+	color: #FFFFFF;
+	font-family: Verdana;	
+	height: 20px;
+}
+
+.tabCuerpo {
+	font-family:Verdana;
+	font-size:11;
+	color:#666666;
+	text-decoration:none;		
+	border-style: solid;
+	border-width: 1px;
+	border-color: #666666;
+	height:100%;
+	width:100%;
+}
+
+.tabCuerpoSinBorde {
+	font-family:Verdana;
+	font-size:11;
+	color:#666666;
+	text-decoration:none;		
+	border-style: none;
+	height:100%;
+	width:100%;
+}
+
+.panelContenedor {
+	font-family:Verdana;
+	font-size:11;
+	color:#666666;
+	text-decoration:none;
+	border-style: none;
+	height:100%;
+	width:100%;
+	padding: 0px;
+}
+
+.panelContenedorTabla {
+	padding: 3px;
+	border-spacing: 0;
+    border-collapse: collapse;	
+}
+/* Autor: Kerwin Arias        | F. creación: 30/04/2008 | Categoría: Splits   */
+/* ============================================================================ */
+
+.panelSplit {
+	height: 100%;
+	border: 1px solid #808080;
+	padding: 0px;
+} 
+
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 07/11/2007 | Categoría: Menús */
+/* ========================================================================= */
+
+.botonMenu { /* Menú desplegable */
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #F3F3F3;
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-bottom-color: #F3F3F3;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-color: #F3F3F3;
+	background-color: #666666;
+	color: #FFFFFF;
+	font-family: Verdana;
+	font-size: 11px;
+	text-decoration:none;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+	cursor: pointer;
+	height:30px;
+}
+
+.botonMenuOver { /** Evento over sobre los menús */
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #F3F3F3;
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-bottom-color: #F3F3F3;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-color: #F3F3F3;
+	background-color: #666666;
+	color: #FFFFFF;
+	font-family: Verdana;
+	font-size: 11px;
+	text-decoration:underline;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+	cursor: pointer;
+	height:30px;
+}
+
+.botonMenuClick { /** Evento clic sobre los menús */
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #F3F3F3;
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-bottom-color: #F3F3F3;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-color: #F3F3F3;
+	background-color: #666666;
+	color: #FFFFFF;
+	font-family: Verdana;
+	font-size: 11px;
+	text-decoration:underline;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+	cursor: pointer;
+	height:30px;
+}
+
+.botonMenuDisabled {
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #F3F3F3;
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-bottom-color: #F3F3F3;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-color: #F3F3F3;
+	background-color: #999999;
+	color: #777777;
+	font-family: Verdana;
+	font-size: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+	cursor: pointer;
+	height:0px;	
+}
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 10/12/2007 | Categoría: Mensaje de la aplicción */
+/* =========================================================================================== */
+
+.mensajeInformativo { /* Mensaje Informativo */	
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;
+	background-color:#F3F3F3;	
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+	text-decoration:none;
+}
+
+.mensajeError { /*  Mensaje de Error */
+	border-style:solid;
+	border-width:1px;
+	border-color:#666666;
+	background-color:#F3F3F3;	
+	font-size:11px;
+	color:#666666;
+	font-family:Verdana;
+	text-decoration:none;
+}
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 10/12/2007 | Categoría: Calendario */
+/* ============================================================================== */
+
+.barraMeses { /*  */
+}
+
+.barraAnos { /*  */
+}
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 13/05/2008 | Categoría: Foro */
+/* ======================================================================== */
+
+.foro { /* Foro */	
+	font-family:Verdana;
+	font-size:11px;		
+	text-decoration:none;	
+	border-style:solid;	
+	border-width:1px;
+	border-color:#666666;	
+}
+
+.categoriaForo { /* Categoría o Separador */
+	font-family:Verdana;
+	font-size:11;	
+	color:#000000;
+	font-weight:bold;
+	text-decoration:none;	
+	height: 30px;
+	background-color:#CCCCCC;	
+}
+
+.encabezadoForo { /* Encabezado */
+	font-family:Verdana;
+	font-size:11;
+	color:#000000;
+	font-weight:bold;
+	text-decoration:none;	
+	height: 30px;
+	background-color:#FFFFEC;	
+}
+
+.cuerpoForo { /* Cuerpo */
+	font-family:Verdana;
+	font-size:11;
+	color:#000000;	
+	text-decoration:none;	
+	height: 30px;
+	background-color:#F3F3F3;	
+}
+
+.autorForo { /* Datos del Autor */
+	font-family:Verdana;
+	font-size:9;
+	color:#999999;	
+	text-decoration:none;		
+}
+
+.mouseEncimaCuerpoForo { /* Evento over de la barra inferior de la forma */
+	font-size:11px;
+	color:#000000;
+	font-family:Verdana;
+	text-decoration:underline;
+}
+
+.mouseFueraCuerpoForo { /* Evento over de la barra inferior de la forma */
+	font-size:11px;
+	color:#000000;
+	font-family:Verdana;
+	text-decoration:none;
+}
+
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 04/02/2009 | Categoría: Mediciones */
+/* ============================================================================== */
+
+.celdaMediciones { /* Evento over del cuerpo del list view */
+	font-family:Verdana;
+	font-size:11;
+	background-color:#F3F3F3;
+	color:#666666;
+}
+
+.celdaMedicionesProgramado { /* Evento over del cuerpo del list view */
+	font-family:Verdana;
+	font-size:11;
+	background-color: white;
+	color:#666666;
+}
+
+.celdaMedicionesError { /* Evento over del cuerpo del list view */
+	font-family:Verdana;
+	font-size:11;
+	background-color:#c1969c;
+	color:#666666;
+}
+
+.medicionProtegida { /* Cuadros de texto */
+	font-weight:normal;
+	font-size:11px;
+	color:#666666;
+	background-color: #CCCCCC;
+	font-family:Verdana;
+	text-decoration:none;
+	border-style:solid;
+	border-width:1px;
+	border-color:#CCCCCC;
+}
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 04/02/2009 | Categoría: Metas */
+/* ========================================================================= */
+
+.celdaMetas { /* Estilo a utilizar para las Metas */
+	font-family:Verdana;
+	font-size:11;
+	background-color:#F3F3F3;
+	color:#666666;
+}
+
+.metaProtegida { /* Estilo a utilizar cuando las Metas están Protegidas */
+	font-weight:normal;
+	font-size:11px;
+	color:#666666;
+	background-color: #CCCCCC;
+	font-family:Verdana;
+	text-decoration:none;
+	border-style:solid;
+	border-width:1px;
+	border-color:#CCCCCC;	
+}
+
+
+/* Autor: Genaro A. Bermúdez B. | F. creación: 15/10/2008 | Categoría: Gantt */
+/* ======================================================================== */
+
+.bordeEncabezadoGantt{ /* Borde de la tabla del encabezado del Gantt */
+	/** width:100%; */
+	border-style:solid; 
+	border-width:1px; 
+	border-color:#666666; 
+	font-family:Verdana;
+	font-size:11;
+	color:#666666;
+	text-decoration:none;
+	/** background:#F3F3F3; */
+}

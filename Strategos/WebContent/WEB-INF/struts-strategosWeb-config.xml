@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (14/07/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<!-- 
+			El forward home es llamado por el action Logon cuando el usuario se ha autenticado
+			de manera correcta. Por defecto, este forward apunta al action Administracion, que
+			muestra la página de administración del sistema. Esta página de administración
+			permite ejecutar funcionalidad de framework. Cuando se crea una aplicación, este
+			forward debe ser modificado para que apunta al action de Inicio del sistema.
+		-->
+		<forward name="home" path="/organizaciones/gestionarOrganizaciones.action" />
+		<forward name="configuracion" path="/framework/administracion.action" />
+	</global-forwards>
+
+	<!-- Definiciones: Message Resources -->
+	<message-resources parameter="MessageResourcesStrategosWeb" factory="com.visiongc.commons.struts.util.VgcPropertyMessageResourcesFactory" />	
+
+</struts-config>

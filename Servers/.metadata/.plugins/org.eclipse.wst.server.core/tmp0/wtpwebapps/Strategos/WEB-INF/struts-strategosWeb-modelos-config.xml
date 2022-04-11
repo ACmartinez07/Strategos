@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (17/12/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean    -->
+	<form-beans>
+		<form-bean name="editarModeloForm" type="com.visiongc.app.strategos.web.struts.planes.modelos.forms.EditarModeloForm" />
+		<form-bean name="gestionarModelosForm" type="com.visiongc.app.strategos.web.struts.planes.modelos.forms.GestionarModelosForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarModelo" path="/paginas/strategos/planes/modelos/editarModelo.jsp" />
+		<forward name="gestionarModelos" path="/paginas/strategos/planes/modelos/gestionarModelos.jsp" />
+		<forward name="seleccionarModelo" path="/paginas/strategos/planes/modelos/seleccionarModelo.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+		<!-- Mapeo del Action: Gestionar Modelos -->
+		<action path="/planes/modelos/gestionarModelos" type="com.visiongc.app.strategos.web.struts.planes.modelos.actions.GestionarModelosAction" scope="session" name="gestionarModelosForm" parameter="gestionarModelos"></action>
+
+		<!-- Mapeo del Action: Generar Reporte de Alertas -->
+		<action path="/planes/modelos/imprimirModelos" type="com.visiongc.app.strategos.web.struts.planes.modelos.actions.ReporteModelosAction"></action>
+
+		<!-- Mapeo del Action: Editar Modelo-->
+		<action path="/planes/modelos/editarModelo" type="com.visiongc.app.strategos.web.struts.planes.modelos.actions.EditarModeloAction" scope="request" name="editarModeloForm" parameter="editarModelo"></action>
+
+		<!-- Mapeo del Action: Guardar Modelo-->
+		<action path="/planes/modelos/guardarModelo" type="com.visiongc.app.strategos.web.struts.planes.modelos.actions.GuardarModeloAction" name="editarModeloForm" scope="request" input="editarModelo" validate="true" parameter="editarModelo">
+		<forward name="editarModelo" path="/planes/modelos/editarModelo.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Modelo -->
+		<action path="/planes/modelos/cancelarGuardarModelo" type="com.visiongc.app.strategos.web.struts.planes.modelos.actions.GuardarModeloAction" name="editarModeloForm" scope="request" parameter="editarModelo"></action>
+		
+		<!-- Mapeo del Action: Eliminar Modelo -->
+		<action path="/planes/modelos/eliminarModelo" type="com.visiongc.app.strategos.web.struts.planes.modelos.actions.EliminarModeloAction"></action>
+		
+		<!-- Mapeo del Action: Lista Modelos -->
+		<action path="/planes/modelos/listaModelo" type="com.visiongc.app.strategos.web.struts.planes.modelos.actions.GestionarModelosAction" name="gestionarModelosForm" scope="session" parameter="seleccionarModelo"></action>
+	</action-mappings>
+
+</struts-config>

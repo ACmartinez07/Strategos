@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+	<!-- Descripción: Mapeo de un objeto Plomemas de la Base de Datos -->
+	<!-- Modificado por: Kerwin Arias (01/10/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.portafolios.model.Portafolio" table="portafolio">
+
+		<!-- Atributo clave de Problemas -->
+		<id name="id" type="java.lang.Long" column="id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para Problemas -->
+		<property name="organizacionId" type="java.lang.Long" column="organizacion_id" />
+		<property name="nombre" type="java.lang.String" column="nombre" />
+		<property name="activo" type="java.lang.Byte" column="activo" />
+		<property name="porcentajeCompletado" type="java.lang.Double" column="porcentaje_completado" />
+		<property name="estatusId" type="java.lang.Long" column="estatusId" />
+		<property name="frecuencia" type="java.lang.Byte" column="frecuencia" />
+		<property name="claseId" type="java.lang.Long" column="clase_id" />
+		<property name="fechaUltimoCalculo" type="java.lang.String" column="fecha_ultimo_calculo" />
+				
+		<!-- Asociación uno a uno para organizacion -->
+		<many-to-one name="organizacion" class="com.visiongc.app.strategos.organizaciones.model.OrganizacionStrategos" column="organizacion_id" unique="true" insert="false" update="false"></many-to-one>
+		
+		<!-- Asociación uno a uno para Estatus -->
+		<many-to-one name="estatus" class="com.visiongc.app.strategos.iniciativas.model.util.IniciativaEstatus" lazy="false" fetch="join" column="estatusId" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para la Clase -->
+		<many-to-one name="clase" class="com.visiongc.app.strategos.indicadores.model.ClaseIndicadores" insert="false" update="false" column="clase_id" not-null="false" lazy="false"></many-to-one>
+						
+		<!-- bi-directional one-to-many association to Pagina -->
+		<set name="paginas" lazy="true" inverse="true" order-by="numero" cascade="persist, merge, save-update, delete, delete-orphan">
+			<key not-null="true" column="portafolioId" />
+			<one-to-many class="com.visiongc.app.strategos.presentaciones.model.Pagina" />
+		</set>
+		
+		<!-- Asociación uno a muchos para PortafolioIndicadores -->
+		<set name="portafolioIndicadores" fetch="select" lazy="true" inverse="true" cascade="none">
+			<key>
+				<column name="portafolioId" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.portafolios.model.IndicadorPortafolio" />
+		</set>
+	</class>
+
+</hibernate-mapping>

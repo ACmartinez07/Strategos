@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (20/10/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="editarEstadoAccionesForm" type="com.visiongc.app.strategos.web.struts.estadosacciones.forms.EditarEstadoAccionesForm" />
+		<form-bean name="gestionarEstadosAccionesForm" type="com.visiongc.app.strategos.web.struts.estadosacciones.forms.GestionarEstadosAccionesForm" />
+		<form-bean name="seleccionarEstadosAccionesForm" type="com.visiongc.framework.web.struts.forms.SelectorListaForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarEstadoAcciones" path="/paginas/strategos/estadosacciones/editarEstadoAcciones.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Estados de Acciones -->
+		<action path="/estadosacciones/gestionarEstadosAcciones" type="com.visiongc.app.strategos.web.struts.estadosacciones.actions.GestionarEstadosAccionesAction" scope="session" name="gestionarEstadosAccionesForm" parameter="gestionarEstadosAcciones">
+			<forward name="gestionarEstadosAcciones" path="/paginas/strategos/estadosacciones/gestionarEstadosAcciones.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Estados de Acciones -->
+		<action path="/estadosacciones/crearEstadoAcciones" type="com.visiongc.app.strategos.web.struts.estadosacciones.actions.EditarEstadoAccionesAction" scope="request" name="editarEstadoAccionesForm" parameter="editarEstadoAcciones"></action>
+
+		<!-- Mapeo del Action: Modificar Estados de Acciones -->
+		<action path="/estadosacciones/modificarEstadoAcciones" type="com.visiongc.app.strategos.web.struts.estadosacciones.actions.EditarEstadoAccionesAction" scope="request" name="editarEstadoAccionesForm" parameter="editarEstadoAcciones"></action>
+
+		<!-- Mapeo del Action: Guardar Estados de Acciones -->
+		<action path="/estadosacciones/guardarEstadoAcciones" type="com.visiongc.app.strategos.web.struts.estadosacciones.actions.GuardarEstadoAccionesAction" name="editarEstadoAccionesForm" scope="request" input="editarEstadoAcciones" validate="true" parameter="editarEstadoAcciones">
+			<forward name="crearEstadoAcciones" path="/estadosacciones/crearEstadoAcciones.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Estados de Acciones -->
+		<action path="/estadosacciones/cancelarGuardarEstadoAcciones" type="com.visiongc.app.strategos.web.struts.estadosacciones.actions.GuardarEstadoAccionesAction" name="editarEstadoAccionesForm" scope="request" parameter="editarEstadoAcciones"></action>
+
+		<!-- Mapeo del Action: Eliminar Estados de Acciones -->
+		<action path="/estadosacciones/eliminarEstadoAcciones" type="com.visiongc.app.strategos.web.struts.estadosacciones.actions.EliminarEstadoAccionesAction"></action>
+
+		<!-- Mapeo del Action: Mover Estado de Acción (Arriba o Abajo) -->
+		<action path="/estadosacciones/cambiarOrdenEstadoAcciones" type="com.visiongc.app.strategos.web.struts.estadosacciones.actions.CambiarOrdenEstadoAccionesAction"></action>
+
+		<!-- Mapeo del Action: Seleccionar Estados de Acciones -->
+		<action path="/estadosacciones/seleccionarEstadosAcciones" type="com.visiongc.app.strategos.web.struts.estadosacciones.actions.SeleccionarEstadosAccionesAction" scope="request" name="seleccionarEstadosAccionesForm" parameter="seleccionarEstadosAcciones">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarEstadosAcciones" path="/paginas/strategos/estadosacciones/seleccionarEstadosAcciones.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Generar Reporte Responsables-->
+		<action path="/estadosacciones/generarReporteEstadosAcciones" type="com.visiongc.app.strategos.web.struts.estadosacciones.actions.ReporteEstadoAccionesAction"></action>
+
+	</action-mappings>
+
+</struts-config>

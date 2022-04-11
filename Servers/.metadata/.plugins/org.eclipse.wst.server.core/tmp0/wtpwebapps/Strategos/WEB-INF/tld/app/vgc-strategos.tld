@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib
+        PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+        "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<!-- Creado por: Kerwin Arias (28/05/2012) -->
+
+<taglib>
+	<tlib-version>1.0.0.0</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>vgc-strategos</short-name>
+	<uri>http://www.visiongc.net</uri>
+	<description>Libreria de tags de strategos (22/08/2012)</description>
+
+	<tag>
+		<name>nombrePeriodoMedicion</name>
+		<tag-class>com.visiongc.app.strategos.web.struts.taglib.NombrePeriodoMedicionTag</tag-class>
+		<body-content>JSP</body-content>
+		<description>Escribe el nombre de un período con su año de una medición</description>
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>frecuencia</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>imagenAlertaIndicador</name>
+		<tag-class>com.visiongc.app.strategos.web.struts.taglib.ImagenAlertaIndicadorTag</tag-class>
+		<body-content>empty</body-content>
+		<description>Agrega una imagen HTML de la alerta de un Indicador</description>
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>property</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>imagenAlertaObjetivo</name>
+		<tag-class>com.visiongc.app.strategos.web.struts.taglib.ImagenAlertaObjetivoTag</tag-class>
+		<body-content>empty</body-content>
+		<description>Agrega una imagen HTML de la alerta de un Objetivo</description>
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>property</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>imagenAlertaIniciativa</name>
+		<tag-class>com.visiongc.app.strategos.web.struts.taglib.ImagenAlertaIniciativaTag</tag-class>
+		<body-content>empty</body-content>
+		<description>Agrega una imagen HTML de la alerta de un Iniciativa</description>
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>property</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>imagenHistoricoIniciativa</name>
+		<tag-class>com.visiongc.app.strategos.web.struts.taglib.ImagenHistoricoIniciativaTag</tag-class>
+		<body-content>empty</body-content>
+		<description>Agrega una imagen HTML de historico de un Iniciativa</description>
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>property</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>imagenTrueFalseTag</name>
+		<tag-class>com.visiongc.app.strategos.web.struts.taglib.ImagenTrueFalseTag</tag-class>
+		<body-content>empty</body-content>
+		<description>Agrega una imagen HTML de si o no, true o false de un objeto</description>
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>property</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>imagenRelacion</name>
+		<tag-class>com.visiongc.app.strategos.web.struts.taglib.ImagenRelacionTag</tag-class>
+		<body-content>empty</body-content>
+		<description>Agrega una imagen HTML de la relacion</description>
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>property</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>imagenAlertaProducto</name>
+		<tag-class>com.visiongc.app.strategos.web.struts.taglib.ImagenAlertaProductoTag</tag-class>
+		<body-content>empty</body-content>
+		<description>Agrega una imagen HTML de la alerta de un Producto de seguimiento de Producto</description>
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>property</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+	
+	<tag>
+		<name>imagenActivoPortafolio</name>
+		<tag-class>com.visiongc.app.strategos.web.struts.taglib.ImagenActivoPortafolioTag</tag-class>
+		<body-content>empty</body-content>
+		<description>Agrega una imagen HTML de activo o inactivo de un Portafolio</description>
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>property</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+</taglib>

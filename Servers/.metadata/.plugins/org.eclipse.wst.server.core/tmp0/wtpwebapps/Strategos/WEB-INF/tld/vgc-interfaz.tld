@@ -1,0 +1,1265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<!-- Creado por: Kerwin Arias (11/03/2012) -->
+<!-- Modificado por: Kerwin Arias (30/07/2012) -->
+
+<taglib>
+	<tlibversion>1.0.0.0</tlibversion>
+	<jspversion>1.2</jspversion>
+	<shortname>vgc-interfaz</shortname>
+	<uri>http://www.visiongc.net</uri>
+	<info>Libreria de tags de objetos de interfaz Vision GC (19/01/2012)</info>
+
+	<tag>
+		<name>boton</name>
+		<tagclass>com.visiongc.commons.struts.tag.BotonTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Genera un botón en formato HTML</info>
+
+		<attribute>
+			<name>bundle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>key</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>locale</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>onclick</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>permisoId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>aplicaOrganizacion</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>icon</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>useImage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<!-- Modificado por: Kerwin Arias (31/03/2012) -->
+	<tag>
+		<name>menuBotones</name>
+		<tagclass>com.visiongc.commons.struts.tag.MenuBotonesTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un menú de botones en formato HTML</info>
+
+		<attribute>
+			<name>bundle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>locale</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>key</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<!-- Agregado por: Kerwin Arias (14/11/2012) -->
+	<tag>
+		<name>menuAnidado</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.MenuAnidadoTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un menú anidado de botones dentro de otro menú en formato HTML</info>
+
+		<attribute>
+			<name>bundle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>locale</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>key</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>agregarSeparador</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<!-- Modificado por: Kerwin Arias (08/04/2012) -->
+	<tag>
+		<name>botonMenu</name>
+		<tagclass>com.visiongc.commons.struts.tag.BotonMenuTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un botón de Menú en formato HTML</info>
+
+		<attribute>
+			<name>arg0</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>arg1</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>arg2</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>arg3</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>arg4</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>bundle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>locale</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>key</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>onclick</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>permisoId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>aplicaOrganizacion</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>icon</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>agregarSeparador</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>contenedorForma</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ContenedorFormaTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un contenedor de forma en formato HTML</info>
+
+		<attribute>
+			<name>bundle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>idHtml</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>idContenedor</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>bodyWidth</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>bodyHeight</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>bodyAlign</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>bodyValign</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>bodyCellpadding</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>mostrarBarraSuperior</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>esSelector</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>comandoAceptarSelector</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>comandoCancelarSelector</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>locale</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>marginTop</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>marginLeft</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>marginBottom</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>marginRight</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>scrolling</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>contenedorFormaTitulo</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ContenedorFormaTituloTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un título de un contenedor de forma</info>
+
+		<attribute>
+			<name>nombre</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>contenedorFormaBotonActualizar</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ContenedorFormaBotonActualizarTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un botón de actualización de contenido de un contenedor de forma</info>
+	</tag>
+	<tag>
+		<name>contenedorFormaBotonAyuda</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ContenedorFormaBotonAyudaTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un botón de ayuda de un contenedor de forma</info>
+	</tag>
+	<tag>
+		<name>contenedorFormaBotonRegresar</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ContenedorFormaBotonRegresarTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un botón para regresar a una pantalla anterior de un contenedor de forma</info>
+	</tag>
+	<tag>
+		<name>contenedorFormaBarraMenus</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ContenedorFormaBarraMenusTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el contenido de la barra de menus de un contenedor de forma</info>
+	</tag>
+	<tag>
+		<name>contenedorFormaBarraGenerica</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ContenedorFormaBarraGenericaTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el contenido de una barra genérica de un contenedor de forma</info>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>contenedorFormaPaginador</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ContenedorFormaPaginadorTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el contenido de un paginador en la barra inferior de un contenedor de forma</info>
+	</tag>
+	<tag>
+		<name>contenedorFormaBarraInferior</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ContenedorFormaBarraInferiorTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el contenido de la barra inferior de un contenedor de forma</info>
+
+		<attribute>
+			<name>idBarraInferior</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>contenedorMenuHorizontal</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ContenedorMenuHorizontalTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el contenido de un contenedor de menus horizontales</info>
+	</tag>
+
+	<tag>
+		<name>contenedorMenuHorizontalItem</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ContenedorMenuHorizontalItemTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el espacio para contener un menú de botones</info>
+
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>contenedorPaneles</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ContenedorPanelesTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un contenedor de Paneles en formato HTML</info>
+
+		<attribute>
+			<name>nombre</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>width</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>height</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>mostrarSelectoresPaneles</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nroSelectoresPorFila</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>panelContenedor</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.PanelContenedorTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un Panel de contenedor de Paneles en formato HTML</info>
+
+		<attribute>
+			<name>nombre</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>anchoPestana</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>titulo</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>mostrarBorde</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>panelContenedorTitulo</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.PanelContenedorTituloTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un Título de Panel de contenedor de Paneles en formato HTML</info>
+
+	</tag>
+
+	<tag>
+		<name>mostrarPanelContenedorJs</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.MostrarPanelContenedorJsTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Genera una llamada de función Javascript que muestra un Panel de un Contenedor</info>
+
+		<attribute>
+			<name>nombreContenedor</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nombrePanel</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>barraAreas</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.BarraAreasTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera una barra de areas en formato HTML</info>
+
+		<attribute>
+			<name>nombre</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>width</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>botonBarraAreas</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.BotonBarraAreasTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un Botón de Barra de Areas en formato HTML</info>
+
+		<attribute>
+			<name>nombre</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>urlImage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>titulo</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>agregarSeparador</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>permisoId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>aplicaOrganizacion</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>setFocoObjetoInterfaz</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.SetFocoObjetoInterfazTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Genera una función javascript que setea el foco en un objeto de interfaz</info>
+
+		<attribute>
+			<name>objetoInputHtml</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>queryStringConfSplitHorizontal</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.QueryStringConfSplitHorizontalTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Escribe el QueryString de Configuración de un split horizontal</info>
+
+		<attribute>
+			<name>splitId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>primerParametro</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>visorLista</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.VisorListaTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un visor tipo lista en formato HTML</info>
+
+		<attribute>
+			<name>idVisorLista</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nombre</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nombreConfiguracionBase</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>namePaginaLista</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>scopePaginaLista</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>propertyPaginaLista</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>messageKeyNoElementos</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>useFrame</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>esSelector</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>seleccionSimple</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>seleccionMultiple</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nombreForma</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nombreCampoSeleccionados</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nombreCampoValores</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>columnaVisorLista</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ColumnaVisorListaTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera una columna de un visor tipo lista en formato HTML</info>
+
+		<attribute>
+			<name>nombre</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>align</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>titulo</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>columnaAccionesVisorLista</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ColumnaAccionesVisorListaTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera una columna de acciones de un visor tipo lista en formato HTML</info>
+
+		<attribute>
+			<name>align</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>width</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>titulo</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>filasVisorLista</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.FilasVisorListaTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera una lista de filas en un visor tipo lista en formato HTML</info>
+
+		<attribute>
+			<name>nombreObjeto</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>accionVisorLista</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.AccionVisorListaTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera una celda de acción de un visor tipo lista en formato HTML</info>
+
+		<attribute>
+			<name>permisoId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>aplicaOrganizacion</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>align</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>urlImage</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>titulo</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>accionTituloVisorLista</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.AccionTituloVisorListaTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el título de una celda de acción de un visor tipo lista en formato HTML</info>
+	</tag>
+
+	<tag>
+		<name>visorListaFilaEventoOnclick</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.visorlista.VisorListaFilaEventoOnclickTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el código del evento onclick de una fila de un visor lista</info>
+	</tag>
+
+	<tag>
+		<name>visorListaFilaEventoDoubleclick</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.visorlista.VisorListaFilaEventoDoubleclickTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el código del evento ondblclick de una fila de un visor lista</info>
+	</tag>
+
+	<tag>
+		<name>visorListaFilaEventoOnmouseout</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.visorlista.VisorListaFilaEventoOnmouseoutTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el código del evento onmouseout de una fila de un visor lista</info>
+	</tag>
+
+	<tag>
+		<name>visorListaFilaEventoOnmouseover</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.visorlista.VisorListaFilaEventoOnmouseoverTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el código del evento onmouseover de una fila de un visor lista</info>
+	</tag>
+
+	<tag>
+		<name>visorListaFilaId</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.visorlista.VisorListaFilaIdTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el valor de id de una fila de un visor lista</info>
+	</tag>
+
+	<tag>
+		<name>visorListaValorFilaColumnaId</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.visorlista.VisorListaValorFilaColumnaIdTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el valor de id de un valor de fila columna de un visor lista</info>
+	</tag>
+
+	<tag>
+		<name>valorFilaColumnaVisorLista</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ValorFilaColumnaVisorListaTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el valor de una fila en una columna de un visor tipo lista en formato HTML</info>
+
+		<attribute>
+			<name>nombre</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>align</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>esValorSelector</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>splitterHorizontal</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.SplitterHorizontalTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un splitter horizontal en formato HTML</info>
+
+		<attribute>
+			<name>splitterId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>anchoPorDefecto</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>overflowPanelIzquierdo</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>overflowPanelDerecho</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>splitterHorizontalPanelIzquierdo</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.SplitterHorizontalPanelIzquierdoTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el contenido del panel izquierdo de un splitter horizontal en formato HTML</info>
+
+		<attribute>
+			<name>splitterId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>splitterHorizontalPanelDerecho</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.SplitterHorizontalPanelDerechoTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el contenido del panel derecho de un splitter horizontal en formato HTML</info>
+
+		<attribute>
+			<name>splitterId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>visorListaColumnaSeleccion</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.VisorListaColumnaSeleccionTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Genera una columna de selección de elementos en un visor lista en formato HTML</info>
+
+		<attribute>
+			<name>align</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nombreFormaHtml</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nombreCampoObjetoId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>visorListaValorSeleccion</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.VisorListaValorSeleccionTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el Valor de Selección de un elemento en un visor de lista en formato HTML</info>
+
+	</tag>
+
+	<tag>
+		<name>splitterVertical</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.SplitterVerticalTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un splitter vertical en formato HTML</info>
+
+		<attribute>
+			<name>splitterId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>altoPorDefecto</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>overflowPanelSuperior</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>overflowPanelInferior</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>splitterVerticalPanelSuperior</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.SplitterVerticalPanelSuperiorTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el contenido del panel superior de un splitter vertical en formato HTML</info>
+
+		<attribute>
+			<name>splitterId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>splitterVerticalPanelInferior</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.SplitterVerticalPanelInferiorTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el contenido del panel inferior de un splitter vertical en formato HTML</info>
+
+		<attribute>
+			<name>splitterId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>barraHerramientas</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.BarraHerramientasTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera una barra de herramientas en formato HTML</info>
+
+		<attribute>
+			<name>nombre</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>agregarSeparadorSuperior</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>agregarSeparadorInferior</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>backgroundClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>barraHerramientasBoton</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.BarraHerramientasBotonTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un Botón de Barra de Herramientas en formato HTML</info>
+
+		<attribute>
+			<name>nombre</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>pathImagenes</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nombreImagen</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>titulo</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>permisoId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>aplicaOrganizacion</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>barraHerramientasBotonVisibilidadJs</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.BarraHerramientasBotonVisibilidadJsTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Modifica la visibilidad de un Botón de Barra de Herramientas en formato HTML</info>
+
+		<attribute>
+			<name>nombreBarra</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nombreBoton</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>display</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>barraHerramientasBotonTitulo</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.BarraHerramientasBotonTituloTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera el título de un botón de barra de herramientas en formato HTML</info>
+
+	</tag>
+
+	<tag>
+		<name>barraHerramientasSeparador</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.BarraHerramientasSeparadorTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Genera un separador de botones de barra de herramientas en formato HTML</info>
+		
+		<attribute>
+			<name>tipo</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>barraHerramientasEspacio</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.BarraHerramientasEspacioTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un Espacio en una Barra de Herramientas en formato HTML</info>
+
+		<attribute>
+			<name>ancho</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>contenedorTamanoFijo</name>
+		<tagclass>com.visiongc.framework.web.struts.taglib.interfaz.ContenedorTamanoFijoTag</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>Genera un contenedor de tamano fijo con barras de scrolling en formato HTML</info>
+
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+</taglib>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+	<!-- Modificado por: Kerwin Arias (13/06/2013) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarAlertasForm" type="com.visiongc.framework.web.struts.alertas.forms.GestionarAlertasForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="gestionarAlertas" path="/paginas/strategos/alertas/gestionarAlertas.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+		<!-- Mapeo del Action: Gestionar Alertas -->
+		<action path="/alertas/gestionarAlertas" type="com.visiongc.framework.web.struts.alertas.actions.GestionarAlertasAction" scope="session" name="gestionarAlertasForm" parameter="gestionarAlertas"></action>
+		
+		<!-- Mapeo del Action: Modificar Alertas -->
+		<action path="/alertas/salvarAlertas" type="com.visiongc.framework.web.struts.alertas.actions.SalvarAlertasAction"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte de Alertas -->
+		<action path="/alertas/generarReporteAlertas" type="com.visiongc.framework.web.struts.alertas.actions.ReporteAlertasAction"></action>
+	</action-mappings>
+</struts-config>

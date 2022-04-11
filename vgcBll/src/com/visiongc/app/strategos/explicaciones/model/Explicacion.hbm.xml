@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripci��n: Mapeo de un objeto Explicacion de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (27/11/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.explicaciones.model.Explicacion" table="explicacion">
+
+		<!-- Atributo clave de Explicaciones -->
+		<id name="explicacionId" type="java.lang.Long" column="explicacion_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para Explicaciones -->
+		<property name="titulo" type="java.lang.String" column="titulo" />
+		<property name="fecha" type="java.util.Date" column="fecha" />
+		<property name="creado" type="java.util.Date" column="creado" />
+		<property name="creadoId" type="java.lang.Long" column="creado_id" />
+		<property name="objetoKey" type="java.lang.Byte" column="objeto_key" />
+		<property name="objetoId" type="java.lang.Long" column="objeto_id" />
+		<property name="tipo" type="java.lang.Integer" column="tipo" />
+		<property name="fechaCompromiso" type="java.util.Date" column="fecha_compromiso" />
+		<property name="fechaReal" type="java.util.Date" column="fecha_real" />
+		<property name="publico" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="publico" />
+
+		<!-- Asociaci��n uno a uno hacia Usuario -->
+		<many-to-one name="usuarioCreado" class="com.visiongc.framework.model.Usuario" column="creado_id" unique="true" insert="false" update="false" lazy="false"></many-to-one>
+
+		<!-- Asociaci��n uno a muchos para MemoExplicacion -->
+		<set name="memosExplicacion" fetch="select" lazy="true" inverse="true" cascade="persist, merge, save-update, delete, delete-orphan">
+			<key>
+				<column name="explicacion_id" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.explicaciones.model.MemoExplicacion" />
+		</set>
+
+		<!-- Asociaci��n uno a muchos para AdjuntoExplicacion -->
+		<set name="adjuntosExplicacion" order-by="adjunto_id" lazy="true" inverse="true" fetch="select" cascade="delete, delete-orphan">
+			<key>
+				<column name="explicacion_id" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.explicaciones.model.AdjuntoExplicacion" />
+		</set>
+
+	</class>
+
+</hibernate-mapping>

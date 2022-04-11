@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Modificado por: Kerwin Arias (28/08/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.framework.model.Sistema" table="afw_sistema">
+		<id name="sistemaId" type="java.lang.Long" column="id">
+			<generator class="assigned" />
+		</id>
+
+		<property name="producto" type="java.lang.String" column="producto" length="50" />
+		<property name="version" type="java.lang.String" column="version" length="20" />
+		<property name="build" type="java.lang.Long" column="build" />
+		<property name="fecha" type="java.sql.Timestamp" column="fecha" length="8" />
+		<property name="rdbmsId" type="java.lang.String" column="rdbms_id" length="20" />
+		<property name="cmaxc" type="java.lang.String" column="cmaxc" length="1000" />
+		<property name="actual" type="java.lang.String" column="actual" length="50" />
+	</class>
+</hibernate-mapping>

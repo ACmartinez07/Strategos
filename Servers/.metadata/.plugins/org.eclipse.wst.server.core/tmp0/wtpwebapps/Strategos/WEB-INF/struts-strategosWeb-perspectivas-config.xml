@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+	<!-- Modificado por: Kerwin Arias (17/09/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="editarPerspectivaForm" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.forms.EditarPerspectivaForm" />
+		<form-bean name="gestionarPerspectivasForm" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.forms.GestionarPerspectivasForm" />
+		<form-bean name="seleccionarPerspectivasForm" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.forms.SeleccionarPerspectivasForm" />
+		<form-bean name="visualizarPerspectivasForm" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.forms.VisualizarPerspectivasForm" />
+		<form-bean name="visualizarPerspectivaForm" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.forms.VisualizarPerspectivaForm" />
+		<form-bean name="trasladarMetasForm" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.forms.TrasladarMetasForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarPerspectiva" path="/paginas/strategos/planes/perspectivas/editarPerspectiva.jsp" />
+		<forward name="gestionarPerspectivasAction" path="/planes/perspectivas/gestionarPerspectivas.action" />
+		<forward name="visualizarPerspectivasAction" path="/planes/perspectivas/visualizarPerspectivas.action" />
+		<forward name="visualizarPerspectivaAction" path="/planes/perspectivas/visualizarPerspectiva.action" />
+		<forward name="copiarPerspectiva" path="/paginas/strategos/planes/perspectivas/copiarPerspectiva.jsp" />
+		<forward name="visualizarPerspectivasRelacionadas" path="/paginas/strategos/planes/perspectivas/visualizarPerspectivasRelacionadas.jsp" />
+		<forward name="trasladarMetas" path="/paginas/strategos/planes/perspectivas/trasladarMetas.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Perspectivas -->
+		<action path="/planes/perspectivas/gestionarPerspectivas" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.GestionarPerspectivasAction" scope="session" name="gestionarPerspectivasForm" parameter="gestionarIndicadoresPlanAction">
+			<forward name="gestionarIndicadoresPlanAction" path="/planes/indicadores/gestionarIndicadoresPlan.action" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Perspectiva -->
+		<action path="/planes/perspectivas/crearPerspectiva" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.EditarPerspectivaAction" scope="request" name="editarPerspectivaForm" parameter="editarPerspectiva"></action>
+
+		<!-- Mapeo del Action: Modificar Perspectiva -->
+		<action path="/planes/perspectivas/modificarPerspectiva" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.EditarPerspectivaAction" scope="request" name="editarPerspectivaForm" parameter="editarPerspectiva"></action>
+
+		<!-- Mapeo del Action: Ver Perspectiva -->
+		<action path="/planes/perspectivas/verPerspectiva" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.EditarPerspectivaAction" scope="request" name="editarPerspectivaForm" parameter="editarPerspectiva"></action>
+
+		<!-- Mapeo del Action: Guardar Perspectiva -->
+		<action path="/planes/perspectivas/guardarPerspectiva" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.GuardarPerspectivaAction" name="editarPerspectivaForm" scope="request" input="editarPerspectiva" validate="true" parameter="editarPerspectiva">
+			<forward name="crearPerspectiva" path="/planes/perspectivas/crearPerspectiva.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Perspectiva -->
+		<action path="/planes/perspectivas/cancelarGuardarPerspectiva" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.GuardarPerspectivaAction" name="editarPerspectivaForm" scope="request" parameter="editarPerspectiva"></action>
+
+		<!-- Mapeo del Action: Eliminar Perspectiva -->
+		<action path="/planes/perspectivas/eliminarPerspectiva" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.EliminarPerspectivaAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte de Perspectivas -->
+		<action path="/planes/perspectivas/generarReportePerspectivas" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.ReportePerspectivasAction"></action>
+
+		<!-- Mapeo del Action: Propiedades Perspectiva -->
+		<action path="/planes/perspectivas/propiedadesPerspectiva" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.MostrarPropiedadesPerspectivaAction" name="editarPerspectivaForm" scope="request" parameter="propiedadesPerspectiva">
+			<forward name="propiedadesPerspectiva" path="/paginas/strategos/planes/perspectivas/propiedadesPerspectiva.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Perspectivas -->
+		<action path="/planes/perspectivas/seleccionarPerspectivas" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.SeleccionarPerspectivasAction" scope="session" name="seleccionarPerspectivasForm" parameter="seleccionarPerspectivasOrganizacionesAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarPerspectivasOrganizacionesAction" path="/planes/perspectivas/seleccionarPerspectivasOrganizaciones.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Perspectivas Organizaciones -->
+		<action path="/planes/perspectivas/seleccionarPerspectivasOrganizaciones" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.SeleccionarPerspectivasOrganizacionesAction" scope="session" name="seleccionarPerspectivasForm" parameter="seleccionarPerspectivasPlanesAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarPerspectivasPlanesAction" path="/planes/perspectivas/seleccionarPerspectivasPlanes.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Perspectivas Planes -->
+		<action path="/planes/perspectivas/seleccionarPerspectivasPlanes" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.SeleccionarPerspectivasPlanesAction" scope="session" name="seleccionarPerspectivasForm" parameter="seleccionarPerspectivasPerspectivasAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarPerspectivasPerspectivasAction" path="/planes/perspectivas/seleccionarPerspectivasPerspectivas.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Perspectivas Perspectivas -->
+		<action path="/planes/perspectivas/seleccionarPerspectivasPerspectivas" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.SeleccionarPerspectivasPerspectivasAction" scope="session" name="seleccionarPerspectivasForm" parameter="seleccionarPerspectivas">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarPerspectivas" path="/paginas/strategos/planes/perspectivas/seleccionarPerspectivas.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Visualizar Perspectivas -->
+		<action path="/planes/perspectivas/visualizarPerspectivas" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.VisualizarPerspectivasAction" scope="session" name="visualizarPerspectivasForm" parameter="visualizarPlan"></action>
+
+		<!-- Mapeo del Action: Visualizar Perspectiva -->
+		<action path="/planes/perspectivas/visualizarPerspectiva" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.VisualizarPerspectivaAction" scope="request" name="visualizarPerspectivaForm" parameter="visualizarPerspectiva">
+			<forward name="visualizarPerspectiva" path="/paginas/strategos/planes/perspectivas/visualizarPerspectiva.jsp" />
+		</action>
+		
+		<!-- Mapeo del Action: Leer Perpectiva -->
+		<action path="/planes/perspectivas/copiarLeerPerspectiva" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.EditarPerspectivaAction" name="editarPerspectivaForm" scope="request" parameter="copiarPerspectiva"></action>
+
+		<!-- Mapeo del Action: Copiar Perpectiva -->
+		<action path="/planes/perspectivas/copiarGuardarPerspectiva" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.CopiarPerspectivaAction" name="editarPerspectivaForm" scope="request" input="copiarPerspectiva" parameter="copiarPerspectiva"></action>
+		
+		<!-- Mapeo del Action: Cancelar Perpectiva -->
+		<action path="/planes/perspectivas/copiarCancelarPerspectiva" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.CopiarPerspectivaAction" name="editarPerspectivaForm" scope="request" parameter="copiarPerspectiva"></action>
+
+		<!-- Mapeo del Action: Visualizar Objetivos Relacionados -->
+		<action path="/planes/perspectivas/visualizarPerspectivasRelacionadas" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.VisualizarObjetivosRelacionadosAction" scope="session" name="seleccionarPerspectivasForm" parameter="visualizarPerspectivasRelacionadas"></action>
+
+		<!-- Mapeo del Action: Pantalla de Iniciativas Resumida-->
+		<action path="/planes/perspectivas/trasladarMetas" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.TrasladarMetasAction" name="trasladarMetasForm" scope="session" input="trasladarMetas" parameter="trasladarMetas"></action>
+
+		<!-- Mapeo del Action: Salvar Proteger/Liberar Mediciones -->
+		<action path="/planes/perspectivas/trasladarMetasSalvar" type="com.visiongc.app.strategos.web.struts.planes.perspectivas.actions.TrasladarMetasSalvarAction" name="trasladarMetasForm" scope="session" parameter="trasladarMetas"></action>
+		<!-- FIN: Mapeos para los Valores Iniciales del Plan -->
+	</action-mappings>
+
+</struts-config>

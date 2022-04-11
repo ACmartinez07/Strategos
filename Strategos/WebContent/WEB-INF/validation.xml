@@ -1,0 +1,1438 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.3.0//EN" "validator_1_3_0.dtd">
+
+<!-- Modificado por: Kerwin Arias (10/11/2012) -->
+
+<form-validation>
+
+	<!-- Validaciones Globales -->
+	<global></global>
+
+	<!-- Validaciones de Formularios  -->
+	<formset>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Organizaciones ************************* -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una organizacion -->
+		<form name="editarOrganizacionForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarorganizacion.pestana.datosbasicos.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>150</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda una Organización -->
+		<form name="/organizaciones/guardarOrganizacion">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarorganizacion.pestana.datosbasicos.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>150</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Organizaciones **************************** -->
+		<!-- ****************************************************** -->
+
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Modelo ********************* -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita un Modelo Causa-Efecto -->
+		<form name="editarModeloForm"></form>
+		<!--
+			<field property="descripcion" depends="required,maxlength">
+			<arg key="jsp.editarmodelo.ficha.descripcion" position="0" />
+			<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+			<var>
+			<var-name>maxlength</var-name>
+			<var-value>2000</var-value>
+			</var>
+			</field>			
+			</form>
+		-->
+
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Unidades de Medida ********************* -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una Unidad de Medida -->
+		<form name="editarUnidadMedidaForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarunidadmedida.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda una Unidad de Medida -->
+		<form name="/unidadesmedida/guardarUnidadMedida">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarunidadmedida.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Unidades de Medida ************************ -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ******************************************************* -->
+		<!-- ***** Inicio: Categorias de Medición  ***************** -->
+		<!-- ******************************************************* -->
+
+		<!-- Forma que Edita una Categoría de Medición -->
+		<form name="editarCategoriaMedicionForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarcategoriamedicion.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda una Categoría de Medición -->
+		<form name="/categoriasmedicion/guardarCategoriaMedicion">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarcategoriamedicion.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Categorias de Medición  ******************* -->
+		<!-- ****************************************************** -->
+
+		
+		<!-- ******************************************************* -->
+		<!-- ***** Inicio: Tipos de Proyecto  ********************** -->
+		<!-- ******************************************************* -->
+
+		<!-- Forma que Edita un Tipo de Proyecto -->
+		<form name="editarTiposProyectoForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editartipoproyecto.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda un Tipo de Proyecto -->
+		<form name="/tiposproyecto/guardarTiposProyecto">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editartipoproyecto.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Tipos de Proyecto  ************************ -->
+		<!-- ****************************************************** -->
+		
+		<!-- ******************************************************* -->
+		<!-- ***** Inicio: Cooperante         ********************** -->
+		<!-- ******************************************************* -->
+
+		<!-- Forma que Edita un Cooperante -->
+		<form name="editarCooperantesForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editartipoproyecto.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			
+			
+		</form>
+
+		<!-- Action que guarda un Cooperante -->
+		<form name="/instrumentos/guardarCooperante">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editartipoproyecto.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			
+			
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Cooperante         ************************ -->
+		<!-- ****************************************************** -->
+		
+		
+		<!-- ******************************************************* -->
+		<!-- ***** Inicio: Tipos Convenio     ********************** -->
+		<!-- ******************************************************* -->
+
+		<!-- Forma que Edita un Tipos Convenio -->
+		<form name="editarTiposConvenioForm">
+						
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editartipoproyecto.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>150</var-value>
+				</var>
+			</field>
+						
+		</form>
+
+		<!-- Action que guarda un Tipos Convenio -->
+		<form name="/instrumentos/guardarConvenio">
+						
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editartipoproyecto.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>150</var-value>
+				</var>
+			</field>
+			
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Tipos Convenio     ************************ -->
+		<!-- ****************************************************** -->
+			
+			
+		<!-- ******************************************************* -->
+		<!-- ***** Inicio: Convenio           ********************** -->
+		<!-- ******************************************************* -->
+
+		<!-- Forma que Edita un Tipos Convenio -->
+		<form name="editarInstrumentosForm">
+					
+			<field property="nombreCorto" depends="required,maxlength">
+				<arg key="jsp.editartipoproyecto.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>		
+												
+		</form>
+
+		<!-- Action que guarda un Tipos Convenio -->
+		<form name="/instrumentos/guardarInstrumento">
+						
+			<field property="nombreCorto" depends="required,maxlength">
+				<arg key="jsp.editartipoproyecto.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>	
+						
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Convenio           ************************ -->
+		<!-- ****************************************************** -->		
+		
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Responsables *************************** -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita un Responsable -->
+		<form name="editarResponsableForm">
+
+			<!-- Campo Nombre -->
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarresponsable.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<!-- Campo Cargo -->
+			<field property="cargo" depends="required,maxlength">
+				<arg key="jsp.editarresponsable.ficha.cargo" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<!-- Campo Ubicación -->
+			<field property="ubicacion" depends="maxlength">
+				<arg key="jsp.editarresponsable.ficha.ubicacion" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>250</var-value>
+				</var>
+			</field>
+
+			<!-- Campo Email -->
+			<field property="email" depends="maxlength,email">
+				<arg key="jsp.editarresponsable.ficha.email" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+		</form>
+
+		<!-- Action que guarda un Responsable -->
+		<form name="/responsables/guardarResponsables">
+
+			<!-- Campo Nombre -->
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarresponsable.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<!-- Campo Cargo -->
+			<field property="cargo" depends="required,maxlength">
+				<arg key="jsp.editarresponsable.ficha.cargo" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<!-- Campo Ubicación -->
+			<field property="ubicacion" depends="maxlength">
+				<arg key="jsp.editarresponsable.ficha.ubicacion" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>250</var-value>
+				</var>
+			</field>
+
+			<!-- Campo Email -->
+			<field property="email" depends="maxlength,email">
+				<arg key="jsp.editarresponsable.ficha.email" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Responsables ****************************** -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- **************** Inicio: Causas ********************** -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una Causa -->
+		<form name="editarCausaForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarcausa.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda una Causa -->
+		<form name="/causas/guardarCausa">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarcausa.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***************** Fin: Causas ************************ -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Estados Acciones *********************** -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita un Estado de Acciones -->
+		<form name="editarEstadoAccionesForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarestadoacciones.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>15</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda un Estado de Acciones -->
+		<form name="/estadosacciones/guardarEstadoAcciones">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarestadoacciones.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>15</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Estados de Acciones *********************** -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Plan de Cuentas ************************ -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una Cuenta -->
+		<form name="editarCuentaForm">
+
+			<!-- Campo Código -->
+			<field property="codigo" depends="required">
+				<arg key="jsp.editarcuenta.ficha.codigo" position="0" />
+			</field>
+
+			<!-- Campo Descripción -->
+			<field property="descripcion" depends="required,maxlength">
+				<arg key="jsp.editarcuenta.ficha.descripcion" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>250</var-value>
+				</var>
+			</field>
+
+		</form>
+
+		<!-- Action que guarda una Cuenta -->
+		<form name="/plancuentas/guardarCuenta">
+
+			<!-- Campo Código -->
+			<field property="codigo" depends="required">
+				<arg key="jsp.editarcuenta.ficha.codigo" position="0" />
+			</field>
+
+			<!-- Campo Descripción -->
+			<field property="descripcion" depends="required,maxlength">
+				<arg key="jsp.editarcuenta.ficha.descripcion" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>250</var-value>
+				</var>
+			</field>
+
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Plan de Cuentas *************************** -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Series de Tiempo *********************** -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una Serie de Tiempo -->
+		<form name="editarSerieTiempoForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarserietiempo.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			<field property="identificador" depends="required,maxlength">
+				<arg key="jsp.editarserietiempo.ficha.identificador" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>5</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda una Serie de Tiempo -->
+		<form name="/seriestiempo/guardarSerieTiempo">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarserietiempo.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			<field property="identificador" depends="required,maxlength">
+				<arg key="jsp.editarserietiempo.ficha.identificador" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>5</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Series de Tiempo ************************** -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- *************** Inicio: Plan ************************* -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita un Plan -->
+		<form name="editarPlanForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarplan.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda un Plan -->
+		<form name="/planes/guardarPlan">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarplan.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- *************** Fin: Plan **************************** -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Perspectivas *************************** -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una Perspectiva -->
+		<form name="editarPerspectivaForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarperspectiva.pestana.datosbasicos.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>250</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda una Perspectiva -->
+		<form name="/planes/perspectivas/guardarPerspectiva">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarperspectiva.pestana.datosbasicos.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>250</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Perspectivas ****************************** -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ************ Inicio: Explicacion ********************* -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una Explicación -->
+		<form name="editarExplicacionForm">
+			<field property="titulo" depends="required,maxlength">
+				<arg key="jsp.editarexplicacion.ficha.titulo" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>250</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda una Explicación -->
+		<form name="/explicaciones/guardarExplicacion">
+			<field property="titulo" depends="required,maxlength">
+				<arg key="jsp.editarexplicacion.ficha.titulo" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>250</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ********** Fin: Explicaciones ************************ -->
+		<!-- ****************************************************** -->
+
+
+		<!-- ****************************************************** -->
+		<!-- ******************* Inicio: Foro ********************* -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita un Comentario de Foro -->
+		<form name="editarForoForm">
+			<field property="asunto" depends="required,maxlength">
+				<arg key="jsp.editarforo.ficha.asunto" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+
+			<field property="email" depends="required, maxlength, email">
+				<arg key="jsp.editarforo.ficha.email" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+
+			<field property="comentario" depends="required">
+				<arg key="jsp.editarforo.ficha.comentario" position="0" />
+			</field>
+		</form>
+
+		<!-- Action que guarda un Comentario de Foro -->
+		<form name="/foros/guardarForo">
+			<field property="asunto" depends="required,maxlength">
+				<arg key="jsp.editarforo.ficha.asunto" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+
+			<field property="email" depends="required, maxlength, email">
+				<arg key="jsp.editarforo.ficha.email" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+
+			<field property="comentario" depends="required">
+				<arg key="jsp.editarforo.ficha.comentario" position="0" />
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ******************* Fin: Foro ************************ -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Clases de Problemas ******************** -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una Clases de Problemas -->
+		<form name="editarClaseProblemasForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarclaseproblemas.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<field property="descripcion" depends="maxlength">
+				<arg key="jsp.editarclaseproblemas.ficha.descripcion" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>2000</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda una Clase de Problemas-->
+		<form name="/problemas/clasesproblemas/guardarClaseProblemas">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarclaseproblemas.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<field property="descripcion" depends="maxlength">
+				<arg key="jsp.editarclaseproblemas.ficha.descripcion" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>2000</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Clases de Problemas *********************** -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Problemas ****************************** -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita un Problema -->
+		<form name="editarProblemaForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarproblema.ficha.pestana.datosbasicos.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda un Problema -->
+		<form name="/problemas/guardarProblema">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarproblema.ficha.pestana.datosbasicos.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Problemas ********************************* -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Acciones Correctivas ******************* -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una Acción Correctiva -->
+		<form name="editarAccionForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editaraccioncorrectiva.pestana.accioncorrectiva.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<field property="responsableId" depends="required">
+				<arg key="jsp.editaraccioncorrectiva.pestana.responsables.responsable" position="0" />
+			</field>
+
+		</form>
+
+		<!-- Action que guarda una Acción Correctiva -->
+		<form name="/problemas/acciones/guardarAccion">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editaraccioncorrectiva.pestana.accioncorrectiva.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<field property="responsableId" depends="required">
+				<arg key="jsp.editaraccioncorrectiva.pestana.responsables.responsable" position="0" />
+			</field>
+
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Acciones Correctivas ********************** -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- * Inicio: Configuración Mensaje Email Seguimientos *** -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita la Configuración del Mensaje Email de los Seguimientos -->
+		<form name="editarConfiguracionMensajeEmailSeguimientosForm">
+			<field property="descripcion" depends="required,maxlength">
+				<arg key="jsp.editarconfiguracionmensajeemailseguimientos.ficha.descripcion" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			<field property="mensaje" depends="required">
+				<arg key="jsp.editarconfiguracionmensajeemailseguimientos.ficha.mensaje" position="0" />
+			</field>
+		</form>
+
+		<!-- Action que guarda la Configuración del Mensaje Email de los Seguimientos -->
+		<form name="/problemas/seguimientos/guardarConfiguracionMensajeEmailSeguimientos">
+			<field property="descripcion" depends="required,maxlength">
+				<arg key="jsp.editarconfiguracionmensajeemailseguimientos.ficha.descripcion" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			<field property="mensaje" depends="required">
+				<arg key="jsp.editarconfiguracionmensajeemailseguimientos.ficha.mensaje" position="0" />
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- * Fin: Configuración Mensaje Email Seguimientos ****** -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Iniciativas **************************** -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una Iniciativa -->
+		<form name="editarIniciativaForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editariniciativa.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>250</var-value>
+				</var>
+			</field>
+
+			<field property="nombreLargo" depends="maxlength">
+				<arg key="jsp.editariniciativa.ficha.nombrelargo" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>300</var-value>
+				</var>
+			</field>
+
+		</form>
+
+		<!-- Action que guarda una Iniciativa -->
+		<form name="/iniciativa/guardarIniciativa">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editariniciativa.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>250</var-value>
+				</var>
+			</field>
+
+			<field property="nombreLargo" depends="maxlength">
+				<arg key="jsp.editariniciativa.ficha.nombrelargo" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>300</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Iniciativas******* ************************ -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ************ Inicio: Clase Indicadores *************** -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una Clase Indicadores -->
+		<form name="editarClaseIndicadoresForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarclaseindicadores.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>150</var-value>
+				</var>
+			</field>
+
+			<field property="enlaceParcial" depends="maxlength">
+				<arg key="jsp.editarclaseindicadores.ficha.codigoparcialenlace" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<field property="descripcion" depends="maxlength">
+				<arg key="jsp.editarclaseindicadores.ficha.descripcion" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>250</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda una Clase Indicadores -->
+		<form name="/indicadores/clasesindicadores/guardarClaseIndicadores">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarclaseindicadores.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>150</var-value>
+				</var>
+			</field>
+
+			<field property="enlaceParcial" depends="maxlength">
+				<arg key="jsp.editarclaseindicadores.ficha.codigoparcialenlace" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<field property="descripcion" depends="maxlength">
+				<arg key="jsp.editarclaseindicadores.ficha.descripcion" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>250</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ************* Fin: Clase Indicadores ***************** -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- **************** Inicio: Indicadores ***************** -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita Indicadores -->
+		<form name="editarIndicadorForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarindicador.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>150</var-value>
+				</var>
+			</field>
+			
+   		    <!-- 
+			<field property="nombreLargo" depends="maxlength">
+				<arg key="jsp.editarindicador.ficha.nombrecorto" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+			-->
+
+			<field property="comportamiento" depends="maxlength">
+				<arg key="jsp.editarindicador.ficha.comportamiento" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<field property="codigoEnlace" depends="maxlength">
+				<arg key="jsp.editarindicador.ficha.codigoenlace" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+
+			<field property="orden" depends="maxlength">
+				<arg key="jsp.editarindicador.ficha.orden" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>10</var-value>
+				</var>
+			</field>
+
+			<field property="enlaceParcial" depends="maxlength">
+				<arg key="jsp.editarindicador.ficha.enlaceparcial" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<field property="numeroDecimales" depends="maxlength">
+				<arg key="jsp.editarindicador.ficha.nrodecimales" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>2</var-value>
+				</var>
+				<var>
+					<var-name>min</var-name>
+					<var-value>0</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>9</var-value>
+				</var>
+
+			</field>
+
+		</form>
+		
+		<form name="crearIndicadorConsolidadoForm">
+		</form>
+
+		<!-- Action que guarda Indicadores -->
+		<form name="/indicadores/guardarIndicador">
+
+			<field property="nombre" depends="required, maxlength, nombreIndicadorReservado">
+				<arg key="jsp.editarindicador.ficha.nombre" position="0" />
+				<arg name="nombreIndicadorReservado" resource="false" key="${var:reservados}" position="1" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>150</var-value>
+				</var>
+				<var>
+					<var-name>reservados</var-name>
+					<var-value>{, }, [, y ]</var-value>
+				</var>
+			</field>
+
+		    <!--
+			<field property="nombreLargo" depends="maxlength, nombreIndicadorReservado">
+				<arg key="jsp.editarindicador.ficha.nombrecorto" position="0" />
+				<arg name="nombreIndicadorReservado" resource="false" key="${var:reservados}" position="1" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+				<var>
+					<var-name>reservados</var-name>
+					<var-value>{, }, [, y ]</var-value>
+				</var>
+			</field>
+			-->
+
+			<field property="numeroDecimales" depends="maxlength">
+				<arg key="jsp.editarindicador.ficha.nrodecimales" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>2</var-value>
+				</var>
+				<var>
+					<var-name>min</var-name>
+					<var-value>0</var-value>
+				</var>
+				<var>
+					<var-name>max</var-name>
+					<var-value>9</var-value>
+				</var>
+			</field>
+
+			<field property="comportamiento" depends="maxlength">
+				<arg key="jsp.editarindicador.ficha.comportamiento" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<field property="orden" depends="maxlength">
+				<arg key="jsp.editarindicador.ficha.orden" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>10</var-value>
+				</var>
+			</field>
+
+			<field property="enlaceParcial" depends="maxlength">
+				<arg key="jsp.editarindicador.ficha.enlaceparcial" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<field property="codigoEnlace" depends="maxlength">
+				<arg key="jsp.editarindicador.ficha.codigoenlace" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+
+			<field property="indicadorAsociadoRevision" depends="indicadorRevisionRepetida">
+			</field>
+
+			<field property="formula" depends="formulaMacroPValido,formulaInsumosPegados">
+				<arg key="editarindicador.label.formula" />
+			</field>
+
+			<field property="formula" depends="formulaMacrosPeriodoValido">
+				<arg key="editarindicador.label.formula" />
+			</field>
+
+			<field property="formula" depends="formulaSintaxisGeneral">
+				<arg key="editarindicador.label.formula" />
+			</field>
+
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- **************** Fin: Indicadores ******************** -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Actividades **************************** -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una Actividad -->
+		<form name="editarActividadForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editariniciativa.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda una Actividad -->
+		<form name="/planificacionseguimiento/actividades/guardarActividad">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editariniciativa.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ************* Fin: Actividades *********************** -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ************** Inicio: Mediciones ******************** -->
+		<!-- ****************************************************** -->
+
+		<form name="/mediciones/seleccionarPeriodoMediciones">
+			<field property="periodoDesde" depends="required">
+				<arg key="seleccionarperiodomediciones.label.periododesde" />
+			</field>
+			<field property="periodoHasta" depends="required">
+				<arg key="seleccionarperiodomediciones.label.periodohasta" />
+			</field>
+			<field property="ano" depends="required">
+				<arg key="seleccionarperiodomediciones.label.ano" />
+			</field>
+		</form>
+
+
+		<form name="editarMedicionesForm">
+			<field property="periodoDesde" depends="required">
+				<arg key="seleccionarperiodomediciones.label.periododesde" />
+			</field>
+			<field property="periodoHasta" depends="required">
+				<arg key="seleccionarperiodomediciones.label.periodohasta" />
+			</field>
+			<field property="ano" depends="required">
+				<arg key="seleccionarperiodomediciones.label.ano" />
+			</field>
+			<field property="identificador" depends="required">
+				<arg key="editarserietiempo.label.identificador" />
+			</field>
+		</form>
+
+
+		<!-- ****************************************************** -->
+		<!-- **************** Fin: Mediciones ********************* -->
+		<!-- ****************************************************** -->
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Calcular Indicador ********************* -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que calcula Indicadores -->
+		<form name="/calculoindicadores/calcularIndicadores">
+			<field property="ano" depends="required">
+				<arg key="jsp.configurarcalculoindicadores.ano" />
+			</field>
+		</form>
+
+		<form name="calculoIndicadoresForm">
+			<field property="ano" depends="required">
+				<arg key="jsp.configurarcalculoindicadores.ano" />
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Calcular Indicador ************************ -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Vistas ********************************* -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una Vista-->
+		<form name="editarVistaForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarvista.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda una Vista -->
+		<form name="/presentaciones/vistas/guardarVista">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editariniciativa.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Vistas ************************************ -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Paginas ******************************** -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una Pagina-->
+		<form name="editarPaginaForm">
+			<field property="descripcion" depends="required,maxlength">
+				<arg key="jsp.editariniciativa.ficha.descripcion" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>2000</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda una Pagina -->
+		<form name="/paginas/guardarPagina">
+			<field property="descripcion" depends="required,maxlength">
+				<arg key="jsp.editarpaginas.ficha.descripcion" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>2000</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Paginas *********************************** -->
+		<!-- ****************************************************** -->
+
+
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Celdas ********************************* -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita una Celda -->
+		<form name="editarCeldaForm">
+			<field property="titulo" depends="required,maxlength">
+				<arg key="jsp.editarcelda.ficha.titulo" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda una Celda -->
+		<form name="presentaciones/vistas/guardarCelda">
+			<field property="titulo" depends="required,maxlength">
+				<arg key="jsp.editarcelda.ficha.titulo" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Celda ************************************ -->
+		<!-- ****************************************************** -->
+
+
+		<!-- ****************************************************** -->
+		<!-- ************** Inicio: Productos ********************* -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma que Edita un Producto -->
+		<form name="editarProductoForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarproducto.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<field property="descripcion" depends="maxlength">
+				<arg key="jsp.editarproducto.ficha.descripcion" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>2000</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que guarda un Producto -->
+		<form name="/planificacionseguimiento/productos/guardarProducto">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarproducto.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+
+			<field property="descripcion" depends="maxlength">
+				<arg key="jsp.editarproducto.ficha.descripcion" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>2000</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Productos ********************************* -->
+		<!-- ****************************************************** -->
+
+
+	</formset>
+</form-validation>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto Modelo de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (03/02/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.planes.model.Modelo" table="modelo">
+
+		<!-- Atributo clave de Modelo -->
+		<composite-id name="pk" class="com.visiongc.app.strategos.planes.model.ModeloPK">
+			<key-property name="modeloId" column="modelo_id" type="java.lang.Long"/>
+			<key-property name="planId" column="plan_id" type="java.lang.Long"/>
+		</composite-id>
+
+		<!-- Atributos del objeto conceptual para Modelos -->
+		<property name="nombre" type="java.lang.String" column="nombre" />
+		<property name="descripcion" type="java.lang.String" column="descripcion" />
+		<property name="binario" type="java.lang.String" column="binario" />
+
+		<!-- Asociación muchos a uno para Plan -->
+		<many-to-one name="plan" class="com.visiongc.app.strategos.planes.model.Plan" unique="true" insert="false" update="false">
+			<column name="plan_id" />
+		</many-to-one>
+
+	</class>
+
+</hibernate-mapping>

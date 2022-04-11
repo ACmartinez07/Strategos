@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (25/09/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="editarConfiguracionSistemaForm" type="com.visiongc.app.strategos.web.struts.configuracion.forms.EditarConfiguracionSistemaForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarConfiguracion" path="/paginas/strategos/configuracion/sistema/editarConfiguracion.jsp" />
+		<forward name="configuracionEmail" path="/paginas/strategos/configuracion/sistema/configuracionEmail.jsp" />
+		<forward name="configuracionServicio" path="/paginas/strategos/configuracion/sistema/configurarServicio.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Pantalla de Configuracion Sistema -->
+		<action path="/configuracion/sistema/editar" type="com.visiongc.app.strategos.web.struts.configuracion.actions.EditarConfiguracionSistemaAction" name="editarConfiguracionSistemaForm" scope="request" parameter="editarConfiguracion"></action>
+		<action path="/configuracion/sistema/email" type="com.visiongc.app.strategos.web.struts.configuracion.actions.EditarConfiguracionSistemaAction" name="editarConfiguracionSistemaForm" scope="request" parameter="configuracionEmail"></action>
+		
+		<!-- Mapeo del Action: Descargar Archivo Adjunto -->
+		<action path="/configuracion/salvarConfiguracionServicio" type="com.visiongc.app.strategos.web.struts.configuracion.actions.SalvarConfiguracionServicioAction" name="editarConfiguracionSistemaForm" scope="request" parameter="editarServicio"></action>
+		
+		
+		
+		<!-- Mapeo del Action: Proteger/Liberar Mediciones -->
+		<action path="/configuracion/configuracionServicio" type="com.visiongc.app.strategos.web.struts.configuracion.actions.ConfiguracionServicioAction" name="editarConfiguracionSistemaForm" scope="session" input="configuracionServicio" parameter="configuracionServicio"></action>
+		
+		<!-- Mapeo del Action: Proteger/Liberar Mediciones -->
+		<action path="/configuracion/salvarConfiguracionServicio" type="com.visiongc.app.strategos.web.struts.configuracion.actions.SalvarConfiguracionServicioAction" name="editarConfiguracionSistemaForm" scope="session" parameter="configuracionServicio"></action>
+		
+		<!-- Mapeo del Action: Proteger/Liberar Mediciones -->
+		<action path="/configuracion/salvarCorreoIniciativa" type="com.visiongc.app.strategos.web.struts.configuracion.actions.SalvarCorreoIniciativaAction" ></action>
+		
+		
+	
+	</action-mappings>
+</struts-config>

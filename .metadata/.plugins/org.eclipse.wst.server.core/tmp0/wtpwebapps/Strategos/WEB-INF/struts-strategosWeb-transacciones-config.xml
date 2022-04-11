@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (25/09/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="transaccionForm" type="com.visiongc.app.strategos.web.struts.transacciones.forms.TransaccionForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="asistenteImportarTransacciones" path="/paginas/strategos/transacciones/asistenteImportarTransacciones.jsp" />
+		<forward name="parametroTransaccion" path="/paginas/strategos/transacciones/parametroTransaccion.jsp" />
+		<forward name="reporteTransacciones" path="/paginas/strategos/transacciones/reporteTransacciones.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Importar Transacciones  -->
+		<action path="/transacciones/importar" type="com.visiongc.app.strategos.web.struts.transacciones.actions.ImportarTransaccionAction" name="transaccionForm" scope="session" input="asistenteImportarTransacciones" parameter="asistenteImportarTransacciones"></action>
+		
+		<!-- Mapeo del Action: Generar la pagina de parametros -->
+		<action path="/transacciones/reporteTransaccion" type="com.visiongc.app.strategos.web.struts.transacciones.actions.ReporteTransaccionAction" name="transaccionForm" scope="session" parameter="parametroTransaccion"></action>
+
+		<!-- Mapeo del Action: Generar reporte -->
+		<action path="/transacciones/reporteEjecucionTransaccion" type="com.visiongc.app.strategos.web.struts.transacciones.actions.ReporteTransaccionAction" name="transaccionForm" scope="session" parameter="reporteTransacciones"></action>
+
+		<!-- Mapeo del Action: Imprimir Transacciones -->
+		<action path="/transacciones/imprimirTransaccion" type="com.visiongc.app.strategos.web.struts.transacciones.actions.ImprimirTransaccionAction"></action>
+		
+		<!-- Mapeo del Action: Imprimir Transacciones -->
+		<action path="/transacciones/imprimirExcelTransaccion" type="com.visiongc.app.strategos.web.struts.transacciones.actions.ImprimirExcelTransaccionAction"></action>
+	</action-mappings>
+</struts-config>

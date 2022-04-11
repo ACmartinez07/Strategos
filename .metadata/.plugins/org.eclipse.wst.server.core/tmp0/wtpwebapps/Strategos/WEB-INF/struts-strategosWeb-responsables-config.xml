@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (24/10/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="editarResponsableForm" type="com.visiongc.app.strategos.web.struts.responsables.forms.EditarResponsableForm" />
+		<form-bean name="gestionarResponsablesForm" type="com.visiongc.app.strategos.web.struts.responsables.forms.GestionarResponsablesForm" />
+		<form-bean name="asociarResponsablesForm" type="com.visiongc.app.strategos.web.struts.responsables.forms.AsociarResponsablesForm" />
+		<form-bean name="seleccionarResponsablesForm" type="com.visiongc.app.strategos.web.struts.responsables.forms.SeleccionarResponsablesForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarResponsable" path="/paginas/strategos/responsables/editarResponsable.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Responsables -->
+		<action path="/responsables/gestionarResponsables" type="com.visiongc.app.strategos.web.struts.responsables.actions.GestionarResponsablesAction" scope="session" name="gestionarResponsablesForm" parameter="gestionarResponsables">
+			<forward name="gestionarResponsables" path="/paginas/strategos/responsables/gestionarResponsables.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Responsables -->
+		<action path="/responsables/crearResponsable" type="com.visiongc.app.strategos.web.struts.responsables.actions.EditarResponsableAction" scope="request" name="editarResponsableForm" parameter="editarResponsable"></action>
+
+		<!-- Mapeo del Action: Modificar Responsables -->
+		<action path="/responsables/modificarResponsable" type="com.visiongc.app.strategos.web.struts.responsables.actions.EditarResponsableAction" scope="request" name="editarResponsableForm" parameter="editarResponsable"></action>
+
+		<!-- Mapeo del Action: Guardar Responsables -->
+		<action path="/responsables/guardarResponsable" type="com.visiongc.app.strategos.web.struts.responsables.actions.GuardarResponsableAction" name="editarResponsableForm" scope="request" input="editarResponsable" validate="true" parameter="editarResponsable">
+			<forward name="crearResponsable" path="/responsables/crearResponsable.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Responsables-->
+		<action path="/responsables/cancelarGuardarResponsable" type="com.visiongc.app.strategos.web.struts.responsables.actions.GuardarResponsableAction" name="editarResponsableForm" scope="request"></action>
+
+		<!-- Mapeo del Action: Eliminar Responsables -->
+		<action path="/responsables/eliminarResponsable" type="com.visiongc.app.strategos.web.struts.responsables.actions.EliminarResponsableAction"></action>
+
+		<!-- Mapeo del Action: Asociar Responsables -->
+		<action path="/responsables/asociarResponsables" type="com.visiongc.app.strategos.web.struts.responsables.actions.AsociarResponsablesAction" scope="request" name="asociarResponsablesForm" parameter="asociarResponsables">
+			<forward name="asociarResponsables" path="/paginas/strategos/responsables/asociarResponsables.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Guardar Responsables Asociados -->
+		<action path="/responsables/guardarResponsablesAsociados" type="com.visiongc.app.strategos.web.struts.responsables.actions.GuardarResponsablesAsociadosAction" name="asociarResponsablesForm" scope="request" parameter="asociarResponsables">
+			<forward name="asociarResponsables" path="/paginas/strategos/responsables/asociarResponsables.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Responsables Asociados -->
+		<action path="/responsables/cancelarGuardarAsociarResponsable" type="com.visiongc.app.strategos.web.struts.responsables.actions.GuardarResponsablesAsociadosAction" name="asociarResponsablesForm" scope="request"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Responsables-->
+		<action path="/responsables/generarReporteResponsables" type="com.visiongc.app.strategos.web.struts.responsables.actions.ReporteResponsablesAction"></action>
+
+		<!-- Mapeo del Action: Propiedades Responsable -->
+		<action path="/responsables/propiedadesResponsable" type="com.visiongc.app.strategos.web.struts.responsables.actions.MostrarPropiedadesResponsableAction" name="editarResponsableForm" scope="request" parameter="propiedadesResponsable">
+			<forward name="propiedadesResponsable" path="/paginas/strategos/responsables/propiedadesResponsable.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Responsables -->
+		<action path="/responsables/seleccionarResponsables" type="com.visiongc.app.strategos.web.struts.responsables.actions.SeleccionarResponsablesAction" scope="request" name="seleccionarResponsablesForm" parameter="seleccionarResponsables">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarResponsables" path="/paginas/strategos/responsables/seleccionarResponsables.jsp" />
+		</action>
+
+	</action-mappings>
+
+</struts-config>
+

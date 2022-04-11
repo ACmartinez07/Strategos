@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (14/09/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarPlanesForm" type="com.visiongc.app.strategos.web.struts.planes.forms.GestionarPlanesForm" />
+		<form-bean name="editarPlanForm" type="com.visiongc.app.strategos.web.struts.planes.forms.EditarPlanForm" />
+		<form-bean name="seleccionarPlanesForm" type="com.visiongc.app.strategos.web.struts.planes.forms.SeleccionarPlanesForm" />
+		<form-bean name="gestionarPlanForm" type="com.visiongc.app.strategos.web.struts.planes.forms.GestionarPlanForm" />
+		<form-bean name="gestionarIndicadoresPlanForm" type="com.visiongc.app.strategos.web.struts.planes.indicadores.forms.GestionarIndicadoresPlanForm" />
+		<form-bean name="asignarPesosIndicadoresPlanForm" type="com.visiongc.app.strategos.web.struts.planes.indicadores.forms.AsignarPesosIndicadoresPlanForm" />
+		<form-bean name="gestionarIniciativasPlanForm" type="com.visiongc.app.strategos.web.struts.planes.iniciativas.forms.GestionarIniciativasPlanForm" />
+		<form-bean name="visualizarPlanForm" type="com.visiongc.app.strategos.web.struts.planes.forms.VisualizarPlanForm" />
+		<form-bean name="editarMetasForm" type="com.visiongc.app.strategos.web.struts.planes.metas.forms.EditarMetasForm" />
+		<form-bean name="editarMetasParcialesForm" type="com.visiongc.app.strategos.web.struts.planes.metas.forms.EditarMetasParcialesForm" />
+		<form-bean name="editarValoresInicialesForm" type="com.visiongc.app.strategos.web.struts.planes.valoresiniciales.forms.EditarValoresInicialesForm" />
+		<form-bean name="importarProgramadoForm" type="com.visiongc.app.strategos.web.struts.planes.indicadores.forms.ImportarProgramadoForm" />
+		<form-bean name="protegerLiberarMedicionesForm" type="com.visiongc.app.strategos.web.struts.mediciones.forms.ProtegerLiberarMedicionesForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarPlan" path="/paginas/strategos/planes/editarPlan.jsp" />
+		<forward name="copiarPlan" path="/paginas/strategos/planes/copiarPlan.jsp" />
+		<forward name="configurarEdicionMetas" path="/paginas/strategos/planes/metas/configurarEdicionMetas.jsp" />
+		<forward name="editarMetas" path="/paginas/strategos/planes/metas/editarMetas.jsp" />
+		<forward name="configurarEdicionValoresIniciales" path="/paginas/strategos/planes/valoresiniciales/configurarEdicionValoresIniciales.jsp" />
+		<forward name="editarValoresIniciales" path="/paginas/strategos/planes/valoresiniciales/editarValoresIniciales.jsp" />
+		<forward name="visualizarPlanAction" path="/planes/visualizarPlan.action" />
+		<forward name="visualizarPlan" path="/paginas/strategos/planes/visualizarPlan.jsp" />
+		<forward name="importarProgramado" path="/paginas/strategos/planes/indicadores/importarProgramado.jsp" />
+		<forward name="protegerPlan" path="/paginas/strategos/planes/metas/protegerLiberarMetas.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Planes -->
+		<action path="/planes/gestionarPlanes" type="com.visiongc.app.strategos.web.struts.planes.actions.GestionarPlanesAction" scope="session" name="gestionarPlanesForm" parameter="gestionarPlanes">
+			<forward name="gestionarPlanes" path="/paginas/strategos/planes/gestionarPlanes.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Gestionar Planes Estratégicos -->
+		<action path="/planes/gestionarPlanesEstrategicos" type="com.visiongc.app.strategos.web.struts.planes.actions.GestionarPlanesAction" scope="session" name="gestionarPlanesForm" parameter="gestionarPlanes">
+			<forward name="gestionarPlanes" path="/paginas/strategos/planes/gestionarPlanes.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Gestionar Planes Operativos -->
+		<action path="/planes/gestionarPlanesOperativos" type="com.visiongc.app.strategos.web.struts.planes.actions.GestionarPlanesAction" scope="session" name="gestionarPlanesForm" parameter="gestionarPlanes">
+			<forward name="gestionarPlanes" path="/paginas/strategos/planes/gestionarPlanes.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Plan -->
+		<action path="/planes/crearPlan" type="com.visiongc.app.strategos.web.struts.planes.actions.EditarPlanAction" scope="request" name="editarPlanForm" parameter="editarPlan"></action>
+
+		<!-- Mapeo del Action: Modificar Plan -->
+		<action path="/planes/modificarPlan" type="com.visiongc.app.strategos.web.struts.planes.actions.EditarPlanAction" scope="request" name="editarPlanForm" parameter="editarPlan"></action>
+
+		<!-- Mapeo del Action: Ver Plan -->
+		<action path="/planes/verPlan" type="com.visiongc.app.strategos.web.struts.planes.actions.EditarPlanAction" scope="request" name="editarPlanForm" parameter="editarPlan"></action>
+
+		<!-- Mapeo del Action: Guardar Plan -->
+		<action path="/planes/guardarPlan" type="com.visiongc.app.strategos.web.struts.planes.actions.GuardarPlanAction" name="editarPlanForm" scope="request" input="editarPlan" validate="true" parameter="editarPlan">
+			<forward name="crearPlan" path="/planes/crearPlan.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Plan -->
+		<action path="/planes/cancelarGuardarPlan" type="com.visiongc.app.strategos.web.struts.planes.actions.GuardarPlanAction" name="editarPlanForm" scope="request" parameter="editarPlan"></action>
+
+		<!-- Mapeo del Action: Eliminar Plan -->
+		<action path="/planes/eliminarPlan" type="com.visiongc.app.strategos.web.struts.planes.actions.EliminarPlanAction"></action>
+
+		<!-- Mapeo del Action: Activar Desactivar Plan -->
+		<action path="/planes/activarDesactivarPlan" type="com.visiongc.app.strategos.web.struts.planes.actions.ActivarDesactivarPlanAction"></action>
+
+		<!-- Mapeo del Action: Copiar Plan -->
+		<action path="/planes/copiarPlan" type="com.visiongc.app.strategos.web.struts.planes.actions.CopiarPlanAction" scope="request" name="editarPlanForm" parameter="copiarPlan"></action>
+
+		<!-- Mapeo del Action: Guardar Copia Plan -->
+		<action path="/planes/guardarCopiaPlan" type="com.visiongc.app.strategos.web.struts.planes.actions.GuardarPlanAction" name="editarPlanForm" scope="request" input="editarPlan" validate="true" parameter="editarPlan"></action>
+
+		<!-- Mapeo del Action: Seleccionar Planes -->
+		<action path="/planes/seleccionarPlanes" type="com.visiongc.app.strategos.web.struts.planes.actions.SeleccionarPlanesAction" scope="session" name="seleccionarPlanesForm" parameter="seleccionarPlanesOrganizacionesAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarPlanesOrganizacionesAction" path="/planes/seleccionarPlanesOrganizaciones.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Planes Organizaciones -->
+		<action path="/planes/seleccionarPlanesOrganizaciones" type="com.visiongc.app.strategos.web.struts.planes.actions.SeleccionarPlanesOrganizacionesAction" scope="session" name="seleccionarPlanesForm" parameter="seleccionarPlanesPlanesAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarPlanesPlanesAction" path="/planes/seleccionarPlanesPlanes.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Planes Planes -->
+		<action path="/planes/seleccionarPlanesPlanes" type="com.visiongc.app.strategos.web.struts.planes.actions.SeleccionarPlanesPlanesAction" scope="session" name="seleccionarPlanesForm" parameter="seleccionarPlanes">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarPlanes" path="/paginas/strategos/planes/seleccionarPlanes.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Generar Reporte Planes -->
+		<action path="/planes/generarReportePlanes" type="com.visiongc.app.strategos.web.struts.planes.actions.ReportePlanesAction"></action>
+
+		<!-- Mapeo del Action: Gestionar Plan (Explorador) -->
+		<action path="/planes/gestionarPlan" type="com.visiongc.app.strategos.web.struts.planes.actions.GestionarPlanAction" scope="session" name="gestionarPlanForm" parameter="gestionarPerspectivasAction"></action>
+		
+		<!-- Mapeo del Action: Setear el panel del plan -->
+		<action path="/planes/setPanel" type="com.visiongc.app.strategos.web.struts.planes.actions.SetPanelAction"></action>
+
+		<!-- Mapeo del Action: Visualizar Plan -->
+		<action path="/planes/visualizarPlan" type="com.visiongc.app.strategos.web.struts.planes.actions.VisualizarPlanAction" scope="session" name="visualizarPlanForm" parameter="visualizarPerspectivasAction"></action>
+
+		<!-- Mapeo del Action: Gestionar Indicadores del Plan (Explorador) -->
+		<action path="/planes/indicadores/gestionarIndicadoresPlan" type="com.visiongc.app.strategos.web.struts.planes.indicadores.actions.GestionarIndicadoresPlanAction" scope="session" name="gestionarIndicadoresPlanForm" parameter="gestionarIniciativasPlanAction">
+			<forward name="gestionarIniciativasPlanAction" path="/planes/iniciativas/gestionarIniciativasPlan.action" />
+		</action>
+
+		<!-- Mapeo del Action: Asociar Indicador del Plan (Explorador) -->
+		<action path="/planes/indicadores/asociarIndicadorPlan" type="com.visiongc.app.strategos.web.struts.planes.indicadores.actions.AsociarIndicadorPlanAction"></action>
+
+		<!-- Mapeo del Action: Desasociar Indicador del Plan (Explorador) -->
+		<action path="/planes/indicadores/desasociarIndicadorPlan" type="com.visiongc.app.strategos.web.struts.planes.indicadores.actions.DesasociarIndicadorPlanAction"></action>
+
+		<!-- Mapeo del Action: Editar Pesos de Indicadores asociados a un Plan (Perspectiva) -->
+		<action path="/planes/indicadores/asignarPesosIndicadoresPlanPerspectiva" type="com.visiongc.app.strategos.web.struts.planes.indicadores.actions.AsignarPesosIndicadoresPlanAction" scope="session" name="asignarPesosIndicadoresPlanForm" parameter="asignarPesosIndicadoresPlan">
+			<forward name="asignarPesosIndicadoresPlan" path="/paginas/strategos/planes/indicadores/asignarPesosIndicadoresPlan.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Editar Pesos de Indicadores asociados a un Plan (Objetivo) -->
+		<action path="/planes/indicadores/editarPesosIndicadoresPlanObjetivo" type="com.visiongc.app.strategos.web.struts.planes.indicadores.actions.EditarPesosIndicadoresPlanAction" scope="session" name="editarPesosIndicadoresPlanForm" parameter="editarPesosIndicadoresPlan"></action>
+
+		<!-- Mapeo del Action: Editar Pesos de Indicadores asociados a un Plan (Común) -->
+		<action path="/planes/indicadores/asignarPesosIndicadoresPlan" type="com.visiongc.app.strategos.web.struts.planes.indicadores.actions.AsignarPesosIndicadoresPlanAction" scope="session" name="asignarPesosIndicadoresPlanForm" parameter="asignarPesosIndicadoresPlan">
+			<forward name="asignarPesosIndicadoresPlan" path="/paginas/strategos/planes/indicadores/asignarPesosIndicadoresPlan.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Gestionar Iniciativas del Plan (Explorador) -->
+		<action path="/planes/iniciativas/gestionarIniciativasPlan" type="com.visiongc.app.strategos.web.struts.planes.iniciativas.actions.GestionarIniciativasPlanAction" scope="session" name="gestionarIniciativasPlanForm" parameter="exploradorPlan">
+			<forward name="exploradorPlan" path="/paginas/strategos/planes/exploradorPlan.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Asociar Iniciativa a un Plan (Explorador) -->
+		<action path="/planes/iniciativas/asociarIniciativaPlan" type="com.visiongc.app.strategos.web.struts.planes.iniciativas.actions.AsociarIniciativaPlanAction"></action>
+
+		<!-- Mapeo del Action: Desasociar Iniciativa de un Plan (Explorador) -->
+		<action path="/planes/iniciativas/desasociarIniciativaPlan" type="com.visiongc.app.strategos.web.struts.planes.iniciativas.actions.DesasociarIniciativaPlanAction"></action>
+
+		<!-- Mapeo del Action: Vincular Iniciativa a un Plan (Explorador) -->
+		<action path="/planes/iniciativas/vincularIniciativaPlan" type="com.visiongc.app.strategos.web.struts.planes.iniciativas.actions.VincularIniciativaPlanAction"></action>
+
+		<!-- INICIO: Mapeos para las Metas del Plan -->
+
+		<!-- Mapeo del Action: Configurar Edición Metas -->
+		<action path="/planes/metas/configurarEdicionMetas" type="com.visiongc.app.strategos.web.struts.planes.metas.actions.ConfigurarEdicionMetasAction" scope="session" name="editarMetasForm" parameter="configurarEdicionMetas"></action>
+
+		<!-- Mapeo del Action: Cancelar Configurar Edición Metas -->
+		<action path="/planes/metas/cancelarConfigurarEdicionMetas" type="com.visiongc.app.strategos.web.struts.planes.metas.actions.ConfigurarEdicionMetasAction" scope="session" name="editarMetasForm"></action>
+
+		<!-- Mapeo del Action: Editar Metas Anuales -->
+		<action path="/planes/metas/editarMetas" type="com.visiongc.app.strategos.web.struts.planes.metas.actions.EditarMetasAction" scope="session" name="editarMetasForm" parameter="editarMetas"></action>
+
+		<!-- Mapeo del Action: Guardar Metas Anuales -->
+		<action path="/planes/metas/guardarMetas" type="com.visiongc.app.strategos.web.struts.planes.metas.actions.GuardarMetasAction" name="editarMetasForm" scope="session" input="editarMetas" parameter="editarMetas"></action>
+
+		<!-- Mapeo del Action: Editar Metas Parciales -->
+		<action path="/planes/metas/editarMetasParciales" type="com.visiongc.app.strategos.web.struts.planes.metas.actions.EditarMetasParcialesAction" scope="session" name="editarMetasParcialesForm" parameter="editarMetasParciales">
+			<forward name="editarMetasParciales" path="/paginas/strategos/planes/metas/editarMetasParciales.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Guardar Metas Parciales -->
+		<action path="/planes/metas/guardarMetasParciales" type="com.visiongc.app.strategos.web.struts.planes.metas.actions.GuardarMetasParcialesAction" name="editarMetasParcialesForm" scope="session" parameter="editarMetas">
+			<forward name="editarMetasParcialesFinalizar" path="/paginas/strategos/planes/metas/editarMetasParcialesFinalizar.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Metas -->
+		<action path="/planes/metas/cancelarGuardarMetas" type="com.visiongc.app.strategos.web.struts.planes.metas.actions.GuardarMetasAction" name="editarMetasForm" scope="session"></action>
+
+		<!-- FIN: Mapeos para las Metas del Plan -->
+
+		<!-- INICIO: Mapeos para los Valores Iniciales del Plan -->
+
+		<!-- Mapeo del Action: Configurar Valores Iniciales  -->
+		<action path="/planes/valoresiniciales/configurarEdicionValoresIniciales" type="com.visiongc.app.strategos.web.struts.planes.valoresiniciales.actions.ConfigurarEdicionValoresInicialesAction" scope="session" name="editarValoresInicialesForm" parameter="configurarEdicionValoresIniciales"></action>
+
+		<!-- Mapeo del Action: Cancelar Configurar Valores Iniciales -->
+		<action path="/planes/valoresiniciales/cancelarConfigurarEdicionValoresIniciales" type="com.visiongc.app.strategos.web.struts.planes.valoresiniciales.actions.ConfigurarEdicionValoresInicialesAction" scope="session" name="editarValoresInicialesForm"></action>
+
+		<!-- Mapeo del Action: Editar Valores Iniciales -->
+		<action path="/planes/valoresiniciales/editarValoresIniciales" type="com.visiongc.app.strategos.web.struts.planes.valoresiniciales.actions.EditarValoresInicialesAction" scope="session" name="editarValoresInicialesForm" parameter="editarValoresIniciales"></action>
+
+		<!-- Mapeo del Action: Guardar Valores Iniciales -->
+		<action path="/planes/valoresiniciales/guardarValoresIniciales" type="com.visiongc.app.strategos.web.struts.planes.valoresiniciales.actions.GuardarValoresInicialesAction" name="editarValoresInicialesForm" scope="session" input="editarValoresIniciales" parameter="editarValoresIniciales"></action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Valores Iniciales  -->
+		<action path="/planes/valoresiniciales/cancelarGuardarValoresIniciales" type="com.visiongc.app.strategos.web.struts.planes.valoresiniciales.actions.GuardarValoresInicialesAction" name="editarValoresInicialesForm" scope="session"></action>
+
+		<!-- Mapeo del Action: Importar Programado -->
+		<action path="/planes/indicadores/importarProgramado" type="com.visiongc.app.strategos.web.struts.planes.indicadores.actions.AsociarIndicadorPlanAction" name="importarProgramadoForm" scope="session" parameter="importarProgramado"></action>
+
+		<!-- Mapeo del Action: Enviar Correo -->
+		<action path="/planes/perspectivas/enviarEmail" type="com.visiongc.app.strategos.web.struts.email.actions.ValidarEmailAction"></action>
+		
+		<!-- Mapeo del Action: Pantalla de Iniciativas Resumida-->
+		<action path="/planes/protegerLiberar" type="com.visiongc.app.strategos.web.struts.planes.metas.actions.ProtegerLiberarPlanesAction" name="protegerLiberarMedicionesForm" scope="session" input="protegerPlan" parameter="protegerPlan"></action>
+
+		<!-- Mapeo del Action: Salvar Proteger/Liberar Mediciones -->
+		<action path="/planes/protegerLiberarSalvar" type="com.visiongc.app.strategos.web.struts.planes.metas.actions.ProtegerLiberarPlanesSalvarAction" name="protegerLiberarMedicionesForm" scope="session" parameter="protegerPlan"></action>
+		<!-- FIN: Mapeos para los Valores Iniciales del Plan -->
+
+	</action-mappings>
+
+</struts-config>

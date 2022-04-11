@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (06/11/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="editarClaseIndicadoresForm" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.forms.EditarClaseIndicadoresForm" />
+		<form-bean name="seleccionarClasesIndicadoresForm" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.forms.SeleccionarClasesIndicadoresForm" />
+		<form-bean name="seleccionarMultiplesClasesForm" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.forms.SeleccionarMultiplesClasesForm" />
+		<form-bean name="gestionarClaseIndicadoresForm" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.forms.GestionarClaseIndicadoresForm" />	
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarClaseIndicadores" path="/paginas/strategos/indicadores/clasesindicadores/editarClaseIndicadores.jsp" />
+		<forward name="propiedadesClaseIndicadores" path="/paginas/strategos/indicadores/clasesindicadores/propiedadesClaseIndicadores.jsp" />
+		<forward name="copiarClase" path="/paginas/strategos/indicadores/clasesindicadores/copiarClase.jsp" />
+		<forward name="seleccionarMultiplesClases" path="/paginas/strategos/indicadores/clasesindicadores/seleccionarMultiplesClases.jsp" />
+		<forward name="moverClase" path="/paginas/strategos/indicadores/clasesindicadores/moveClase.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Clase Indicadores -->
+		<action path="/indicadores/clasesindicadores/gestionarClasesIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.GestionarClasesIndicadoresAction" scope="request" name="gestionarClaseIndicadoresForm" parameter="gestionarIndicadoresAction"></action>
+
+		<!-- Mapeo del Action: Crear Clase Indicadores -->
+		<action path="/indicadores/clasesindicadores/crearClaseIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.EditarClaseIndicadoresAction" scope="request" name="editarClaseIndicadoresForm" parameter="editarClaseIndicadores"></action>
+
+		<!-- Mapeo del Action: Modificar Clase Indicadores -->
+		<action path="/indicadores/clasesindicadores/modificarClaseIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.EditarClaseIndicadoresAction" scope="request" name="editarClaseIndicadoresForm" parameter="editarClaseIndicadores"></action>
+
+		<!-- Mapeo del Action: Ver Clase Indicadores -->
+		<action path="/indicadores/clasesindicadores/verClaseIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.EditarClaseIndicadoresAction" scope="request" name="editarClaseIndicadoresForm" parameter="editarClaseIndicadores"></action>
+
+		<!-- Mapeo del Action: Guardar Clase Indicadores -->
+		<action path="/indicadores/clasesindicadores/guardarClaseIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.GuardarClaseIndicadoresAction" name="editarClaseIndicadoresForm" scope="request" input="editarClaseIndicadores" validate="true" parameter="editarClaseIndicadores">
+			<forward name="crearClaseIndicadores" path="/indicadores/clasesindicadores/crearClaseIndicadores.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Clase Indicadores -->
+		<action path="/indicadores/clasesindicadores/cancelarClaseIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.GuardarClaseIndicadoresAction" name="editarClaseIndicadoresForm" scope="request" parameter="editarClaseIndicadores"></action>
+
+		<!-- Mapeo del Action: Propiedades Clase Indicadores-->
+		<action path="/indicadores/clasesindicadores/propiedadesClaseIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.MostrarPropiedadesClaseIndicadoresAction" name="editarClaseIndicadoresForm" scope="request" parameter="propiedadesClaseIndicadores"></action>
+
+		<!-- Mapeo del Action: Eliminar Clase Indicadores -->
+		<action path="/indicadores/clasesindicadores/eliminarClaseIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.EliminarClaseIndicadoresAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte de Clases de Indicadores -->
+		<action path="/indicadores/clasesindicadores/generarReporteClasesIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.ReporteClasesIndicadoresAction"></action>
+
+		<!-- Mapeo del Action: Seleccionar Clase de Indicadores  -->
+		<action path="/indicadores/clasesindicadores/seleccionarClasesIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.SeleccionarClasesIndicadoresAction" scope="session" name="seleccionarClasesIndicadoresForm" parameter="seleccionarClases">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarClases" path="/paginas/strategos/indicadores/clasesindicadores/seleccionarClasesIndicadores.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Indicadores Organizaciones -->
+		<action path="/indicadores/seleccionarClasesOrganizaciones" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.SeleccionarClasesOrganizacionesAction" scope="session" name="seleccionarClasesIndicadoresForm" parameter="seleccionarClasesIndicadores">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarClasesIndicadores" path="/indicadores/clasesindicadores/seleccionarClasesIndicadores.action" />
+		</action>
+
+		<action path="/indicadores/clasesindicadores/seleccionarClasesIndicadoresInterno" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.SeleccionarClasesIndicadoresAction" scope="session" name="seleccionarClasesIndicadoresForm" parameter="seleccionarClasesIndicadores">
+			<set-property property="secure" value="false" />
+		</action>
+		
+		<!-- Mapeo del Action: Seleccionar multiples clases  -->
+		<action path="/indicadores/seleccionarMultiplesClases" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.SeleccionarMultiplesClasesAction" scope="session" name="seleccionarMultiplesClasesForm" parameter="seleccionarMultiplesClases"></action>
+		
+		<!-- Mapeo del Action: Leer Clase -->
+		<action path="/indicadores/clasesindicadores/copiarClase" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.EditarClaseIndicadoresAction" name="editarClaseIndicadoresForm" scope="request" parameter="copiarClase"></action>
+
+		<!-- Mapeo del Action: Copiar Clase -->
+		<action path="/indicadores/clasesindicadores/guardarCopiarClase" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.CopiarClaseIndicadoresAction" name="editarClaseIndicadoresForm" scope="request" input="copiarClase" parameter="copiarClase"></action>
+		
+		<!-- Mapeo del Action: Cancelar Clase -->
+		<action path="/indicadores/clasesindicadores/cancelarCopiarClase" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.CopiarClaseIndicadoresAction" name="editarClaseIndicadoresForm" scope="request" parameter="copiarClase"></action>
+
+		<!-- Mapeo del Action: llamar pantalla principal mover Clase -->
+		<action path="/indicadores/clasesindicadores/moverClase" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.EditarClaseIndicadoresAction" name="editarClaseIndicadoresForm" scope="request" parameter="moverClase"></action>
+
+		<!-- Mapeo del Action: Mover Clase -->
+		<action path="/indicadores/clasesindicadores/guardarMoverClase" type="com.visiongc.app.strategos.web.struts.indicadores.clasesindicadores.actions.MoverClaseIndicadoresAction"></action>
+
+	</action-mappings>
+</struts-config>

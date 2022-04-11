@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (25/09/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="editarIniciativaForm" type="com.visiongc.app.strategos.web.struts.iniciativas.forms.EditarIniciativaForm" />
+		<form-bean name="gestionarIniciativasForm" type="com.visiongc.app.strategos.web.struts.iniciativas.forms.GestionarIniciativasForm" />
+		<form-bean name="gestionarIndicadoresIniciativaForm" type="com.visiongc.app.strategos.web.struts.iniciativas.forms.GestionarIndicadoresIniciativaForm" />
+		<form-bean name="gestionarIniciativasPlanForm" type="com.visiongc.app.strategos.web.struts.planes.iniciativas.forms.GestionarIniciativasPlanForm" />
+		<form-bean name="seleccionarIniciativasForm" type="com.visiongc.app.strategos.web.struts.iniciativas.forms.SeleccionarIniciativasForm" />
+		<form-bean name="mostrarGestionIniciativaForm" type="com.visiongc.app.strategos.web.struts.iniciativas.forms.MostrarGestionIniciativaForm" />
+		<form-bean name="relacionIniciativaForm" type="com.visiongc.app.strategos.web.struts.iniciativas.forms.RelacionIniciativaForm" />
+		<!-- Estados de la Iniciativa -->
+		<form-bean name="gestionarIniciativaEstatusForm" type="com.visiongc.app.strategos.web.struts.iniciativas.estatus.forms.GestionarIniciativaEstatusForm" />
+		<form-bean name="editarIniciativaEstatusForm" type="com.visiongc.app.strategos.web.struts.iniciativas.estatus.forms.EditarIniciativaEstatusForm" />
+		<form-bean name="protegerLiberarIniciativasForm" type="com.visiongc.app.strategos.web.struts.iniciativas.forms.ProtegerLiberarIniciativasForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarIniciativa" path="/paginas/strategos/iniciativas/editarIniciativa.jsp" />
+		<forward name="propiedadesIniciativa" path="/paginas/strategos/iniciativas/propiedadesIniciativa.jsp" />
+		<forward name="visualizarIniciativa" path="/paginas/strategos/iniciativas/visualizarIniciativa.jsp" />
+		<forward name="exploradorIniciativas" path="/paginas/strategos/iniciativas/exploradorIniciativas.jsp" />
+		<forward name="mostrarGestionIniciativaAction" path="/iniciativas/mostrarGestionIniciativa.action" />
+		<forward name="gestionarIndicadoresIniciativaAction" path="/iniciativas/gestionarIndicadoresIniciativa.action" />
+		<forward name="gestionarIniciativasAction" path="/iniciativas/gestionarIniciativas.action" />
+		<forward name="visualizarIniciativasRelacionadas" path="/paginas/strategos/iniciativas/visualizarIniciativasRelacionadas.jsp" />
+		<forward name="configurarCalculoIniciativas" path="/paginas/strategos/calculos/configurarCalculoIniciativas.jsp" />
+		<forward name="historicoIniciativas" path="/paginas/strategos/iniciativas/historicoIniciativa.jsp" />
+		<!-- Estados de la Iniciativa -->
+		<forward name="gestionarEstatusIniciativas" path="/paginas/strategos/iniciativas/estatus/gestionarEstatus.jsp" />
+		<forward name="editarIniciativaEstatus" path="/paginas/strategos/iniciativas/estatus/editarEstatus.jsp" />
+		<forward name="protegerLiberarIniciativa" path="/paginas/strategos/iniciativas/protegerLiberarIniciativas.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Iniciativa -->
+		<action path="/iniciativas/gestionarIniciativas" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.GestionarIniciativasAction" scope="session" name="gestionarIniciativasForm" parameter="mostrarGestionIniciativaAction"></action>
+
+		<!-- Mapeo del Action: Gestionar Iniciativa De Plan -->
+		<action path="/iniciativas/gestionarIniciativasDePlan" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.GestionarIniciativasAction" scope="session" name="gestionarIniciativasForm" parameter="mostrarGestionIniciativaAction"></action>
+
+		<!-- Mapeo del Action: Gestionar Iniciativa -->
+		<action path="/iniciativas/gestionarIndicadoresIniciativa" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.GestionarIndicadoresIniciativaAction" scope="session" name="gestionarIndicadoresIniciativaForm" parameter="exploradorIniciativas"></action>
+
+		<!-- Mapeo del Action: Crear Iniciativa-->
+		<action path="/iniciativas/crearIniciativa" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.EditarIniciativaAction" scope="request" name="editarIniciativaForm" parameter="editarIniciativa"></action>
+
+		<!-- Mapeo del Action: Modificar Iniciativa-->
+		<action path="/iniciativas/modificarIniciativa" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.EditarIniciativaAction" scope="request" name="editarIniciativaForm" parameter="editarIniciativa"></action>
+
+		<!-- Mapeo del Action: Ver Iniciativa-->
+		<action path="/iniciativas/verIniciativa" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.EditarIniciativaAction" scope="request" name="editarIniciativaForm" parameter="editarIniciativa"></action>
+
+		<!-- Mapeo del Action: Guardar Iniciativa-->
+		<action path="/iniciativas/guardarIniciativa" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.GuardarIniciativaAction" name="editarIniciativaForm" scope="request" input="editarIniciativa" validate="true" parameter="editarIniciativa">
+			<forward name="crearIniciativa" path="/iniciativas/crearIniciativa.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Iniciativa-->
+		<action path="/iniciativas/cancelarGuardarIniciativa" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.GuardarIniciativaAction" name="editarIniciativaForm" scope="request" parameter="editarIniciativa"></action>
+
+		<!-- Mapeo del Action: Propiedades Iniciativa-->
+		<action path="/iniciativas/propiedadesIniciativa" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.MostrarPropiedadesIniciativaAction" name="editarIniciativaForm" scope="request" parameter="propiedadesIniciativa"></action>
+
+		<!-- Mapeo del Action: Visualizar Iniciativa-->
+		<action path="/iniciativas/visualizarIniciativa" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.VisualizarIniciativaAction" name="editarIniciativaForm" scope="request" parameter="visualizarIniciativa"></action>
+
+		<!-- Mapeo del Action: Guardar Iniciativa-->
+		<action path="/iniciativas/guardarIniciativaSoloLectura" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.GuardarIniciativaSoloLecturaAction" name="editarIniciativaForm" scope="request" parameter="editarIniciativa"></action>
+
+		<!-- Mapeo del Action: Eliminar Iniciativa-->
+		<action path="/iniciativas/eliminarIniciativa" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.EliminarIniciativaAction"></action>
+
+		<!-- Mapeo del Action: Seleccionar Iniciativas -->
+		<action path="/iniciativas/seleccionarIniciativas" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.SeleccionarIniciativasAction" scope="session" name="seleccionarIniciativasForm" parameter="seleccionarIniciativasOrganizacionesAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarIniciativasOrganizacionesAction" path="/iniciativas/seleccionarIniciativasOrganizaciones.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Iniciativas Organizaciones -->
+		<action path="/iniciativas/seleccionarIniciativasOrganizaciones" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.SeleccionarIniciativasOrganizacionesAction" scope="session" name="seleccionarIniciativasForm" parameter="seleccionarIniciativasPlanesAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarIniciativasPlanesAction" path="/iniciativas/seleccionarIniciativasPlanes.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Iniciativas Planes -->
+		<action path="/iniciativas/seleccionarIniciativasPlanes" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.SeleccionarIniciativasPlanesAction" scope="session" name="seleccionarIniciativasForm" parameter="seleccionarIniciativasIniciativasAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarIniciativasIniciativasAction" path="/iniciativas/seleccionarIniciativasIniciativas.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Iniciativas Iniciativas -->
+		<action path="/iniciativas/seleccionarIniciativasIniciativas" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.SeleccionarIniciativasIniciativasAction" scope="session" name="seleccionarIniciativasForm" parameter="seleccionarIniciativas">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarIniciativas" path="/paginas/strategos/iniciativas/seleccionarIniciativas.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Mostrar Gestion Iniciativas -->
+		<action path="/iniciativas/mostrarGestionIniciativa" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.MostrarGestionIniciativaAction" scope="session" name="mostrarGestionIniciativaForm" parameter="exploradorIniciativas"></action>
+
+		<!-- Mapeo del Action: Enviar Correo -->
+		<action path="/iniciativas/enviarEmail" type="com.visiongc.app.strategos.web.struts.email.actions.ValidarEmailAction"></action>
+		
+		<!-- Mapeo del Action: Visualizar Iniciativas Relacionados -->
+		<action path="/iniciativas/visualizarIniciativasRelacionadas" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.VisualizarIniciativasRelacionadasAction" scope="session" name="relacionIniciativaForm" parameter="visualizarIniciativasRelacionadas"></action>
+
+		<!-- Mapeo del Action: Configurar Calcular Iniciativas -->
+		<action path="/iniciativas/configurarCalculoIniciativas" type="com.visiongc.app.strategos.web.struts.calculos.actions.ConfigurarCalculoIniciativasAction" name="calculoIndicadoresForm" scope="session" parameter="configurarCalculoIniciativas">
+			<forward name="exito" path="/iniciativas/calcularIniciativas.action" />
+		</action>
+
+		<!-- Mapeo del Action: Calcular Iniciativas -->
+		<action path="/iniciativas/calcularIniciativas" type="com.visiongc.app.strategos.web.struts.calculos.actions.CalcularIniciativasAction" name="calculoIndicadoresForm" scope="session" validate="true" input="/paginas/strategos/calculos/configurarCalculoIniciativas.jsp" parameter="configurarCalculoIniciativas"></action>
+
+		<!-- Mapeo del Action: Visualizar Historico Iniciativas -->
+		<action path="/iniciativas/historicoIniciativa" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.HistoricoIniciativaAction" scope="session" name="gestionarIniciativasForm" parameter="historicoIniciativas"></action>
+		
+		<!-- Mapeo del Action: Gestionar Estatus de las Iniciativas -->
+		<action path="/iniciativas/estatus/gestionarEstatus" type="com.visiongc.app.strategos.web.struts.iniciativas.estatus.actions.GestionarIniciativaEstatusAction" scope="session" name="gestionarIniciativaEstatusForm" parameter="gestionarEstatusIniciativas"></action>
+
+		<!-- Mapeo del Action: Crear Estatus de las Iniciativas -->
+		<action path="/iniciativas/estatus/editar/crear" type="com.visiongc.app.strategos.web.struts.iniciativas.estatus.actions.EditarIniciativaEstatusAction" scope="request" name="editarIniciativaEstatusForm" parameter="editarIniciativaEstatus"></action>
+
+		<!-- Mapeo del Action: Modificar Estatus de las Iniciativas -->
+		<action path="/iniciativas/estatus/editar/modificar" type="com.visiongc.app.strategos.web.struts.iniciativas.estatus.actions.EditarIniciativaEstatusAction" scope="request" name="editarIniciativaEstatusForm" parameter="editarIniciativaEstatus"></action>
+		
+		<!-- Mapeo del Action: Guardar Estatus de las Iniciativas -->
+		<action path="/iniciativas/estatus/guardar" type="com.visiongc.app.strategos.web.struts.iniciativas.estatus.actions.GuardarIniciativaEstatusAction" name="editarIniciativaEstatusForm" scope="request" input="editarIniciativaEstatus" validate="true" parameter="editarIniciativaEstatus">
+			<forward name="crearEstatus" path="/iniciativas/estatus/editar/crear.action" />
+		</action>
+		
+		<!-- Mapeo del Action: Eliminar Acción Correctiva -->
+		<action path="/iniciativas/estatus/eliminar" type="com.visiongc.app.strategos.web.struts.iniciativas.estatus.actions.EliminarIniciativaEstatusAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Status -->
+		<action path="/iniciativas/estatus/generarReporte" type="com.visiongc.app.strategos.web.struts.iniciativas.estatus.actions.ReporteIniciativaEstatusAction"></action>
+							
+		<!-- Mapeo del Action: Proteger/Liberar Mediciones -->
+		<action path="/iniciativas/desbloquearCulminadoSalvar" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.DesbloquearCulminadoSalvarAction" ></action>
+		
+		<!-- Mapeo del Action: Proteger/Liberar Iniciativas -->
+		<action path="/iniciativas/protegerLiberar" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.ProtegerLiberarIniciativaAction" name="protegerLiberarIniciativasForm" scope="session" input="protegerLiberarIniciativa" parameter="protegerLiberarIniciativa"></action>
+
+		<!-- Mapeo del Action: Salvar Proteger/Liberar Iniciativas -->
+		<action path="/iniciativas/protegerLiberarSalvar" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.ProtegerLiberarIniciativaSalvarAction" name="protegerLiberarIniciativasForm" scope="session" parameter="protegerLiberarIniciativa"></action>
+		
+		
+						
+		</action-mappings>
+</struts-config>

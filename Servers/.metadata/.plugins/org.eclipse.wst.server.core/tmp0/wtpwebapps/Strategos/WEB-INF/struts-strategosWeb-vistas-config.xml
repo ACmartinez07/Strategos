@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (13/06/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarVistasForm" type="com.visiongc.app.strategos.web.struts.presentaciones.vistas.forms.GestionarVistasForm" />
+		<form-bean name="editarVistaForm" type="com.visiongc.app.strategos.web.struts.presentaciones.vistas.forms.EditarVistaForm" />
+		<form-bean name="showVistaForm" type="com.visiongc.app.strategos.web.struts.presentaciones.vistas.forms.ShowVistaForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarVista" path="/paginas/strategos/presentaciones/vistas/editarVista.jsp" />
+		<forward name="gestionarVistasAction" path="/presentaciones/vistas/gestionarVistas.action" />
+		<forward name="mostrarVista" path="/paginas/strategos/presentaciones/vistas/mostrarVista.jsp" />
+		<forward name="gestionarVistas" path="/paginas/strategos/presentaciones/vistas/gestionarVistas.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Vistas -->
+		<action path="/presentaciones/vistas/gestionarVistas" type="com.visiongc.app.strategos.web.struts.presentaciones.vistas.actions.GestionarVistasAction" scope="session" name="gestionarVistasForm" parameter="gestionarPaginasAction"></action>
+
+		<!-- Mapeo del Action: Crear Vista -->
+		<action path="/presentaciones/vistas/crearVista" type="com.visiongc.app.strategos.web.struts.presentaciones.vistas.actions.EditarVistaAction" scope="session" name="editarVistaForm" parameter="editarVista"></action>
+
+		<!-- Mapeo del Action: Modificar Vista -->
+		<action path="/presentaciones/vistas/modificarVista" type="com.visiongc.app.strategos.web.struts.presentaciones.vistas.actions.EditarVistaAction" scope="session" name="editarVistaForm" parameter="editarVista"></action>
+
+		<!-- Mapeo del Action: Ver Vista -->
+		<action path="/presentaciones/vistas/verVista" type="com.visiongc.app.strategos.web.struts.presentaciones.vistas.actions.EditarVistaAction" scope="session" name="editarVistaForm" parameter="editarVista"></action>
+
+		<!-- Mapeo del Action: Guardar Vista -->
+		<action path="/presentaciones/vistas/guardarVista" type="com.visiongc.app.strategos.web.struts.presentaciones.vistas.actions.GuardarVistaAction" name="editarVistaForm" scope="session" input="editarVista" validate="true" parameter="editarVista">
+			<forward name="crearVista" path="/presentaciones/vistas/crearVista.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Vista -->
+		<action path="/presentaciones/vistas/cancelarGuardarVista" type="com.visiongc.app.strategos.web.struts.presentaciones.vistas.actions.GuardarVistaAction" name="editarVistaForm" scope="session" parameter="editarVista"></action>
+
+		<!-- Mapeo del Action: Eliminar Vista -->
+		<action path="/presentaciones/vistas/eliminarVista" type="com.visiongc.app.strategos.web.struts.presentaciones.vistas.actions.EliminarVistaAction"></action>
+
+		<!-- Mapeo del Action: Mostrar Vista -->
+		<action path="/presentaciones/vistas/mostrarVista" type="com.visiongc.app.strategos.web.struts.presentaciones.vistas.actions.MostrarVistaAction" name="showVistaForm" scope="session" parameter="mostrarVista"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte Vistas -->
+		<action path="/presentaciones/vistas/generarReporteVistas" type="com.visiongc.app.strategos.web.struts.presentaciones.vistas.actions.ReporteVistasAction"></action>
+		
+	</action-mappings>
+
+</struts-config>

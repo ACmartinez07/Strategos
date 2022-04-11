@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (25/09/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarIndicadoresForm" type="com.visiongc.app.strategos.web.struts.indicadores.forms.GestionarIndicadoresForm" />
+		<form-bean name="gestionarIndicadoresPlanForm" type="com.visiongc.app.strategos.web.struts.indicadores.planes.forms.GestionarIndicadoresPlanForm" />
+		<form-bean name="editarIndicadorForm" type="com.visiongc.app.strategos.web.struts.indicadores.forms.EditarIndicadorForm" />
+		<form-bean name="seleccionarIndicadoresForm" type="com.visiongc.app.strategos.web.struts.indicadores.forms.SeleccionarIndicadoresForm" />
+		<form-bean name="indicadorConsolidadoForm" type="com.visiongc.app.strategos.web.struts.indicadores.forms.IndicadorConsolidadoForm" />
+		<form-bean name="importarMedicionesForm" type="com.visiongc.app.strategos.web.struts.indicadores.forms.ImportarMedicionesForm" />
+		<form-bean name="reporteComiteEjecutivoForm" type="com.visiongc.app.strategos.web.struts.reportes.forms.ReporteComiteEjecutivoForm" />
+		<form-bean name="importarSeleccionForm" type="com.visiongc.app.strategos.web.struts.indicadores.forms.ImportarSeleccionForm" />
+		<form-bean name="indicadorInventarioForm" type="com.visiongc.app.strategos.web.struts.indicadores.forms.IndicadorInventarioForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarIndicador" path="/paginas/strategos/indicadores/editar/editarIndicador.jsp" />
+		<forward name="gestionarIndicadoresAction" path="/indicadores/gestionarIndicadores.action" />
+		<forward name="propiedadesIndicador" path="/paginas/strategos/indicadores/propiedadesIndicador.jsp" />
+		<forward name="visualizarIndicador" path="/paginas/strategos/indicadores/visualizarIndicador.jsp" />
+		<forward name="exploradorIndicadores" path="/paginas/strategos/indicadores/exploradorIndicadores.jsp" />
+		<forward name="copiarIndicador" path="/paginas/strategos/indicadores/copiarIndicador.jsp" />
+		<forward name="indicadorConsolidado" path="/paginas/strategos/indicadores/consolidados/indicadorConsolidado.jsp" />
+		<forward name="asistenteImportarMediciones" path="/paginas/strategos/indicadores/importacion/asistenteImportarMediciones.jsp" />
+		<forward name="reporteComiteEjecutivo" path="/paginas/strategos/reportes/indicadores/parametrosReporteComiteEjecutivo.jsp" />
+		<forward name="listaImportacion" path="/paginas/strategos/indicadores/importacion/listaImportacion.jsp" />
+		<forward name="moverIndicador" path="/paginas/strategos/indicadores/moveIndicadores.jsp" />
+		<forward name="transformarInventario" path="/paginas/strategos/indicadores/transformarInventario.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Indicador -->
+		<action path="/indicadores/gestionarIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.actions.GestionarIndicadoresAction" scope="session" name="gestionarIndicadoresForm" parameter="exploradorIndicadores"></action>
+
+		<!-- Mapeo del Action: Crear Indicador -->
+		<action path="/indicadores/crearIndicador" type="com.visiongc.app.strategos.web.struts.indicadores.actions.EditarIndicadorAction" scope="session" name="editarIndicadorForm" parameter="editarIndicador"></action>
+
+		<!-- Mapeo del Action: Modificar Indicador -->
+		<action path="/indicadores/modificarIndicador" type="com.visiongc.app.strategos.web.struts.indicadores.actions.EditarIndicadorAction" scope="session" name="editarIndicadorForm" parameter="editarIndicador"></action>
+
+		<!-- Mapeo del Action: Ver Indicador -->
+		<action path="/indicadores/verIndicador" type="com.visiongc.app.strategos.web.struts.indicadores.actions.EditarIndicadorAction" scope="session" name="editarIndicadorForm" parameter="editarIndicador"></action>
+
+		<!-- Mapeo del Action: Modificar Indicador -->
+		<action path="/indicadores/editarIndicadorFuncion" type="com.visiongc.app.strategos.web.struts.indicadores.actions.EditarIndicadorFuncionAction"></action>
+
+		<!-- Mapeo del Action: Guardar Indicador -->
+		<action path="/indicadores/guardarIndicador" type="com.visiongc.app.strategos.web.struts.indicadores.actions.GuardarIndicadorAction" name="editarIndicadorForm" scope="session" input="editarIndicador" validate="true" parameter="editarIndicador">
+			<forward name="crearIndicador" path="/indicadores/crearIndicador.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Indicador -->
+		<action path="/indicadores/cancelarGuardarIndicador" type="com.visiongc.app.strategos.web.struts.indicadores.actions.GuardarIndicadorAction" name="editarIndicadorForm" scope="session" parameter="editarIndicador"></action>
+
+		<!-- Mapeo del Action: Eliminar Indicador -->
+		<action path="/indicadores/eliminarIndicador" type="com.visiongc.app.strategos.web.struts.indicadores.actions.EliminarIndicadorAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte de Indicadores -->
+		<action path="/indicadores/generarReporteIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.actions.ReporteIndicadoresAction"></action>
+
+		<!-- Mapeo del Action: Seleccionar Indicadores -->
+		<action path="/indicadores/seleccionarIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.actions.SeleccionarIndicadoresAction" scope="session" name="seleccionarIndicadoresForm" parameter="seleccionarIndicadoresOrganizacionesAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarIndicadoresOrganizacionesAction" path="/indicadores/seleccionarIndicadoresOrganizaciones.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Indicadores Organizaciones -->
+		<action path="/indicadores/seleccionarIndicadoresOrganizaciones" type="com.visiongc.app.strategos.web.struts.indicadores.actions.SeleccionarIndicadoresOrganizacionesAction" scope="session" name="seleccionarIndicadoresForm" parameter="seleccionarIndicadoresClasesIndicadoresAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarIndicadoresClasesIndicadoresAction" path="/indicadores/seleccionarIndicadoresClasesIndicadores.action" />
+			<forward name="seleccionarIndicadoresIniciativasAction" path="/indicadores/seleccionarIndicadoresIniciativas.action" />
+			<forward name="seleccionarIndicadoresPlanesAction" path="/indicadores/seleccionarIndicadoresPlanes.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Indicadores Clases de Indicadores -->
+		<action path="/indicadores/seleccionarIndicadoresClasesIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.actions.SeleccionarIndicadoresClasesIndicadoresAction" scope="session" name="seleccionarIndicadoresForm" parameter="seleccionarIndicadoresIndicadoresAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarIndicadoresIndicadoresAction" path="/indicadores/seleccionarIndicadoresIndicadores.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Indicadores Iniciativas -->
+		<action path="/indicadores/seleccionarIndicadoresIniciativas" type="com.visiongc.app.strategos.web.struts.indicadores.actions.SeleccionarIndicadoresIniciativasAction" scope="session" name="seleccionarIndicadoresForm" parameter="seleccionarIndicadoresIndicadoresAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarIndicadoresIndicadoresAction" path="/indicadores/seleccionarIndicadoresIndicadores.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Indicadores Planes -->
+		<action path="/indicadores/seleccionarIndicadoresPlanes" type="com.visiongc.app.strategos.web.struts.indicadores.actions.SeleccionarIndicadoresPlanesAction" scope="session" name="seleccionarIndicadoresForm" parameter="seleccionarIndicadoresIndicadoresAction">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarIndicadoresIndicadoresAction" path="/indicadores/seleccionarIndicadoresIndicadores.action" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Indicadores Indicadores -->
+		<action path="/indicadores/seleccionarIndicadoresIndicadores" type="com.visiongc.app.strategos.web.struts.indicadores.actions.SeleccionarIndicadoresIndicadoresAction" scope="session" name="seleccionarIndicadoresForm" parameter="seleccionarIndicadores">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarIndicadores" path="/paginas/strategos/indicadores/seleccionarIndicadores.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Propiedades Indicador -->
+		<action path="/indicadores/propiedadesIndicador" type="com.visiongc.app.strategos.web.struts.indicadores.actions.MostrarPropiedadesIndicadorAction" name="editarIndicadorForm" scope="request" parameter="propiedadesIndicador"></action>
+
+		<!-- Mapeo del Action: Visualizar Indicador -->
+		<action path="/indicadores/visualizarIndicador" type="com.visiongc.app.strategos.web.struts.indicadores.actions.VisualizarIndicadorAction" name="editarIndicadorForm" scope="request" parameter="visualizarIndicador"></action>
+
+		<!-- Mapeo del Action: Guardar Indicador Solo Lectura -->
+		<action path="/indicadores/guardarIndicadorSoloLectura" type="com.visiongc.app.strategos.web.struts.indicadores.actions.GuardarIndicadorSoloLecturaAction" name="editarIndicadorForm" scope="request"></action>
+
+		<!-- Mapeo del Action: Mover Indicador -->
+		<action path="/indicadores/moverIndicador" type="com.visiongc.app.strategos.web.struts.indicadores.actions.EditarIndicadorAction" name="editarIndicadorForm" scope="request" parameter="moverIndicador"></action>
+
+		<!-- Mapeo del Action: Salvar Copiar Indicador -->
+		<action path="/indicadores/guardarMoverIndicador" type="com.visiongc.app.strategos.web.struts.indicadores.actions.EditarIndicadorAction" name="editarIndicadorForm" scope="request" input="moverIndicador" parameter="moverIndicador"></action>
+
+		<!-- Mapeo del Action: Leer Indicador -->
+		<action path="/indicadores/copiarIndicador" type="com.visiongc.app.strategos.web.struts.indicadores.actions.EditarIndicadorAction" name="editarIndicadorForm" scope="request" parameter="copiarIndicador"></action>
+
+		<!-- Mapeo del Action: Copiar Indicador -->
+		<action path="/indicadores/guardarCopiarIndicador" type="com.visiongc.app.strategos.web.struts.indicadores.actions.CopiarIndicadorAction" name="editarIndicadorForm" scope="request" input="copiarIndicador" parameter="copiarIndicador"></action>
+		
+		<!-- Mapeo del Action: Cancelar Indicador -->
+		<action path="/indicadores/cancelarCopiarIndicador" type="com.visiongc.app.strategos.web.struts.indicadores.actions.CopiarIndicadorAction" name="editarIndicadorForm" scope="request" parameter="copiarIndicador"></action>
+
+		<!-- Mapeo del Action: Importar Mediciones  -->
+		<action path="/indicadores/importar" type="com.visiongc.app.strategos.web.struts.indicadores.actions.ImportarMedicionesAction" name="importarMedicionesForm" scope="session" input="asistenteImportarMediciones" parameter="asistenteImportarMediciones"></action>
+
+		<!-- Mapeo del Action: Importar Mediciones  -->
+		<action path="/indicadores/importarSalvar" type="com.visiongc.app.strategos.web.struts.indicadores.actions.ImportarMedicionesSalvarAction" name="importarMedicionesForm" scope="session" parameter="asistenteImportarMediciones"></action>
+
+		<!-- Mapeo del Action: Importar Mediciones  -->
+		<action path="/indicadores/verArchivoLog" type="com.visiongc.app.strategos.web.struts.indicadores.actions.VerArchivoLog"></action>
+		
+		<!-- Mapeo del Action: Reporte Comite Ejecutivo -->
+		<action path="/reportes/indicadores/reporteComiteEjecutivo" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReporteComiteEjecutivoAction" name="reporteComiteEjecutivoForm" scope="request" parameter="reporteComiteEjecutivo"></action>
+		
+		<!-- Mapeo del Action: Generar Comite Ejecutivo PDF -->
+		<action path="/reportes/indicadores/reporteComiteEjecutivoPDF" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReporteComiteEjecutivoPDFAction"></action>
+
+		<!-- Mapeo del Action: Crear Indicadores Consolidados  -->
+		<action path="/indicadores/indicadorConsolidado" type="com.visiongc.app.strategos.web.struts.indicadores.actions.IndicadoresConsolidadosAction" name="indicadorConsolidadoForm" scope="request" parameter="indicadorConsolidado"></action>
+		
+		<!-- Mapeo del Action: Leer Lista importaciones -->
+		<action path="/indicadores/listaImportacion" type="com.visiongc.app.strategos.web.struts.indicadores.actions.ImportarSeleccionAction" name="importarSeleccionForm" scope="session" parameter="listaImportacion"></action>
+		
+		<!-- Mapeo del Action: Eliminar Importacion -->
+		<action path="/indicadores/eliminarImportacion" type="com.visiongc.app.strategos.web.struts.indicadores.actions.ImportarMedicionesSalvarAction"></action>
+
+		<!-- Mapeo del Action: Enviar Correo -->
+		<action path="/indicadores/enviarEmailIndicador" type="com.visiongc.app.strategos.web.struts.email.actions.ValidarEmailAction"></action>
+		
+		<!-- Mapeo del Action: Proteger/Liberar Mediciones -->
+		<action path="/indicadores/transformarInventario" type="com.visiongc.app.strategos.web.struts.indicadores.actions.TransformarInventarioAction" name="indicadorInventarioForm" scope="session" input="transformarInventario" parameter="transformarInventario"></action>
+		
+		<!-- Mapeo del Action: Proteger/Liberar Mediciones -->
+		<action path="/indicadores/transformarInventarioSalvar" type="com.visiongc.app.strategos.web.struts.indicadores.actions.TransformarInventarioSalvarAction" name="indicadorInventarioForm" scope="session" parameter="transformarInventario"></action>
+		
+		
+		
+		
+	</action-mappings>
+</struts-config>

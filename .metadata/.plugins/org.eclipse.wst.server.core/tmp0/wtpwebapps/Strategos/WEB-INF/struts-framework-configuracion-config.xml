@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "struts-config_1_3.dtd">
+
+<!-- Creado por: Kerwin Arias (29/08/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="editarConfiguracionVisorListaForm" type="com.visiongc.framework.web.struts.forms.configuracion.EditarConfiguracionVisorListaForm" />
+		<form-bean name="editarConfiguracionPaginaForm" type="com.visiongc.framework.web.struts.forms.configuracion.EditarConfiguracionPaginaForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarConfiguracionVisorLista" path="/paginas/framework/configuracion/visorlista/editarConfiguracionVisorLista.jsp" />
+		<forward name="editarConfiguracionVisorListaModal" path="/paginas/framework/configuracion/visorlista/editarConfiguracionVisorListaModal.jsp" />
+		<forward name="editarConfiguracionPagina" path="/paginas/framework/configuracion/pagina/editarConfiguracionPagina.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings type="org.apache.struts.config.SecureActionConfig">
+
+		<!-- Mapeo del Action: Editar Configuracion de Visor Lista -->
+		<action path="/framework/configuracion/editarConfiguracionVisorLista" type="com.visiongc.framework.web.struts.actions.configuracion.EditarConfiguracionVisorListaAction" name="editarConfiguracionVisorListaForm" scope="request" parameter="editarConfiguracionVisorLista"></action>
+		
+		<!-- Mapeo del Action: Guardar Configuracion de Visor Lista -->
+		<action path="/framework/configuracion/guardarConfiguracionVisorLista" type="com.visiongc.framework.web.struts.actions.configuracion.GuardarConfiguracionVisorListaAction" name="editarConfiguracionVisorListaForm" scope="request" parameter="editarConfiguracionVisorLista" input="editarConfiguracionVisorLista"></action>
+
+		<!-- Mapeo del Action: Editar Configuracion de Visor Lista Modal -->
+		<action path="/framework/configuracion/editarConfiguracionVisor" type="com.visiongc.framework.web.struts.actions.configuracion.EditarConfiguracionVisorListaAction" name="editarConfiguracionVisorListaForm" scope="request" parameter="editarConfiguracionVisorListaModal"></action>
+
+		<!-- Mapeo del Action: Guardar Configuracion de Visor Lista -->
+		<action path="/framework/configuracion/guardarConfiguracionVisor" type="com.visiongc.framework.web.struts.actions.configuracion.GuardarConfiguracionVisorListaAction"></action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Configuracion de Visor Lista -->
+		<action path="/framework/configuracion/cancelarGuardarConfiguracionVisorLista" type="com.visiongc.framework.web.struts.actions.configuracion.GuardarConfiguracionVisorListaAction" name="editarConfiguracionVisorListaForm" scope="request"></action>
+
+		<!-- Mapeo del Action: Editar Configuracion de Visor Lista -->
+		<action path="/framework/configuracion/editarConfiguracionPagina" type="com.visiongc.framework.web.struts.actions.configuracion.EditarConfiguracionPaginaAction" name="editarConfiguracionPaginaForm" scope="request" parameter="editarConfiguracionPagina"></action>
+
+		<!-- Mapeo del Action: Guardar Configuracion de Visor Lista -->
+		<action path="/framework/configuracion/guardarConfiguracionPagina" type="com.visiongc.framework.web.struts.actions.configuracion.GuardarConfiguracionPaginaAction" name="editarConfiguracionPaginaForm" scope="request" parameter="editarConfiguracionPagina" input="editarConfiguracionPagina">
+			<forward name="finalizarConfiguracionPagina" path="/paginas/framework/configuracion/pagina/finalizarConfiguracionPagina.jsp" />
+			<forward name="imagenInvalida" path="/paginas/framework/configuracion/pagina/imagenInvalidaConfiguracionPagina.jsp" />
+			<forward name="tamanoInvalido" path="/paginas/framework/configuracion/pagina/tamanoInvalidoConfiguracionPagina.jsp" />
+			<forward name="dimensionInvalida" path="/paginas/framework/configuracion/pagina/dimensionInvalidaConfiguracionPagina.jsp" />
+			<forward name="editarConfiguracionPagina" path="/paginas/framework/configuracion/pagina/editarConfiguracionPagina.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Configuracion de Visor Lista -->
+		<action path="/framework/configuracion/cancelarGuardarConfiguracionPagina" type="com.visiongc.framework.web.struts.actions.configuracion.GuardarConfiguracionPaginaAction" name="editarConfiguracionPaginaForm" scope="request" input="editarConfiguracionPagina" parameter="editarConfiguracionPagina"></action>
+		
+		<!-- Mapeo del Action: Validar Guardar Configuracion de Pagina Configuracion -->
+		<action path="/configuracion/validarConfiguracionPagina" type="com.visiongc.app.strategos.web.struts.configuracion.actions.ValidarConfiguracionPaginaAction" name="editarConfiguracionPaginaForm" scope="session" parameter="editarConfiguracionPagina"></action>
+
+		
+
+
+	</action-mappings>
+
+</struts-config>

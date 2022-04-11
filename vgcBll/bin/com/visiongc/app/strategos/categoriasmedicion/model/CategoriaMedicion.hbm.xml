@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto CategoriaMedición de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (08/04/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.categoriasmedicion.model.CategoriaMedicion" table="categoria">
+
+		<!-- Atributo clave de Categoria -->
+		<id name="categoriaId" type="java.lang.Long" column="categoria_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para Categoria -->
+		<property name="nombre" type="java.lang.String" column="nombre" />
+
+	</class>
+
+</hibernate-mapping>

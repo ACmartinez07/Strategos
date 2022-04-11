@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto PrdSeguimiento de la Base de Datos -->
+
+<!-- Creado por: Kerwin Arias (04/12/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.planificacionseguimiento.model.PrdSeguimiento" table="prd_seguimiento">
+
+		<!-- Atributo clave -->
+		<composite-id name="pk" class="com.visiongc.app.strategos.planificacionseguimiento.model.PrdSeguimientoPK">
+			<key-property name="iniciativaId" column="iniciativa_id" type="java.lang.Long" />
+			<key-property name="ano" column="ano" type="java.lang.Integer" />
+			<key-property name="periodo" column="periodo" type="java.lang.Integer" />
+		</composite-id>
+
+		<!-- Atributos del objeto conceptual para PrdProducto -->
+		<property name="fecha" type="java.util.Date" column="fecha" />
+		<property name="alerta" type="java.lang.Byte" column="alerta" />
+		<property name="seguimiento" type="java.lang.String" column="seguimiento" />
+
+		<!-- Asociación uno a muchos para SeguimientosProductos -->
+		<set name="seguimientosProductos" fetch="select" lazy="true" inverse="true" cascade="persist, merge, save-update, delete, delete-orphan">
+			<key>
+				<column name="iniciativa_id" />
+				<column name="ano" />
+				<column name="periodo" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.planificacionseguimiento.model.PrdSeguimientoProducto" />
+		</set>
+
+	</class>
+
+</hibernate-mapping>

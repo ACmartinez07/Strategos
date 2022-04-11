@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (19/05/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="editarCategoriaMedicionForm" type="com.visiongc.app.strategos.web.struts.categoriasmedicion.forms.EditarCategoriaMedicionForm" />
+		<form-bean name="gestionarCategoriasMedicionForm" type="com.visiongc.app.strategos.web.struts.categoriasmedicion.forms.GestionarCategoriasMedicionForm" />
+		<form-bean name="seleccionarCategoriasMedicionForm" type="com.visiongc.framework.web.struts.forms.SelectorListaForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarCategoriaMedicion" path="/paginas/strategos/categoriasmedicion/editarCategoriaMedicion.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Categorias de Medicion -->
+		<action path="/categoriasmedicion/gestionarCategoriasMedicion" type="com.visiongc.app.strategos.web.struts.categoriasmedicion.actions.GestionarCategoriasMedicionAction" scope="session" name="gestionarCategoriasMedicionForm" parameter="gestionarCategoriasMedicion">
+			<forward name="gestionarCategoriasMedicion" path="/paginas/strategos/categoriasmedicion/gestionarCategoriasMedicion.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Categoria de Medicion -->
+		<action path="/categoriasmedicion/crearCategoriaMedicion" type="com.visiongc.app.strategos.web.struts.categoriasmedicion.actions.EditarCategoriaMedicionAction" scope="request" name="editarCategoriaMedicionForm" parameter="editarCategoriaMedicion"></action>
+
+		<!-- Mapeo del Action: Modificar Categoria de Medicion -->
+		<action path="/categoriasmedicion/modificarCategoriaMedicion" type="com.visiongc.app.strategos.web.struts.categoriasmedicion.actions.EditarCategoriaMedicionAction" scope="request" name="editarCategoriaMedicionForm" parameter="editarCategoriaMedicion"></action>
+
+		<!-- Mapeo del Action: Guardar Categoria de Medicion -->
+		<action path="/categoriasmedicion/guardarCategoriaMedicion" type="com.visiongc.app.strategos.web.struts.categoriasmedicion.actions.GuardarCategoriaMedicionAction" name="editarCategoriaMedicionForm" scope="request" input="editarCategoriaMedicion" validate="true" parameter="editarCategoriaMedicion">
+			<forward name="crearCategoriaMedicion" path="/categoriasmedicion/crearCategoriaMedicion.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Categoria de Medicion -->
+		<action path="/categoriasmedicion/cancelarGuardarCategoriaMedicion" type="com.visiongc.app.strategos.web.struts.categoriasmedicion.actions.GuardarCategoriaMedicionAction" name="editarCategoriaMedicionForm" scope="request" parameter="editarCategoriaMedicion"></action>
+
+		<!-- Mapeo del Action: Eliminar Categoria de Medicion -->
+		<action path="/categoriasmedicion/eliminarCategoriaMedicion" type="com.visiongc.app.strategos.web.struts.categoriasmedicion.actions.EliminarCategoriaMedicionAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Categorias de Medicion -->
+		<action path="/categoriasmedicion/generarReporteCategoriasMedicion" type="com.visiongc.app.strategos.web.struts.categoriasmedicion.actions.ReporteCategoriasMedicionAction"></action>
+
+		<!-- Mapeo del Action: Seleccionar Categorias de Medicion -->
+		<action path="/categoriasmedicion/seleccionarCategoriasMedicion" type="com.visiongc.app.strategos.web.struts.categoriasmedicion.actions.SeleccionarCategoriasMedicionAction" scope="request" name="seleccionarCategoriasMedicionForm" parameter="seleccionarCategoriasMedicion">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarCategoriasMedicion" path="/paginas/strategos/categoriasmedicion/seleccionarCategoriasMedicion.jsp" />
+		</action>
+
+	</action-mappings>
+
+</struts-config>

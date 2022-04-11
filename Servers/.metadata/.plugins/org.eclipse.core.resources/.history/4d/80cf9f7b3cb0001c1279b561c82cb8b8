@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Context>
+<Context 
+	docBase="Strategos" 
+	path="/Strategos" 
+	reloadable="true" 
+	crossContext="true">
+	
+	
+	<Resource name="jdbc/Strategos" auth="Container" type="javax.sql.DataSource" username="postgres" password="canela3108" 
+		removeAbandoned="true" removeAbandonedTimeout="60" logAbandoned="true" maxActive="8" maxIdle="30" minIdle="8"
+		maxWait="10000" validationQuery="SELECT 1 FROM afw_sistema"
+		driverClassName="org.postgresql.Driver" url="jdbc:postgresql://localhost:5432/strategos?compatible=7.1"/>
+		
+	
+	-->
+</Context>

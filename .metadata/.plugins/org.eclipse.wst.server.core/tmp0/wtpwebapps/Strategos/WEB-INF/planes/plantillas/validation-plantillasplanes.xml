@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE form-validation SYSTEM "../../validator_1_3_0.dtd">
+
+<!-- Modificado por: Kerwin Arias (02/07/2012) -->
+
+<form-validation>
+
+	<!-- Validaciones de Formularios  -->
+	<formset>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Inicio: Plantillas de Planes ******************* -->
+		<!-- ****************************************************** -->
+
+		<!-- Forma de Edición de una Plantilla de Planes -->
+		<form name="editarPlantillaPlanesForm">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarplantillaplanes.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			<field property="nombreIndicadorSingular" depends="required,maxlength">
+				<arg key="jsp.editarplantillaplanes.validacion.nombreindicadorsingular" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			<field property="nombreIniciativaSingular" depends="required,maxlength">
+				<arg key="jsp.editarplantillaplanes.validacion.nombreiniciativasingular" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			<field property="nombreActividadSingular" depends="required,maxlength">
+				<arg key="jsp.editarplantillaplanes.validacion.nombreactividadsingular" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>			
+		</form>
+
+		<!-- Action que guarda una Plantilla de Planes -->
+		<form name="/planes/plantillas/guardarPlantillaPlanes">
+			<field property="nombre" depends="required,maxlength">
+				<arg key="jsp.editarplantillaplanes.ficha.nombre" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			<field property="nombreIndicadorSingular" depends="required,maxlength">
+				<arg key="jsp.editarplantillaplanes.validacion.nombreindicadorsingular" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			<field property="nombreIniciativaSingular" depends="required,maxlength">
+				<arg key="jsp.editarplantillaplanes.validacion.nombreiniciativasingular" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			<field property="nombreActividadSingular" depends="required,maxlength">
+				<arg key="jsp.editarplantillaplanes.validacion.nombreactividadsingular" position="0" />
+				<arg name="maxlength" key="${var:maxlength}" resource="false" position="1" />
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>			
+		</form>
+
+		<!-- ****************************************************** -->
+		<!-- ***** Fin: Plantillas de Planes ********************** -->
+		<!-- ****************************************************** -->
+
+	</formset>
+</form-validation>

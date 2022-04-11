@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (28/11/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarProductosForm" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.forms.GestionarProductosForm" />
+		<form-bean name="editarProductoForm" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.forms.EditarProductoForm" />
+		<form-bean name="registrarSeguimientoForm" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.forms.RegistrarSeguimientoForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarProducto" path="/paginas/strategos/planificacionseguimiento/productos/editarProducto.jsp" />
+		<forward name="exploradorIniciativas" path="/paginas/strategos/iniciativas/exploradorIniciativas.jsp" />
+		<forward name="gestionarProductosAutonomo" path="/paginas/strategos/planificacionseguimiento/productos/gestionarProductosAutonomo.jsp" />
+		<forward name="gestionarProductosAction" path="/planificacionseguimiento/productos/gestionarProductos.action" />
+		<forward name="gestionarProductosIniciativaAction" path="/planificacionseguimiento/productos/gestionarProductosIniciativa.action" />
+		<forward name="registrarSeguimiento" path="/paginas/strategos/planificacionseguimiento/productos/registrarSeguimiento.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Productos -->
+		<action path="/planificacionseguimiento/productos/gestionarProductos" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.actions.GestionarProductosAction" scope="session" name="gestionarProductosForm" parameter="gestionarProductosAutonomo"></action>
+
+		<!-- Mapeo del Action: Gestionar Productos desde el explorador de iniciativas -->
+		<action path="/planificacionseguimiento/productos/gestionarProductosIniciativa" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.actions.GestionarProductosAction" scope="session" name="gestionarProductosForm" parameter="exploradorIniciativas"></action>
+
+		<!-- Mapeo del Action: Gestionar Productos Autonomo -->
+		<action path="/planificacionseguimiento/productos/gestionarProductosAutonomo" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.actions.GestionarProductosAction" scope="session" name="gestionarProductosForm" parameter="gestionarProductosAutonomo"></action>
+
+		<!-- Mapeo del Action: Crear Producto -->
+		<action path="/planificacionseguimiento/productos/crearProducto" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.actions.EditarProductoAction" scope="request" name="editarProductoForm" parameter="editarProducto"></action>
+
+		<!-- Mapeo del Action: Modificar Producto -->
+		<action path="/planificacionseguimiento/productos/modificarProducto" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.actions.EditarProductoAction" scope="request" name="editarProductoForm" parameter="editarProducto"></action>
+
+		<!-- Mapeo del Action: Guardar Productos -->
+		<action path="/planificacionseguimiento/productos/guardarProducto" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.actions.GuardarProductoAction" name="editarProductoForm" scope="request" input="editarProducto" validate="true" parameter="editarProducto">
+			<forward name="crearProducto" path="/planificacionseguimiento/productos/crearProducto.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Producto -->
+		<action path="/planificacionseguimiento/productos/cancelarGuardarProducto" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.actions.GuardarProductoAction" name="editarProductoForm" scope="request" parameter="editarProducto"></action>
+
+		<!-- Mapeo del Action: Eliminar Producto -->
+		<action path="/planificacionseguimiento/productos/eliminarProducto" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.actions.EliminarProductoAction"></action>
+
+		<!-- Mapeo del Action: Iniciar Registro de Seguimiento -->
+		<action path="/planificacionseguimiento/productos/iniciarRegistroSeguimiento" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.actions.IniciarRegistroSeguimientoAction" scope="session" name="registrarSeguimientoForm" parameter="registrarSeguimiento"></action>
+
+		<!-- Mapeo del Action: Guardar Registro de Seguimiento -->
+		<action path="/planificacionseguimiento/productos/guardarRegistroSeguimiento" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.actions.GuardarRegistroSeguimientoAction" scope="session" name="registrarSeguimientoForm" parameter="registrarSeguimiento"></action>
+
+		<!-- Mapeo del Action: Guardar Registro de Seguimiento -->
+		<action path="/planificacionseguimiento/productos/actualizarRegistroSeguimiento" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.actions.ActualizarRegistroSeguimientoAction" scope="session" name="registrarSeguimientoForm" parameter="registrarSeguimiento"></action>
+
+		<!-- Mapeo del Action: Guardar Registro de Seguimiento -->
+		<action path="/planificacionseguimiento/productos/cancelarGuardarRegistroSeguimiento" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.actions.GuardarRegistroSeguimientoAction" scope="session" name="registrarSeguimientoForm"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Detallado de Iniciativa por Productos -->
+		<action path="/planificacionseguimiento/productos/generarReporteDetalladoIniciativaPorProductos" type="com.visiongc.app.strategos.web.struts.planificacionseguimiento.prdproductos.actions.ReporteDetalladoIniciativaPorProductosAction"></action>
+
+	</action-mappings>
+
+</struts-config>

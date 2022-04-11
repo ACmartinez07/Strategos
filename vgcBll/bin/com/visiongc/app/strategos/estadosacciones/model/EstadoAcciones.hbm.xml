@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto estado_acciones  de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (09/04/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.estadosacciones.model.EstadoAcciones" table="estado_acciones">
+
+		<!-- Atributo clave de estado_acciones -->
+		<id name="estadoId" type="java.lang.Long" column="estado_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para estado_acciones -->
+		<property name="nombre" type="java.lang.String" column="nombre" />
+		<property name="aplicaSeguimiento" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="aplica_seguimiento" />
+		<property name="orden" type="java.lang.Integer" column="orden" />
+		<property name="condicion" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="condicion" />
+
+	</class>
+
+</hibernate-mapping>

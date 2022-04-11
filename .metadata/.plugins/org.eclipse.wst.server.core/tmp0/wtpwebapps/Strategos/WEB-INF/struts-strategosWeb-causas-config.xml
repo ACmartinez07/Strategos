@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (24/10/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="editarCausaForm" type="com.visiongc.app.strategos.web.struts.causas.forms.EditarCausaForm" />
+		<form-bean name="seleccionarCausasForm" type="com.visiongc.framework.web.struts.forms.SelectorArbolForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarCausa" path="/paginas/strategos/causas/editarCausa.jsp" />		
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Causas -->
+		<action path="/causas/gestionarCausas" type="com.visiongc.app.strategos.web.struts.causas.actions.GestionarCausasAction" parameter="gestionarCausas">
+			<forward name="gestionarCausas" path="/paginas/strategos/causas/gestionarCausas.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Causa -->
+		<action path="/causas/crearCausa" type="com.visiongc.app.strategos.web.struts.causas.actions.EditarCausaAction" scope="request" name="editarCausaForm" parameter="editarCausa"></action>
+
+		<!-- Mapeo del Action: Modificar Causa -->
+		<action path="/causas/modificarCausa" type="com.visiongc.app.strategos.web.struts.causas.actions.EditarCausaAction" scope="request" name="editarCausaForm" parameter="editarCausa"></action>
+
+		<!-- Mapeo del Action: Guardar Causa -->
+		<action path="/causas/guardarCausa" type="com.visiongc.app.strategos.web.struts.causas.actions.GuardarCausaAction" name="editarCausaForm" scope="request" input="editarCausa" validate="true" parameter="editarCausa">
+			<forward name="crearCausa" path="/causas/crearCausa.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Causa -->
+		<action path="/causas/cancelarGuardarCausa" type="com.visiongc.app.strategos.web.struts.causas.actions.GuardarCausaAction" name="editarCausaForm" scope="request" parameter="editarCausa"></action>
+
+		<!-- Mapeo del Action: Eliminar Causa -->
+		<action path="/causas/eliminarCausa" type="com.visiongc.app.strategos.web.struts.causas.actions.EliminarCausaAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte de Causas-->
+		<action path="/causas/generarReporteCausas" type="com.visiongc.app.strategos.web.struts.causas.actions.ReporteCausasAction"></action>
+
+		<!-- Mapeo del Action: Seleccionar Causas -->
+		<action path="/causas/seleccionarCausas" type="com.visiongc.app.strategos.web.struts.causas.actions.SeleccionarCausasAction" scope="session" name="seleccionarCausasForm" parameter="seleccionarCausas">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarCausas" path="/paginas/strategos/causas/seleccionarCausas.jsp" />
+		</action>
+
+	</action-mappings>
+</struts-config>

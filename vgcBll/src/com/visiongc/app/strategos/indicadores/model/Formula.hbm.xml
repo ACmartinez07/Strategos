@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.indicadores.model.Formula" table="formula">
+		<composite-id name="pk"  class="com.visiongc.app.strategos.indicadores.model.FormulaPK">
+			<key-property name="indicadorId" column="indicador_id" type="java.lang.Long" />
+			<key-property name="serieId" column="serie_id" type="java.lang.Long" />
+		</composite-id>
+		<property name="expresion" type="java.lang.String" not-null="true" />
+			
+		<!-- Associations -->
+
+		<!-- bi-directional many-to-one association to SerieIndicador -->
+		<many-to-one name="serieIndicador" class="com.visiongc.app.strategos.indicadores.model.SerieIndicador" update="false" insert="false" fetch="select">
+			<column name="serie_id" />
+			<column name="indicador_id" />
+		</many-to-one>
+
+		<!-- bi-directional one-to-many association to InsumoFormula -->
+		<set name="insumos" fetch="select" lazy="true" inverse="true" order-by="indicador_id, insumo_serie_id" cascade="persist, merge, save-update, delete, delete-orphan">
+			<key>
+				<column name="padre_id"></column>
+				<column name="serie_id"></column>
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.indicadores.model.InsumoFormula" />
+		</set>
+	</class>
+</hibernate-mapping>

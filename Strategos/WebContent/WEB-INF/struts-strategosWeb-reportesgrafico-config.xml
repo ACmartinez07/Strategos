@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (09/09/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="reporteForm" type="com.visiongc.app.strategos.web.struts.reportes.forms.ReporteForm" />
+		<form-bean name="configurarReporteGraficoForm" type="com.visiongc.app.strategos.web.struts.reportes.grafico.forms.ConfigurarReporteGraficoForm" />
+		<form-bean name="seleccionarTiempoGraficoForm" type="com.visiongc.app.strategos.web.struts.reportes.grafico.forms.SeleccionarTiempoGraficoForm" />
+		<form-bean name="seleccionarAtributoGraficoForm" type="com.visiongc.app.strategos.web.struts.reportes.grafico.forms.SeleccionarAtributoGraficoForm" />
+		<form-bean name="seleccionarVariableGraficoForm" type="com.visiongc.app.strategos.web.struts.reportes.grafico.forms.SeleccionarVariableGraficoForm" />
+		<form-bean name="seleccionarIndicadorGraficoForm" type="com.visiongc.app.strategos.web.struts.reportes.grafico.forms.SeleccionarIndicadorGraficoForm" />
+		<form-bean name="seleccionarOrganizacionGraficoForm" type="com.visiongc.app.strategos.web.struts.reportes.grafico.forms.SeleccionarOrganizacionGraficoForm" />
+		<form-bean name="seleccionarPlanGraficoForm" type="com.visiongc.app.strategos.web.struts.reportes.grafico.forms.SeleccionarPlanGraficoForm" />
+		<form-bean name="gestionarReporteGraficoForm" type="com.visiongc.app.strategos.web.struts.reportes.grafico.forms.GestionarReporteGraficoForm" />
+		<form-bean name="graficoReporteForm" type="com.visiongc.app.strategos.web.struts.reportes.grafico.forms.GraficoReporteForm" />
+		
+		
+		<form-bean name="duppontGraficoForm" type="com.visiongc.app.strategos.web.struts.reportes.grafico.forms.DuppontGraficoForm" />
+		<form-bean name="medidorCeldaForm" type="com.visiongc.app.strategos.web.struts.presentaciones.celdas.graficos.forms.MedidorCeldaForm" />
+		<form-bean name="graficosForm" type="com.visiongc.app.strategos.web.struts.reportes.grafico.forms.GraficosForm" />
+		<form-bean name="seleccionarGraficoReporteForm" type="com.visiongc.app.strategos.web.struts.reportes.grafico.forms.SeleccionarGraficoReporteForm" />
+		
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+	
+	    <forward name="configurarReporteGrafico" path="/paginas/strategos/reportesgrafico/configurarReporteGrafico.jsp" /> 
+		<forward name="listarDimensionesGrafico" path="/paginas/strategos/reportesgrafico/listarDimensionesGrafico.jsp" />
+		<forward name="visualizarReporteGrafico" path="/paginas/strategos/reportesgrafico/visualizarReporteGrafico.jsp" />
+		<forward name="listarMiembrosGrafico" path="/paginas/strategos/reportesgrafico/listarMiembrosGrafico.jsp" />
+		<forward name="gestionarReporteGrafico" path="/paginas/strategos/reportesgrafico/gestionarReporteGrafico.jsp" />
+		<forward name="seleccionarReporteGrafico" path="/paginas/strategos/reportesgrafico/vistasGrafico.jsp" />
+		<forward name="graficarReporte" path="/paginas/strategos/reportesgrafico/graficarReporte.jsp" />
+		
+		
+		<forward name="asistenteGraficoReporte" path="/paginas/strategos/reportesgrafico/asistenteGrafico.jsp" />
+		<forward name="listaGraficoReporte" path="/paginas/strategos/reportesgrafico/listaGraficoReporte.jsp" />
+		<forward name="duppontReporte" path="/paginas/strategos/duppont/duppont.jsp" />
+		<forward name="graficoReporte" path="/paginas/strategos/reportesgrafico/graficoReporte.jsp" />
+		
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Proteger/Liberar Mediciones -->
+		<action path="/reportesgrafico/graficarReporte" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.GraficarReporteAction" name="graficoReporteForm" scope="session" input="graficarReporte" parameter="graficarReporte"></action>
+		
+
+		<!-- Mapeo del Action: Configurar Vista Datos -->
+		<action path="/reportesgrafico/configurarReporteGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.ConfigurarReporteGraficoAction" scope="session" name="configurarReporteGraficoForm" parameter="listarDimensionesGrafico">
+		    <forward name="listarDimensionesGrafico" path="/reportesgrafico/listarDimensionesGrafico.action" />
+		</action>
+
+		<!-- Mapeo del Action: Modificar Configurar Vista Datos -->
+		<action path="/reportesgrafico/modificarReporteGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.ConfigurarReporteGraficoAction" scope="session" name="configurarReporteGraficoForm" parameter="listarDimensionesGrafico">
+		    <forward name="listarDimensionesGrafico" path="/reportesgrafico/listarDimensionesGrafico.action" />
+		</action>
+
+		<!-- Mapeo del Action: Ver Configurar Vista Datos -->
+		<action path="/reportesgrafico/verConfiguracionReporteGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.ConfigurarReporteGraficoAction" scope="session" name="configurarReporteGraficoForm" parameter="listarDimensionesGrafico">
+		    <forward name="listarDimensionesGrafico" path="/reportesgrafico/listarDimensionesGrafico.action" />
+		</action>
+
+		<!-- Mapeo del Action: Listar Dimensiones -->
+		<action path="/reportesgrafico/listarDimensionesGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.ListarDimensionesGraficoAction" scope="session" name="configurarReporteGraficoForm" parameter="visualizarReporteGrafico">
+		    <forward name="visualizarReporteGrafico" path="/reportesgrafico/visualizarReporteGrafico.action" />
+		</action>
+
+		<!-- Mapeo del Action: Visualizar Datos -->
+		<action path="/reportesgrafico/visualizarReporteGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.VisualizarReporteGraficoAction" scope="session" name="configurarReporteGraficoForm" parameter="listarMiembrosGrafico">
+		    <forward name="listarMiembrosGrafico" path="/reportesgrafico/listarMiembrosGrafico.action" />
+		</action>
+
+		<!-- Mapeo del Action: Listar Miembros -->
+		<action path="/reportesgrafico/listarMiembrosGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.ListarMiembrosGraficoAction" scope="session" name="configurarReporteGraficoForm" parameter="configurarReporteGrafico"></action>		
+		
+		<!-- Mapeo del Action: Seleccionar Tiempo -->
+		<action path="/reportesgrafico/seleccionarTiempoGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.SeleccionarTiempoGraficoAction" scope="session" name="seleccionarTiempoGraficoForm" parameter="seleccionarTiempoGrafico">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarTiempoGrafico" path="/paginas/strategos/reportesgrafico/seleccionarTiempoGrafico.jsp" />
+		</action>
+		
+		<!-- Mapeo del Action: Seleccionar Atributo -->
+		<action path="/reportesgrafico/seleccionarAtributoGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.SeleccionarAtributoGraficoAction" scope="session" name="seleccionarAtributoGraficoForm" parameter="seleccionarAtributoGrafico">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarAtributoGrafico" path="/paginas/strategos/reportesgrafico/seleccionarAtributoGrafico.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Seleccionar Variable -->
+		<action path="/reportesgrafico/seleccionarVariableGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.SeleccionarVariableGraficoAction" scope="session" name="seleccionarVariableGraficoForm" parameter="seleccionarVariableGrafico">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarVariableGrafico" path="/paginas/strategos/reportesgrafico/seleccionarVariableGrafico.jsp" />
+		</action>	
+
+		<!-- Mapeo del Action: Seleccionar Indicador -->
+		<action path="/reportesgrafico/seleccionarIndicadorGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.SeleccionarIndicadorGraficoAction" scope="session" name="seleccionarIndicadorGraficoForm" parameter="seleccionarIndicadorGrafico">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarIndicadorGrafico" path="/paginas/strategos/reportesgrafico/seleccionarIndicadorGrafico.jsp" />
+		</action>	
+
+		<!-- Mapeo del Action: Seleccionar Organizacion -->
+		<action path="/reportesgrafico/seleccionarOrganizacionGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.SeleccionarOrganizacionGraficoAction" scope="session" name="seleccionarOrganizacionGraficoForm" parameter="seleccionarOrganizacionGrafico">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarOrganizacionGrafico" path="/paginas/strategos/reportesgrafico/seleccionarOrganizacionGrafico.jsp" />
+		</action>	
+
+		<!-- Mapeo del Action: Seleccionar Plan -->
+		<action path="/reportesgrafico/seleccionarPlanGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.SeleccionarPlanGraficoAction" scope="session" name="seleccionarPlanGraficoForm" parameter="seleccionarPlanGrafico">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarPlanGrafico" path="/paginas/strategos/reportesgrafico/seleccionarPlanGrafio.jsp" />
+		</action>	
+		
+		<!-- Mapeo del Action: Mostrar Vista Datos -->
+		<action path="/reportesgrafico/mostrarReporteGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.MostrarReporteGraficoAction" scope="session" name="configurarReporteGraficoForm" parameter="mostrarReporteGrafico">
+		    <forward name="mostrarReporteGrafico" path="/paginas/strategos/reportesgrafico/mostrarReporteGrafico.jsp" />
+		</action>
+		
+		<!-- Mapeo del Action: Guardar Configuracion Vista Datos -->
+		<action path="/reportesgrafico/guardarConfiguracionReporteGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.GuardarReporteGraficoAction" name="configurarReporteGraficoForm" scope="session" input="configurarVistaDatos" validate="false" parameter="configurarReporteGrafico">
+			<forward name="exito" path="/reportesgrafico/gestionarReporteGrafico.action?reload=true" />
+		</action>
+		
+		<!-- Mapeo del Action: Guardar Mostrar Vista Datos -->
+		<action path="/reportesgrafico/guardarMostrarReporteGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.GuardarReporteGraficoAction" name="configurarReporteGraficoForm" scope="session" input="mostrarVistaDatos" validate="false" parameter="mostrarReporteGrafico">
+			<forward name="mostrarReporteGrafico" path="/paginas/strategos/reportesgrafico/mostrarReporteGrafico.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Pantalla de Iniciativas Resumida-->
+		<action path="/reportesgrafico/seleccionarVistaGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.SeleccionarVistaGraficoAction" scope="request" name="reporteForm" parameter="seleccionarVistaGrafico"></action>
+		
+		
+		<!-- Mapeo del Action: Guardar Mostrar Vista Datos -->
+		<action path="/reportesgrafico/gestionarReporteGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.GestionarReporteGraficoAction" name="gestionarReporteGraficoForm" scope="session" parameter="gestionarReporteGrafico"></action>
+		
+		<!-- Mapeo del Action: Eliminar -->
+		<action path="/reportesgrafico/eliminarReporteGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.EliminarReporteGraficoAction"></action>
+		
+		<!-- Mapeo del Action: Imprimir Vista de Datos -->
+		<action path="/reportesgrafico/imprimirGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.ImprimirReporteGraficoPDFAction"></action>
+
+		<!-- Mapeo del Action: Imprimir Vista de Datos -->
+		<action path="/reportesgrafico/exportarXLSGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.ImprimirReporteGraficoXLSAction"></action>
+		
+		
+		<!--  -->
+		
+		<!-- 
+			/////////////////////
+			*
+			Reporte grafico
+			*
+			/////////////////////
+		 -->
+		
+		<!-- Mapeo del Action:  Dupont -->
+		<action path="/reportesgrafico/dupontIndicador" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.DuppontActionGrafico" name="duppontForm"  scope="request" parameter="duppont"></action>
+
+		<!-- Mapeo del Action: Gráfico de Celda -->
+		<action path="/reportesgrafico/graficoCelda" type="com.visiongc.app.strategos.web.struts.presentaciones.celdas.graficos.actions.GraficoCeldaAction" scope="session" name="graficoForm" parameter="graficoCelda">
+			<forward name="graficoCelda" path="/paginas/strategos/presentaciones/celdas/graficos/graficoCelda.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Guardar Configuración del Grafico de Celda -->
+		<action path="/reportesgrafico/guardarConfiguracionGraficoCelda" type="com.visiongc.app.strategos.web.struts.presentaciones.celdas.graficos.actions.GuardarConfiguracionGraficoCeldaAction" name="graficoForm" scope="session" parameter="graficoCelda">
+			<forward name="exito" path="/graficos/graficoCelda.action?reload=1" />
+		</action>
+
+		<!-- Mapeo del Action: Leer Lista Grafico -->
+		<action path="/reportesgrafico/listaGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.ReadListaGraficoReporteAction" name="seleccionarGraficoForm" scope="session" parameter="listaGrafico"></action>
+
+		<!-- Mapeo del Action: Eliminar Grafico -->
+		<action path="/reportesgrafico/eliminarGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.SeleccionarGraficoReporteAction"></action>
+
+		<!-- Mapeo del Action: Leer Asistente Grafico -->
+		<action path="/reportesgrafico/asistenteGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.ReadGraficoReporteAction" name="graficoForm" scope="request" parameter="asistenteGrafico"></action>
+
+		<!-- Mapeo del Action: Guardar Grafico -->
+		<action path="/reportesgrafico/guardarAsistenteGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.SalvarGraficoReporteAction"></action>
+		
+		<!-- Mapeo del Action: Cancelar Grafico -->
+		<action path="/reportesgrafico/cancelarAsistenteGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.SalvarGraficoReporteAction" name="graficoForm" scope="request" parameter="asistenteGrafico"></action>
+
+		<!-- Mapeo del Action: Crear Formato Grafico -->
+		<action path="/reportesgrafico/grafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.GraficoReporteAction" name="graficoForm" scope="request" parameter="grafico"></action>
+
+		<!-- Mapeo del Action: Seleccionar Grafico -->
+		<action path="/reportesgrafico/seleccionarGrafico" type="com.visiongc.app.strategos.web.struts.reportes.grafico.actions.SeleccionarGraficoReporteAction" name="seleccionarGraficoForm" scope="request" input="listaGrafico" parameter="listaGrafico"></action>
+		
+	</action-mappings>
+
+</struts-config>

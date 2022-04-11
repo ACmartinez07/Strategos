@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto Causa de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (06/08/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.causas.model.Causa" table="causa">
+
+		<!-- Atributo clave -->
+		<id name="causaId" type="java.lang.Long" column="causa_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos  -->
+		<property name="nombre" type="java.lang.String" column="nombre" length="50" />
+		<property name="descripcion" type="java.lang.String" column="descripcion" />
+		<property name="nivel" type="java.lang.Integer" column="nivel" />
+		<property name="padreId" type="java.lang.Long" column="padre_id" />
+
+		<!-- Asociación uno a muchos hacia Causa -->
+		<set name="hijos" lazy="true" inverse="true" order-by="nombre">
+			<key>
+				<column name="padre_id" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.causas.model.Causa" />
+		</set>
+
+		<!-- Asociación muchos a uno hacia Causa -->
+		<many-to-one name="padre" class="com.visiongc.app.strategos.causas.model.Causa" not-null="false" insert="false" update="false">
+			<column name="padre_id" />
+		</many-to-one>
+
+		<!-- Asociación uno a muchos hacia Problema -->
+		<set name="problemas" lazy="true" table="causa_por_problema">
+			<key>
+				<column name="causa_id" />
+			</key>
+			<many-to-many class="com.visiongc.app.strategos.problemas.model.Problema" column="problema_id" />
+		</set>
+
+	</class>
+
+</hibernate-mapping>

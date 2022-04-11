@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../hibernate-mapping-3.0.dtd"  >
+
+<!-- Modificado por: Kerwin Arias (28/08/2012) -->
+
+<hibernate-mapping>
+	<!-- 
+		Created by the Middlegen Hibernate plugin 2.1
+		
+		http://boss.bekk.no/boss/middlegen/
+		http://www.hibernate.org/
+	-->
+
+	<class name="com.visiongc.framework.model.Grupo" table="afw_grupo">
+
+		<id name="grupoId" type="java.lang.Long" column="grupo_id">
+			<generator class="assigned" />
+		</id>
+
+		<property name="grupo" type="java.lang.String" column="grupo" not-null="true" unique="true" length="50" />
+
+		<property name="creado" type="java.sql.Timestamp" column="creado" length="8" />
+
+		<property name="modificado" type="java.sql.Timestamp" column="modificado" length="8" />
+
+		<property name="creadoId" type="java.lang.Long" column="creado_id" length="10" />
+
+		<property name="modificadoId" type="java.lang.Long" column="modificado_id" length="10" />
+
+		<!-- Associations -->
+
+		<!-- bi-directional one-to-many association to PermisoGrupo -->
+		<set name="permisos" lazy="true" table="afw_permiso_grupo">
+			<key>
+				<column name="grupo_id" />
+			</key>
+			<many-to-many class="com.visiongc.framework.model.Permiso" column="permiso_id" />
+		</set>
+
+		<!-- bi-directional one-to-many association to UsuarioGrupo -->
+		<set name="usuarioGrupos" lazy="true" inverse="true" cascade="delete, delete-orphan">
+			<key>
+				<column name="grupo_id" />
+			</key>
+			<one-to-many class="com.visiongc.framework.model.UsuarioGrupo" />
+		</set>
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+	<!-- Modificado por: Kerwin Arias (01/10/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean    -->
+	<form-beans>
+		<form-bean name="gestionarPortafoliosForm" type="com.visiongc.app.strategos.web.struts.portafolios.forms.GestionarPortafoliosForm" />
+		<form-bean name="editarPortafolioForm" type="com.visiongc.app.strategos.web.struts.portafolios.forms.EditarPortafolioForm" />
+	
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<!-- 
+		<forward name="editarPortafolioGrafico" path="/paginas/strategos/portafolios/editarPortafolioGrafico.jsp" />-->
+		<forward name="exploradorPortafolio" path="/paginas/strategos/portafolios/explorador.jsp" />
+		<forward name="editarPortafolio" path="/paginas/strategos/portafolios/editar.jsp" />
+		<!--<forward name="gestionarPortafolios" path="/paginas/strategos/portafolios/gestionar.jsp" />-->
+		<forward name="configurarGrafico" path="/paginas/strategos/portafolios/configurarGrafico.jsp" />
+		<forward name="graficarPortafolio" path="/paginas/strategos/portafolios/graficarPortafolio.jsp" />
+		<forward name="vista" path="/paginas/strategos/portafolios/vista.jsp" />
+		<forward name="asignarPesos" path="/paginas/strategos/portafolios/asignarPesos.jsp" />
+		
+		<forward name="gestionarPortafoliosIniciativasAction" path="/portafolios/gestionarPortafoliosIniciativas.action" />
+		<forward name="gestionarPortafoliosIndicadoresIniciativaAction" path="/portafolios/gestionarPortafoliosIndicadoresIniciativa.action" />
+		
+						
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Pantalla de Iniciativas -->
+		<action path="/iniciativa/grafico/configurar" type="com.visiongc.app.strategos.web.struts.portafolios.actions.GenerarGraficoAction" scope="request" name="graficoForm" parameter="configurarGrafico"></action>
+		
+		<!-- Mapeo del Action: Sacar Grafico -->
+		<action path="/iniciativa/grafico/crearGrafico" type="com.visiongc.app.strategos.web.struts.portafolios.actions.CrearGraficoAction" scope="request" name="graficoForm" parameter="graficarPortafolio"></action>
+		
+		<!-- Mapeo del Action: Eliminar Grafico -->
+		<action path="/iniciativa/grafico/preimprimir" type="com.visiongc.app.strategos.web.struts.portafolios.actions.GenerarGraficoAction"></action>
+		
+		<!-- Mapeo del Action: Imprimir Grafico -->
+		<action path="/iniciativa/grafico/imprimirGrafico" type="com.visiongc.app.strategos.web.struts.portafolios.actions.ImprimirGraficoAction"></action>
+		
+		<!-- Mapeo del Action: Gestionar Portafolios -->
+		<action path="/portafolios/gestionarPortafolios" type="com.visiongc.app.strategos.web.struts.portafolios.actions.GestionarPortafoliosAction" scope="session" name="gestionarPortafoliosForm" parameter="gestionarPortafoliosIniciativasAction"></action>
+		
+		<!-- Mapeo del Action: Gestionar Iniciativa -->
+		<action path="/portafolios/gestionarPortafoliosIniciativas" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.GestionarIniciativasAction" scope="session" name="gestionarIniciativasForm" parameter="gestionarPortafoliosIndicadoresIniciativaAction"></action>
+
+		<!-- Mapeo del Action: Gestionar Indicadores -->
+		<action path="/portafolios/gestionarPortafoliosIndicadoresIniciativa" type="com.visiongc.app.strategos.web.struts.iniciativas.actions.GestionarIndicadoresIniciativaAction" scope="session" name="gestionarIndicadoresIniciativaForm" parameter="exploradorPortafolio"></action>
+
+		<!-- Mapeo del Action: Crear Portafolio -->
+		<action path="/portafolios/crearPortafolio" type="com.visiongc.app.strategos.web.struts.portafolios.actions.EditarPortafolioAction" scope="request" name="editarPortafolioForm" parameter="editarPortafolio"></action>
+
+		<!-- Mapeo del Action: Modificar Portafolio -->
+		<action path="/portafolios/modificarPortafolio" type="com.visiongc.app.strategos.web.struts.portafolios.actions.EditarPortafolioAction" scope="request" name="editarPortafolioForm" parameter="editarPortafolio"></action>
+
+		<!-- Mapeo del Action: Guardar Portafolio -->
+		<action path="/portafolios/guardarPortafolio" type="com.visiongc.app.strategos.web.struts.portafolios.actions.GuardarPortafolioAction" name="editarPortafolioForm" scope="request" input="editarPortafolio" validate="true" parameter="editarPortafolio">
+			<forward name="crearPortafolio" path="/portafolios/crearPortafolio.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Portafolio -->
+		<action path="/portafolios/cancelarGuardarPortafolio" type="com.visiongc.app.strategos.web.struts.portafolios.actions.GuardarPortafolioAction" name="editarPortafolioForm" scope="request" parameter="editarPortafolio"></action>
+
+		<!-- Mapeo del Action: Eliminar Portafolio -->
+		<action path="/portafolios/eliminarPortafolio" type="com.visiongc.app.strategos.web.struts.portafolios.actions.EliminarPortafolioAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Portafolio -->
+		<action path="/portafolios/generarReportePortafolios" type="com.visiongc.app.strategos.web.struts.portafolios.actions.ReportePortafoliosAction"></action>
+		
+		<!-- Mapeo del Action: Asociar Iniciativa a un Portafolio -->
+		<action path="/portafolios/asociarIniciativa" type="com.visiongc.app.strategos.web.struts.portafolios.actions.AsociarIniciativaPortafolioAction"></action>
+		
+		<!-- Mapeo del Action: Desasociar Iniciativa de un Portafolio -->
+		<action path="/portafolios/desasociarIniciativa" type="com.visiongc.app.strategos.web.struts.portafolios.actions.DesasociarIniciativaPortafolioAction"></action>
+		
+		<!-- Mapeo del Action: Desasociar Iniciativa de un Portafolio -->
+		<action path="/portafolios/mostrarVista" type="com.visiongc.app.strategos.web.struts.portafolios.actions.VistaAction" name="showVistaForm" scope="session" parameter="vista"></action>
+
+		<!-- Mapeo del Action: Calcular Portafolio -->
+		<action path="/portafolios/calcular" type="com.visiongc.app.strategos.web.struts.portafolios.actions.CalcularPortafolioAction"></action>
+		
+		<!-- Mapeo del Action: Asignar Pesos -->
+		<action path="/portafolios/asignarPesos" type="com.visiongc.app.strategos.web.struts.portafolios.actions.AsignarPesosIniciativasPortafolioAction" scope="request" name="editarPortafolioForm" parameter="asignarPesos"></action>
+	
+		
+	</action-mappings>
+
+</struts-config>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+	<!-- Modificado por: Kerwin Arias (24/09/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="duppontForm" type="com.visiongc.app.strategos.web.struts.graficos.forms.DuppontForm" />
+		<form-bean name="medidorCeldaForm" type="com.visiongc.app.strategos.web.struts.presentaciones.celdas.graficos.forms.MedidorCeldaForm" />
+		<form-bean name="graficoForm" type="com.visiongc.app.strategos.web.struts.graficos.forms.GraficoForm" />
+		<form-bean name="seleccionarGraficoForm" type="com.visiongc.app.strategos.web.struts.graficos.forms.SeleccionarGraficoForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="asistenteGrafico" path="/paginas/strategos/graficos/asistenteGrafico.jsp" />
+		<forward name="listaGrafico" path="/paginas/strategos/graficos/listaGrafico.jsp" />
+		<forward name="duppont" path="/paginas/strategos/duppont/duppont.jsp" />
+		<forward name="grafico" path="/paginas/strategos/graficos/grafico.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action:  Dupont -->
+		<action path="/graficos/dupontIndicador" type="com.visiongc.app.strategos.web.struts.graficos.actions.DuppontAction" name="duppontForm"  scope="request" parameter="duppont"></action>
+
+		<!-- Mapeo del Action: Gráfico de Celda -->
+		<action path="/graficos/graficoCelda" type="com.visiongc.app.strategos.web.struts.presentaciones.celdas.graficos.actions.GraficoCeldaAction" scope="session" name="graficoForm" parameter="graficoCelda">
+			<forward name="graficoCelda" path="/paginas/strategos/presentaciones/celdas/graficos/graficoCelda.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Guardar Configuración del Grafico de Celda -->
+		<action path="/graficos/guardarConfiguracionGraficoCelda" type="com.visiongc.app.strategos.web.struts.presentaciones.celdas.graficos.actions.GuardarConfiguracionGraficoCeldaAction" name="graficoForm" scope="session" parameter="graficoCelda">
+			<forward name="exito" path="/graficos/graficoCelda.action?reload=1" />
+		</action>
+
+		<!-- Mapeo del Action: Leer Lista Grafico -->
+		<action path="/graficos/listaGrafico" type="com.visiongc.app.strategos.web.struts.graficos.actions.ReadListaGraficoAction" name="seleccionarGraficoForm" scope="session" parameter="listaGrafico"></action>
+
+		<!-- Mapeo del Action: Eliminar Grafico -->
+		<action path="/graficos/eliminarGrafico" type="com.visiongc.app.strategos.web.struts.graficos.actions.SeleccionarGraficoAction"></action>
+
+		<!-- Mapeo del Action: Leer Asistente Grafico -->
+		<action path="/graficos/asistenteGrafico" type="com.visiongc.app.strategos.web.struts.graficos.actions.ReadGraficoAction" name="graficoForm" scope="request" parameter="asistenteGrafico"></action>
+
+		<!-- Mapeo del Action: Guardar Grafico -->
+		<action path="/graficos/guardarAsistenteGrafico" type="com.visiongc.app.strategos.web.struts.graficos.actions.SalvarGraficoAction"></action>
+		
+		<!-- Mapeo del Action: Cancelar Grafico -->
+		<action path="/graficos/cancelarAsistenteGrafico" type="com.visiongc.app.strategos.web.struts.graficos.actions.SalvarGraficoAction" name="graficoForm" scope="request" parameter="asistenteGrafico"></action>
+
+		<!-- Mapeo del Action: Crear Formato Grafico -->
+		<action path="/graficos/grafico" type="com.visiongc.app.strategos.web.struts.graficos.actions.GraficoAction" name="graficoForm" scope="request" parameter="grafico"></action>
+
+		<!-- Mapeo del Action: Seleccionar Grafico -->
+		<action path="/graficos/seleccionarGrafico" type="com.visiongc.app.strategos.web.struts.graficos.actions.SeleccionarGraficoAction" name="seleccionarGraficoForm" scope="request" input="listaGrafico" parameter="listaGrafico"></action>
+		
+	</action-mappings>
+</struts-config>

@@ -1,0 +1,30 @@
+.boton
+{
+    background:#878686; 
+    background-image: -webkit-linear-gradient(top,#878686,#666666);
+    background-image: -moz-linear-gradient(top,#878686,#666666);
+    background-image: -o-linear-gradient(top,#878686,#666666);  
+    background-image: linear-gradient(to bottom,#878686,#666666);   
+    border: 1px solid #969696;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;  
+    border-radius: 5px;
+    -moz-box-shadow: 0 1px 1px #9d9fa1 inset;
+    -webkit-box-shadow: 0 1px 1px #9d9fa1 inset;
+    -o-box-shadow: 0 1px 1px #9d9fa1 inset; 
+    box-shadow: 0 1px 1px #9d9fa1 inset;
+    padding: .1em .1em;
+    color: white;
+    font-weight:normal;
+    text-decoration:none;
+}
+.boton:hover 
+{
+    background:#666666;
+    background-image: -webkit-linear-gradient(bottom,#878686,#666666);
+    background-image: -moz-linear-gradient(bottom,#878686,#666666);
+    background-image: -o-linear-gradient(bottom,#878686,#666666);   
+    background-image: linear-gradient(to top,#878686,#666666);
+    cursor: pointer;
+}

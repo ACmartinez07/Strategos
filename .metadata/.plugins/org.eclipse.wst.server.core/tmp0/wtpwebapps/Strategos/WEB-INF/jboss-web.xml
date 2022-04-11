@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<jboss-web> 
+	<resource-ref> 
+		<res-ref-name>jdbc/Strategos</res-ref-name> 
+		<res-type>javax.sql.DataSource</res-type>
+	 	<jndi-name>java:/jdbc/Strategos</jndi-name> 
+	</resource-ref>
+	<env-entry>
+    	<env-entry-name>folderMasterConfiguration</env-entry-name>
+    	<env-entry-type>java.lang.String</env-entry-type>
+    	<env-entry-value>/data/jboss/jboss-eap-6.4.3/Repositorio</env-entry-value>
+  	</env-entry>		
+	<!--
+	max-active-sessions	
+		El límite de conexiones que puede haber activas (es decir fuera del pool).
+	-->
+	<max-active-sessions>3</max-active-sessions>
+ </jboss-web>

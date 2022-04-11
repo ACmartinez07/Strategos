@@ -1,0 +1,4 @@
+INDEX VERSION 1.4+C:\Users\amc01\Desktop\strategos\strategos\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+4251138785.index
+2275819454.index
+2419279634.index

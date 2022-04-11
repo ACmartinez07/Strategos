@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (21/10/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarOrganizacionesForm" type="com.visiongc.app.strategos.web.struts.organizaciones.forms.GestionarOrganizacionesForm" />
+		<form-bean name="editarOrganizacionForm" type="com.visiongc.app.strategos.web.struts.organizaciones.forms.EditarOrganizacionForm" />
+		<form-bean name="seleccionarOrganizacionesForm" type="com.visiongc.app.strategos.web.struts.organizaciones.forms.SeleccionarOrganizacionesForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarOrganizacion" path="/paginas/strategos/organizaciones/editarOrganizacion.jsp" />
+		<forward name="copiarOrganizacion" path="/paginas/strategos/organizaciones/copiarOrganizacion.jsp" />
+		<forward name="codigoEnlaceOrganizacion" path="/paginas/strategos/organizaciones/codigoEnlaceOrganizacion.jsp" />
+		<forward name="moveOrganizacion" path="/paginas/strategos/organizaciones/moveOrganizacion.jsp" />	
+		<forward name="exploradorIndicadoresResponsable" path="/paginas/strategos/organizaciones/exploradorIndicadoresResponsable.jsp" />
+		<forward name="exploradorIniciativasResponsable" path="/paginas/strategos/organizaciones/exploradorIniciativasResponsable.jsp" />	
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Organizaciones -->
+		<action path="/organizaciones/gestionarOrganizaciones" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.GestionarOrganizacionesAction" scope="session" name="gestionarOrganizacionesForm" parameter="gestionarOrganizaciones">
+			<forward name="gestionarOrganizaciones" path="/paginas/strategos/organizaciones/gestionarOrganizaciones.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Organizacion -->
+		<action path="/organizaciones/crearOrganizacion" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.EditarOrganizacionAction" scope="request" name="editarOrganizacionForm" parameter="editarOrganizacion"></action>
+
+		<!-- Mapeo del Action: Modificar Organizacion -->
+		<action path="/organizaciones/modificarOrganizacion" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.EditarOrganizacionAction" scope="request" name="editarOrganizacionForm" parameter="editarOrganizacion"></action>
+		
+		<!-- Mapeo del Action: Modificar Organizacion -->
+		<action path="/organizaciones/verOrganizacion" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.EditarOrganizacionAction" scope="request" name="editarOrganizacionForm" parameter="editarOrganizacion"></action>
+
+		<!-- Mapeo del Action: Guardar Organizacion -->
+		<action path="/organizaciones/guardarOrganizacion" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.GuardarOrganizacionAction" name="editarOrganizacionForm" scope="request" input="editarOrganizacion" validate="true" parameter="editarOrganizacion">
+			<forward name="crearOrganizacion" path="/organizaciones/crearOrganizacion.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Organizacion -->
+		<action path="/organizaciones/cancelarGuardarOrganizacion" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.GuardarOrganizacionAction" name="editarOrganizacionForm" scope="request" parameter="editarOrganizacion"></action>
+
+		<!-- Mapeo del Action: Eliminar Organizacion -->
+		<action path="/organizaciones/eliminarOrganizacion" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.EliminarOrganizacionAction"></action>
+
+		<!-- Mapeo del Action: Seleccionar Organizaciones -->
+		<action path="/organizaciones/seleccionarOrganizaciones" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.SeleccionarOrganizacionesAction" scope="session" name="seleccionarOrganizacionesForm" parameter="seleccionarOrganizaciones">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarOrganizaciones" path="/paginas/strategos/organizaciones/seleccionarOrganizaciones.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Propiedades Organizacion-->
+		<action path="/organizaciones/propiedadesOrganizacion" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.MostrarPropiedadesOrganizacionAction" name="editarOrganizacionForm" scope="session" parameter="propiedadesOrganizacion">
+			<forward name="propiedadesOrganizacion" path="/paginas/strategos/organizaciones/propiedadesOrganizacion.jsp" />
+		</action>
+		
+		<!-- Mapeo del Action: Gestionar Indicador -->
+		<action path="/organizaciones/gestionarIndicadores" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.GestionarIndicadoresAction" scope="session" name="gestionarIndicadoresForm" parameter="exploradorIndicadoresResponsable"></action>
+		
+		<!-- Mapeo del Action: Gestionar Iniciativa -->
+		<action path="/organizaciones/gestionarIniciativas" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.GestionarIniciativasAction" scope="session" name="gestionarIniciativasForm" parameter="exploradorIniciativasResponsable"></action>
+		
+
+		<!-- Mapeo del Action: Guardar Organizacion Solo Lectura -->
+		<action path="/organizaciones/guardarOrganizacionSoloLectura" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.GuardarOrganizacionSoloLecturaAction" name="editarOrganizacionForm" scope="session" validate="true"></action>
+
+		<!-- Mapeo del Action: Generar Reporte de Organizaciones -->
+		<action path="/organizaciones/generarReporteOrganizaciones" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.ReporteOrganizacionesAction"></action>
+
+		<!-- Mapeo del Action: Leer Organizacion -->
+		<action path="/organizaciones/copiarOrganizacion" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.EditarOrganizacionAction" name="editarOrganizacionForm" scope="request" parameter="copiarOrganizacion"></action>
+
+		<!-- Mapeo del Action: Guardar Organizacion -->
+		<action path="/organizaciones/guardarCopiarOrganizacion" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.CopiarOrganizacionAction" name="editarOrganizacionForm" scope="request" input="copiarOrganizacion" parameter="copiarOrganizacion"></action>
+		
+		<!-- Mapeo del Action: Cancelar Copiar Organizacion -->
+		<action path="/organizaciones/cancelarCopiarOrganizacion" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.CopiarOrganizacionAction" name="editarOrganizacionForm" scope="request" parameter="copiarOrganizacion"></action>
+		
+		<!-- Mapeo del Action: Leer Codigo de Enlace Organizacion -->
+		<action path="/organizaciones/editarCodigoEnlaceOrganizacion" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.EditarOrganizacionAction" name="editarOrganizacionForm" scope="request" parameter="codigoEnlaceOrganizacion"></action>
+		
+		<!-- Mapeo del Action: Generar Codigo de Enlace Organizacion -->
+		<action path="/organizaciones/codigoEnlaceOrganizacion" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.CodigoEnlaceOrganizacionAction" name="editarOrganizacionForm" scope="request" input="codigoEnlaceOrganizacion" parameter="codigoEnlaceOrganizacion">
+			<forward name="finalizarCodigoEnlace" path="/paginas/strategos/organizaciones/finalizarCodigoEnlace.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Editar Mover Organizacion -->
+		<action path="/organizaciones/moverOrganizacion" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.EditarOrganizacionAction" name="editarOrganizacionForm" scope="request" parameter="moveOrganizacion"></action>
+		
+		<!-- Mapeo del Action: Guardar Mover Organizacion -->
+		<action path="/organizaciones/guardarMoverOrganizacion" type="com.visiongc.app.strategos.web.struts.organizaciones.actions.MoverOrganizacionAction"></action>
+		
+		
+	</action-mappings>
+
+</struts-config>

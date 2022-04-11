@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="calculoIndicadoresForm" type="com.visiongc.app.strategos.web.struts.calculos.forms.CalculoIndicadoresForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="configurarCalculoIndicadores" path="/paginas/strategos/calculos/configurarCalculoIndicadores.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<action path="/calculoindicadores/configurarCalculoIndicadores" type="com.visiongc.app.strategos.web.struts.calculos.actions.ConfigurarCalculoIndicadoresAction" name="calculoIndicadoresForm" scope="session" parameter="configurarCalculoIndicadores">
+			<forward name="exito" path="/calculoindicadores/calcularIndicadores.action" />
+		</action>
+
+		<action path="/calculoindicadores/calcularIndicadores" type="com.visiongc.app.strategos.web.struts.calculos.actions.CalcularIndicadoresAction" name="calculoIndicadoresForm" scope="session" validate="true" input="/paginas/strategos/calculos/configurarCalculoIndicadores.jsp" parameter="configurarCalculoIndicadores"></action>
+
+		<action path="/calculoindicadores/cancelarCalcularIndicadores" type="com.visiongc.app.strategos.web.struts.calculos.actions.CalcularIndicadoresAction"></action>
+	</action-mappings>
+
+</struts-config>

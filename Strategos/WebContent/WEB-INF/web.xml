@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app 
+	id="Strategos" 
+	version="3.0" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<icon>
+	  <small-icon>/componentes/logos/icon/small.gif</small-icon>
+	  <large-icon>/componentes/logos/icon/large.gif</large-icon>
+	</icon>
+	
+	<!-- Nombre de la aplicación -->
+	<display-name>Strategos ® Plus</display-name>
+	<resource-ref>
+		<description>Strategos</description>
+		<res-ref-name>jdbc/Strategos</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+
+    <context-param>
+        <param-name>javax.faces.CONFIG_FILES</param-name>
+        <param-value>
+            /WEB-INF/faces-config.xml
+        </param-value>
+        <!--
+        <description>
+            Comma separated list of URIs of (additional) faces config files.
+            (e.g. /WEB-INF/my-config.xml)
+            See JSF 1.0 PRD2, 10.3.2
+        </description>
+        -->
+    </context-param>
+
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>client</param-value>
+        <!--
+        <description>
+            State saving method: "client" or "server" (= default)
+            See JSF Specification 2.5.2
+        </description>
+        -->
+    </context-param>
+
+    <!-- Tiles ViewHandler config file -->    
+    <context-param>
+    	<param-name>tiles-definitions</param-name>
+    	<param-value>/WEB-INF/tiles-defs.xml</param-value>
+        <!--
+    	<description>
+    	Tiles configuration
+         definition files and a listener need to be defined.
+         the listener will initialize JspTilesViewHandlerImpl with tiles definitions.
+    	</description>
+        -->
+    </context-param>
+
+	<!-- Ubicación de la clase SessionListener -->
+	<listener>
+		<listener-class>
+			com.visiongc.framework.web.SessionListener
+		</listener-class>
+	</listener>
+
+	<!-- Configuración de Faces -->
+	<servlet>
+		<servlet-name>faces</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<!-- Mapeo del Servlet de JSF -->
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.action</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>faces</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
+
+	<!-- Tiempo de duración de las sesiones -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	
+	<!-- Página de inicio de la aplicación -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!-- Librerías - Descriptores de Tags Struts -->
+	<jsp-config>
+		<taglib>
+			<taglib-uri>/tags/struts-tiles</taglib-uri>
+			<taglib-location>/WEB-INF/tld/struts-tiles.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/struts-bean</taglib-uri>
+			<taglib-location>/WEB-INF/tld/struts-bean.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/struts-html</taglib-uri>
+			<taglib-location>/WEB-INF/tld/struts-html.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/struts-logic</taglib-uri>
+			<taglib-location>/WEB-INF/tld/struts-logic.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/struts-nested</taglib-uri>
+			<taglib-location>/WEB-INF/tld/struts-nested.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/paginationtag</taglib-uri>
+			<taglib-location>/WEB-INF/tld/pagination.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/vgc-treeview</taglib-uri>
+			<taglib-location>/WEB-INF/tld/vgc-treeview.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/vgc-util</taglib-uri>
+			<taglib-location>/WEB-INF/tld/vgc-util.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/vgc-interfaz</taglib-uri>
+			<taglib-location>/WEB-INF/tld/vgc-interfaz.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/vgc-logica</taglib-uri>
+			<taglib-location>/WEB-INF/tld/vgc-logica.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/vgc-strategos</taglib-uri>
+			<taglib-location>/WEB-INF/tld/app/vgc-strategos.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/sslext</taglib-uri>
+			<taglib-location>/WEB-INF/tld/sslext.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/struts-faces</taglib-uri>
+			<taglib-location>/WEB-INF/tld/struts-faces.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+	
+	<!-- Configuración del Servlet (Action) de Struts (con debugging) -->
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>
+			com.visiongc.commons.struts.action.VgcActionServlet
+		</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>
+				/WEB-INF/struts-framework-config.xml,
+				/WEB-INF/struts-framework-usuarios-config.xml,
+				/WEB-INF/struts-framework-configuracion-config.xml,
+				/WEB-INF/struts-framework-auditorias-config.xml,
+				/WEB-INF/struts-framework-alertas-config.xml,
+				/WEB-INF/struts-strategosWeb-config.xml,
+				/WEB-INF/struts-strategosWeb-categoriasmedicion-config.xml,
+				/WEB-INF/struts-strategosWeb-causas-config.xml,
+				/WEB-INF/struts-strategosWeb-unidadesmedida-config.xml,
+				/WEB-INF/struts-strategosWeb-estadosacciones-config.xml,
+				/WEB-INF/struts-strategosWeb-iniciativas-config.xml,
+				/WEB-INF/struts-strategosWeb-tiposproyecto-config.xml,
+				/WEB-INF/struts-strategosWeb-organizaciones-config.xml, 
+				/WEB-INF/struts-strategosWeb-plancuentas-config.xml,
+				/WEB-INF/struts-strategosWeb-responsables-config.xml,
+				/WEB-INF/struts-strategosWeb-clasesindicadores-config.xml,
+				/WEB-INF/struts-strategosWeb-actividades-config.xml,
+				/WEB-INF/struts-strategosWeb-indicadores-config.xml,
+				/WEB-INF/struts-strategosWeb-instrumentos-config.xml,
+                /WEB-INF/struts-strategosWeb-seriestiempo-config.xml,
+                /WEB-INF/struts-strategosWeb-mediciones-config.xml,
+                /WEB-INF/struts-strategosWeb-explicaciones-config.xml,
+                /WEB-INF/struts-strategosWeb-foros-config.xml,
+                /WEB-INF/planes/plantillas/struts-strategosWeb-plantillasplanes-config.xml,
+                /WEB-INF/struts-strategosWeb-calculoindicadores-config.xml, 
+                /WEB-INF/struts-strategosWeb-graficos-config.xml,
+                /WEB-INF/struts-strategosWeb-vistas-config.xml,
+                /WEB-INF/struts-strategosWeb-paginas-config.xml, 
+                /WEB-INF/struts-strategosWeb-celdas-config.xml,
+				/WEB-INF/struts-strategosWeb-clasesproblemas-config.xml,
+				/WEB-INF/struts-strategosWeb-problemas-config.xml,
+			    /WEB-INF/struts-strategosWeb-seguimientos-config.xml,
+			    /WEB-INF/struts-strategosWeb-acciones-config.xml,
+			    /WEB-INF/struts-strategosWeb-planes-config.xml,
+			    /WEB-INF/struts-strategosWeb-perspectivas-config.xml,
+			    /WEB-INF/struts-strategosWeb-productos-config.xml,
+			  	/WEB-INF/struts-strategosWeb-anexos-config.xml,
+				/WEB-INF/struts-strategosWeb-modelos-config.xml,
+				/WEB-INF/struts-strategosWeb-modulos-externos-config.xml,
+				/WEB-INF/struts-strategosWeb-portafolios-config.xml,
+				/WEB-INF/struts-strategosWeb-reportes-config.xml,
+				/WEB-INF/struts-strategosWeb-reportesgrafico-config.xml,
+				/WEB-INF/struts-strategosWeb-vistasdatos-config.xml,
+				/WEB-INF/struts-strategosWeb-transacciones-config.xml,
+				/WEB-INF/struts-strategosWeb-configuracion-config.xml
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>3</param-value>
+		</init-param>
+		<init-param>
+			<param-name>detail</param-name>
+			<param-value>3</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<!-- 
+	Configuracion de Carpeta Control
+	-->
+	<!-- 
+	<env-entry>
+		<env-entry-name>folderMasterConfiguration</env-entry-name>
+		<env-entry-type>java.lang.String</env-entry-type>
+		<env-entry-value>C:\Vision\Strategos</env-entry-value>
+	</env-entry>
+	-->
+</web-app>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<!-- Modificado por: Kerwin Arias (06/06/2012) -->
+
+<taglib>
+	<tlibversion>1.0-b3</tlibversion>
+	<jspversion>1.2</jspversion>
+	<shortname>page</shortname>
+	<uri>http://www.visiongc.net</uri>
+	<info>Libreria de tag para Paginación de una lista de resultados</info>
+	<tag>
+		<name>pager</name>
+		<tagclass>com.visiongc.commons.struts.tag.PaginationTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Prints the Tabs</info>
+		<attribute>
+			<name>page</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>pageSize</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>pagesSetSize</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>resultSize</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>labelPage</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>action</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>imageFirst</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>imagePrev</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>imageNext</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>imageLast</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>nombrePaginaLista</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+	</tag>
+
+</taglib>

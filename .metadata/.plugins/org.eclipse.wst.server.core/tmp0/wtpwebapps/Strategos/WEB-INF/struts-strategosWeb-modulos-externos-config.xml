@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (17/12/2012) -->
+<struts-config>
+
+	<!-- Definiciones: Form Bean    -->
+	<form-beans>
+		<form-bean name="gestionarCodigoEnlaceForm" type="com.visiongc.app.strategos.web.struts.modulo.codigoEnlace.forms.GestionarCodigoEnlaceForm" />
+		<form-bean name="editarCodigoEnlaceForm" type="com.visiongc.app.strategos.web.struts.modulo.codigoEnlace.forms.EditarCodigoEnlaceForm" />
+		<form-bean name="seleccionarCodigoEnlaceForm" type="com.visiongc.framework.web.struts.forms.SelectorListaForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="gestionarCodigoEnlace" path="/paginas/strategos/modulo/codigoenlace/gestionarCodigoEnlace.jsp" />
+		<forward name="editarCodigoEnlace" path="/paginas/strategos/modulo/codigoenlace/editarCodigoEnlace.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+		<!-- Mapeo del Action: Gestionar Codigo de Enlace -->
+		<action path="/codigoenlace/gestionarCodigoEnlace" type="com.visiongc.app.strategos.web.struts.modulo.codigoEnlace.actions.GestionarCodigoEnlaceAction" scope="session" name="gestionarCodigoEnlaceForm" parameter="gestionarCodigoEnlace"></action>
+		
+		<!-- Mapeo del Action: Crear Codigo de Enlace -->
+		<action path="/codigoenlace/crearCodigoEnlace" type="com.visiongc.app.strategos.web.struts.modulo.codigoEnlace.actions.EditarCodigoEnlaceAction" scope="request" name="editarCodigoEnlaceForm" parameter="editarCodigoEnlace"></action>
+
+		<!-- Mapeo del Action: Modificar Estatus de las Iniciativas -->
+		<action path="/codigoenlace/modificarCodigoEnlace" type="com.visiongc.app.strategos.web.struts.modulo.codigoEnlace.actions.EditarCodigoEnlaceAction" scope="request" name="editarCodigoEnlaceForm" parameter="editarCodigoEnlace"></action>
+		
+		<!-- Mapeo del Action: Guardar Codigo de Enlace -->
+		<action path="/codigoenlace/guardarCodigoEnlace" type="com.visiongc.app.strategos.web.struts.modulo.codigoEnlace.actions.GuardarCodigoEnlaceAction" name="editarCodigoEnlaceForm" scope="request" input="editarCodigoEnlace" validate="true" parameter="editarCodigoEnlace">
+			<forward name="crearCodigoenlace" path="/codigoenlace/crearCodigoEnlace.action" />
+		</action>
+		
+		<!-- Mapeo del Action: Eliminar Codigo de Enlace -->
+		<action path="/codigoenlace/eliminarCodigoEnlace" type="com.visiongc.app.strategos.web.struts.modulo.codigoEnlace.actions.EliminarCodigoEnlaceAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Codigo de Enlace -->
+		<action path="/codigoenlace/generarReporteCodigoEnlace" type="com.visiongc.app.strategos.web.struts.modulo.codigoEnlace.actions.ReporteCodigoEnlaceAction"></action>
+		
+		<!-- Mapeo del Action: Seleccionar Codigo de Enlace -->
+		<action path="/codigoenlace/seleccionarCodigoEnlace" type="com.visiongc.app.strategos.web.struts.modulo.codigoEnlace.actions.SeleccionarCodigoEnlaceAction" scope="request" name="seleccionarCodigoEnlaceForm" parameter="seleccionarCodigoEnlace">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarCodigoEnlace" path="/paginas/strategos/modulo/codigoenlace/seleccionarCodigoEnlace.jsp" />
+		</action>
+						
+	</action-mappings>
+
+</struts-config>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="StrutsProcess">
+ <PROCESS-ITEM ID="editarConfiguracionVisorLista" NAME="forward0"
+  PATH="/paginas/framework/configuracion/visorlista/editarConfiguracionVisorLista.jsp"
+  SHAPE="32,17,0,0" TARGET="page0" TITLE="editarConfiguracionVisorLista"
+  TYPE="forward" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM ID="editarConfiguracionPagina" NAME="forward1"
+  PATH="/paginas/framework/configuracion/pagina/editarConfiguracionPagina.jsp"
+  SHAPE="32,129,0,0" TARGET="page1" TITLE="editarConfiguracionPagina"
+  TYPE="forward" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM ID="#framework#configuracion#editarConfiguracionPagina"
+  NAME="action0"
+  PATH="/framework/configuracion/editarConfiguracionPagina"
+  SHAPE="32,241,0,0" TITLE="editarConfiguracionPaginaForm" TYPE="action" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM
+  ID="#framework#configuracion#guardarConfiguracionVisorLista"
+  NAME="action1"
+  PATH="/framework/configuracion/guardarConfiguracionVisorLista"
+  SHAPE="448,17,0,0" TITLE="editarConfiguracionVisorListaForm"
+  TYPE="action" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM
+  ID="#framework#configuracion#cancelarGuardarConfiguracionVisorLista"
+  NAME="action2"
+  PATH="/framework/configuracion/cancelarGuardarConfiguracionVisorLista"
+  SHAPE="240,257,0,0" TITLE="editarConfiguracionVisorListaForm"
+  TYPE="action" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM
+  ID="#framework#configuracion#cancelarGuardarConfiguracionPagina"
+  NAME="action3"
+  PATH="/framework/configuracion/cancelarGuardarConfiguracionPagina"
+  SHAPE="448,241,0,0" TITLE="editarConfiguracionPaginaForm"
+  TYPE="action" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM
+  ID="#framework#configuracion#editarConfiguracionVisorLista"
+  NAME="action4"
+  PATH="/framework/configuracion/editarConfiguracionVisorLista"
+  SHAPE="656,257,0,0" TITLE="editarConfiguracionVisorListaForm"
+  TYPE="action" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM ID="#framework#configuracion#guardarConfiguracionPagina"
+  NAME="action5"
+  PATH="/framework/configuracion/guardarConfiguracionPagina"
+  SHAPE="448,129,0,0" TITLE="editarConfiguracionPaginaForm"
+  TYPE="action" model-entity="StrutsProcessItem">
+  <PROCESS-ITEM-OUTPUT ID="finalizarConfiguracionPagina" NAME="forward0"
+   PATH="/paginas/framework/configuracion/pagina/finalizarConfiguracionPagina.jsp"
+   TARGET="page2" TITLE="finalizarConfiguracionPagina" TYPE="forward" model-entity="StrutsProcessItemOutput"/>
+  <PROCESS-ITEM-OUTPUT ID="imagenInvalida" NAME="forward1"
+   PATH="/paginas/framework/configuracion/pagina/imagenInvalidaConfiguracionPagina.jsp"
+   TARGET="page3" TITLE="imagenInvalida" TYPE="forward" model-entity="StrutsProcessItemOutput"/>
+  <PROCESS-ITEM-OUTPUT ID="tamanoInvalido" NAME="forward2"
+   PATH="/paginas/framework/configuracion/pagina/tamanoInvalidoConfiguracionPagina.jsp"
+   TARGET="page4" TITLE="tamanoInvalido" TYPE="forward" model-entity="StrutsProcessItemOutput"/>
+  <PROCESS-ITEM-OUTPUT ID="dimensionInvalida" NAME="forward3"
+   PATH="/paginas/framework/configuracion/pagina/dimensionInvalidaConfiguracionPagina.jsp"
+   TARGET="page5" TITLE="dimensionInvalida" TYPE="forward" model-entity="StrutsProcessItemOutput"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="page0"
+  PATH="/paginas/framework/configuracion/visorlista/editarConfiguracionVisorLista.jsp"
+  SHAPE="240,34,0,0" SUBTYPE="jsp"
+  TITLE="editarConfiguracionVisorLista.jsp" TYPE="page" model-entity="StrutsProcessItem">
+  <PROCESS-ITEM-OUTPUT NAME="link0"
+   PATH="/framework/configuracion/guardarConfiguracionVisorLista.do"
+   SUBTYPE="confirmed" TARGET="action1"
+   TITLE="/framework/configuracion/guardarConfiguracionVisorLista.do"
+   TYPE="link" model-entity="StrutsProcessItemOutput"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="page1"
+  PATH="/paginas/framework/configuracion/pagina/editarConfiguracionPagina.jsp"
+  SHAPE="240,146,0,0" SUBTYPE="jsp"
+  TITLE="editarConfiguracionPagina.jsp" TYPE="page" model-entity="StrutsProcessItem">
+  <PROCESS-ITEM-OUTPUT NAME="link0"
+   PATH="/framework/configuracion/guardarConfiguracionPagina.do"
+   SUBTYPE="confirmed" TARGET="action5"
+   TITLE="/framework/configuracion/guardarConfiguracionPagina.do"
+   TYPE="link" model-entity="StrutsProcessItemOutput"/>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="page2"
+  PATH="/paginas/framework/configuracion/pagina/finalizarConfiguracionPagina.jsp"
+  SHAPE="656,146,0,0" SUBTYPE="jsp"
+  TITLE="finalizarConfiguracionPagina.jsp" TYPE="page" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM NAME="page3"
+  PATH="/paginas/framework/configuracion/pagina/imagenInvalidaConfiguracionPagina.jsp"
+  SHAPE="864,129,0,0" SUBTYPE="jsp"
+  TITLE="imagenInvalidaConfiguracionPagina.jsp" TYPE="page" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM NAME="page4"
+  PATH="/paginas/framework/configuracion/pagina/tamanoInvalidoConfiguracionPagina.jsp"
+  SHAPE="656,353,0,0" SUBTYPE="jsp"
+  TITLE="tamanoInvalidoConfiguracionPagina.jsp" TYPE="page" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM NAME="page5"
+  PATH="/paginas/framework/configuracion/pagina/dimensionInvalidaConfiguracionPagina.jsp"
+  SHAPE="864,241,0,0" SUBTYPE="jsp"
+  TITLE="dimensionInvalidaConfiguracionPagina.jsp" TYPE="page" model-entity="StrutsProcessItem"/>
+ <PROCESS-ITEM ID="#configuracion#validarConfiguracionPagina"
+  NAME="action6" PATH="/configuracion/validarConfiguracionPagina"
+  SHAPE="32,561,0,0" TITLE="editarConfiguracionPaginaForm" TYPE="action" model-entity="StrutsProcessItem"/>
+<PROCESS-ITEM
+  ID="#framework#configuracion#editarConfiguracionVisorListaModal"
+  NAME="action7"
+  PATH="/framework/configuracion/editarConfiguracionVisorListaModal"
+  SHAPE="656,257,0,0" TITLE="editarConfiguracionVisorListaForm"
+  TYPE="action" model-entity="StrutsProcessItem"/>  
+</PROCESS>

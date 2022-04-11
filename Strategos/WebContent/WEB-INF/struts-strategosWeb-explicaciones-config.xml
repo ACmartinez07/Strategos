@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (27/11/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarExplicacionesForm" type="com.visiongc.app.strategos.web.struts.explicaciones.forms.GestionarExplicacionesForm" />
+		<form-bean name="editarExplicacionForm" type="com.visiongc.app.strategos.web.struts.explicaciones.forms.EditarExplicacionForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarExplicacion" path="/paginas/strategos/explicaciones/editarExplicacion.jsp" />		
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Explicaciones -->
+		<action path="/explicaciones/gestionarExplicaciones" type="com.visiongc.app.strategos.web.struts.explicaciones.actions.GestionarExplicacionesAction" scope="session" name="gestionarExplicacionesForm" parameter="gestionarExplicaciones">
+			<forward name="gestionarExplicaciones" path="/paginas/strategos/explicaciones/gestionarExplicaciones.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Explicación -->
+		<action path="/explicaciones/crearExplicacion" type="com.visiongc.app.strategos.web.struts.explicaciones.actions.EditarExplicacionAction" scope="session" name="editarExplicacionForm" parameter="editarExplicacion"></action>
+
+		<!-- Mapeo del Action: Modificar Explicación -->
+		<action path="/explicaciones/modificarExplicacion" type="com.visiongc.app.strategos.web.struts.explicaciones.actions.EditarExplicacionAction" scope="session" name="editarExplicacionForm" parameter="editarExplicacion"></action>
+
+		<!-- Mapeo del Action: Modificar Explicación -->
+		<action path="/explicaciones/verExplicacion" type="com.visiongc.app.strategos.web.struts.explicaciones.actions.EditarExplicacionAction" scope="session" name="editarExplicacionForm" parameter="editarExplicacion"></action>
+
+		<!-- Mapeo del Action: Guardar Explicación -->
+		<action path="/explicaciones/guardarExplicacion" type="com.visiongc.app.strategos.web.struts.explicaciones.actions.GuardarExplicacionAction" name="editarExplicacionForm" scope="session" input="editarExplicacion" validate="true" parameter="editarExplicacion">
+			<forward name="crearExplicacion" path="/explicaciones/crearExplicacion.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Explicación -->
+		<action path="/explicaciones/cancelarGuardarExplicacion" type="com.visiongc.app.strategos.web.struts.explicaciones.actions.GuardarExplicacionAction" name="editarExplicacionForm" scope="session" parameter="editarExplicacion"></action>
+
+		<!-- Mapeo del Action: Eliminar Explicación -->
+		<action path="/explicaciones/eliminarExplicacion" type="com.visiongc.app.strategos.web.struts.explicaciones.actions.EliminarExplicacionAction"></action>
+
+		<!-- Mapeo del Action: Subir Adjunto -->
+		<action path="/explicaciones/subirAdjuntoExplicacion" type="com.visiongc.app.strategos.web.struts.explicaciones.actions.SubirAdjuntoExplicacionAction" name="editarExplicacionForm" scope="session" parameter="editarExplicacion"></action>
+
+		<!-- Mapeo del Action: Eliminar Adjunto -->
+		<action path="/explicaciones/eliminarAdjuntoExplicacion" type="com.visiongc.app.strategos.web.struts.explicaciones.actions.EliminarAdjuntoExplicacionAction" name="editarExplicacionForm" scope="session" parameter="editarExplicacion"></action>
+
+		<!-- Mapeo del Action: Descargar Archivo Adjunto -->
+		<action path="/explicaciones/descargarAdjuntoExplicacion" type="com.visiongc.app.strategos.web.struts.explicaciones.actions.DescargarAdjuntoExplicacionAction"></action>
+
+		<!-- Mapeo del Action: Propiedades Explicacion -->
+		<action path="/explicaciones/propiedadesExplicacion" type="com.visiongc.app.strategos.web.struts.explicaciones.actions.MostrarPropiedadesExplicacionAction" name="editarExplicacionForm" scope="request" parameter="propiedadesExplicacion">
+			<forward name="propiedadesExplicacion" path="/paginas/strategos/explicaciones/propiedadesExplicacion.jsp" />
+		</action>
+		
+		<!-- Mapeo del Action: Generar Reporte de Explicaciones en PDF-->
+		<action path="/explicaciones/generarReporteExplicacionesPdf" type="com.visiongc.app.strategos.web.struts.explicaciones.actions.ReporteExplicacionesPdfAction"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte de Explicaciones en XLS-->
+		<action path="/explicaciones/generarReporteExplicacionesXls" type="com.visiongc.app.strategos.web.struts.explicaciones.actions.ReporteExplicacionesXLSAction"></action>
+
+	</action-mappings>
+
+</struts-config>

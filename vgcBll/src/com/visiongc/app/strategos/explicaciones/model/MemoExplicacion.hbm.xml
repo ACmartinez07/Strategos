@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto MemoExplicacion de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (27/11/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.app.strategos.explicaciones.model.MemoExplicacion" table="explicacion_memo">
+
+		<!-- Clave compuesta -->
+		<composite-id name="pk" class="com.visiongc.app.strategos.explicaciones.model.MemoExplicacionPK">
+			<key-property name="explicacionId" column="explicacion_id" type="java.lang.Long" />
+			<key-property name="tipo" column="tipo" type="java.lang.Byte" />
+		</composite-id>
+
+		<!-- Atributos del objeto conceptual para  MemoExplicacion -->
+		<property name="memo" type="java.lang.String" column="memo" />
+
+		<!-- Asociación muchos a uno para Explicacion -->
+		<many-to-one name="explicacion" class="com.visiongc.app.strategos.explicaciones.model.Explicacion" update="false" insert="false">
+			<column name="explicacion_id" />
+		</many-to-one>
+
+	</class>
+
+</hibernate-mapping>

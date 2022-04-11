@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (10/06/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarCeldasForm" type="com.visiongc.app.strategos.web.struts.presentaciones.celdas.forms.GestionarCeldasForm" />
+		<form-bean name="editarCeldaForm" type="com.visiongc.app.strategos.web.struts.presentaciones.celdas.forms.EditarCeldaForm" />		
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarCelda" path="/paginas/strategos/presentaciones/celdas/editarCelda.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Celdas -->
+		<action path="/presentaciones/celdas/gestionarCeldas" type="com.visiongc.app.strategos.web.struts.presentaciones.celdas.actions.GestionarCeldasAction" scope="session" name="gestionarCeldasForm" parameter="gestionarCeldas">
+			<forward name="gestionarCeldas" path="/paginas/strategos/presentaciones/celdas/gestionarCeldas.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Celda -->
+		<action path="/presentaciones/celdas/crearCelda" type="com.visiongc.app.strategos.web.struts.presentaciones.celdas.actions.EditarCeldaAction" scope="session" name="editarCeldaForm" parameter="editarCelda"></action>
+
+		<!-- Mapeo del Action: Modificar Celda -->
+		<action path="/presentaciones/celdas/modificarCelda" type="com.visiongc.app.strategos.web.struts.presentaciones.celdas.actions.EditarCeldaAction" scope="session" name="editarCeldaForm" parameter="editarCelda"></action>
+
+		<!-- Mapeo del Action: Guardar Celda -->
+		<action path="/presentaciones/celdas/guardarCelda" type="com.visiongc.app.strategos.web.struts.presentaciones.celdas.actions.GuardarCeldaAction" name="editarCeldaForm" scope="session" input="editarCelda" validate="true" parameter="editarCelda">
+			<forward name="crearCelda" path="/presentaciones/celdas/crearCelda.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Celda -->
+		<action path="/presentaciones/celdas/cancelarGuardarCelda" type="com.visiongc.app.strategos.web.struts.presentaciones.celdas.actions.GuardarCeldaAction" name="editarCeldaForm" scope="session" parameter="editarCelda"></action>
+
+		<!-- Mapeo del Action: Eliminar Celda -->
+		<action path="/presentaciones/celdas/eliminarCelda" type="com.visiongc.app.strategos.web.struts.presentaciones.celdas.actions.EliminarCeldaAction"></action>
+
+	</action-mappings>
+
+</struts-config>

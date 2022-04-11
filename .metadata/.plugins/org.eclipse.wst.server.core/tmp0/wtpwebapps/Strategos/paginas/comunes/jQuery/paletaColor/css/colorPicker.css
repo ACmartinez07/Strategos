@@ -1,0 +1,22 @@
+/* ESTILO DE LA CAPA CONTENEDORA DE COLORES (PALETA) */
+#paletaColor
+{	width:324px; 
+	height:54px; 
+	border:#333333 1px solid; 
+	background-color:#000000;
+}
+/* ESTILO DE LA CELDA DE CADA COLOR DE LA PALETA */
+.divColor
+{	border-color:#000000;
+	border-style:solid;
+	border-width:1px;
+	border-top-width:0;
+	border-left-width:0;
+	width:8px;
+	height:8px;
+	margin:0;
+	padding:0;
+	top:0;
+	left:0;
+	float:left;	
+}

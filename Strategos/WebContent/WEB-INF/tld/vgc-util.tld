@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+	<!-- Creado por: Kerwin Arias (11/01/2012) -->
+	<!-- Modificado por: Kerwin Arias (11/10/2012) -->
+
+<taglib>
+	<tlibversion>1.0.0.0</tlibversion>
+	<jspversion>1.2</jspversion>
+	<shortname>vgc-util</shortname>
+	<uri>http://www.visiongc.net</uri>
+	<info>Libreria de tags utilitarios de Vision GC (11/01/2012)</info>
+	<tag>
+		<name>objetosistema</name>
+		<tagclass>
+			com.visiongc.commons.struts.tag.ObjetoSistemaTag
+		</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Imprime el nombre de un Objeto de Sistema</info>
+
+		<attribute>
+			<name>objetoId</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>articuloSingular</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nombreSingular</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>articuloPlural</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nombrePlural</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>mayuscula</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>minuscula</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>html</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>message</name>
+		<tagclass>com.visiongc.commons.struts.tag.MessageTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>
+			<![CDATA[
+            <p><strong>
+    Imprime un string de mensaje internacionalizado en el response.
+    </strong></p>
+          
+    <p>Retrieves an internationalized message for the specified locale,
+    using the specified message key, and write it to the output stream.
+    Up to five parametric replacements (such as "{0}") may be specified.</p>
+
+    <p>The message key may be specified directly, using the <code>key</code>
+    attribute, or indirectly, using the <code>name</code> and
+    <code>property</code> attributes to obtain it from a bean.</p>
+    
+    <p>
+    <strong>JSTL</strong>:  El tag JSTL equivalent es &lt;fmt:message&gt;.  Por ejemplo,
+    <br/>
+    <code>
+    	&lt;fmt:message key="my.msg.key"&gt;
+    	  &lt;fmt:param value="replacement text"/&gt;
+    	&lt;/fmt:message&gt;
+    </code>
+    </p>
+    ]]>
+		</info>
+		<attribute>
+			<name>arg0</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>arg1</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>arg2</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>arg3</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>arg4</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>bundle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>key</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>locale</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>property</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>tienePermiso</name>
+		<tagclass>
+			com.visiongc.commons.struts.tag.TienePermisoTag
+		</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>
+			Agregar el Contenido si el usuario tiene el permiso
+			respectivo
+		</info>
+		<attribute>
+			<name>permisoId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>aplicaOrganizacion</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>crearPaginaLista</name>
+		<tagclass>
+			com.visiongc.framework.web.struts.taglib.util.CrearPaginaListaTag
+		</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>
+			Agregar el Contenido si el usuario tiene el permiso
+			respectivo
+		</info>
+		<attribute>
+			<name>nombre</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>property</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>toScope</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+	<tag>
+		<name>valorPropertyIgual</name>
+		<tagclass>
+			com.visiongc.framework.web.struts.taglib.util.ValorPropertyIgualTag
+		</tagclass>
+		<bodycontent>JSP</bodycontent>
+		<info>
+			Agregar el Contenido si el valor del property tiene el valor pasado como parámetro
+		</info>
+		<attribute>
+			<name>nombre</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>property</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>valor</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+</taglib>

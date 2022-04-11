@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (13/05/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="logonForm" type="com.visiongc.framework.web.struts.forms.LogonForm" />
+		<form-bean name="licenciaForm" type="com.visiongc.framework.web.struts.forms.LicenciaForm" />
+		<form-bean name="expiracionForm" type="com.visiongc.framework.web.struts.forms.ExpiracionForm" />
+		<form-bean name="errorForm" type="org.apache.struts.action.DynaActionForm">
+			<form-property name="message" type="java.lang.String" />
+			<form-property name="cause" type="java.lang.String" />
+			<form-property name="stackTrace" type="java.lang.String" />
+		</form-bean>
+		<form-bean name="gestionarErroresForm" type="com.visiongc.framework.web.struts.forms.errores.GestionarErroresForm" />
+		<form-bean name="gestionarServiciosForm" type="com.visiongc.framework.web.struts.forms.servicio.GestionarServiciosForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Exceptions -->
+	<global-exceptions>
+		<exception key="error.generalmessage" type="java.lang.Throwable" path="/error.action" />
+	</global-exceptions>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="inicio" path="/index.jsp" />
+		<forward name="ingreso" path="/paginas/comunes/ingreso.jsp" />
+		<forward name="expirado" path="/paginas/comunes/expirado.jsp" />
+		<forward name="fullConexion" path="/paginas/comunes/fullConexion.jsp" />
+		<forward name="folderConfiguracionEmpty" path="/paginas/comunes/folderConfiguracionEmpty.jsp" />
+		<forward name="folderConfiguracionError" path="/paginas/comunes/folderConfiguracionError.jsp" />
+		<forward name="sincronizar" path="/paginas/comunes/sincronizar.jsp" />
+		<forward name="error" path="/paginas/comunes/error.jsp" />
+		<forward name="acerca" path="/paginas/comunes/acerca.jsp" />
+		<forward name="licencia" path="/paginas/comunes/licencia.jsp" />
+		<forward name="administracion" path="/paginas/framework/administracion.jsp" />
+		<forward name="permisoNegado" path="/paginas/comunes/permisoNegado.jsp" />
+		<forward name="logon" path="ingreso" />
+		<forward name="ajaxResponse" path="/componentes/ajax/ajaxResponse.jsp" />
+		<forward name="gestionarErroresAction" path="/framework/errores/gestionarErrores.action" />
+		<forward name="gestionarServiciosAction" path="/framework/servicio/gestionarServicios.action" />
+		<forward name="configurarServicios" path="/paginas/framework/servicio/configurarServicio.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings type="org.apache.struts.config.SecureActionConfig">
+
+		<!-- Mapeo del Action: Ingreso  -->
+		<action path="/ingreso" type="com.visiongc.framework.web.struts.actions.WelcomeAction" />
+
+		<!-- Mapeo del Action: Error -->
+		<action path="/error" type="com.visiongc.framework.web.struts.actions.RegistrarErrorAction" name="errorForm" scope="request" parameter="error" />
+
+		<!-- Mapeo del Action Locale -->
+		<action path="/locale" type="com.visiongc.framework.web.struts.actions.LocaleAction" parameter="welcome" />
+
+		<!-- Mapeo del Action: Logon -->
+		<action path="/logon" type="com.visiongc.framework.web.struts.actions.LogonAction" name="logonForm" scope="request" input="logon" validate="true">
+			<set-property property="secure" value="true" />
+			<forward name="exito" path="/paginas/comunes/home.jsp" />
+			<forward name="fallo" path="/paginas/comunes/ingreso.jsp" />
+			<forward name="conectado" path="/paginas/comunes/ingreso.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Logout -->
+		<action path="/logout" type="com.visiongc.framework.web.struts.actions.LogoutAction" parameter="inicio"></action>
+
+		<!-- Mapeo del Action: Goback -->
+		<action path="/goback" type="com.visiongc.framework.web.struts.actions.GoBackAction"></action>
+
+		<!-- Mapeo del Action: About -->
+		<action path="/acerca" type="com.visiongc.framework.web.struts.actions.AboutAction">
+			<set-property property="secure" value="false" />
+		</action>
+
+		<!-- Mapeo del Action: Licencia -->
+		<action path="/licencia" type="com.visiongc.framework.web.struts.actions.LicenciaAction" name="licenciaForm" scope="session" input="licencia" parameter="licencia">
+			<set-property property="secure" value="false" />
+		</action>
+
+		<!-- Mapeo del Action: Licencia enviar mail -->
+		<action path="/licencia/enviar/mail" type="com.visiongc.framework.web.struts.actions.LicenciaEnviarMailAction"></action>
+
+		<!-- Mapeo del Action: Licencia salvar clave -->
+		<action path="/licencia/salvar" type="com.visiongc.framework.web.struts.actions.LicenciaSalvarAction" name="licenciaForm" scope="session" parameter="licencia"></action>
+
+		<!-- Mapeo del Action: Home -->
+		<action path="/home" type="com.visiongc.framework.web.struts.actions.HomeAction"></action>
+
+		<!-- Mapeo del Action: Administración -->
+		<action path="/framework/administracion" type="com.visiongc.framework.web.struts.actions.AdministracionAction" parameter="gestionarUsuariosAction">
+			<set-property property="secure" value="false" />
+		</action>
+
+		<!-- Mapeo del Action: RefreshSession -->
+		<action path="/framework/refreshSession" type="com.visiongc.framework.web.struts.actions.RefreshSessionAction">
+			<set-property property="secure" value="false" />
+		</action>
+
+		<!-- Mapeo del Action: Gestionar Errores -->
+		<action path="/framework/errores/gestionarErrores" type="com.visiongc.framework.web.struts.actions.errores.GestionarErroresAction" scope="request" name="gestionarErroresForm" parameter="gestionarErrores">
+			<set-property property="secure" value="false" />
+			<forward name="gestionarErrores" path="/paginas/framework/errores/gestionarErrores.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Reporte Registro de Error -->
+		<action path="/framework/errores/reporteError" type="com.visiongc.framework.web.struts.actions.errores.ReporteErrorAction"></action>
+
+		<!-- Mapeo del Action: Reporte Registro de Error -->
+		<action path="/framework/errores/enviarError" type="com.visiongc.framework.web.struts.actions.errores.EnviarErrorAction"></action>
+
+		<!-- Mapeo del Action: Gestionar Servicios -->
+		<action path="/framework/servicio/gestionarServicios" type="com.visiongc.framework.web.struts.actions.servicio.GestionarServiciosAction" scope="request" name="gestionarServiciosForm" parameter="gestionarServicios">
+			<set-property property="secure" value="false" />
+			<forward name="gestionarServicios" path="/paginas/framework/servicio/gestionarServicios.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Configurar servicios -->
+		<action path="/framework/servicio/configurarServicio" type="com.visiongc.framework.web.struts.actions.servicio.ConfigurarServiciosAction" name="gestionarServiciosForm" scope="request" parameter="configurarServicios"></action>
+		
+		<!-- Mapeo del Action: Configurar servicios -->
+		<action path="/framework/servicio/salvarServicio" type="com.visiongc.framework.web.struts.actions.servicio.SaveServiceAction"></action>
+	
+		<!-- Mapeo del Action: Descargar Archivo Adjunto -->
+		<action path="/framework/servicio/descargarAdjunto" type="com.visiongc.framework.web.struts.actions.servicio.DescargarAdjuntoAction"></action>
+		
+	
+	</action-mappings>
+
+	<!-- Configuración del Controlador de Request (Struts) -->
+	<controller>
+		<set-property property="inputForward" value="true" />
+		<set-property property="processorClass" value="com.visiongc.commons.struts.VgcRequestProcessor" />
+	</controller>
+
+	<!-- Configuración del plugin Tiles -->
+	<plug-in className="org.apache.struts.tiles.TilesPlugin">
+		<set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml, /WEB-INF/tiles-defs-app.xml" />
+		<set-property property="moduleAware" value="true" />
+	</plug-in>
+
+	<!-- Configuración del plugin Validator -->
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames" value="/org/apache/struts/validator/validator-rules.xml,
+			/WEB-INF/validator-rules-app.xml,
+			/WEB-INF/validator-rules-framework.xml,
+			/WEB-INF/validation-framework.xml,
+			/WEB-INF/validation.xml,
+			/WEB-INF/planes/plantillas/validation-plantillasplanes.xml" />
+	</plug-in>
+
+	<!-- Configuración del plugin de seguridad SSL -->
+	<plug-in className="org.apache.struts.action.SecurePlugIn">
+		<set-property property="httpPort" value="8090" />
+		<set-property property="httpsPort" value="8443" />
+		<set-property property="enable" value="false" />
+		<set-property property="addSession" value="false" />
+	</plug-in>
+
+</struts-config>

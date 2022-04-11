@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Andres Caucali (21/06/2019) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="editarTiposProyectoForm" type="com.visiongc.app.strategos.web.struts.tipoproyecto.forms.EditarTiposProyectoForm" />
+		<form-bean name="gestionarTiposProyectoForm" type="com.visiongc.app.strategos.web.struts.tipoproyecto.forms.GestionarTiposProyectoForm" />
+		<form-bean name="seleccionarTiposProyectoForm" type="com.visiongc.framework.web.struts.forms.SelectorListaForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarTiposProyecto" path="/paginas/strategos/tiposproyecto/editarTiposProyecto.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Categorias de Medicion -->
+		<action path="/tiposproyecto/gestionarTiposProyecto" type="com.visiongc.app.strategos.web.struts.tipoproyecto.actions.GestionarTiposProyectoAction" scope="session" name="gestionarTiposProyectoForm" parameter="gestionarTiposProyecto">
+			<forward name="gestionarTiposProyecto" path="/paginas/strategos/tiposproyecto/gestionarTiposProyecto.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Categoria de Medicion -->
+		<action path="/tiposproyecto/crearTiposProyecto" type="com.visiongc.app.strategos.web.struts.tipoproyecto.actions.EditarTiposProyectoAction" scope="request" name="editarTiposProyectoForm" parameter="editarTiposProyecto"></action>
+
+		<!-- Mapeo del Action: Modificar Categoria de Medicion -->
+		<action path="/tiposproyecto/modificarTiposProyecto" type="com.visiongc.app.strategos.web.struts.tipoproyecto.actions.EditarTiposProyectoAction" scope="request" name="editarTiposProyectoForm" parameter="editarTiposProyecto"></action>
+
+		<!-- Mapeo del Action: Guardar Categoria de Medicion -->
+		<action path="/tiposproyecto/guardarTiposProyecto" type="com.visiongc.app.strategos.web.struts.tipoproyecto.actions.GuardarTiposProyectoAction" name="editarTiposProyectoForm" scope="request" input="editarTiposProyecto" validate="true" parameter="editarTiposProyecto">
+			<forward name="crearTiposProyecto" path="/tiposproyecto/crearTiposProyecto.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Categoria de Medicion -->
+		<action path="/tiposproyecto/cancelarGuardarTiposProyecto" type="com.visiongc.app.strategos.web.struts.tipoproyecto.actions.GuardarTiposProyectoAction" name="editarTiposProyectoForm" scope="request" parameter="editarTiposProyecto"></action>
+
+		<!-- Mapeo del Action: Eliminar Categoria de Medicion -->
+		<action path="/tiposproyecto/eliminarTiposProyecto" type="com.visiongc.app.strategos.web.struts.tipoproyecto.actions.EliminarTiposProyectoAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Categorias de Medicion -->
+		<action path="/tiposproyecto/generarReporteTiposProyecto" type="com.visiongc.app.strategos.web.struts.tipoproyecto.actions.ReporteTiposProyectoAction"></action>
+
+		<!-- Mapeo del Action: Seleccionar Categorias de Medicion -->
+		<action path="/tiposproyecto/seleccionarTiposProyecto" type="com.visiongc.app.strategos.web.struts.tipoproyecto.actions.SeleccionarTiposProyectoAction" scope="request" name="seleccionarTiposProyectoForm" parameter="seleccionarTiposProyecto">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarTiposProyecto" path="/paginas/strategos/tiposproyecto/seleccionarTiposProyecto.jsp" />
+		</action>
+
+	</action-mappings>
+	
+</struts-config>

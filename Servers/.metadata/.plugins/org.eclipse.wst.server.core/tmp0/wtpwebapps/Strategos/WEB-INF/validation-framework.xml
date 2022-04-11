@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.3.0//EN" "validator_1_3_0.dtd">
+
+<!-- Modificado por: Kerwin Arias (28/07/2012) -->
+
+<form-validation>
+
+	<!-- Validaciones Globales -->
+	<global></global>
+
+	<!-- Validaciones de Formularios  -->
+	<formset>
+
+		<!-- Forma de Conexión a la aplicación -->
+		<form name="logonForm">
+			<field property="username" depends="required">
+				<arg key="jsp.ingreso.usuario" />
+			</field>
+			<field property="password" depends="required,mask">
+				<arg key="jsp.ingreso.contrasena" />
+				<var>
+					<var-name>mask</var-name>
+					<var-value>^[0-9a-zA-Z]*$</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Forma que Guarda un Usuario -->
+		<form name="/framework/usuarios/guardarUsuario">
+			<field property="UId" depends="required, caracteresNoPermitidos">
+				<arg key="jsp.framework.editarusuario.label.uid" />
+			</field>
+			<field property="UId" depends="caracteresNoPermitidosApp">
+				<arg key="jsp.framework.editarusuario.label.uid" />
+			</field>
+			<field property="fullName" depends="required, caracteresNoPermitidos">
+				<arg key="jsp.framework.editarusuario.label.fullname" />
+			</field>
+			<field property="fullName" depends="caracteresNoPermitidosApp">
+				<arg key="jsp.framework.editarusuario.label.fullname" />
+			</field>
+			<field property="pwd" depends="required,minlength">
+				<arg key="jsp.framework.editarusuario.label.password" position="0" />
+				<arg name="minlength" key="${var:minlength}" resource="false" position="1" />
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>4</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Forma que Edita un Usuario  -->
+		<form name="editarUsuarioForm">
+			<field property="UId" depends="required">
+				<arg key="jsp.framework.editarusuario.label.uid" />
+			</field>
+			<field property="fullName" depends="required">
+				<arg key="jsp.framework.editarusuario.label.fullname" />
+			</field>
+			<field property="pwd" depends="required,minlength">
+				<arg key="jsp.framework.editarusuario.label.password" position="0" />
+				<arg name="minlength" key="${var:minlength}" resource="false" position="1" />
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>4</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Action que Guarda la Clave de un Usuario -->
+		<form name="/framework/usuarios/guardarClaveUsuario">
+			<field property="pwdActual" depends="required,minlength">
+				<arg key="jsp.framework.usuarios.cambiarclaveusuario.label.passwordactual" position="0" />
+				<arg name="minlength" key="${var:minlength}" resource="false" position="1" />
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>4</var-value>
+				</var>
+			</field>
+			<field property="pwd" depends="required,minlength">
+				<arg key="jsp.framework.usuarios.cambiarclaveusuario.label.passwordnuevo" position="0" />
+				<arg name="minlength" key="${var:minlength}" resource="false" position="1" />
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>4</var-value>
+				</var>
+			</field>
+			<field property="pwd" depends="required,minlength">
+				<arg key="jsp.framework.usuarios.cambiarclaveusuario.label.pwdconfirm" position="0" />
+				<arg name="minlength" key="${var:minlength}" resource="false" position="1" />
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>4</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Forma que Cambia la Clave de un Usuario  -->
+		<form name="cambiarClaveUsuarioForm">
+			<field property="pwdActual" depends="required,minlength">
+				<arg key="jsp.framework.usuarios.cambiarclaveusuario.label.passwordactual" position="0" />
+				<arg name="minlength" key="${var:minlength}" resource="false" position="1" />
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>4</var-value>
+				</var>
+			</field>
+			<field property="pwd" depends="required,minlength">
+				<arg key="jsp.framework.usuarios.cambiarclaveusuario.label.passwordnuevo" position="0" />
+				<arg name="minlength" key="${var:minlength}" resource="false" position="1" />
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>4</var-value>
+				</var>
+			</field>
+			<field property="pwd" depends="required,minlength">
+				<arg key="jsp.framework.usuarios.cambiarclaveusuario.label.pwdconfirm" position="0" />
+				<arg name="minlength" key="${var:minlength}" resource="false" position="1" />
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>4</var-value>
+				</var>
+			</field>
+		</form>
+
+		<!-- Forma que Guarda un Grupo -->
+		<form name="/framework/grupos/guardarGrupo">
+			<field property="grupo" depends="required,caracteresNoPermitidosApp,caracteresNoPermitidos">
+				<arg key="jsp.framework.editargrupo.label.nombre" />
+			</field>
+		</form>
+
+		<!-- Forma que Edita un Grupo -->
+		<form name="editarGrupoForm">
+			<field property="grupo" depends="required">
+				<arg key="jsp.framework.editargrupo.label.nombre" />
+			</field>
+		</form>
+
+	</formset>
+
+</form-validation>

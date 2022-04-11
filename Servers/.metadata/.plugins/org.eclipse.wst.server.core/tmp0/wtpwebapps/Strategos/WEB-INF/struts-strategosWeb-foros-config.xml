@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (27/11/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarForosForm" type="com.visiongc.app.strategos.web.struts.foros.forms.GestionarForosForm" />
+		<form-bean name="editarForoForm" type="com.visiongc.app.strategos.web.struts.foros.forms.EditarForoForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarForo" path="/paginas/strategos/foros/editarForo.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Foros -->
+		<action path="/foros/gestionarForos" type="com.visiongc.app.strategos.web.struts.foros.actions.GestionarForosAction" scope="session" name="gestionarForosForm" parameter="gestionarForos">
+			<forward name="gestionarForos" path="/paginas/strategos/foros/gestionarForos.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Foro -->
+		<action path="/foros/crearForo" type="com.visiongc.app.strategos.web.struts.foros.actions.EditarForoAction" scope="request" name="editarForoForm" parameter="editarForo"></action>
+
+		<!-- Mapeo del Action: Guardar Foro -->
+		<action path="/foros/guardarForo" type="com.visiongc.app.strategos.web.struts.foros.actions.GuardarForoAction" name="editarForoForm" scope="request" input="editarForo" validate="true" parameter="editarForo">
+			<forward name="crearForo" path="/foros/crearForo.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Foro -->
+		<action path="/foros/cancelarGuardarForo" type="com.visiongc.app.strategos.web.struts.foros.actions.GuardarForoAction" name="editarForoForm" scope="request" parameter="editarForo"></action>
+
+	</action-mappings>
+
+</struts-config>

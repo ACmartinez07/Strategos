@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (19/05/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean    -->
+	<form-beans>
+		<form-bean name="gestionarUnidadesMedidaForm" type="com.visiongc.app.strategos.web.struts.unidadesmedida.forms.GestionarUnidadesMedidaForm" />
+		<form-bean name="editarUnidadMedidaForm" type="com.visiongc.app.strategos.web.struts.unidadesmedida.forms.EditarUnidadMedidaForm" />
+		<form-bean name="seleccionarUnidadesMedidaForm" type="com.visiongc.framework.web.struts.forms.SelectorListaForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarUnidadMedida" path="/paginas/strategos/unidadesmedida/editarUnidadMedida.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Unidad Medida-->
+		<action path="/unidadesmedida/gestionarUnidadesMedida" type="com.visiongc.app.strategos.web.struts.unidadesmedida.actions.GestionarUnidadesMedidaAction" scope="session" name="gestionarUnidadesMedidaForm" parameter="gestionarUnidadesMedida">
+			<forward name="gestionarUnidadesMedida" path="/paginas/strategos/unidadesmedida/gestionarUnidadesMedida.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Unidad de Medida-->
+		<action path="/unidadesmedida/crearUnidadMedida" type="com.visiongc.app.strategos.web.struts.unidadesmedida.actions.EditarUnidadMedidaAction" scope="request" name="editarUnidadMedidaForm" parameter="editarUnidadMedida"></action>
+
+		<!-- Mapeo del Action: Modificar Unidad de Medida-->
+		<action path="/unidadesmedida/modificarUnidadMedida" type="com.visiongc.app.strategos.web.struts.unidadesmedida.actions.EditarUnidadMedidaAction" scope="request" name="editarUnidadMedidaForm" parameter="editarUnidadMedida"></action>
+
+		<!-- Mapeo del Action: Guardar Unidad de Medida-->
+		<action path="/unidadesmedida/guardarUnidadMedida" type="com.visiongc.app.strategos.web.struts.unidadesmedida.actions.GuardarUnidadMedidaAction" name="editarUnidadMedidaForm" scope="request" input="editarUnidadMedida" validate="true" parameter="editarUnidadMedida">
+			<forward name="crearUnidadMedida" path="/unidadesmedida/crearUnidadMedida.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Unidad de Medida-->
+		<action path="/unidadesmedida/cancelarGuardarUnidadMedida" type="com.visiongc.app.strategos.web.struts.unidadesmedida.actions.GuardarUnidadMedidaAction" name="editarUnidadMedidaForm" scope="request" parameter="editarUnidadMedida"></action>
+
+		<!-- Mapeo del Action: Eliminar Unidad de Medida-->
+		<action path="/unidadesmedida/eliminarUnidadMedida" type="com.visiongc.app.strategos.web.struts.unidadesmedida.actions.EliminarUnidadMedidaAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Unidad de Medida-->
+		<action path="/unidadesmedida/generarReporteUnidadesMedida" type="com.visiongc.app.strategos.web.struts.unidadesmedida.actions.ReporteUnidadesMedidaAction"></action>
+
+		<!-- Mapeo del Action: Seleccionar Unidades de Medida -->
+		<action path="/unidadesmedida/seleccionarUnidadesMedida" type="com.visiongc.app.strategos.web.struts.unidadesmedida.actions.SeleccionarUnidadesMedidaAction" scope="request" name="seleccionarUnidadesMedidaForm" parameter="seleccionarUnidadesMedida">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarUnidadesMedida" path="/paginas/strategos/unidadesmedida/seleccionarUnidadesMedida.jsp" />
+		</action>
+
+	</action-mappings>
+
+</struts-config>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (11/11/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarAccionesForm" type="com.visiongc.app.strategos.web.struts.problemas.acciones.forms.GestionarAccionesForm" />
+		<form-bean name="editarAccionForm" type="com.visiongc.app.strategos.web.struts.problemas.acciones.forms.EditarAccionForm" />
+		<form-bean name="gestionarAccionesPendientesForm" type="com.visiongc.app.strategos.web.struts.problemas.acciones.forms.GestionarAccionesPendientesForm" />		
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarAccion" path="/paginas/strategos/problemas/acciones/editarAccion.jsp" />		
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Acciones Correctivas -->
+		<action path="/problemas/acciones/gestionarAcciones" type="com.visiongc.app.strategos.web.struts.problemas.acciones.actions.GestionarAccionesAction" parameter="gestionarSeguimientosAction" name="gestionarAccionesForm" scope="session"></action>
+
+		<!-- Mapeo del Action: Crear Acción Correctiva -->
+		<action path="/problemas/acciones/crearAccion" type="com.visiongc.app.strategos.web.struts.problemas.acciones.actions.EditarAccionAction" scope="request" name="editarAccionForm" parameter="editarAccion"></action>
+
+		<!-- Mapeo del Action: Modificar Acción Correctiva -->
+		<action path="/problemas/acciones/modificarAccion" type="com.visiongc.app.strategos.web.struts.problemas.acciones.actions.EditarAccionAction" scope="request" name="editarAccionForm" parameter="editarAccion"></action>
+
+		<!-- Mapeo del Action: Ver Acción Correctiva -->
+		<action path="/problemas/acciones/verAccion" type="com.visiongc.app.strategos.web.struts.problemas.acciones.actions.EditarAccionAction" scope="request" name="editarAccionForm" parameter="editarAccion"></action>
+
+		<!-- Mapeo del Action: Guardar Acción Correctiva -->
+		<action path="/problemas/acciones/guardarAccion" type="com.visiongc.app.strategos.web.struts.problemas.acciones.actions.GuardarAccionAction" name="editarAccionForm" scope="request" input="editarAccion" validate="true" parameter="editarAccion">
+			<forward name="crearAccion" path="/problemas/acciones/crearAccion.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Acción Correctiva -->
+		<action path="/problemas/acciones/cancelarGuardarAccion" type="com.visiongc.app.strategos.web.struts.problemas.acciones.actions.GuardarAccionAction" name="editarAccionForm" scope="request" parameter="editarAccion"></action>
+
+		<!-- Mapeo del Action: Eliminar Acción Correctiva -->
+		<action path="/problemas/acciones/eliminarAccion" type="com.visiongc.app.strategos.web.struts.problemas.acciones.actions.EliminarAccionAction"></action>
+
+		<!-- Mapeo del Action: Propiedades Acción Correctiva -->
+		<action path="/problemas/acciones/propiedadesAccion" type="com.visiongc.app.strategos.web.struts.problemas.acciones.actions.MostrarPropiedadesAccionAction" name="editarAccionForm" scope="request" parameter="propiedadesAccion">
+			<forward name="propiedadesAccion" path="/paginas/strategos/problemas/acciones/propiedadesAccion.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Guardar Acción Correctiva Solo Lectura -->
+		<action path="/problemas/acciones/guardarAccionSoloLectura" type="com.visiongc.app.strategos.web.struts.problemas.acciones.actions.GuardarAccionSoloLecturaAction" name="editarAccionForm" scope="request" validate="true"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte Acciones Correctivas -->
+		<action path="/problemas/acciones/generarReporteAcciones" type="com.visiongc.app.strategos.web.struts.problemas.acciones.actions.ReporteAccionesAction"></action>
+
+		<!-- Mapeo del Action: Gestionar Acciones Correctivas Pendientes  -->
+		<action path="/problemas/acciones/gestionarAccionesPendientes" type="com.visiongc.app.strategos.web.struts.problemas.acciones.actions.GestionarAccionesPendientesAction" name="gestionarAccionesPendientesForm" scope="session" parameter="gestionarAccionesPendientes">
+			<forward name="gestionarAccionesPendientes" path="/paginas/strategos/problemas/acciones/gestionarAccionesPendientes.jsp" />
+		</action>
+		
+
+	</action-mappings>
+</struts-config>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (15/04/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarAuditoriasForm" type="com.visiongc.framework.web.struts.auditorias.forms.GestionarAuditoriasForm" />
+		<form-bean name="gestionarAuditoriasMedicionForm" type="com.visiongc.framework.web.struts.auditorias.forms.GestionarAuditoriasMedicionForm" />
+		<form-bean name="gestionarAuditoriasPorAtributoForm" type="com.visiongc.framework.web.struts.auditorias.forms.GestionarAuditoriasPorAtributoForm" />
+		<form-bean name="reporteAuditoriaForm" type="com.visiongc.framework.web.struts.auditorias.forms.ReporteAuditoriaForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="gestionarAuditoriasAction" path="/framework/auditorias/gestionarAuditorias.action" />
+		<forward name="gestionarAuditoriasPorAtributoAction" path="/framework/auditorias/gestionarAuditoriasPorAtributo.action" />
+		<forward name="gestionarAuditoriasMedicionAction" path="/framework/auditorias/gestionarAuditoriasMedicion.action" />
+		<forward name="gestionarAuditoriasMedicionDetalleAction" path="/framework/auditorias/gestionarAuditoriasMedicionDetalle.action" />
+		<forward name="reporteAuditoriaMedicionProyecto" path="/paginas/framework/auditorias/reporteMedicionProyecto.jsp" />
+	
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings type="org.apache.struts.config.SecureActionConfig">
+
+		<!-- Mapeo del Action: Gestionar Auditorias -->
+		<action path="/framework/auditorias/gestionarAuditorias" type="com.visiongc.framework.web.struts.auditorias.actions.GestionarAuditoriasAction" scope="session" name="gestionarAuditoriasForm" parameter="gestionarAuditorias">
+			<set-property property="secure" value="false" />
+			<forward name="gestionarAuditorias" path="/paginas/framework/auditorias/gestionarAuditorias.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Gestionar Auditorias Por Atributo -->
+		<action path="/framework/auditorias/gestionarAuditoriasPorAtributo" type="com.visiongc.framework.web.struts.auditorias.actions.GestionarAuditoriasPorAtributoAction" scope="session" name="gestionarAuditoriasPorAtributoForm" parameter="gestionarAuditoriasPorAtributo">
+			<set-property property="secure" value="false" />
+			<forward name="gestionarAuditoriasPorAtributo" path="/paginas/framework/auditorias/gestionarAuditoriasPorAtributo.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Gestionar Auditorias -->
+		<action path="/framework/auditorias/gestionarAuditoriasMedicion" type="com.visiongc.framework.web.struts.auditorias.actions.GestionarAuditoriasMedicionAction" scope="session" name="gestionarAuditoriasMedicionForm" parameter="gestionarAuditoriasMedicion">
+			<set-property property="secure" value="false" />
+			<forward name="gestionarAuditoriasMedicion" path="/paginas/framework/auditorias/gestionarAuditoriasMedicion.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Gestionar Auditorias Detalle -->
+		<action path="/framework/auditorias/gestionarAuditoriasMedicionDetalle" type="com.visiongc.framework.web.struts.auditorias.actions.GestionarAuditoriasMedicionDetalleAction" name="gestionarAuditoriasMedicionForm" scope="request" parameter="gestionarAuditoriasMedicionDetalle">
+			<set-property property="secure" value="false" />
+			<forward name="gestionarAuditoriasMedicionDetalle" path="/paginas/framework/auditorias/gestionarAuditoriasMedicionDetalle.jsp" />
+		</action>
+		
+		<!-- Mapeo del Action: Reporte Auditoria Pdf -->
+		<action path="/framework/auditorias/reporteAuditoriaMedicionPdf" type="com.visiongc.framework.web.struts.auditorias.actions.ReporteAuditoriaMedicionPdfAction">
+			<set-property property="secure" value="false" />
+			<forward name="exito" path="/framework/auditorias/gestionarAuditoriasMedicion.action" />
+		</action>
+		
+		<!-- Mapeo del Action: Reporte Auditoria Excel -->
+		<action path="/framework/auditorias/reporteAuditoriaMedicionExcel" type="com.visiongc.framework.web.struts.auditorias.actions.ReporteAuditoriaMedicionExcelAction">
+			<set-property property="secure" value="false" />
+			<forward name="exito" path="/framework/auditorias/gestionarAuditoriasMedicion.action" />
+		</action>
+		
+		<!-- Mapeo del Action: Reporte Auditoria Pdf -->
+		<action path="/framework/auditorias/reporteAuditoriaPdf" type="com.visiongc.framework.web.struts.auditorias.actions.ReporteAuditoriaPdfAction">
+			<set-property property="secure" value="false" />
+			<forward name="exito" path="/framework/auditorias/gestionarAuditoriasMedicion.action" />
+		</action>
+		
+		<!-- Mapeo del Action: Reporte Auditoria Excel -->
+		<action path="/framework/auditorias/reporteAuditoriaExcel" type="com.visiongc.framework.web.struts.auditorias.actions.ReporteAuditoriaExcelAction">
+			<set-property property="secure" value="false" />
+			<forward name="exito" path="/framework/auditorias/gestionarAuditoriasMedicion.action" />
+		</action>
+		
+			<!-- Mapeo del Action: Reporte auditoria mediciones por proyecto -->
+		<action path="/framework/auditorias/reporteMedicionProyecto" type="com.visiongc.framework.web.struts.auditorias.actions.ReporteAuditoriaMedicionProyecto" scope="request" name="reporteAuditoriaForm" parameter="reporteAuditoriaMedicionProyecto"></action>
+		
+		<!-- Mapeo del Action: Reporte auditoria mediciones por proyecto pdf-->
+
+
+		<action path="/framework/auditorias/reporteMedicionProyectoPdf" type="com.visiongc.framework.web.struts.auditorias.actions.ReporteAuditoriaMedicionProyectoPdfAction"></action>
+		
+		<!-- Mapeo del Action: Reporte auditoria mediciones por proyecto xls-->
+		<action path="/framework/auditorias/reporteMedicionProyectoXls" type="com.visiongc.framework.web.struts.auditorias.actions.ReporteAuditoriaMedicionProyectoExcelAction"></action>
+
+
+
+		
+
+	</action-mappings>
+
+</struts-config>

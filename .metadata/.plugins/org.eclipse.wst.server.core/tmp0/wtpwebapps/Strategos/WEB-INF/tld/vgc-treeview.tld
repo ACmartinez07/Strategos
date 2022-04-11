@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<taglib>
+	<tlibversion>1.0.0.0</tlibversion>
+	<jspversion>1.2</jspversion>
+	<shortname>treeview</shortname>
+	<uri>http://www.visiongc.net</uri>
+	<info>Libreria de tag para dibujar un treeview HTML</info>
+	<tag>
+		<name>treeview</name>
+		<tagclass>com.visiongc.commons.struts.tag.TreeviewTag</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Imprime el Treeview HTML</info>
+
+		<attribute>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>scope</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nameExcludedList</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>nameSelectedId</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>baseObject</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>isRoot</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>urlConnector</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>urlConnectorOpen</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>urlConnectorClose</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>urlName</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>useUrlAnchor</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>fieldName</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>fieldId</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>fieldChildren</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>lblUrlObjectId</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>lblUrlAnchor</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>checkbox</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>checkboxName</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>checkboxOnClick</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>urlJs</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>pathImages</name>
+			<required>true</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>useFrame</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>arbolBean</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>useNodeImage</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>labelNodeType</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>idType</name>
+			<required>false</required>
+			<rtexprvalue>yes</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+</taglib>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (25/09/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="reporteForm" type="com.visiongc.app.strategos.web.struts.reportes.forms.ReporteForm" />
+		<form-bean name="seleccionarReporteForm" type="com.visiongc.app.strategos.web.struts.reportes.forms.SeleccionarReporteForm" />
+		<form-bean name="parametroReporteForm" type="com.visiongc.app.strategos.web.struts.reportes.forms.ParametroReporteForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="asistenteReporte" path="/paginas/strategos/reportes/asistenteReporte.jsp" />
+		<forward name="listaReporte" path="/paginas/strategos/reportes/listaReporte.jsp" />
+		<forward name="ejecucion" path="/paginas/strategos/reportes/planes/ejecucion.jsp" />
+		<forward name="reporteMeta" path="/paginas/strategos/reportes/planes/meta.jsp" />
+		<forward name="reporteExplicaciones" path="/paginas/strategos/reportes/planes/explicaciones.jsp" />
+		<forward name="corteReporte" path="/paginas/strategos/reportes/corteReporte.jsp" />
+		<forward name="mostrarReporte" path="/paginas/strategos/reportes/mostrarReporte.jsp" />
+		<forward name="ejecucionIniciativa" path="/paginas/strategos/reportes/iniciativas/ejecucion.jsp" />
+		<forward name="reporteIniciativas" path="/paginas/strategos/reportes/iniciativas/ejecucionResumida.jsp" />
+		<forward name="reporteIniciativaEjecucion" path="/paginas/strategos/reportes/iniciativas/resumidaEjecucion.jsp" />
+		<forward name="parametrosReporte" path="/paginas/strategos/reportes/parametrosReporte.jsp" />
+		<forward name="reporteConsolidado" path="/paginas/strategos/reportes/planes/consolidado.jsp" />
+		<forward name="reportePortafolioDetallado" path="/paginas/strategos/reportes/portafolio/reporteDetallado.jsp" />
+		<forward name="reportePortafolioResumido" path="/paginas/strategos/reportes/portafolio/reporteResumido.jsp" />
+		
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Leer Asistente Reporte -->
+		<action path="/reportes/asistenteReporte" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReadReporteAction" name="reporteForm" scope="request" parameter="asistenteReporte"></action>
+
+		<!-- Mapeo del Action: Guardar Reporte -->
+		<action path="/reportes/guardarAsistenteReporte" type="com.visiongc.app.strategos.web.struts.reportes.actions.SalvarReporteAction" name="reporteForm" scope="request" input="asistenteReporte" parameter="asistenteReporte"></action>
+		
+		<!-- Mapeo del Action: Cancelar Reporte -->
+		<action path="/reportes/cancelarAsistenteReporte" type="com.visiongc.app.strategos.web.struts.reportes.actions.SalvarReporteAction" name="reporteForm" scope="request" parameter="asistenteReporte"></action>
+
+		<!-- Mapeo del Action: Crear Formato Reporte -->
+		<action path="/reportes/crearFormato" type="com.visiongc.app.strategos.web.struts.reportes.actions.CrearFormatoAction" name="reporteForm" scope="request" parameter="asistenteReporte"></action>
+
+		<!-- Mapeo del Action: Leer Lista Reporte -->
+		<action path="/reportes/listaReporte" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReadListaReporteAction" name="seleccionarReporteForm" scope="session" parameter="listaReporte"></action>
+
+		<!-- Mapeo del Action: Eliminar Reporte -->
+		<action path="/reportes/eliminarReporte" type="com.visiongc.app.strategos.web.struts.reportes.actions.SeleccionarReporteAction"></action>
+
+		<!-- Mapeo del Action: Seleccionar Reporte -->
+		<action path="/reportes/seleccionarReporte" type="com.visiongc.app.strategos.web.struts.reportes.actions.SeleccionarReporteAction" name="seleccionarReporteForm" scope="request" input="listaReporte" parameter="listaReporte"></action>
+		
+		<!-- Mapeo del Action: Cancelar Lista Reporte -->
+		<action path="/reportes/cancelarListaReporte" type="com.visiongc.app.strategos.web.struts.reportes.actions.SeleccionarReporteAction" name="seleccionarReporteForm" scope="request" parameter="listaReporte"></action>
+
+		<!-- Mapeo del Action: Pantalla de Objetivos -->
+		<action path="/reportes/planes/ejecucion" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanEjecucionAction" scope="request" name="reporteForm" parameter="ejecucion"></action>
+
+		<!-- Mapeo del Action: Generar Reporte de Ejecucion -->
+		<action path="/reportes/planes/ejecucionReporte" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanEjecucionReporteAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte de Ejecucion Resumida -->
+		<action path="/reportes/planes/ejecucionReporteResumido" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanEjecucionReporteActionResumido"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte de Ejecucion -->
+		<action path="/reportes/planes/ejecucionReporteXls" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanEjecucionReporteXlsAction"></action>
+			
+		<!-- Mapeo del Action: Meta Plan -->
+		<action path="/reportes/planes/meta" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanMetaAction" scope="request" name="reporteForm" parameter="reporteMeta"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Meta Plan -->
+		<action path="/reportes/planes/metaReportePdf" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanMetaReportePdfAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Meta Plan -->
+		<action path="/reportes/planes/metaReporteXls" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanMetaReporteXLSAction"></action>
+
+		<!-- Mapeo del Action: Explicaciones Plan -->
+		<action path="/reportes/planes/explicaciones" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanExplicacionesAction" scope="request" name="reporteForm" parameter="reporteExplicaciones"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte Meta Plan -->
+		<action path="/reportes/planes/explicacionReporte" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanExplicacionesReporteAction"></action>
+
+		<!-- Mapeo del Action: Consolidado Plan -->
+		<action path="/reportes/planes/consolidado" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanConsolidadoAction" scope="request" name="reporteForm" parameter="reporteConsolidado"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Consolidado Plan en PDF -->
+		<action path="/reportes/planes/consolidadoReportePdf" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanConsolidadoReportePdfAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Consolidado Plan en XLS -->
+		<action path="/reportes/planes/consolidadoReporteXls" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanConsolidadoReporteXLSAction"></action>
+		
+		<!-- Mapeo del Action: Pantalla de Iniciativas -->
+		<action path="/reportes/iniciativas/ejecucion" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanEjecucionAction" scope="request" name="reporteForm" parameter="ejecucionIniciativa"></action>
+		
+		<!-- Mapeo del Action: Pantalla de Iniciativas Resumida-->
+		<action path="/reportes/iniciativas/ejecucionResumida" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanEjecucionActionResumida" scope="request" name="reporteForm" parameter="reporteIniciativas"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte de Resumido Pdf de la Iniciativa-->
+		<action path="/reportes/iniciativas/ejecucionIniciativaPdf" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReporteIniciativaPdf"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte de Resumido Xls de la Iniciativa-->
+		<action path="/reportes/iniciativas/ejecucionIniciativaXls" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReporteIniciativaXls"></action>
+		
+		
+		<!-- Mapeo del Action: Pantalla de Iniciativas Resumida Ejecucion-->
+		<action path="/reportes/iniciativas/resumidaEjecucion" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReporteIniciativaEjecucionAction" scope="request" name="reporteForm" parameter="reporteIniciativaEjecucion"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte de Resumido Pdf de la Iniciativa Ejecucion-->
+		<action path="/reportes/iniciativas/reporteIniciativaPdf" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReporteIniciativaEjecucionPdf"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte de Resumido Xls de la Iniciativa Ejecucion-->
+		<action path="/reportes/iniciativas/reporteIniciativaXls" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReporteIniciativaEjecucionXls"></action>
+		
+				
+		<!-- Mapeo del Action: Generar Reporte Ejecucion de la Iniciativa-->
+		<action path="/reportes/iniciativas/ejecucionReporte" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanEjecucionReporteAction"></action>
+		
+		
+		
+		
+		
+		
+		<!-- Mapeo del Action: Pantalla de Iniciativas -->
+		<action path="/reportes/portafolios/detalle" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReportePortafolioDetalle" scope="request" name="reporteForm" parameter="reportePortafolioDetallado"></action>
+		
+		<!-- Mapeo del Action: Pantalla de Iniciativas Resumida-->
+		<action path="/reportes/portafolios/detalleEjecucionPdf" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReportePortafolioDetallePdf"></action>
+		
+		<!-- Mapeo del Action: Pantalla de Iniciativas Resumida-->
+		<action path="/reportes/portafolios/detalleEjecucionXls" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReportePortafolioDetalleXls"></action>
+		
+		<!-- Mapeo del Action: Pantalla de Iniciativas -->
+		<action path="/reportes/portafolios/resumida" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReportePortafolioResumido" scope="request" name="reporteForm" parameter="reportePortafolioResumido"></action>
+		
+		<!-- Mapeo del Action: Pantalla de Iniciativas Resumida-->
+		<action path="/reportes/portafolios/resumidaEjecucionPdf" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReportePortafolioResumidoPdf"></action>
+		
+		<!-- Mapeo del Action: Pantalla de Iniciativas Resumida-->
+		<action path="/reportes/portafolios/resumidaEjecucionXls" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReportePortafolioResumidoXls"></action>
+		
+		
+		<!-- Ejecucion reporte explicaciones instrumento pdf-->
+		<action path="/reportes/explicaciones/instrumentos/ejecucionPdf" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReportePortafolioResumidoPdf"></action>
+		
+		<!--Ejecucion reporte explicaciones instrumento xls-->
+		<action path="/reportes/explicaciones/instrumentos/ejecucionXls" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReportePortafolioResumidoXls"></action>		
+		
+		
+		
+		<!-- Mapeo del Action: Generar la pagina de Corte del Reporte -->
+		<action path="/reportes/corteReporte"  type="com.visiongc.app.strategos.web.struts.reportes.actions.SeleccionarReporteAction" name="seleccionarReporteForm" scope="session" parameter="corteReporte"></action>
+
+		<!-- Mapeo del Action: Mostrar Reporte -->
+		<action path="/reportes/mostrarReporte" type="com.visiongc.app.strategos.web.struts.reportes.actions.MostrarReporteAction" name="reporteForm" scope="session" parameter="mostrarReporte"></action>
+
+		<!-- Mapeo del Action: Parametro del Reporte -->
+		<action path="/reportes/parametrosReporte"  type="com.visiongc.app.strategos.web.struts.reportes.actions.ParametroReporteAction" name="parametroReporteForm" scope="session" parameter="parametrosReporte"></action>
+		
+	</action-mappings>
+</struts-config>

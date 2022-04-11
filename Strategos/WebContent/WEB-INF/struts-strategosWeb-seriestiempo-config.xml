@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" "struts-config_1_3.dtd">
+
+<!-- Modificado por: Kerwin Arias (25/10/2012) -->
+
+<struts-config>
+
+	<!-- Definiciones: Form Bean -->
+	<form-beans>
+		<form-bean name="gestionarSeriesTiempoForm" type="com.visiongc.app.strategos.web.struts.seriestiempo.forms.GestionarSeriesTiempoForm" />
+		<form-bean name="editarSerieTiempoForm" type="com.visiongc.app.strategos.web.struts.seriestiempo.forms.EditarSerieTiempoForm" />
+		<form-bean name="seleccionarSeriesTiempoForm" type="com.visiongc.framework.web.struts.forms.SelectorListaForm" />
+	</form-beans>
+
+	<!-- Definiciones: Global Forward -->
+	<global-forwards>
+		<forward name="editarSerieTiempo" path="/paginas/strategos/seriestiempo/editarSerieTiempo.jsp" />
+	</global-forwards>
+
+	<!-- Definiciones: Action Mapping -->
+	<action-mappings>
+
+		<!-- Mapeo del Action: Gestionar Series de Tiempo-->
+		<action path="/seriestiempo/gestionarSeriesTiempo" type="com.visiongc.app.strategos.web.struts.seriestiempo.actions.GestionarSeriesTiempoAction" scope="session" name="gestionarSeriesTiempoForm" parameter="gestionarSeriesTiempo">
+			<forward name="gestionarSeriesTiempo" path="/paginas/strategos/seriestiempo/gestionarSeriesTiempo.jsp" />
+		</action>
+
+		<!-- Mapeo del Action: Crear Serie de Tiempo-->
+		<action path="/seriestiempo/crearSerieTiempo" type="com.visiongc.app.strategos.web.struts.seriestiempo.actions.EditarSerieTiempoAction" scope="request" name="editarSerieTiempoForm" parameter="editarSerieTiempo"></action>
+
+		<!-- Mapeo del Action: Modificar Serie de Tiempo-->
+		<action path="/seriestiempo/modificarSerieTiempo" type="com.visiongc.app.strategos.web.struts.seriestiempo.actions.EditarSerieTiempoAction" scope="request" name="editarSerieTiempoForm" parameter="editarSerieTiempo"></action>
+
+		<!-- Mapeo del Action: Guardar Serie de Tiempo-->
+		<action path="/seriestiempo/guardarSerieTiempo" type="com.visiongc.app.strategos.web.struts.seriestiempo.actions.GuardarSerieTiempoAction" name="editarSerieTiempoForm" scope="request" input="editarSerieTiempo" validate="true" parameter="editarSerieTiempo">
+			<forward name="crearSerieTiempo" path="/seriestiempo/crearSerieTiempo.action" />
+		</action>
+
+		<!-- Mapeo del Action: Cancelar Guardar Serie de Tiempo-->
+		<action path="/seriestiempo/cancelarGuardarSerieTiempo" type="com.visiongc.app.strategos.web.struts.seriestiempo.actions.GuardarSerieTiempoAction" name="editarSerieTiempoForm" scope="request" parameter="editarSerieTiempo"></action>
+
+		<!-- Mapeo del Action: Eliminar Serie de Tiempo-->
+		<action path="/seriestiempo/eliminarSerieTiempo" type="com.visiongc.app.strategos.web.struts.seriestiempo.actions.EliminarSerieTiempoAction"></action>
+
+		<!-- Mapeo del Action: Generar Reporte Series de Tiempo-->
+		<action path="/seriestiempo/generarReporteSeriesTiempo" type="com.visiongc.app.strategos.web.struts.seriestiempo.actions.ReporteSeriesTiempoAction"></action>
+
+		<!-- Mapeo del Action: Seleccionar Series de Tiempo -->
+		<action path="/seriestiempo/seleccionarSeriesTiempo" type="com.visiongc.app.strategos.web.struts.seriestiempo.actions.SeleccionarSeriesTiempoAction" scope="request" name="seleccionarSeriesTiempoForm" parameter="seleccionarSeriesTiempo">
+			<set-property property="secure" value="false" />
+			<forward name="seleccionarSeriesTiempo" path="/paginas/strategos/seriestiempo/seleccionarSeriesTiempo.jsp" />
+		</action>
+
+	</action-mappings>
+
+</struts-config>

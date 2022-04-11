@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto Plan de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (03/02/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.planes.model.Plan" table="planes">
+
+		<!-- Atributo clave de Plan -->
+		<id name="planId" type="java.lang.Long" column="plan_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para Plan -->
+		<property name="organizacionId" type="java.lang.Long" column="organizacion_id" />
+		<property name="planImpactaId" type="java.lang.Long" column="plan_impacta_id" />
+		<property name="nombre" type="java.lang.String" column="nombre" length="50" />
+		<property name="padreId" type="java.lang.Long" column="padre_id" />
+		<property name="anoInicial" type="java.lang.Integer" column="ano_inicial" />
+		<property name="anoFinal" type="java.lang.Integer" column="ano_final" />
+		<property name="tipo" type="java.lang.Byte" column="tipo" />
+		<property name="activo" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="activo" />
+		<property name="revision" type="java.lang.Byte" column="revision" />
+		<property name="esquema" type="java.lang.String" column="esquema" length="50" />
+		<property name="metodologiaId" type="java.lang.Long" column="metodologia_id" />
+		<property name="claseId" type="java.lang.Long" column="clase_id" />
+		<property name="claseIdIndicadoresTotales" type="java.lang.Long" column="clase_id_indicadores_totales" />
+		<property name="indTotalImputacionId" type="java.lang.Long" column=" ind_total_imputacion_id" />
+		<property name="indTotalIniciativaId" type="java.lang.Long" column="ind_total_iniciativa_id" />
+		<property name="alerta" type="java.lang.Byte" column="crecimiento" />
+		<property name="ultimaMedicionAnual" type="java.lang.Double" column="ultima_medicion_anual" />
+		<property name="ultimaMedicionParcial" type="java.lang.Double" column="ultima_medicion_parcial" />
+		<property name="nlAnoIndicadorId" type="java.lang.Long" column=" nl_ano_indicador_id" />
+		<property name="nlParIndicadorId" type="java.lang.Long" column=" nl_par_indicador_id" />
+		<property name="fechaUltimaMedicion" type="java.lang.String" column="fecha_ultima_medicion" length="10" />
+
+		<!-- Asociación uno a muchos para Planes Hijos -->
+		<set name="hijos" lazy="true" inverse="true" cascade="none" order-by="nombre">
+			<key>
+				<column name="padre_id" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.planes.model.Plan" />
+		</set>
+
+		<!-- Asociación muchos a uno para Plan Padre -->
+		<many-to-one name="padre" class="com.visiongc.app.strategos.planes.model.Plan" not-null="false" insert="false" update="false">
+			<column name="padre_id" />
+		</many-to-one>
+
+		<!-- Asociación uno a uno para Organizacion -->
+		<many-to-one name="organizacion" class="com.visiongc.app.strategos.organizaciones.model.OrganizacionStrategos" column="organizacion_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para Plan -->
+		<many-to-one name="planImpacta" class="com.visiongc.app.strategos.planes.model.Plan" column="plan_impacta_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para PlantillaPlanes -->
+		<many-to-one name="metodologia" class="com.visiongc.app.strategos.planes.model.PlantillaPlanes" column="metodologia_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para ClaseIndicadores -->
+		<many-to-one name="clase" class="com.visiongc.app.strategos.indicadores.model.ClaseIndicadores" column="clase_id" unique="true" insert="false" update="false"></many-to-one>
+
+	</class>
+
+</hibernate-mapping>
