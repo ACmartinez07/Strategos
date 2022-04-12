@@ -162,7 +162,9 @@
 		
 		<!-- Mapeo del Action: Generar Reporte Proyectos Asociados-->
 		<action path="/instrumentos/reporteProyectosAsociados" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteProyectosAsociadosAction" scope="request" name="reporteForm" parameter="reporteProyectosAsociados"></action>
-
+		
+		<!-- Mapeo del Action: Generar Reporte Proyectos Asociados PDF-->
+		<action path="/instrumentos/reporteProyectosAsociadosPdf" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteProyectosAsociadosPdf"></action>
 
 		<!-- Mapeo del Action: Seleccionar Organizacion -->
 		<action path="/instrumentos/seleccionarOrganizacion" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.SeleccionarOrganizacionAction" scope="session" name="seleccionarOrganizacionForm" parameter="seleccionarOrganizacion">

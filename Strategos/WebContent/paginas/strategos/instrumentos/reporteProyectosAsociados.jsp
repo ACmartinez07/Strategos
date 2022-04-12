@@ -42,7 +42,7 @@
 						url = url + '&tipoconvenio=' +	document.reporteForm.tipoCooperanteId.value;
 										
 					if (document.reporteForm.tipoReporte[0].checked)
-						abrirReporte('<html:rewrite action="/instrumentos/reporteInstrumentoDetallePdf"/>?'+url);
+						abrirReporte('<html:rewrite action="//instrumentos/reporteProyectosAsociadosPdf"/>?'+url);
 	    	 	
 					else if (document.reporteForm.tipoReporte[1].checked)
 						abrirReporte('<html:rewrite action="/instrumentos/reporteInstrumentoDetalleXls"/>?'+url);
@@ -55,7 +55,14 @@
 		<%-- Forma asociada al Action - Jsp --%>
 		<html:form action="/instrumentos/reporteProyectosAsociados">
 		
-		
+		<html:hidden property="source" />
+			<html:hidden property="objetoSeleccionadoId" />
+			<html:hidden property="id" />
+			<html:hidden property="nombre" />
+			<html:hidden property="ano" />
+			<html:hidden property="cooperanteId" />
+			<html:hidden property="tipoCooperanteId" />
+			
 		<vgcinterfaz:contenedorForma width="460px" height="360px" bodyAlign="center" bodyValign="middle" bodyCellpadding="20">
 			
 			<%-- Título--%>
