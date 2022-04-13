@@ -165,6 +165,9 @@
 		
 		<!-- Mapeo del Action: Generar Reporte Proyectos Asociados PDF-->
 		<action path="/instrumentos/reporteProyectosAsociadosPdf" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteProyectosAsociadosPdf"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte Proyectos Asociados Excel-->
+		<action path="/instrumentos/reporteProyectosAsociadosXls" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteProyectosAsociadosXls"></action>
 
 		<!-- Mapeo del Action: Seleccionar Organizacion -->
 		<action path="/instrumentos/seleccionarOrganizacion" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.SeleccionarOrganizacionAction" scope="session" name="seleccionarOrganizacionForm" parameter="seleccionarOrganizacion">

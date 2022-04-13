@@ -1,8 +1,6 @@
 package com.visiongc.app.strategos.web.struts.instrumentos.actions;
 
 import java.awt.Color;
-import java.net.URL;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,15 +17,9 @@ import org.apache.struts.util.MessageResources;
 import com.lowagie.text.Document;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
-import com.lowagie.text.Image;
 import com.lowagie.text.Paragraph;
 import com.visiongc.app.strategos.impl.StrategosServiceFactory;
-import com.visiongc.app.strategos.indicadores.StrategosIndicadoresService;
-import com.visiongc.app.strategos.indicadores.StrategosMedicionesService;
-import com.visiongc.app.strategos.indicadores.model.Indicador;
-import com.visiongc.app.strategos.indicadores.model.Medicion;
-import com.visiongc.app.strategos.indicadores.model.util.AlertaIndicador;
-import com.visiongc.app.strategos.indicadores.model.util.TipoFuncionIndicador;
+
 import com.visiongc.app.strategos.iniciativas.StrategosIniciativasService;
 import com.visiongc.app.strategos.iniciativas.model.Iniciativa;
 import com.visiongc.app.strategos.instrumentos.StrategosCooperantesService;
@@ -36,23 +28,13 @@ import com.visiongc.app.strategos.instrumentos.StrategosTiposConvenioService;
 import com.visiongc.app.strategos.instrumentos.model.Cooperante;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.app.strategos.instrumentos.model.TipoConvenio;
-import com.visiongc.app.strategos.model.util.LapsoTiempo;
+
 import com.visiongc.app.strategos.planes.StrategosMetasService;
-import com.visiongc.app.strategos.planes.StrategosPerspectivasService;
-import com.visiongc.app.strategos.planes.StrategosPlanesService;
-import com.visiongc.app.strategos.planes.model.IniciativaPerspectiva;
-import com.visiongc.app.strategos.planes.model.Perspectiva;
-import com.visiongc.app.strategos.planificacionseguimiento.StrategosPryProyectosService;
-import com.visiongc.app.strategos.planificacionseguimiento.model.PryProyecto;
-import com.visiongc.app.strategos.seriestiempo.model.SerieTiempo;
-import com.visiongc.app.strategos.util.PeriodoUtil;
 import com.visiongc.app.strategos.web.struts.reportes.forms.ReporteForm;
 import com.visiongc.commons.report.TablaBasicaPDF;
 import com.visiongc.commons.report.VgcFormatoReporte;
 import com.visiongc.commons.struts.action.VgcReporteBasicoAction;
 import com.visiongc.commons.util.PaginaLista;
-import com.visiongc.commons.util.VgcFormatter;
-import com.visiongc.framework.web.struts.forms.FiltroForm;
 
 public class ReporteProyectosAsociadosPdf extends VgcReporteBasicoAction{
 
@@ -256,7 +238,7 @@ public class ReporteProyectosAsociadosPdf extends VgcReporteBasicoAction{
 	    }
 	}
 	
-private void dibujarInformacionInstrumento(ReporteForm reporte, Font font, String source, Instrumentos instrumento, Document documento, MessageResources mensajes, HttpServletRequest request) throws Exception{
+	private void dibujarInformacionInstrumento(ReporteForm reporte, Font font, String source, Instrumentos instrumento, Document documento, MessageResources mensajes, HttpServletRequest request) throws Exception{
 		
 		StrategosTiposConvenioService strategosTiposConvenioService = StrategosServiceFactory.getInstance().openStrategosTiposConvenioService();
 		StrategosCooperantesService strategosCooperantesService = StrategosServiceFactory.getInstance().openStrategosCooperantesService();
@@ -267,27 +249,17 @@ private void dibujarInformacionInstrumento(ReporteForm reporte, Font font, Strin
 			
 		if(instrumento != null) {
 			
-		    					
 				documento.add(lineaEnBlanco(font));
 				
-
     			texto = new Paragraph("Instrumento" + " : " + instrumento.getNombreCorto(), font);
     			texto.setAlignment(Element.ALIGN_LEFT);
     			texto.setIndentationLeft(16);
     			documento.add(texto);
-    			
-    			
+    			    			
 				documento.add(lineaEnBlanco(font));
 				
-
-					
 				// Dibujar Informacion de la Iniciativa
-    			crearTablaInstrumento(reporte, instrumento, font, mensajes, documento, request);
-
-				documento.add(lineaEnBlanco(font));
-				
-				
-				
+    			crearTablaInstrumento(reporte, instrumento, font, mensajes, documento, request);				
 		}
 		else
 		{
@@ -300,7 +272,6 @@ private void dibujarInformacionInstrumento(ReporteForm reporte, Font font, Strin
 			documento.add(texto);
 			font.setColor(0, 0, 0);
 			
-
 			documento.add(lineaEnBlanco(font));
 			
 		}
@@ -424,92 +395,9 @@ private void dibujarInformacionInstrumento(ReporteForm reporte, Font font, Strin
 	
 		return nombre;
 	}
-	
-	private void dibujarInformacionIniciativa(int nivel, ReporteForm reporte, Font font, String source, List<Iniciativa> iniciativas, Document documento, StrategosMedicionesService strategosMedicionesService, StrategosIndicadoresService strategosIndicadoresService, MessageResources mensajes, HttpServletRequest request) throws Exception
-	{
-		StrategosMetasService strategosMetasService = StrategosServiceFactory.getInstance().openStrategosMetasService();
-		StrategosIniciativasService strategosIniciativasService = StrategosServiceFactory.getInstance().openStrategosIniciativasService();
-		StrategosPlanesService strategosPlanesService = StrategosServiceFactory.getInstance().openStrategosPlanesService();
-					
-		Map<String, Object> filtros = new HashMap<String, Object>();
-		Paragraph texto;
-		font.setStyle(Font.NORMAL);
-
-		filtros = new HashMap<String, Object>();
-				
-				
-		if (iniciativas.size() > 0)
-		{
-			for (Iterator<Iniciativa> iter = iniciativas.iterator(); iter.hasNext();)
-			{
-				Iniciativa iniciativa = (Iniciativa)iter.next();
-								
-				
-				Font fontIni = new Font(getConfiguracionPagina(request).getCodigoFuente());
-				Font fontBold = new Font(getConfiguracionPagina(request).getCodigoFuente());
-				    //Nombre de la Organizacion, plan y periodo del reporte
-				fontIni.setSize(8);
-				fontIni.setStyle(Font.BOLD);
-				fontBold.setSize(VgcFormatoReporte.TAMANO_FUENTE_SUBTITULO);
-				fontBold.setStyle(Font.BOLD);																								
-				
-				Indicador indicador = (Indicador)strategosIndicadoresService.load(Indicador.class, iniciativa.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()));
-				
-		    	LapsoTiempo lapsoTiempoEnPeriodos = PeriodoUtil.getLapsoTiempoEnPeriodosPorMes(((Integer)(Integer.parseInt(reporte.getAnoInicial()))).intValue(), ((Integer)(Integer.parseInt(reporte.getAnoFinal()))).intValue(), ((Integer)(Integer.parseInt(reporte.getMesInicial()))).intValue(), ((Integer)(Integer.parseInt(reporte.getMesFinal()))).intValue(), indicador.getFrecuencia().byteValue());
-		    	int periodoInicio = lapsoTiempoEnPeriodos.getPeriodoInicio().intValue();
-		    	int periodoFin = periodoInicio; 
-		    	if (lapsoTiempoEnPeriodos.getPeriodoFin() != null)
-		    		periodoFin = lapsoTiempoEnPeriodos.getPeriodoFin().intValue();
-				
-				
-    		    documento.add(lineaEnBlanco(font));
-    			
-
-    		    texto = new Paragraph("Iniciativa" + " : " + iniciativa.getNombre(), fontIni);
-    			texto.setAlignment(Element.ALIGN_LEFT);
-    			texto.setIndentationLeft(16);
-    			documento.add(texto);
-    			 
-    			documento.add(lineaEnBlanco(font));
-    			
-    			
-				List<Medicion> medicionesEjecutado = strategosMedicionesService.getMedicionesPeriodo(indicador.getIndicadorId(), SerieTiempo.getSerieRealId(), new Integer(reporte.getAnoInicial()), new Integer(reporte.getAnoFinal()), periodoInicio, periodoFin);
-				List<Medicion> medicionesProgramado = strategosMedicionesService.getMedicionesPeriodo(indicador.getIndicadorId(), SerieTiempo.getSerieProgramadoId(), new Integer(reporte.getAnoInicial()), new Integer(reporte.getAnoFinal()), periodoInicio, periodoFin);
-
-				// Dibujar Informacion de la Iniciativa
-    			crearTablaIniciativa(reporte, iniciativa, indicador, medicionesProgramado, medicionesEjecutado, font, mensajes, documento, request);
-								
-				documento.add(lineaEnBlanco(font));    			 												
-    			
-			}	
-		}
-		else
-		{
-			documento.add(lineaEnBlanco(font));
-			
-
-			font.setColor(0, 0, 255);
-			texto = new Paragraph(mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.noiniciativas", "INICIATIVAS", "PERSPECTIVA"), font);
-			texto.setIndentationLeft(50);
-			documento.add(texto);
-			font.setColor(0, 0, 0);
-			
-			documento.add(lineaEnBlanco(font));			
-		}		
-		strategosMetasService.close();
-		strategosIniciativasService.close();
-	}
-
-	private void crearTablaIniciativa(ReporteForm reporte, Iniciativa iniciativa, Indicador indicador, List<Medicion> medicionesProgramado, List<Medicion> medicionesEjecutado, Font font, MessageResources mensajes, Document documento, HttpServletRequest request) throws Exception
-	{		
-		PryProyecto proyecto = null;
-		if (iniciativa.getProyectoId() != null)
-		{
-			StrategosPryProyectosService strategosPryProyectosService = StrategosServiceFactory.getInstance().openStrategosPryProyectosService();
-			proyecto = (PryProyecto) strategosPryProyectosService.load(PryProyecto.class, iniciativa.getProyectoId());
-			strategosPryProyectosService.close();
-		}
 		
+	private void crearTablaIniciativa(ReporteForm reporte, Iniciativa iniciativa, Font font, MessageResources mensajes, Document documento, HttpServletRequest request) throws Exception
+	{						
 		String encabezado = mensajes.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa") + ",";
 		encabezado = encabezado + mensajes.getMessage("jsp.visualizariniciativasplan.columna.porcentajecompletado") + ",";	
 		encabezado = encabezado + mensajes.getMessage("jsp.gestionariniciativasplan.columna.fechaUltimaMedicion") + ",";
@@ -554,18 +442,11 @@ private void dibujarInformacionInstrumento(ReporteForm reporte, Font font, Strin
 		string.append("\n");
 		tabla.agregarCelda(string.toString());
 	    tabla.agregarCelda(iniciativa.getPorcentajeCompletadoFormateado());
-	    tabla.agregarCelda(iniciativa.getFechaUltimaMedicion());
-	    
-	    if (iniciativa.getEstatus() != null )
-	    	tabla.agregarCelda(iniciativa.getEstatus());
-	    else
-	    	string.append("");
-		string.append("\n");
-		string.append("\n");
-		tabla.agregarCelda(string.toString());	    	    		    
+	    tabla.agregarCelda(iniciativa.getFechaUltimaMedicion());	    
+	    tabla.agregarCelda("Estatus");
 	    tabla.agregarCelda(iniciativa.getAnioFormulacion());
-		tabla.agregarCelda(iniciativa.getIniciativaPlanes());				    
-		tabla.agregarCelda(obtenerObjetivo(iniciativa));
+		tabla.agregarCelda("plan");				    
+		tabla.agregarCelda("objetivo");
 
 		documento.add(tabla.getTabla());
 	}		
@@ -577,48 +458,114 @@ private void dibujarInformacionInstrumento(ReporteForm reporte, Font font, Strin
 
 	    Font font = new Font(getConfiguracionPagina(request).getCodigoFuente());
 		Font fontBold = new Font(getConfiguracionPagina(request).getCodigoFuente());
-	    		
-		/*
-		texto = new Paragraph(mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.titulo.rango") + " : " + PeriodoUtil.getMesNombre(Byte.parseByte(reporte.getMesInicial())) + "/" + PeriodoUtil.getMesNombre(Byte.parseByte(reporte.getMesFinal())) + " -- " + (reporte.getAnoInicial().equals(reporte.getAnoFinal()) ? reporte.getAnoInicial() : (reporte.getAnoInicial() + "/" + reporte.getAnoFinal())), font);
-		texto.setAlignment(Element.ALIGN_CENTER);
-		documento.add(texto);
-		lineas = getNumeroLinea((lineas + 5), inicioLineas);
-		*/
-		
+	    						
 		font.setSize(8);
 		font.setStyle(Font.NORMAL);
 		fontBold.setSize(8);
 		fontBold.setStyle(Font.BOLD);
-
-		Integer nivel = 0;
+		
 		inicioTamanoPagina = lineasxPagina(font);
 	    tamanoPagina = inicioTamanoPagina;
-		
-	    StrategosIndicadoresService strategosIndicadoresService = StrategosServiceFactory.getInstance().openStrategosIndicadoresService();
-		StrategosMedicionesService strategosMedicionesService = StrategosServiceFactory.getInstance().openStrategosMedicionesService();
-
-		dibujarInformacionIniciativa(nivel, reporte, font, source, iniciativas, documento, strategosMedicionesService, strategosIndicadoresService, mensajes, request);
-
-	    strategosIndicadoresService.close();
-	    strategosMedicionesService.close();
-	}
-	
-	public String obtenerObjetivo(Iniciativa iniciativa) throws SQLException{
-		String objetivo=null;
-		Long id=iniciativa.getIniciativaId();
-		
+			    				
+		StrategosMetasService strategosMetasService = StrategosServiceFactory.getInstance().openStrategosMetasService();
+		StrategosIniciativasService strategosIniciativasService = StrategosServiceFactory.getInstance().openStrategosIniciativasService();		
+					
 		Map<String, Object> filtros = new HashMap<String, Object>();
+		Paragraph texto;
+		font.setStyle(Font.NORMAL);
+
+		filtros = new HashMap<String, Object>();
+				
+		Font fontIni = new Font(getConfiguracionPagina(request).getCodigoFuente());				
+		   
 		
-		if((iniciativa.getIniciativaPerspectivas() != null) && (iniciativa.getIniciativaPerspectivas().size() > 0)){
+		if (iniciativas.size() > 0)
+		{
+
+			fontIni.setSize(8);
+			fontIni.setStyle(Font.BOLD);
+			fontBold.setSize(VgcFormatoReporte.TAMANO_FUENTE_SUBTITULO);
+			fontBold.setStyle(Font.BOLD);																								
+															
+		    documento.add(lineaEnBlanco(font));    			
+
+		    texto = new Paragraph("Tabla Iniciativas" + " : " , fontIni);
+			texto.setAlignment(Element.ALIGN_LEFT);
+			texto.setIndentationLeft(16);
+			documento.add(texto);
+						
+			String encabezado = mensajes.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa") + ",";
+			encabezado = encabezado + mensajes.getMessage("jsp.visualizariniciativasplan.columna.porcentajecompletado") + ",";	
+			encabezado = encabezado + mensajes.getMessage("jsp.gestionariniciativasplan.columna.fechaUltimaMedicion") + ",";
+			encabezado = encabezado + mensajes.getMessage("jsp.visualizariniciativasplan.columna.estatus") + ",";    		
+			encabezado = encabezado + mensajes.getMessage("jsp.editariniciativa.ficha.anioformulacion") + ",";    		
+			encabezado = encabezado + mensajes.getMessage("jsp.mostrarplanesasociadosiniciativa.columna.nombreplan") + ",";
+			encabezado = encabezado + mensajes.getMessage("jsp.mostrarplanesasociadosiniciativa.columna.objetivo");
 			
-			IniciativaPerspectiva iniciativaPerspectiva = (IniciativaPerspectiva)iniciativa.getIniciativaPerspectivas().toArray()[0];
-            StrategosPerspectivasService strategosPerspectivasService = StrategosServiceFactory.getInstance().openStrategosPerspectivasService();
-            Perspectiva perspectiva = (Perspectiva)strategosPerspectivasService.load(Perspectiva.class, iniciativaPerspectiva.getPk().getPerspectivaId());
-            
-            objetivo= perspectiva.getNombre();
-        
+			String[] titulo = encabezado.split(",");
+			boolean tablaIniciada = false;
+
+		    String[][] columnas = new String[titulo.length][2];
+		    StringBuilder string;
+
+		    for (int f = 0; f < titulo.length; f++)
+		    {
+	    		columnas[f][0] = "8";
+	    		if (f == (titulo.length - 1))
+	    		{
+	    			string = new StringBuilder();
+	    			string.append(titulo[f]);
+	    			string.append("\n");
+	    			string.append("\n");
+	    		    columnas[f][1] = string.toString();
+	    		}
+	    		else
+	    			columnas[f][1] = titulo[f];
+		    }
+		    
+			
+		    TablaBasicaPDF tabla = crearTabla(true, false, columnas, reporte, font, mensajes, documento, request);
+				
+			for (Iterator<Iniciativa> iter = iniciativas.iterator(); iter.hasNext();)
+			{
+				Iniciativa iniciativa = (Iniciativa)iter.next();												    			    							
+								
+				// Dibujar Informacion de la Iniciativa    			
+    			string = new StringBuilder();
+    		    if (iniciativa.getNombre() != null && iniciativa.getNombre() != "")
+    		    	string.append(iniciativa.getNombre());
+    		    else
+    		    	string.append("");
+    			string.append("\n");
+    			string.append("\n");
+    			tabla.agregarCelda(string.toString());
+    			
+    		    tabla.agregarCelda(iniciativa.getPorcentajeCompletadoFormateado());
+    		    tabla.agregarCelda(iniciativa.getFechaUltimaMedicion());	    
+    		    tabla.agregarCelda("Estatus");
+    		    
+    		    System.out.printf("\n\nEstatus de la iniciativa: ", iniciativa.getIniciativaPlanes(), "\n\n");
+    		    
+    		    tabla.agregarCelda(iniciativa.getAnioFormulacion());
+    			tabla.agregarCelda("plan");				    
+    			tabla.agregarCelda("objetivo");    																 												
+			}						
+			documento.add(tabla.getTabla());			
 		}
-		return objetivo;
-	}
-	
+		else
+		{
+			documento.add(lineaEnBlanco(font));
+			
+
+			font.setColor(0, 0, 255);
+			texto = new Paragraph(mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.noiniciativas", "INICIATIVAS", "PERSPECTIVA"), font);
+			texto.setIndentationLeft(50);
+			documento.add(texto);
+			font.setColor(0, 0, 0);
+			
+			documento.add(lineaEnBlanco(font));			
+		}		
+		strategosMetasService.close();
+		strategosIniciativasService.close();
+	}	
 }

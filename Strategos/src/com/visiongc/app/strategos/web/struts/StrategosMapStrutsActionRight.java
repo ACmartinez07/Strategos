@@ -361,7 +361,8 @@ public class StrategosMapStrutsActionRight implements MapStrutsActionRight
 	    this.mapa.put("instrumentos.reporteproyectosasociados", actionRight);
 	    actionRight = new StrutsActionRight("instrumentos.reporteproyectosasociadospdf", false, false, "INSTRUMENTOS");
 	    this.mapa.put("instrumentos.reporteproyectosasociadospdf", actionRight);
-	    
+	    actionRight = new StrutsActionRight("instrumentos.reporteproyectosasociadosxls", false, false, "INSTRUMENTOS");
+	    this.mapa.put("instrumentos.reporteproyectosasociadosxls", actionRight);
 	
 	    
 	    actionRight = new StrutsActionRight("instrumentos.crearconvenio", false, false, "INSTRUMENTOS");
