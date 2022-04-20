@@ -370,11 +370,7 @@ url = '&instrumentoId=' + document.gestionarInstrumentosForm.seleccionados.value
 					
 					<vgcinterfaz:columnaVisorLista nombre="unidad" width="200px" >
 						<vgcutil:message key="jsp.pagina.instrumentos.unidad" />
-					</vgcinterfaz:columnaVisorLista>
-					
-					<vgcinterfaz:columnaVisorLista nombre="objetivo" width="500px" >
-						<vgcutil:message key="jsp.pagina.instrumentos.objetivo" />
-					</vgcinterfaz:columnaVisorLista>
+					</vgcinterfaz:columnaVisorLista>										
 														
 					<vgcinterfaz:columnaVisorLista nombre="responsable" width="250px" >
 						<vgcutil:message key="jsp.pagina.instrumentos.responsable.cgi" />
@@ -450,11 +446,7 @@ url = '&instrumentoId=' + document.gestionarInstrumentosForm.seleccionados.value
 						
 						<vgcinterfaz:valorFilaColumnaVisorLista nombre="unidad">
 							<bean:write name="instrumentos" property="areasCargo" />
-						</vgcinterfaz:valorFilaColumnaVisorLista>
-											
-						<vgcinterfaz:valorFilaColumnaVisorLista nombre="objetivo">
-							<bean:write name="instrumentos" property="objetivoInstrumento" />
-						</vgcinterfaz:valorFilaColumnaVisorLista>					
+						</vgcinterfaz:valorFilaColumnaVisorLista>																						
 											
 						<vgcinterfaz:valorFilaColumnaVisorLista nombre="responsable">
 							<bean:write name="instrumentos" property="responsableCgi" />

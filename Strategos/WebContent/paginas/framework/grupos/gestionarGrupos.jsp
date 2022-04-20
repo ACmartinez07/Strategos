@@ -30,7 +30,7 @@
 			function modificar() 
 			{
 				if (verificarElementoUnicoSeleccionMultiple(document.gestionarGruposForm.seleccionados)) 					
-					abrirVentanaModal('<sslext:rewrite action="/framework/grupos/modificarGrupo"/>?grupoId="' + document.gestionarGruposForm.seleccionados.value, "GrupoEdit", 750, 570);
+					abrirVentanaModal('<sslext:rewrite action="/framework/grupos/modificarGrupo"/>?grupoId=' + document.gestionarGruposForm.seleccionados.value, "GrupoEdit", 750, 570);
 			}
 			
 			function copiar() 

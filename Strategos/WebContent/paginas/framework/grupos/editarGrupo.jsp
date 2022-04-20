@@ -68,8 +68,9 @@
 			
 			function guardar() 
 			{
-				if (validar(self.document.editarGrupoForm)) 
-					self.document.editarGrupoForm.submit();
+				if (validar(document.editarGrupoForm)) 					
+					window.document.editarGrupoForm.submit();
+					activarBloqueoEspera();									
 			}
 			
 			function cancelarGuardar() 
