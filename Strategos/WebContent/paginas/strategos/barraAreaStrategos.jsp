@@ -269,6 +269,12 @@
 	{
 	}
 	
+	/*
+	function bancoProyectos() 
+	{		
+		window.location.href="http://localhost:4200/gestionideas?id=" + '<bean:write scope="session" name="organizacionId"/>' ;	
+	}*/
+	
 </script>
 
 			
@@ -328,8 +334,13 @@
 			</logic:notEmpty>
 		</logic:notEmpty>
 
-		<!-- 
 		
+		<!-- Banco proyectos	
+		<vgcinterfaz:botonBarraAreas permisoId="" onclick="bancoProyectos();" nombre="riesgo" urlImage="/paginas/strategos/imagenes/portafolio.gif" >
+			<vgcutil:message key="barraareas.strategos.banco" />
+		</vgcinterfaz:botonBarraAreas>
+
+		<!-- 
 		<logic:notEmpty scope="session" name="activarRiesgo">
 			<logic:notEmpty scope="session" name="activarRiesgo" property="objeto">
 				<logic:equal scope="session" name="activarRiesgo" property="objeto.activo" value="true">

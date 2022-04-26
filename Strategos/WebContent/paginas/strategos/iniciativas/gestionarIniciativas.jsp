@@ -451,8 +451,9 @@
 		abrirVentanaModal('<html:rewrite action="/iniciativas/protegerLiberar"/>' + nombreForma + nombreCampoOculto + funcionCierre + parametros, 'protegerLiberarIniciativa', '750', '560');
 	}
 	
-	 function onProtegerLiberarIniciativas()
+	 function generarReporteDatosBasicos()
 	 {
+		 abrirVentanaModal('<html:rewrite action="/reportes/iniciativas/datosBasicos" />', "Iniciativa", 770, 485);
 	 }
 	
 	
@@ -576,6 +577,7 @@
 							<vgcinterfaz:botonMenu key="jsp.gestionariniciativas.menu.reportes.detallado" onclick="reporteIniciativas();" permisoId="INICIATIVA_EVALUAR_REPORTE_DETALLADO" />
 							<vgcinterfaz:botonMenu key="jsp.gestionariniciativas.menu.reportes.resumido" onclick="reporteIniciativasResumido();" permisoId="INICIATIVA_EVALUAR_REPORTE_RESUMIDO" />
 							<vgcinterfaz:botonMenu key="jsp.gestionariniciativas.menu.reportes.detallado.ejecucion" onclick="reporteIniciativasResumidoEjecucion();" permisoId="INICIATIVA_EVALUAR_REPORTE_RESUMIDO" />
+							<vgcinterfaz:botonMenu key="jsp.gestionariniciativas.menu.reportes.datos.basicos" onclick="generarReporteDatosBasicos();" permisoId="INICIATIVA_EVALUAR_REPORTE_DATOS_BASICOS" />
 							<logic:equal name="gestionarIniciativasForm" property="tipoAlerta" value="<%= tipoCalculoEstadoIniciativaPorSeguimientos %>">
 								<vgcinterfaz:botonMenu key="jsp.gestionariniciativas.menu.reportes.detallado" onclick="reporteDetalladoIniciativaPorProductos();" />
 								

@@ -1236,6 +1236,14 @@ public class StrategosMapStrutsActionRight implements MapStrutsActionRight
 	    this.mapa.put("reportes.iniciativas.reporteiniciativaxls", actionRight);	    
 	    
 	    
+	    actionRight = new StrutsActionRight("reportes.iniciativas.datosbasicos", false, false, "INICIATIVA_EVALUAR_REPORTE_DATOS_BASICOS");
+	    this.mapa.put(actionRight.getActionName(), actionRight);
+	    actionRight = new StrutsActionRight("reportes.iniciativas.datosbasicospdf", false, false, "INICIATIVA_EVALUAR_REPORTE_DATOS_BASICOS");
+	    this.mapa.put(actionRight.getActionName(), actionRight);
+	    actionRight = new StrutsActionRight("reportes.iniciativas.datosbasicosxls", false, false, "INICIATIVA_EVALUAR_REPORTE_DATOS_BASICOS");
+	    this.mapa.put(actionRight.getActionName(), actionRight);
+	    	  
+	    
 	    actionRight = new StrutsActionRight("reportes.portafolios.detalle", false, false, "PORTAFOLIO_VISTA");
 	    this.mapa.put(actionRight.getActionName(), actionRight);
 	    actionRight = new StrutsActionRight("reportes.portafolios.detalleejecucionpdf", false, false, "PORTAFOLIO_VISTA");
