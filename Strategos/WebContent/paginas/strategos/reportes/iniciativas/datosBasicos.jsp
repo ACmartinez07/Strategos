@@ -45,13 +45,7 @@
 					url = url + '&tipo='+document.reporteForm.tipo.value;
 					url = url + '&estatus='+document.reporteForm.estatus.value;
 					url = url + '&ano=' +document.reporteForm.ano.value;
-				
-				
-					if(document.reporteForm.todosAno.checked==true){
-						url = url + '&todos=' + true;
-					}else{
-						url = url + '&todos=' + false;
-					}
+													
 				
 					if (document.reporteForm.tipoReporte[0].checked)
 						abrirReporte('<html:rewrite action="/reportes/iniciativas/datosBasicosPdf"/>?'+url+'&organizacionId=<bean:write name="organizacionId" scope="session" />');
@@ -127,18 +121,7 @@
 									</html:radio>
 								</td>
 							</tr>
-							
-							<tr>
-								<td colspan="3">
-									<bean:define id="alcanceOrganizacion" toScope="page">
-										<bean:write name="reporteForm" property="alcanceOrganizacion" />
-									</bean:define>
-									<html:radio property="alcance" value="<%= alcanceOrganizacion %>">
-										<vgcutil:message key="jsp.protegerliberar.pororganizaciontodas" />
-									</html:radio>
-								</td>
-							</tr>
-							
+																					
 							
 							
 							<tr>
@@ -166,18 +149,7 @@
 											%>
 										</html:select>
 								</td>
-							</tr>
-							
-							<tr>
-								<%-- Visible --%>
-								<td colspan="3">
-									&nbsp;
-									<vgcutil:message key="jsp.editariniciativa.ficha.todos.ano" />
-									&nbsp;&nbsp;&nbsp;&nbsp;
-									<html:checkbox styleClass="botonSeleccionMultiple" property="todosAno" />
-								</td>
-								
-							</tr>
+							</tr>														
 																					
 							<tr>
 								<td colspan="3">
