@@ -18,7 +18,6 @@ import com.visiongc.app.strategos.planes.StrategosPerspectivasService;
 import com.visiongc.app.strategos.planes.StrategosPlanesService;
 import com.visiongc.app.strategos.planes.model.IniciativaPerspectiva;
 import com.visiongc.app.strategos.planes.model.IniciativaPlan;
-import com.visiongc.app.strategos.planes.model.IniciativaPlanPK;
 import com.visiongc.app.strategos.planes.model.Perspectiva;
 import com.visiongc.app.strategos.planes.model.Plan;
 import com.visiongc.app.strategos.seriestiempo.model.SerieTiempo;
@@ -34,11 +33,8 @@ import com.visiongc.framework.impl.FrameworkServiceFactory;
 import com.visiongc.framework.model.ConfiguracionUsuario;
 import com.visiongc.framework.model.ConfiguracionUsuarioPK;
 import com.visiongc.framework.model.Modulo;
-import com.visiongc.framework.model.Usuario;
-import com.visiongc.framework.util.PermisologiaUsuario;
 import com.visiongc.framework.web.controles.SplitControl;
 import com.visiongc.framework.web.struts.forms.FiltroForm;
-import com.visiongc.framework.web.struts.taglib.interfaz.util.BarraAreaInfo;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -50,7 +46,6 @@ import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -142,7 +137,7 @@ public class GestionarIniciativasAction
     }
     
     
-    /* obtener el año actual y setear en el filtro */
+    /* obtener el aï¿½o actual y setear en el filtro */
     Calendar cal= Calendar.getInstance();
     int year= cal.get(Calendar.YEAR);
     

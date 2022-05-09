@@ -1,12 +1,16 @@
 package com.visiongc.app.strategos.web.struts.instrumentos.actions;
 
 import java.awt.Color;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +23,11 @@ import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.Paragraph;
 import com.visiongc.app.strategos.impl.StrategosServiceFactory;
-
+import com.visiongc.app.strategos.indicadores.StrategosMedicionesService;
+import com.visiongc.app.strategos.indicadores.model.Indicador;
+import com.visiongc.app.strategos.indicadores.model.Medicion;
+import com.visiongc.app.strategos.indicadores.model.util.AlertaIndicador;
+import com.visiongc.app.strategos.indicadores.model.util.TipoFuncionIndicador;
 import com.visiongc.app.strategos.iniciativas.StrategosIniciativasService;
 import com.visiongc.app.strategos.iniciativas.model.Iniciativa;
 import com.visiongc.app.strategos.instrumentos.StrategosCooperantesService;
@@ -28,8 +36,15 @@ import com.visiongc.app.strategos.instrumentos.StrategosTiposConvenioService;
 import com.visiongc.app.strategos.instrumentos.model.Cooperante;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.app.strategos.instrumentos.model.TipoConvenio;
-
+import com.visiongc.app.strategos.organizaciones.model.OrganizacionStrategos;
 import com.visiongc.app.strategos.planes.StrategosMetasService;
+import com.visiongc.app.strategos.planes.StrategosPerspectivasService;
+import com.visiongc.app.strategos.planes.StrategosPlanesService;
+import com.visiongc.app.strategos.planes.model.IniciativaPerspectiva;
+import com.visiongc.app.strategos.planes.model.IniciativaPlan;
+import com.visiongc.app.strategos.planes.model.Perspectiva;
+import com.visiongc.app.strategos.planes.model.Plan;
+import com.visiongc.app.strategos.seriestiempo.model.SerieTiempo;
 import com.visiongc.app.strategos.web.struts.reportes.forms.ReporteForm;
 import com.visiongc.commons.report.TablaBasicaPDF;
 import com.visiongc.commons.report.VgcFormatoReporte;
@@ -38,6 +53,7 @@ import com.visiongc.commons.util.PaginaLista;
 
 public class ReporteProyectosAsociadosPdf extends VgcReporteBasicoAction{
 
+	private static final String Plan = null;
 	private int lineas = 0;
 	private int tamanoPagina = 0;
 	private int inicioLineas = 1;
@@ -46,7 +62,7 @@ public class ReporteProyectosAsociadosPdf extends VgcReporteBasicoAction{
 	
 	protected String agregarTitulo(HttpServletRequest request,	MessageResources mensajes) throws Exception 
 	{
-		return mensajes.getMessage("jsp.pagina.instrumentos.reporte.titulo.detalle");
+		return mensajes.getMessage("jsp.pagina.instrumentos.reporte.proyectos.asociados");
 	}
 	
 	protected void construirReporte(ActionForm form, HttpServletRequest request, HttpServletResponse response, Document documento) throws Exception 
@@ -164,6 +180,7 @@ public class ReporteProyectosAsociadosPdf extends VgcReporteBasicoAction{
 	    	StrategosInstrumentosService strategosInstrumentosService = StrategosServiceFactory.getInstance().openStrategosInstrumentosService();
 			StrategosTiposConvenioService strategosTiposConvenioService = StrategosServiceFactory.getInstance().openStrategosTiposConvenioService();
 			StrategosCooperantesService strategosCooperantesService = StrategosServiceFactory.getInstance().openStrategosCooperantesService();
+			
 	    	
 	    	Instrumentos instrumento = (Instrumentos)strategosInstrumentosService.load(Instrumentos.class, reporte.getId());
 	    	
@@ -171,24 +188,25 @@ public class ReporteProyectosAsociadosPdf extends VgcReporteBasicoAction{
 	    		dibujarInformacionInstrumento(reporte, font, source, instrumento, documento, mensajes, request);
 	    		
 	    		StrategosIniciativasService strategosIniciativasService = StrategosServiceFactory.getInstance().openStrategosIniciativasService();
+	    		StrategosPlanesService strategosPlanesService = StrategosServiceFactory.getInstance().openStrategosPlanesService();
 	    		
 	    		filtros = new HashMap();
 	    		
 	    		filtros.put("instrumentoId", instrumento.getInstrumentoId().toString());
 	    		
-	    		PaginaLista paginaIniciativas = strategosIniciativasService.getIniciativas(pagina, 30, atributoOrden, tipoOrden, true, filtros);
 	    		
-	    		EjecucionIniciativa(reporte, documento, request, mensajes, source, paginaIniciativas.getLista());
+	    		PaginaLista paginaIniciativas = strategosIniciativasService.getIniciativas(pagina, 30, atributoOrden, tipoOrden, true, filtros);
+	    		PaginaLista paginaPlanes = strategosPlanesService.getPlanes(pagina, 30, atributoOrden, tipoOrden, true, filtros);
+	    		
+	    		EjecucionIniciativa(reporte, documento, request, mensajes, source, paginaIniciativas.getLista(), paginaPlanes.getLista());
 	    	
 	    	}
 	    	
 	    	
 	    }else {
 	    	
-	    	StrategosInstrumentosService strategosInstrumentosService = StrategosServiceFactory.getInstance().openStrategosInstrumentosService();
-			StrategosTiposConvenioService strategosTiposConvenioService = StrategosServiceFactory.getInstance().openStrategosTiposConvenioService();
-			StrategosCooperantesService strategosCooperantesService = StrategosServiceFactory.getInstance().openStrategosCooperantesService();
-			
+	    	StrategosInstrumentosService strategosInstrumentosService = StrategosServiceFactory.getInstance().openStrategosInstrumentosService();			
+	    	
 			Map<String, String> filtros = new HashMap<String, String>();
 		    int pagina = 0;
 		    String atributoOrden = null;
@@ -224,14 +242,17 @@ public class ReporteProyectosAsociadosPdf extends VgcReporteBasicoAction{
 		    		dibujarInformacionInstrumento(reporte, font, source, instrumento, documento, mensajes, request);
 		    		
 		    		StrategosIniciativasService strategosIniciativasService = StrategosServiceFactory.getInstance().openStrategosIniciativasService();
+		    		//StrategosPlanesService strategosPlanesService = StrategosServiceFactory.getInstance().openStrategosPlanesService();
 		    		
 		    		filtros = new HashMap();
 		    		
 		    		filtros.put("instrumentoId", instrumento.getInstrumentoId().toString());
 		    		
-		    		PaginaLista paginaIniciativas = strategosIniciativasService.getIniciativas(pagina, 30, null, tipoOrden, true, filtros);
+		    		PaginaLista paginaIniciativas = strategosIniciativasService.getIniciativas(pagina, 30, null, tipoOrden, true, filtros);	
+		    		//PaginaLista paginaPlanes = strategosPlanesService.getPlanes(pagina, 30, atributoOrden, tipoOrden, true, filtros);
+		    		List paginaPlanes = null;
 		    		
-		    		EjecucionIniciativa(reporte, documento, request, mensajes, source, paginaIniciativas.getLista());		    		
+		    		EjecucionIniciativa(reporte, documento, request, mensajes, source, paginaIniciativas.getLista(), paginaPlanes);		    		
 		    				    		
 				}
 			}
@@ -394,64 +415,9 @@ public class ReporteProyectosAsociadosPdf extends VgcReporteBasicoAction{
 		}
 	
 		return nombre;
-	}
-		
-	private void crearTablaIniciativa(ReporteForm reporte, Iniciativa iniciativa, Font font, MessageResources mensajes, Document documento, HttpServletRequest request) throws Exception
-	{						
-		String encabezado = mensajes.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa") + ",";
-		encabezado = encabezado + mensajes.getMessage("jsp.visualizariniciativasplan.columna.porcentajecompletado") + ",";	
-		encabezado = encabezado + mensajes.getMessage("jsp.gestionariniciativasplan.columna.fechaUltimaMedicion") + ",";
-	
-			encabezado = encabezado + mensajes.getMessage("jsp.visualizariniciativasplan.columna.estatus") + ",";
-	
-			encabezado = encabezado + mensajes.getMessage("jsp.editariniciativa.ficha.anioformulacion") + ",";
-	
-			encabezado = encabezado + mensajes.getMessage("jsp.mostrarplanesasociadosiniciativa.columna.nombreplan") + ",";
-		encabezado = encabezado + mensajes.getMessage("jsp.mostrarplanesasociadosiniciativa.columna.objetivo");
-		
-		String[] titulo = encabezado.split(",");
-		boolean tablaIniciada = false;
-
-	    String[][] columnas = new String[titulo.length][2];
-	    StringBuilder string;
-
-	    for (int f = 0; f < titulo.length; f++)
-	    {
-    		columnas[f][0] = "8";
-    		if (f == (titulo.length - 1))
-    		{
-    			string = new StringBuilder();
-    			string.append(titulo[f]);
-    			string.append("\n");
-    			string.append("\n");
-    		    columnas[f][1] = string.toString();
-    		}
-    		else
-    			columnas[f][1] = titulo[f];
-	    }
-	    
-		TablaBasicaPDF tabla = crearTabla(true, false, columnas, reporte, font, mensajes, documento, request);
-			    	   	
-		tablaIniciada = false;
-		string = new StringBuilder();
-	    if (iniciativa.getNombre() != null && iniciativa.getNombre() != "")
-	    	string.append(iniciativa.getNombre());
-	    else
-	    	string.append("");
-		string.append("\n");
-		string.append("\n");
-		tabla.agregarCelda(string.toString());
-	    tabla.agregarCelda(iniciativa.getPorcentajeCompletadoFormateado());
-	    tabla.agregarCelda(iniciativa.getFechaUltimaMedicion());	    
-	    tabla.agregarCelda("Estatus");
-	    tabla.agregarCelda(iniciativa.getAnioFormulacion());
-		tabla.agregarCelda("plan");				    
-		tabla.agregarCelda("objetivo");
-
-		documento.add(tabla.getTabla());
 	}		
 	
-	private void EjecucionIniciativa(ReporteForm reporte, Document documento, HttpServletRequest request, MessageResources mensajes, String source, List<Iniciativa> iniciativas) throws Exception
+	private void EjecucionIniciativa(ReporteForm reporte, Document documento, HttpServletRequest request, MessageResources mensajes, String source, List<Iniciativa> iniciativas, List<Plan> planes) throws Exception
 	{
 	    //Raiz del plan
 	    lineas = 2;
@@ -464,11 +430,17 @@ public class ReporteProyectosAsociadosPdf extends VgcReporteBasicoAction{
 		fontBold.setSize(8);
 		fontBold.setStyle(Font.BOLD);
 		
+		Calendar fecha = Calendar.getInstance();
+        int anoTemp = fecha.get(Calendar.YEAR);
+        int mes = fecha.get(Calendar.MONTH) + 1;
+		
 		inicioTamanoPagina = lineasxPagina(font);
 	    tamanoPagina = inicioTamanoPagina;
-			    				
-		StrategosMetasService strategosMetasService = StrategosServiceFactory.getInstance().openStrategosMetasService();
-		StrategosIniciativasService strategosIniciativasService = StrategosServiceFactory.getInstance().openStrategosIniciativasService();		
+	    	    
+		StrategosIniciativasService strategosIniciativasService = StrategosServiceFactory.getInstance().openStrategosIniciativasService();
+		StrategosMedicionesService strategosMedicionesService = StrategosServiceFactory.getInstance().openStrategosMedicionesService();		
+		
+		
 					
 		Map<String, Object> filtros = new HashMap<String, Object>();
 		Paragraph texto;
@@ -493,43 +465,40 @@ public class ReporteProyectosAsociadosPdf extends VgcReporteBasicoAction{
 			texto.setAlignment(Element.ALIGN_LEFT);
 			texto.setIndentationLeft(16);
 			documento.add(texto);
-						
-			String encabezado = mensajes.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa") + ",";
-			encabezado = encabezado + mensajes.getMessage("jsp.visualizariniciativasplan.columna.porcentajecompletado") + ",";	
-			encabezado = encabezado + mensajes.getMessage("jsp.gestionariniciativasplan.columna.fechaUltimaMedicion") + ",";
-			encabezado = encabezado + mensajes.getMessage("jsp.visualizariniciativasplan.columna.estatus") + ",";    		
-			encabezado = encabezado + mensajes.getMessage("jsp.editariniciativa.ficha.anioformulacion") + ",";    		
-			encabezado = encabezado + mensajes.getMessage("jsp.mostrarplanesasociadosiniciativa.columna.nombreplan") + ",";
-			encabezado = encabezado + mensajes.getMessage("jsp.mostrarplanesasociadosiniciativa.columna.objetivo");
-			
-			String[] titulo = encabezado.split(",");
+									
 			boolean tablaIniciada = false;
+			
+			Plan infoPlan = new Plan();
 
-		    String[][] columnas = new String[titulo.length][2];
+		    String[][] columnas = new String[7][2];
 		    StringBuilder string;
 
-		    for (int f = 0; f < titulo.length; f++)
-		    {
-	    		columnas[f][0] = "8";
-	    		if (f == (titulo.length - 1))
-	    		{
-	    			string = new StringBuilder();
-	    			string.append(titulo[f]);
-	    			string.append("\n");
-	    			string.append("\n");
-	    		    columnas[f][1] = string.toString();
-	    		}
-	    		else
-	    			columnas[f][1] = titulo[f];
-		    }
-		    
-			
+		    columnas[0][0] = "20";
+		    columnas[0][1] =  mensajes.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa");
+		    columnas[1][0] = "9";
+		    columnas[1][1] = mensajes.getMessage("jsp.visualizariniciativasplan.columna.porcentajecompletado");
+		    columnas[2][0] = "10";
+		    columnas[2][1] = mensajes.getMessage("jsp.gestionariniciativasplan.columna.fechaUltimaMedicion");
+		    columnas[3][0] = "10";
+		    columnas[3][1] = mensajes.getMessage("jsp.visualizariniciativasplan.columna.estatus");
+		    columnas[4][0] = "10";
+		    columnas[4][1] = mensajes.getMessage("jsp.editariniciativa.ficha.anioformulacion") + "\n\n";		    
+		    columnas[5][0] = "15";
+		    columnas[5][1] = mensajes.getMessage("jsp.mostrarplanesasociadosiniciativa.columna.nombreplan"); 
+		    columnas[6][0] = "15";
+		    columnas[6][1] = mensajes.getMessage("jsp.mostrarplanesasociadosiniciativa.columna.objetivo");
+		    		    		    			
 		    TablaBasicaPDF tabla = crearTabla(true, false, columnas, reporte, font, mensajes, documento, request);
 				
 			for (Iterator<Iniciativa> iter = iniciativas.iterator(); iter.hasNext();)
 			{
 				Iniciativa iniciativa = (Iniciativa)iter.next();												    			    							
 								
+				Indicador indicador = (Indicador)strategosIniciativasService.load(Indicador.class, iniciativa.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()));
+				
+				List<Medicion> medicionesEjecutadas = strategosMedicionesService.getMedicionesPeriodo(indicador.getIndicadorId(), SerieTiempo.getSerieReal().getSerieId(), 0000, anoTemp, 000, mes);
+				List<Medicion> medicionesProgramadas = strategosMedicionesService.getMedicionesPeriodo(indicador.getIndicadorId(), SerieTiempo.getSerieProgramado().getSerieId(), 0000, anoTemp, 000, mes);
+				
 				// Dibujar Informacion de la Iniciativa    			
     			string = new StringBuilder();
     		    if (iniciativa.getNombre() != null && iniciativa.getNombre() != "")
@@ -542,14 +511,57 @@ public class ReporteProyectosAsociadosPdf extends VgcReporteBasicoAction{
     			
     		    tabla.agregarCelda(iniciativa.getPorcentajeCompletadoFormateado());
     		    tabla.agregarCelda(iniciativa.getFechaUltimaMedicion());	    
-    		    tabla.agregarCelda("Estatus");
     		    
-    		    System.out.printf("\n\nEstatus de la iniciativa: ", iniciativa.getIniciativaPlanes(), "\n\n");
+    		    //estatus
+    			if (medicionesProgramadas.size() == 0) {
+    				//EstatusIniciar
+    				tabla.agregarCelda(mensajes.getMessage("estado.sin.iniciar"));
+    			}else if(medicionesProgramadas.size() > 0 && medicionesEjecutadas.size() == 0) {
+    				//EstatusIniciardesfasado
+    				tabla.agregarCelda(mensajes.getMessage("estado.sin.iniciar.desfasada"));
+    			}					
+    			else if(iniciativa.getEstatusId() == 2 && iniciativa.getAlerta() != null && iniciativa.getAlerta().byteValue() == AlertaIndicador.getAlertaVerde().byteValue() && iniciativa.getPorcentajeCompletado() != null && iniciativa.getPorcentajeCompletado().doubleValue() < 100D) {
+    				//EnEjecucionSinRetrasos
+    				tabla.agregarCelda(mensajes.getMessage("estado.en.ejecucion.sin.retrasos"));
+    			}else if(iniciativa.getEstatusId() == 2 && iniciativa.getAlerta().byteValue() == AlertaIndicador.getAlertaAmarilla().byteValue()) {
+    				//EnEjecucionConRetrasosSuperables
+    				tabla.agregarCelda(mensajes.getMessage("estado.en.ejecucion.con.retrasos.superables"));
+    			}else if(iniciativa.getEstatusId() == 2 && iniciativa.getAlerta().byteValue() == AlertaIndicador.getAlertaRoja().byteValue()) {
+    				//EnEjecucionConRetrasosSignificativos
+    				tabla.agregarCelda(mensajes.getMessage("estado.en.ejecucion.con.retrasos.significativos"));
+    			}else if(iniciativa.getEstatusId() == 5 && iniciativa.getPorcentajeCompletado() != null && iniciativa.getPorcentajeCompletado().doubleValue() >= 100D) {
+    				//EstatusConcluidas
+    				tabla.agregarCelda(mensajes.getMessage("estado.concluidas"));
+    			}
+    			else if(iniciativa.getEstatusId() == 3) {
+    				//EstatusCancelado
+    				tabla.agregarCelda("Cancelado");
+    			}
+    			else if(iniciativa.getEstatusId() == 4) {
+    				//EstatusSuspendido
+    				tabla.agregarCelda("Suspendido");
+    			}else {
+    				//EstatusIniciar
+    				tabla.agregarCelda(mensajes.getMessage("estado.sin.iniciar"));    				
+    			}    		        		    
     		    
     		    tabla.agregarCelda(iniciativa.getAnioFormulacion());
-    			tabla.agregarCelda("plan");				    
-    			tabla.agregarCelda("objetivo");    																 												
-			}						
+    		        		    
+    		    infoPlan = obtenerPlan(iniciativa);		
+    		    
+    		    if(infoPlan != null)    		    
+    		    	tabla.agregarCelda(infoPlan.getNombre());
+    		    else {
+    		    	tabla.agregarCelda("No hay plan asociado");
+    		    }
+    		    
+    		    if(infoPlan != null)    		    
+    		    	tabla.agregarCelda(obtenerObjetivo(iniciativa.getIniciativaId(), infoPlan.getPlanId()));
+    		    else {
+    		    	tabla.agregarCelda("No hay Objetivo descrito");    		    
+    		    }
+			}									
+			
 			documento.add(tabla.getTabla());			
 		}
 		else
@@ -564,8 +576,63 @@ public class ReporteProyectosAsociadosPdf extends VgcReporteBasicoAction{
 			font.setColor(0, 0, 0);
 			
 			documento.add(lineaEnBlanco(font));			
-		}		
-		strategosMetasService.close();
+		}				
 		strategosIniciativasService.close();
+				
 	}	
+	
+	public Plan obtenerPlan(Iniciativa iniciativa) {		 
+		  ArrayList<Plan> listaPlanes = new ArrayList(); 
+		    if (iniciativa != null)
+		      {		        		        		        
+		        Set<IniciativaPlan> iniciativaPlanes = iniciativa.getIniciativaPlanes();
+		        StrategosPlanesService strategosPlanesService = StrategosServiceFactory.getInstance().openStrategosPlanesService();
+		        for (Iterator<IniciativaPlan> iter = iniciativaPlanes.iterator(); iter.hasNext();)
+		        {
+		          IniciativaPlan iniciativaPlan = (IniciativaPlan)iter.next();
+		          		         		          
+		            Plan plan = (Plan)strategosPlanesService.load(Plan.class, iniciativaPlan.getPk().getPlanId());
+		            OrganizacionStrategos organizacion = (OrganizacionStrategos)strategosPlanesService.load(OrganizacionStrategos.class, plan.getOrganizacionId());
+		            plan.setOrganizacion(organizacion);
+		            
+		            listaPlanes.add(plan);		            		            		          
+		        }
+		        strategosPlanesService.close();    		            		          		    
+		      }
+		    
+		    if (listaPlanes.size() > 0)
+		    {
+		      Plan plan = (Plan)listaPlanes.get(0);
+			    return plan;		     
+		    }
+			return null;
+		   
+	}
+	
+	 public String obtenerObjetivo(Long iniciativaId, Long planId) throws SQLException{
+		  
+			String objetivo="";
+			Long id=iniciativaId;
+			
+			if(id != null && planId != null){
+			
+				StrategosIniciativasService strategosIniciativasService = StrategosServiceFactory.getInstance().openStrategosIniciativasService();
+				
+				Iniciativa ini = (Iniciativa)strategosIniciativasService.load(Iniciativa.class, new Long(id));
+				
+				
+				if((ini.getIniciativaPerspectivas() != null) && (ini.getIniciativaPerspectivas().size() > 0)){
+					
+				  IniciativaPerspectiva iniciativaPerspectiva = (IniciativaPerspectiva)ini.getIniciativaPerspectivas().toArray()[0];
+		          StrategosPerspectivasService strategosPerspectivasService = StrategosServiceFactory.getInstance().openStrategosPerspectivasService();
+		          Perspectiva perspectiva = (Perspectiva)strategosPerspectivasService.load(Perspectiva.class, iniciativaPerspectiva.getPk().getPerspectivaId());
+		          
+		        	  objetivo= perspectiva.getNombre();
+		         
+				}
+				strategosIniciativasService.close();
+			}
+			
+			return objetivo;
+	  }
 }

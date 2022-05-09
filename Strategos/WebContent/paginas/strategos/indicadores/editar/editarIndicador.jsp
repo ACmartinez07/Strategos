@@ -156,8 +156,7 @@
 			function cancelar() 
 			{
 				window.document.editarIndicadorForm.action = '<html:rewrite action="/indicadores/cancelarGuardarIndicador"/>';
-				window.document.editarIndicadorForm.submit();
-				this.close();
+				window.document.editarIndicadorForm.submit();				
 			}
 			
 			function ejecutarPorDefecto(e) 

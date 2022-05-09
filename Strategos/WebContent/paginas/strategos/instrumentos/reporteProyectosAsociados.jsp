@@ -13,7 +13,7 @@
 
 	<%-- Titulo --%>
 	<tiles:put name="title" type="String">
-		<vgcutil:message key="reporte.framework.usuarios.organizacion.titulo" />
+		<vgcutil:message key="jsp.pagina.instrumentos.reporte.proyectos.asociados" />
 	</tiles:put>
 	
 	<%-- Cuerpo --%>
@@ -61,13 +61,13 @@
 			<html:hidden property="nombre" />
 			<html:hidden property="ano" />
 			<html:hidden property="cooperanteId" />
-			<html:hidden property="tipoCooperanteId" />
+			<html:hidden property="tipoCooperanteId" />			
 			
 		<vgcinterfaz:contenedorForma width="460px" height="360px" bodyAlign="center" bodyValign="middle" bodyCellpadding="20">
 			
 			<%-- Título--%>
 			<vgcinterfaz:contenedorFormaTitulo>..::					
-				<vgcutil:message key="jsp.pagina.instrumentos.reporte.titulo.resumido" />
+				<vgcutil:message key="jsp.pagina.instrumentos.reporte.proyectos.asociados" />
 			</vgcinterfaz:contenedorFormaTitulo>
 			
 			<%-- Paneles --%>

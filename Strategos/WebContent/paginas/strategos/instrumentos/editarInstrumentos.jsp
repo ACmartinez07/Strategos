@@ -38,8 +38,7 @@
 		
 			function cancelar() {				
 				window.document.editarInstrumentosForm.action = '<html:rewrite action="/instrumentos/cancelarGuardarInstrumento"/>';
-				window.document.editarInstrumentosForm.submit();	
-				this.close();
+				window.document.editarInstrumentosForm.submit();					
 			}
 		
 			function guardar() {				

@@ -46,6 +46,11 @@
 					url = url + '&estatus='+document.reporteForm.estatus.value;
 					url = url + '&ano=' +document.reporteForm.ano.value;
 													
+					if(document.reporteForm.todosAno.checked==true){
+						url = url + '&todos=' + true;
+					}else{
+						url = url + '&todos=' + false;
+					}
 				
 					if (document.reporteForm.tipoReporte[0].checked)
 						abrirReporte('<html:rewrite action="/reportes/iniciativas/datosBasicosPdf"/>?'+url+'&organizacionId=<bean:write name="organizacionId" scope="session" />');
@@ -68,14 +73,14 @@
 			<input type='hidden' name='filtroNombre' value='<bean:write name="reporteForm" property="filtro.nombre" />'>
 			<input type='hidden' name='selectHitoricoType' value='<bean:write name="reporteForm" property="filtro.historico" />'>
 			
-			<vgcinterfaz:contenedorForma width="460px" height="460px" bodyAlign="center" bodyValign="middle" bodyCellpadding="20">
+			<vgcinterfaz:contenedorForma width="460px" height="420px" bodyAlign="center" bodyValign="middle" bodyCellpadding="20">
 				<%-- Título--%>
 				<vgcinterfaz:contenedorFormaTitulo>..::					
 					<vgcutil:message key="jsp.gestionariniciativas.menu.reportes.datos.basicos" />
 				</vgcinterfaz:contenedorFormaTitulo>
 				
 				<%-- Paneles --%>
-				<vgcinterfaz:contenedorPaneles height="340px" width="400px" nombre="reporteCriterios">
+				<vgcinterfaz:contenedorPaneles height="320px" width="400px" nombre="reporteCriterios">
 
 					<%-- Panel: Parametros --%>
 					
@@ -92,7 +97,7 @@
 							<!-- Organizacion Seleccionada-->
 							<tr>
 								<td align="left"><vgcutil:message key="jsp.reportes.iniciativa.ejecucion.plantilla.organizacion" /> : </td>
-								<td colspan="3"><b><bean:write name="reporteForm" property="nombreOrganizacion"/></b></td>
+								<td colspan="1"><b><bean:write name="reporteForm" property="nombreOrganizacion"/></b></td>
 								<td></td>
 							</tr>
 							
@@ -149,22 +154,31 @@
 											%>
 										</html:select>
 								</td>
-							</tr>														
+							</tr>		
+							
+							<tr>
+								<%-- Visible --%>
+								<td colspan="3">
+									&nbsp;
+									<vgcutil:message key="jsp.editariniciativa.ficha.todos.ano" />
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<html:checkbox styleClass="botonSeleccionMultiple" property="todosAno" />
+								</td>
+								
+							</tr>												
 																					
 							<tr>
 								<td colspan="3">
 									&nbsp;
 									<vgcutil:message key="jsp.editariniciativa.ficha.tipoproyecto" />
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<select class="cuadroCombinado" name="reporteForm" property='tipo' id="tipo" >
-										<option value="0" selected>Todos</option>
+									<select class="cuadroCombinado" name="reporteForm" property='tipo' id="tipo" >																	
 										<logic:iterate name="reporteForm" property="tipos" id="tip">
 											<bean:define id="tipoProyectoId" toScope="page"><bean:write name='tip' property='tipoProyectoId' /></bean:define>
-											<bean:define id="nombre" toScope="page"><bean:write name='tip' property='nombre' /></bean:define>
-											
-											<option value="<%=tipoProyectoId%>" selected><%=nombre%></option>
-											
+											<bean:define id="nombre" toScope="page"><bean:write name='tip' property='nombre' /></bean:define>											
+											<option value="<%=tipoProyectoId%>" selected><%=nombre%></option>											
 										</logic:iterate>
+										<option value="0" selected>Todos</option>		
 									</select>
 								
 								</td>
@@ -215,7 +229,7 @@
 							<!-- Organizacion Seleccionada-->
 							<tr>
 								<td align="left"><vgcutil:message key="jsp.reportes.plan.ejecucion.plantilla.organizacion" /> : </td>
-								<td colspan="3" ><b><bean:write name="reporteForm" property="nombreOrganizacion" /></b></td>
+								<td colspan="1" ><b><bean:write name="reporteForm" property="nombreOrganizacion" /></b></td>
 							</tr>
 														
 							<tr>

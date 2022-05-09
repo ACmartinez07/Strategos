@@ -76,8 +76,7 @@
 			function cancelarGuardar() 
 			{
 				window.document.editarGrupoForm.action = '<sslext:rewrite action="/framework/grupos/cancelarGuardarGrupo"/>';
-				window.document.editarGrupoForm.submit();
-				this.close();
+				window.document.editarGrupoForm.submit();				
 			}
 			
 			// funcion que se utiliza para cargar todos los permisos asociados al grupo a ser editado al

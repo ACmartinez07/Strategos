@@ -30,8 +30,9 @@
 			<logic:notEmpty name="gestionarIniciativasForm" property="instrumentoId">
 				url = url + "&instrumentoId=" + document.gestionarIniciativasForm.instrumentoId.value;
 			</logic:notEmpty>
-		</logic:equal>			
-		window.location.href='<html:rewrite action="/iniciativas/crearIniciativa"/>' + url;
+		</logic:equal>					
+		//abrirVentanaModal('<html:rewrite action="/iniciativas/crearIniciativa"/>' + url , "IniciativaAdd", 1080, 800);
+		window.location.href = '<html:rewrite action="/iniciativas/crearIniciativa" />' + url;
 	}
 
 	function modificarIniciativa() 
@@ -49,12 +50,14 @@
 			</logic:notEmpty>
 		</logic:equal>
 		
-		<logic:equal name="gestionarIniciativasForm" property="editarForma" value="true">			
-		window.location.href='<html:rewrite action="/iniciativas/modificarIniciativa"/>?iniciativaId=' + document.gestionarIniciativasForm.seleccionadoId.value + url;
+		<logic:equal name="gestionarIniciativasForm" property="editarForma" value="true">					
+			//abrirVentanaModal('<html:rewrite action="/iniciativas/modificarIniciativa"/>?iniciativaId=' + document.gestionarIniciativasForm.seleccionadoId.value + url, "IniciativaEdit", 1080, 800);
+			window.location.href='<html:rewrite action="/iniciativas/modificarIniciativa" />?iniciativaId=' + document.gestionarIniciativasForm.seleccionadoId.value + url;
 		</logic:equal>
 		<logic:notEqual name="gestionarIniciativasForm" property="editarForma" value="true">
 			<logic:equal name="gestionarIniciativasForm" property="verForma" value="true">				
-			window.location.href='<html:rewrite action="/iniciativas/verIniciativa"/>?iniciativaId=' + document.gestionarIniciativasForm.seleccionadoId.value + url;
+				//abrirVentanaModal('<html:rewrite action="/iniciativas/verIniciativa"/>?iniciativaId=' + document.gestionarIniciativasForm.seleccionadoId.value + url, "IniciativaEdit", 1080, 800);
+				window.location.href='<html:rewrite action="/iniciativas/verIniciativa" />?iniciativaId=' + document.gestionarIniciativasForm.seleccionadoId.value + url;
 			</logic:equal>
 		</logic:notEqual>
 	}
@@ -453,7 +456,7 @@
 	
 	 function generarReporteDatosBasicos()
 	 {
-		 abrirVentanaModal('<html:rewrite action="/reportes/iniciativas/datosBasicos" />', "Iniciativa", 770, 485);
+		 abrirVentanaModal('<html:rewrite action="/reportes/iniciativas/datosBasicos" />', "Iniciativa", 520, 460);
 	 }
 	
 	

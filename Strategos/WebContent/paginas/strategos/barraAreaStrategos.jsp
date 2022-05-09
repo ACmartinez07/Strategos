@@ -271,7 +271,7 @@
 	
 	function bancoProyectos() 
 	{		
-		window.location.href="http://localhost:80/gestionideas?id=" + '<bean:write scope="session" name="organizacionId"/>' ;	
+		window.location.href="http://tyr.defensoria.gov.co/gestionideas?id=" + '<bean:write scope="session" name="organizacionId"/>' ;	
 	}
 	
 </script>
@@ -333,12 +333,14 @@
 			</logic:notEmpty>
 		</logic:notEmpty>
 
-		<!-- Banco proyectos	-->
+		
+		<!-- 	
 		<vgcinterfaz:botonBarraAreas permisoId="" onclick="bancoProyectos();" nombre="riesgo" urlImage="/paginas/strategos/imagenes/portafolio.gif" >
 			<vgcutil:message key="barraareas.strategos.banco" />
 		</vgcinterfaz:botonBarraAreas>
+		
 
-		<!-- 		
+				
 		<logic:notEmpty scope="session" name="activarRiesgo">
 			<logic:notEmpty scope="session" name="activarRiesgo" property="objeto">
 				<logic:equal scope="session" name="activarRiesgo" property="objeto.activo" value="true">
@@ -415,11 +417,13 @@
 			</logic:notEmpty>
 		</logic:notEmpty>
 		
-		<!-- Instrumentos -->
+		<!-- Instrumentos -->		 
 	
 		<vgcinterfaz:botonBarraAreas permisoId="INSTRUMENTOS" onclick="gestionarInstrumentos();" nombre="instrumentos" urlImage="/paginas/strategos/imagenes/riesgo.gif">
 			<vgcutil:message key="barraareas.strategos.instrumentos" />
 		</vgcinterfaz:botonBarraAreas>
+			 	
+		
 			 	
 		<!-- Reportes Graficos -->
 		

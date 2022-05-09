@@ -19,6 +19,8 @@ import com.visiongc.framework.usuarios.UsuariosService;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,12 +43,16 @@ public class ReporteUsuariosResumidoAction extends VgcReporteBasicoAction
   {
     String atributoOrden = request.getParameter("atributoOrden");
     String tipoOrden = request.getParameter("tipoOrden");
+    String selectCondicionType = (request.getParameter("selectType")); 
+    
+    short condicionType= Short.parseShort(selectCondicionType);
     
     Font fuente = getConfiguracionPagina(request).getFuente();
     MessageResources messageResources = getResources(request);
     
     UsuariosService usuariosService = FrameworkServiceFactory.getInstance().openUsuariosService(getLocale(request));
     
+    Map<String, Object> filtros = new HashMap();
 
     TablaPDF tabla = null;
     tabla = new TablaPDF(getConfiguracionPagina(request), request);
@@ -77,35 +83,84 @@ public class ReporteUsuariosResumidoAction extends VgcReporteBasicoAction
     tabla.setDefaultAlineacionHorizontal();
     if (usuarios.size() > 0) {
       for (Iterator iter = usuarios.iterator(); iter.hasNext();) {
-        Usuario usuario = (Usuario)iter.next();
+    	  Usuario usuario = (Usuario)iter.next();
         
-
-        tabla.setAlineacionHorizontal(0);
-        tabla.agregarCelda(usuario.getUId());
-        tabla.agregarCelda(usuario.getFullName());
-        tabla.setAlineacionHorizontal(1);
-        if (usuario.getIsAdmin().booleanValue()) {
-          tabla.agregarCelda(VgcResourceManager.getResourceApp("comunes.si"));
-        } else {
-          tabla.agregarCelda(VgcResourceManager.getResourceApp("comunes.no"));
-        }
+    	  switch(condicionType){
+    	  	// Todos los usuarios
+        	case 0:
+        		tabla.setAlineacionHorizontal(0);
+        		tabla.agregarCelda(usuario.getUId());
+        		tabla.agregarCelda(usuario.getFullName());
+        		tabla.setAlineacionHorizontal(1);
+        		if (usuario.getIsAdmin().booleanValue()) {
+        			tabla.agregarCelda(VgcResourceManager.getResourceApp("comunes.si"));
+        		} else {
+        			tabla.agregarCelda(VgcResourceManager.getResourceApp("comunes.no"));
+        		}
         
-        if (usuario.getEstatus().intValue() == 0) {
-          tabla.agregarCelda(VgcResourceManager.getResourceApp("jsp.framework.editarusuario.label.estatus.activo"));
+        		if (usuario.getEstatus().intValue() == 0) {
+        			tabla.agregarCelda(VgcResourceManager.getResourceApp("jsp.framework.editarusuario.label.estatus.activo"));
+        		}
+        		else if (usuario.getEstatus().intValue() == 1) {
+        			tabla.agregarCelda(VgcResourceManager.getResourceApp("jsp.framework.editarusuario.label.estatus.inactivo"));
+        		}
+        		else if (usuario.getEstatus().intValue() == 2) {
+        			tabla.agregarCelda(VgcResourceManager.getResourceApp("jsp.framework.editarusuario.label.estatus.deshabilitado"));
+        		}
+        		tabla.agregarCelda(VgcFormatter.formatearFecha(usuario.getCreado(), "dd-MM-yyyy hh:mm:ss aa"));
+        		tabla.agregarCelda(VgcFormatter.formatearFecha(usuario.getModificado(), "dd-MM-yyyy hh:mm:ss aa"));
+        		break;
+        	case 1:
+        		if (usuario.getEstatus().intValue() == 0) {
+        			tabla.setAlineacionHorizontal(0);
+            		tabla.agregarCelda(usuario.getUId());
+            		tabla.agregarCelda(usuario.getFullName());
+            		tabla.setAlineacionHorizontal(1);
+            		if (usuario.getIsAdmin().booleanValue()) {
+            			tabla.agregarCelda(VgcResourceManager.getResourceApp("comunes.si"));
+            		} else {
+            			tabla.agregarCelda(VgcResourceManager.getResourceApp("comunes.no"));
+            		}
+            
+            		if (usuario.getEstatus().intValue() == 0) {
+            			tabla.agregarCelda(VgcResourceManager.getResourceApp("jsp.framework.editarusuario.label.estatus.activo"));
+            		}
+            		else if (usuario.getEstatus().intValue() == 1) {
+            			tabla.agregarCelda(VgcResourceManager.getResourceApp("jsp.framework.editarusuario.label.estatus.inactivo"));
+            		}
+            		else if (usuario.getEstatus().intValue() == 2) {
+            			tabla.agregarCelda(VgcResourceManager.getResourceApp("jsp.framework.editarusuario.label.estatus.deshabilitado"));
+            		}
+            		tabla.agregarCelda(VgcFormatter.formatearFecha(usuario.getCreado(), "dd-MM-yyyy hh:mm:ss aa"));
+            		tabla.agregarCelda(VgcFormatter.formatearFecha(usuario.getModificado(), "dd-MM-yyyy hh:mm:ss aa"));
+        		}
+        		break;
+        	case 2:
+        		if (usuario.getEstatus().intValue() == 1) {
+        			tabla.setAlineacionHorizontal(0);
+            		tabla.agregarCelda(usuario.getUId());
+            		tabla.agregarCelda(usuario.getFullName());
+            		tabla.setAlineacionHorizontal(1);
+            		if (usuario.getIsAdmin().booleanValue()) {
+            			tabla.agregarCelda(VgcResourceManager.getResourceApp("comunes.si"));
+            		} else {
+            			tabla.agregarCelda(VgcResourceManager.getResourceApp("comunes.no"));
+            		}
+            
+            		if (usuario.getEstatus().intValue() == 0) {
+            			tabla.agregarCelda(VgcResourceManager.getResourceApp("jsp.framework.editarusuario.label.estatus.activo"));
+            		}
+            		else if (usuario.getEstatus().intValue() == 1) {
+            			tabla.agregarCelda(VgcResourceManager.getResourceApp("jsp.framework.editarusuario.label.estatus.inactivo"));
+            		}
+            		else if (usuario.getEstatus().intValue() == 2) {
+            			tabla.agregarCelda(VgcResourceManager.getResourceApp("jsp.framework.editarusuario.label.estatus.deshabilitado"));
+            		}
+            		tabla.agregarCelda(VgcFormatter.formatearFecha(usuario.getCreado(), "dd-MM-yyyy hh:mm:ss aa"));
+            		tabla.agregarCelda(VgcFormatter.formatearFecha(usuario.getModificado(), "dd-MM-yyyy hh:mm:ss aa"));
+        		}
+        		break;        	        		
         }
-        else if (usuario.getEstatus().intValue() == 1) {
-          tabla.agregarCelda(VgcResourceManager.getResourceApp("jsp.framework.editarusuario.label.estatus.inactivo"));
-        }
-        else if (usuario.getEstatus().intValue() == 2) {
-          tabla.agregarCelda(VgcResourceManager.getResourceApp("jsp.framework.editarusuario.label.estatus.deshabilitado"));
-        }
-        
-        tabla.agregarCelda(VgcFormatter.formatearFecha(usuario.getCreado(), "dd-MM-yyyy hh:mm:ss aa"));
-        tabla.agregarCelda(VgcFormatter.formatearFecha(usuario.getModificado(), "dd-MM-yyyy hh:mm:ss aa"));
-      
-      
-
-        
       }
       documento.add(tabla.getTabla());
       

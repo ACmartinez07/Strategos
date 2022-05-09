@@ -18,7 +18,8 @@
 
 	function nuevoIndicador() 
 	{		
-		abrirVentanaModal('<html:rewrite action="/indicadores/crearIndicador"/>?inicializar=true', 'IndicadoresAdd', 900, 680);
+		//abrirVentanaModal('<html:rewrite action="/indicadores/crearIndicador"/>?inicializar=true', 'IndicadoresAdd', 900, 680);
+		window.location.href='<html:rewrite action="/indicadores/crearIndicador" />?inicializar=true';
 	}
 
 	function modificarIndicador(modificar) 
@@ -27,9 +28,11 @@
 		{
 			if (modificar)
 				
-				abrirVentanaModal('<html:rewrite action="/indicadores/modificarIndicador"/>?indicadorId=' + document.gestionarIndicadoresForm.seleccionados.value, 'IndicadoresAdd', 900, 680);
+				//abrirVentanaModal('<html:rewrite action="/indicadores/modificarIndicador"/>?indicadorId=' + document.gestionarIndicadoresForm.seleccionados.value, 'IndicadoresAdd', 900, 680);
+				window.location.href='<html:rewrite action="/indicadores/modificarIndicador" />?indicadorId=' + document.gestionarIndicadoresForm.seleccionados.value;
 			else				
-				abrirVentanaModal('<html:rewrite action="/indicadores/verIndicador"/>?indicadorId=' + document.gestionarIndicadoresForm.seleccionados.value, 'IndicadoresAdd', 900, 680);	
+				//abrirVentanaModal('<html:rewrite action="/indicadores/verIndicador"/>?indicadorId=' + document.gestionarIndicadoresForm.seleccionados.value, 'IndicadoresAdd', 900, 680);
+				window.location.href='<html:rewrite action="/indicadores/verIndicador" />?indicadorId=' + document.gestionarIndicadoresForm.seleccionados.value;
 		}
 	}
 

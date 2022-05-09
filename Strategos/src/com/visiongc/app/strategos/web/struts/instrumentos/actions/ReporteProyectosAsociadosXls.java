@@ -1,12 +1,15 @@
 package com.visiongc.app.strategos.web.struts.instrumentos.actions;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +33,7 @@ import com.visiongc.app.strategos.indicadores.StrategosIndicadoresService;
 import com.visiongc.app.strategos.indicadores.StrategosMedicionesService;
 import com.visiongc.app.strategos.indicadores.model.Indicador;
 import com.visiongc.app.strategos.indicadores.model.Medicion;
+import com.visiongc.app.strategos.indicadores.model.util.AlertaIndicador;
 import com.visiongc.app.strategos.indicadores.model.util.TipoFuncionIndicador;
 import com.visiongc.app.strategos.iniciativas.StrategosIniciativasService;
 import com.visiongc.app.strategos.iniciativas.model.Iniciativa;
@@ -39,20 +43,18 @@ import com.visiongc.app.strategos.instrumentos.StrategosTiposConvenioService;
 import com.visiongc.app.strategos.instrumentos.model.Cooperante;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.app.strategos.instrumentos.model.TipoConvenio;
-import com.visiongc.app.strategos.model.util.LapsoTiempo;
-import com.visiongc.app.strategos.organizaciones.StrategosOrganizacionesService;
-import com.visiongc.app.strategos.planes.StrategosMetasService;
-import com.visiongc.app.strategos.planificacionseguimiento.StrategosPryActividadesService;
-import com.visiongc.app.strategos.planificacionseguimiento.StrategosPryProyectosService;
-import com.visiongc.app.strategos.planificacionseguimiento.model.PryActividad;
-import com.visiongc.app.strategos.planificacionseguimiento.model.PryProyecto;
+import com.visiongc.app.strategos.organizaciones.model.OrganizacionStrategos;
+import com.visiongc.app.strategos.planes.StrategosPerspectivasService;
+import com.visiongc.app.strategos.planes.StrategosPlanesService;
+import com.visiongc.app.strategos.planes.model.IniciativaPerspectiva;
+import com.visiongc.app.strategos.planes.model.IniciativaPlan;
+import com.visiongc.app.strategos.planes.model.Perspectiva;
+import com.visiongc.app.strategos.planes.model.Plan;
 import com.visiongc.app.strategos.seriestiempo.model.SerieTiempo;
-import com.visiongc.app.strategos.util.PeriodoUtil;
 import com.visiongc.app.strategos.web.struts.reportes.forms.ReporteForm;
 import com.visiongc.commons.struts.action.VgcAction;
 import com.visiongc.commons.util.HistoricoType;
 import com.visiongc.commons.util.PaginaLista;
-import com.visiongc.commons.util.VgcFormatter;
 import com.visiongc.commons.web.NavigationBar;
 import com.visiongc.framework.web.struts.forms.FiltroForm;
 
@@ -80,6 +82,8 @@ public class ReporteProyectosAsociadosXls extends VgcAction{
 			}else {
 				reporte.setAno(null);
 			}
+			
+			Plan infoPlan = new Plan();
 			
 			Calendar fecha = Calendar.getInstance();
 	        Integer anoTemp = fecha.get(Calendar.YEAR);
@@ -145,7 +149,7 @@ public class ReporteProyectosAsociadosXls extends VgcAction{
 		        
 		        HSSFRow headerRow = sheet.createRow(columna++);
 		        
-		        String header = "Reporte Instrumentos Detallado";
+		        String header = "Listado de Proyectos por Instrumento";
 		        HSSFCell cell = headerRow.createCell(1);
 		        cell.setCellStyle(headerStyle);
 		        cell.setCellValue(header);
@@ -244,16 +248,68 @@ public class ReporteProyectosAsociadosXls extends VgcAction{
 	    			{
 	    				Iniciativa iniciativa = (Iniciativa)iter.next();
 	    				
+	    				StrategosMedicionesService strategosMedicionesService = StrategosServiceFactory.getInstance().openStrategosMedicionesService();
+	    				
+	    				Indicador indicador = (Indicador)strategosIniciativasService.load(Indicador.class, iniciativa.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()));
+	    				
+	    				List<Medicion> medicionesEjecutadas = strategosMedicionesService.getMedicionesPeriodo(indicador.getIndicadorId(), SerieTiempo.getSerieReal().getSerieId(), 0000, anoTemp, 000, mes);
+						List<Medicion> medicionesProgramadas = strategosMedicionesService.getMedicionesPeriodo(indicador.getIndicadorId(), SerieTiempo.getSerieProgramado().getSerieId(), 0000, anoTemp, 000, mes);
+	    				
 	    			    HSSFRow datapIni = sheet.createRow(columna++);
 		    			   
 		    			// datos iniciativa
 		    				datapIni.createCell(0).setCellValue(iniciativa.getNombre());
 		    				datapIni.createCell(1).setCellValue(iniciativa.getPorcentajeCompletadoFormateado());
 		    				datapIni.createCell(2).setCellValue(iniciativa.getFechaUltimaMedicion());			    							    				
-		    				datapIni.createCell(3).setCellValue("Estatus");
+		    				
+		    				//estatus
+							if (medicionesProgramadas.size() == 0) {
+								//EstatusIniciar
+								datapIni.createCell(3).setCellValue(messageResources.getMessage("estado.sin.iniciar"));
+							}else if(medicionesProgramadas.size() > 0 && medicionesEjecutadas.size() == 0) {
+								//EstatusIniciardesfasado
+								datapIni.createCell(3).setCellValue(messageResources.getMessage("estado.sin.iniciar.desfasada"));
+							}					
+							else if(iniciativa.getEstatusId() == 2 && iniciativa.getAlerta() != null && iniciativa.getAlerta().byteValue() == AlertaIndicador.getAlertaVerde().byteValue() && iniciativa.getPorcentajeCompletado() != null && iniciativa.getPorcentajeCompletado().doubleValue() < 100D) {
+								//EnEjecucionSinRetrasos
+								datapIni.createCell(3).setCellValue(messageResources.getMessage("estado.en.ejecucion.sin.retrasos"));
+							}else if(iniciativa.getEstatusId() == 2 && iniciativa.getAlerta().byteValue() == AlertaIndicador.getAlertaAmarilla().byteValue()) {
+								//EnEjecucionConRetrasosSuperables
+								datapIni.createCell(3).setCellValue(messageResources.getMessage("estado.en.ejecucion.con.retrasos.superables"));
+							}else if(iniciativa.getEstatusId() == 2 && iniciativa.getAlerta().byteValue() == AlertaIndicador.getAlertaRoja().byteValue()) {
+								//EnEjecucionConRetrasosSignificativos
+								datapIni.createCell(3).setCellValue(messageResources.getMessage("estado.en.ejecucion.con.retrasos.significativos"));
+							}else if(iniciativa.getEstatusId() == 5 && iniciativa.getPorcentajeCompletado() != null && iniciativa.getPorcentajeCompletado().doubleValue() >= 100D) {
+								//EstatusConcluidas
+								datapIni.createCell(3).setCellValue(messageResources.getMessage("estado.concluidas"));
+							}
+							else if(iniciativa.getEstatusId() == 3) {
+								//EstatusCancelado
+								datapIni.createCell(3).setCellValue("Cancelado");
+							}
+							else if(iniciativa.getEstatusId() == 4) {
+								//EstatusSuspendido
+								datapIni.createCell(3).setCellValue("Suspendido");
+							}else {
+								//EstatusIniciar
+								datapIni.createCell(3).setCellValue(messageResources.getMessage("estado.sin.iniciar"));
+							}
 		    				datapIni.createCell(4).setCellValue(iniciativa.getAnioFormulacion());
-		    				datapIni.createCell(5).setCellValue("Plan");
-		    				datapIni.createCell(6).setCellValue("Objetivo");		    					    			   	    			   
+		    				
+		    				infoPlan = obtenerPlan(iniciativa);		
+		        		    
+		        		    if(infoPlan != null)    		    			        		    	
+		        		    	datapIni.createCell(5).setCellValue(infoPlan.getNombre());
+		        		    else {			        		    	
+		        		    	datapIni.createCell(5).setCellValue("No hay plan asociado");
+		        		    }
+		        		    
+		        		    if(infoPlan != null)    		    
+		        		    	datapIni.createCell(6).setCellValue(obtenerObjetivo(iniciativa.getIniciativaId(), infoPlan.getPlanId()));
+		        		    	
+		        		    else if(obtenerObjetivo(iniciativa.getIniciativaId(), infoPlan.getPlanId()) != ""){
+		        		    	datapIni.createCell(6).setCellValue("No hay Objetivo descrito");			        		    	
+		        		    }  
 	    			}
 	    			sheet.createRow(columna++);	   
 	    		}
@@ -265,7 +321,7 @@ public class ReporteProyectosAsociadosXls extends VgcAction{
 		        SimpleDateFormat hourdateFormat = new SimpleDateFormat("HHmmss_ddMMyyyy");
 		       
 		        
-		        String archivo="InstrumentoDetallado_"+hourdateFormat.format(date)+".xls"; 
+		        String archivo="InstrumentoProyectosAsociados_"+hourdateFormat.format(date)+".xls"; 
 		        
 		        response.setContentType("application/octet-stream");
 		        response.setHeader("Content-Disposition","attachment;filename="+archivo);    
@@ -282,6 +338,7 @@ public class ReporteProyectosAsociadosXls extends VgcAction{
 				return mapping.findForward(forward);  
 		        
 			}			
+			// Todos los intrumentos
 			else {
 				
 				int columna = 1;
@@ -302,7 +359,7 @@ public class ReporteProyectosAsociadosXls extends VgcAction{
 		        
 		        HSSFRow headerRow = sheet.createRow(columna++);
 		        
-		        String header = "Reporte Instrumentos Detallado";
+		        String header = "Listado de Proyectos por Instrumento";
 		        HSSFCell cell = headerRow.createCell(1);
 		        cell.setCellStyle(headerStyle);
 		        cell.setCellValue(header);
@@ -403,7 +460,7 @@ public class ReporteProyectosAsociadosXls extends VgcAction{
 				        
 				        pagina = 0;
 					    atributoOrden = null;
-					    tipoOrden = null;
+					    tipoOrden = null;					    					    
 
 					    if (atributoOrden == null) 
 					    	atributoOrden = "nombreCorto";
@@ -439,20 +496,68 @@ public class ReporteProyectosAsociadosXls extends VgcAction{
 			    			for (Iterator<Iniciativa> iteri = paginaIniciativas.getLista().iterator(); iteri.hasNext();)
 			    			{    
 			    			   HSSFRow datapIni = sheet.createRow(columna++);
-			    			   
-			    				Iniciativa iniciativa = (Iniciativa)iteri.next();
+			    			   Iniciativa iniciativa = (Iniciativa)iteri.next();
+			    				
+			    				StrategosMedicionesService strategosMedicionesService = StrategosServiceFactory.getInstance().openStrategosMedicionesService();
+			    				
+			    				Indicador indicador = (Indicador)strategosIniciativasService.load(Indicador.class, iniciativa.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()));
+			    				
+			    				List<Medicion> medicionesEjecutadas = strategosMedicionesService.getMedicionesPeriodo(indicador.getIndicadorId(), SerieTiempo.getSerieReal().getSerieId(), 0000, anoTemp, 000, mes);
+								List<Medicion> medicionesProgramadas = strategosMedicionesService.getMedicionesPeriodo(indicador.getIndicadorId(), SerieTiempo.getSerieProgramado().getSerieId(), 0000, anoTemp, 000, mes);
 			    				
 			    				// datos iniciativa
 			    				datapIni.createCell(0).setCellValue(iniciativa.getNombre());
 			    				datapIni.createCell(1).setCellValue(iniciativa.getPorcentajeCompletadoFormateado());
-			    				datapIni.createCell(2).setCellValue(iniciativa.getFechaUltimaMedicion());			    							    				
-			    				datapIni.createCell(3).setCellValue("Estatus");
-			    				datapIni.createCell(4).setCellValue(iniciativa.getAnioFormulacion());
-			    				datapIni.createCell(5).setCellValue("Plan");
-			    				datapIni.createCell(6).setCellValue("Objetivo");
-		    							    				
+			    				datapIni.createCell(2).setCellValue(iniciativa.getFechaUltimaMedicion());			    							    							    				
 			    				
-			    			   		    			 			   	    			  
+			    				//estatus
+								if (medicionesProgramadas.size() == 0) {
+									//EstatusIniciar
+									datapIni.createCell(3).setCellValue(messageResources.getMessage("estado.sin.iniciar"));
+								}else if(medicionesProgramadas.size() > 0 && medicionesEjecutadas.size() == 0) {
+									//EstatusIniciardesfasado
+									datapIni.createCell(3).setCellValue(messageResources.getMessage("estado.sin.iniciar.desfasada"));
+								}					
+								else if(iniciativa.getEstatusId() == 2 && iniciativa.getAlerta() != null && iniciativa.getAlerta().byteValue() == AlertaIndicador.getAlertaVerde().byteValue() && iniciativa.getPorcentajeCompletado() != null && iniciativa.getPorcentajeCompletado().doubleValue() < 100D) {
+									//EnEjecucionSinRetrasos
+									datapIni.createCell(3).setCellValue(messageResources.getMessage("estado.en.ejecucion.sin.retrasos"));
+								}else if(iniciativa.getEstatusId() == 2 && iniciativa.getAlerta().byteValue() == AlertaIndicador.getAlertaAmarilla().byteValue()) {
+									//EnEjecucionConRetrasosSuperables
+									datapIni.createCell(3).setCellValue(messageResources.getMessage("estado.en.ejecucion.con.retrasos.superables"));
+								}else if(iniciativa.getEstatusId() == 2 && iniciativa.getAlerta().byteValue() == AlertaIndicador.getAlertaRoja().byteValue()) {
+									//EnEjecucionConRetrasosSignificativos
+									datapIni.createCell(3).setCellValue(messageResources.getMessage("estado.en.ejecucion.con.retrasos.significativos"));
+								}else if(iniciativa.getEstatusId() == 5 && iniciativa.getPorcentajeCompletado() != null && iniciativa.getPorcentajeCompletado().doubleValue() >= 100D) {
+									//EstatusConcluidas
+									datapIni.createCell(3).setCellValue(messageResources.getMessage("estado.concluidas"));
+								}
+								else if(iniciativa.getEstatusId() == 3) {
+									//EstatusCancelado
+									datapIni.createCell(3).setCellValue("Cancelado");
+								}
+								else if(iniciativa.getEstatusId() == 4) {
+									//EstatusSuspendido
+									datapIni.createCell(3).setCellValue("Suspendido");
+								}else {
+									//EstatusIniciar
+									datapIni.createCell(3).setCellValue(messageResources.getMessage("estado.sin.iniciar"));
+								}
+			    				datapIni.createCell(4).setCellValue(iniciativa.getAnioFormulacion());
+			    				
+			    				infoPlan = obtenerPlan(iniciativa);		
+			        		    
+			        		    if(infoPlan != null)    		    			        		    	
+			        		    	datapIni.createCell(5).setCellValue(infoPlan.getNombre());
+			        		    else {			        		    	
+			        		    	datapIni.createCell(5).setCellValue("No hay plan asociado");
+			        		    }
+			        		    
+			        		    if(infoPlan != null)    		    
+			        		    	datapIni.createCell(6).setCellValue(obtenerObjetivo(iniciativa.getIniciativaId(), infoPlan.getPlanId()));
+			        		    	
+			        		    else if(obtenerObjetivo(iniciativa.getIniciativaId(), infoPlan.getPlanId()) != ""){
+			        		    	datapIni.createCell(6).setCellValue("No hay Objetivo descrito");			        		    	
+			        		    }    			  
 			    			}
 			    			sheet.createRow(columna++);	
 			    		}			    		
@@ -464,7 +569,7 @@ public class ReporteProyectosAsociadosXls extends VgcAction{
 		        SimpleDateFormat hourdateFormat = new SimpleDateFormat("HHmmss_ddMMyyyy");
 		       
 		        
-		        String archivo="InstrumentoDetallado_"+hourdateFormat.format(date)+".xls"; 
+		        String archivo="InstrumentoProyectosAsociados_"+hourdateFormat.format(date)+".xls"; 
 		        
 		        response.setContentType("application/octet-stream");
 		        response.setHeader("Content-Disposition","attachment;filename="+archivo);    
@@ -484,6 +589,61 @@ public class ReporteProyectosAsociadosXls extends VgcAction{
 			}
 	        
 	}
+	
+	public Plan obtenerPlan(Iniciativa iniciativa) {		 
+		  ArrayList<Plan> listaPlanes = new ArrayList(); 
+		    if (iniciativa != null)
+		      {		        		        		        
+		        Set<IniciativaPlan> iniciativaPlanes = iniciativa.getIniciativaPlanes();
+		        StrategosPlanesService strategosPlanesService = StrategosServiceFactory.getInstance().openStrategosPlanesService();
+		        for (Iterator<IniciativaPlan> iter = iniciativaPlanes.iterator(); iter.hasNext();)
+		        {
+		          IniciativaPlan iniciativaPlan = (IniciativaPlan)iter.next();
+		          		         		          
+		            Plan plan = (Plan)strategosPlanesService.load(Plan.class, iniciativaPlan.getPk().getPlanId());
+		            OrganizacionStrategos organizacion = (OrganizacionStrategos)strategosPlanesService.load(OrganizacionStrategos.class, plan.getOrganizacionId());
+		            plan.setOrganizacion(organizacion);
+		            
+		            listaPlanes.add(plan);		            		            		          
+		        }
+		        strategosPlanesService.close();    		            		          		    
+		      }
+		    
+		    if (listaPlanes.size() > 0)
+		    {
+		      Plan plan = (Plan)listaPlanes.get(0);
+			    return plan;		     
+		    }
+			return null;
+		   
+	}
+	
+	 public String obtenerObjetivo(Long iniciativaId, Long planId) throws SQLException{
+		  
+			String objetivo="";
+			Long id=iniciativaId;
+			
+			if(id != null && planId != null){
+			
+				StrategosIniciativasService strategosIniciativasService = StrategosServiceFactory.getInstance().openStrategosIniciativasService();
+				
+				Iniciativa ini = (Iniciativa)strategosIniciativasService.load(Iniciativa.class, new Long(id));
+				
+				
+				if((ini.getIniciativaPerspectivas() != null) && (ini.getIniciativaPerspectivas().size() > 0)){
+					
+				  IniciativaPerspectiva iniciativaPerspectiva = (IniciativaPerspectiva)ini.getIniciativaPerspectivas().toArray()[0];
+		          StrategosPerspectivasService strategosPerspectivasService = StrategosServiceFactory.getInstance().openStrategosPerspectivasService();
+		          Perspectiva perspectiva = (Perspectiva)strategosPerspectivasService.load(Perspectiva.class, iniciativaPerspectiva.getPk().getPerspectivaId());
+		          
+		        	  objetivo= perspectiva.getNombre();
+		         
+				}
+				strategosIniciativasService.close();
+			}
+			
+			return objetivo;
+	  }
 	
 	public String obtenerEstatus(Byte estatus) {
 		

@@ -17,7 +17,8 @@
 	var _showFiltroInst = false;
 
 	function nuevoInstrumento(){		
-		abrirVentanaModal('<html:rewrite action="/instrumentos/crearInstrumento"/>', "InstrumentoAdd", 1130, 650);
+		//abrirVentanaModal('<html:rewrite action="/instrumentos/crearInstrumento"/>', "InstrumentoAdd", 1130, 650);
+		window.location.href='<html:rewrite action="/instrumentos/crearInstrumento" />';
 	}
 	
 	function modificarInstrumento(instrumentoId) 
@@ -29,7 +30,8 @@
 		}
 		var instrumentoId = document.gestionarInstrumentosForm.seleccionados.value;
 		
-		abrirVentanaModal('<html:rewrite action="/instrumentos/modificarInstrumento"/>?instrumentoId=' + instrumentoId , "InstrumentoEdit", 1130, 650);
+		//abrirVentanaModal('<html:rewrite action="/instrumentos/modificarInstrumento"/>?instrumentoId=' + instrumentoId , "InstrumentoEdit", 1130, 650);
+		window.location.href='<html:rewrite action="/instrumentos/modificarInstrumento" />?instrumentoId=' + instrumentoId;
 	}
 
 	function eliminarInstrumento(instrumentoId) 
@@ -91,7 +93,7 @@
 		if (anio != null)
 			url = url + '&anio=' + anio.value;
 		var estatus = document.getElementById('estatus');
-		if (estatus != null)
+		if (estatus != null && estatus.value != 0)
 			url = url + '&estatus=' + estatus.value;	
 		var convenio = document.getElementById('selectTipoConvenio');
 		if (convenio != null)
@@ -194,7 +196,7 @@
 	}
 	
 	function reporteProyectosAsociados(){
-url = '&instrumentoId=' + document.gestionarInstrumentosForm.seleccionados.value;
+		url = '&instrumentoId=' + document.gestionarInstrumentosForm.seleccionados.value;		
 		
 		var filtroNombre = document.getElementById('nombreCorto');
 		if (filtroNombre != null)
@@ -344,7 +346,7 @@ url = '&instrumentoId=' + document.gestionarInstrumentosForm.seleccionados.value
 						<vgcutil:message key="jsp.pagina.instrumentos.nombre" />
 					</vgcinterfaz:columnaVisorLista>
 									
-					<vgcinterfaz:columnaVisorLista nombre="tipo" width="150px">
+					<vgcinterfaz:columnaVisorLista nombre="tipo" width="400px">
 						<vgcutil:message key="jsp.pagina.instrumentos.tipo" />
 					</vgcinterfaz:columnaVisorLista>
 					
@@ -352,7 +354,7 @@ url = '&instrumentoId=' + document.gestionarInstrumentosForm.seleccionados.value
 						<vgcutil:message key="jsp.pagina.instrumentos.cooperante" />
 					</vgcinterfaz:columnaVisorLista>	
 							
-					<vgcinterfaz:columnaVisorLista nombre="fecha" width="100px" >
+					<vgcinterfaz:columnaVisorLista nombre="fecha" width="150px" >
 						<vgcutil:message key="jsp.pagina.instrumentos.fecha" />
 					</vgcinterfaz:columnaVisorLista>	
 					
@@ -360,15 +362,15 @@ url = '&instrumentoId=' + document.gestionarInstrumentosForm.seleccionados.value
 						<vgcutil:message key="jsp.pagina.instrumentos.fecha.terminacion" />
 					</vgcinterfaz:columnaVisorLista>
 					
-					<vgcinterfaz:columnaVisorLista nombre="descripcion" width="350px" >
+					<vgcinterfaz:columnaVisorLista nombre="descripcion" width="1020px" >
 						<vgcutil:message key="jsp.pagina.instrumentos.descripcion" />
 					</vgcinterfaz:columnaVisorLista>
 										
-					<vgcinterfaz:columnaVisorLista nombre="estatus" width="100px" >
+					<vgcinterfaz:columnaVisorLista nombre="estatus" width="200px" >
 						<vgcutil:message key="jsp.pagina.instrumentos.estatus" />
 					</vgcinterfaz:columnaVisorLista>
 					
-					<vgcinterfaz:columnaVisorLista nombre="unidad" width="200px" >
+					<vgcinterfaz:columnaVisorLista nombre="unidad" width="820px" >
 						<vgcutil:message key="jsp.pagina.instrumentos.unidad" />
 					</vgcinterfaz:columnaVisorLista>										
 														

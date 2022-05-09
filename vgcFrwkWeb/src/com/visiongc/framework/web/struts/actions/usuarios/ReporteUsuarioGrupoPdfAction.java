@@ -99,7 +99,7 @@ public class ReporteUsuarioGrupoPdfAction extends VgcReporteBasicoAction
 			
 		 documento.add(lineaEnBlanco(fuente));
 		 
-		 usuarios= usuariosService.getUsuarios(1, atributoOrden, tipoOrden, true, filtros).getLista();
+		 usuarios= usuariosService.getUsuarios(0, atributoOrden, tipoOrden, true, filtros).getLista();
 		 
 		 if(usuarios == null || usuarios.size() == 0) {
 			 
@@ -193,7 +193,7 @@ public class ReporteUsuarioGrupoPdfAction extends VgcReporteBasicoAction
 		 
 	 }else {//todos los grupos
 		 
-		 PaginaLista paginaGrupos = usuariosService.getGrupos(1, "grupo", "ASC");
+		 PaginaLista paginaGrupos = usuariosService.getGrupos(0, "grupo", "ASC");
 		    
 		 if(paginaGrupos != null && paginaGrupos.getLista().size() > 0) {   	
 		   	grupos = paginaGrupos.getLista();	
@@ -220,7 +220,7 @@ public class ReporteUsuarioGrupoPdfAction extends VgcReporteBasicoAction
 				
 			 documento.add(lineaEnBlanco(fuente));
 			 
-			 usuarios= usuariosService.getUsuarios(1, atributoOrden, tipoOrden, true, filtros).getLista();
+			 usuarios= usuariosService.getUsuarios(0, atributoOrden, tipoOrden, true, filtros).getLista();
 			 
 			 if(usuarios == null || usuarios.size() == 0) {
 				 
