@@ -125,44 +125,7 @@ public class ReporteIniciativaXls extends VgcAction {
 					.getLista();
 
 			MessageResources messageResources = getResources(request);
-
-			Object[][] data = new Object[iniciativas.size() + 1][8];
-
-			data[0][0] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.entidad");
-			data[0][1] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa");
-			data[0][2] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje");
-			data[0][3] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha");
-			data[0][4] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable");
-			data[0][5] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio");
-			data[0][6] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo");
-			data[0][7] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo");
-
-			if (iniciativas.size() > 0) {
-				for (Iterator<Iniciativa> iter = iniciativas.iterator(); iter.hasNext();) {
-					Iniciativa iniciativa = (Iniciativa) iter.next();
-
-					data[x][0] = iniciativa.getOrganizacion().getNombre();
-					data[x][1] = iniciativa.getNombre();
-					data[x][2] = iniciativa.getPorcentajeCompletadoFormateado();
-					data[x][3] = iniciativa.getFechaUltimaMedicion();
-					if (iniciativa.getResponsableLograrMeta() == null) {
-						data[x][4] = ("");
-					} else {
-						data[x][4] = iniciativa.getResponsableLograrMeta().getNombre();
-					}
-					data[x][5] = iniciativa.getAnioFormulacion();
-					data[x][6] = obtenerObjetivo(iniciativa);
-
-					if (iniciativa.getTipoProyecto() == null) {
-						data[x][7] = ("");
-					} else {
-						data[x][7] = iniciativa.getTipoProyecto().getNombre();
-					}
-
-					x = x + 1;
-				}
-			}
-
+			
 			HSSFWorkbook workbook = new HSSFWorkbook();
 			HSSFSheet sheet = workbook.createSheet();
 			workbook.setSheetName(0, "Hoja excel");
@@ -183,34 +146,56 @@ public class ReporteIniciativaXls extends VgcAction {
 			cell.setCellStyle(headerStyle);
 			cell.setCellValue(header);
 
-			for (int i = 0; i < data.length; ++i) {
-				HSSFRow dataRow = sheet.createRow(i + 1);
+			HSSFRow dataRow = sheet.createRow(1);			
+			dataRow.createCell(0)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.entidad"));
+			dataRow.createCell(1)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa"));
+			dataRow.createCell(2)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje"));
+			dataRow.createCell(3)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha"));
+			dataRow.createCell(4)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable"));
+			dataRow.createCell(5)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio"));
+			dataRow.createCell(6)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo"));
+			dataRow.createCell(7)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));				
 
-				Object[] d = data[i];
-				String orgName = (String) d[0];
-				String iniciativaName = (String) d[1];
-				String porcentaje = (String) d[2];
-				String fecha = (String) d[3];
-				String responsable = (String) d[4];
-				String anio = (String) d[5];
-				String objetivo = (String) d[6];
-				String tipo = (String) d[7];
+			if (iniciativas.size() > 0) {
+				for (Iterator<Iniciativa> iter = iniciativas.iterator(); iter.hasNext();) {
+					Iniciativa iniciativa = (Iniciativa) iter.next();
+					
+					HSSFRow dataRow1 = sheet.createRow(x + 1);
+					dataRow1.createCell(1).setCellValue(iniciativa.getOrganizacion().getNombre());
+					dataRow1.createCell(2).setCellValue(iniciativa.getNombre());
+					dataRow1.createCell(3).setCellValue(iniciativa.getPorcentajeCompletadoFormateado());
+					dataRow1.createCell(4).setCellValue(iniciativa.getFechaUltimaMedicion());
+					if (iniciativa.getResponsableLograrMeta() == null) {
+						dataRow1.createCell(5).setCellValue("");
 
-				dataRow.createCell(0).setCellValue(orgName);
-				dataRow.createCell(1).setCellValue(iniciativaName);
-				dataRow.createCell(2).setCellValue(porcentaje);
-				dataRow.createCell(3).setCellValue(fecha);
-				dataRow.createCell(4).setCellValue(responsable);
-				dataRow.createCell(5).setCellValue(anio);
-				dataRow.createCell(6).setCellValue(objetivo);
-				dataRow.createCell(7).setCellValue(tipo);
+					} else {
+						dataRow1.createCell(5).setCellValue(iniciativa.getResponsableLograrMeta().getNombre());
+
+					}
+
+					dataRow1.createCell(6).setCellValue(iniciativa.getAnioFormulacion());
+					dataRow1.createCell(7).setCellValue(obtenerObjetivo(iniciativa));
+
+					if (iniciativa.getTipoProyecto() == null) {
+						dataRow1.createCell(8).setCellValue("");
+					} else {
+						dataRow1.createCell(8).setCellValue(iniciativa.getTipoProyecto().getNombre());
+					}
+
+					x = x + 1;
+				}
 			}
-
-			HSSFRow dataRow = sheet.createRow(1 + data.length);
-
+			
 			Date date = new Date();
 			SimpleDateFormat hourdateFormat = new SimpleDateFormat("HHmmss_ddMMyyyy");
-
 			String archivo = "IniciativasResumido_" + hourdateFormat.format(date) + ".xls";
 
 			response.setContentType("application/octet-stream");
@@ -272,7 +257,7 @@ public class ReporteIniciativaXls extends VgcAction {
 					.getLista();
 
 			MessageResources messageResources = getResources(request);
-			
+
 			HSSFWorkbook workbook = new HSSFWorkbook();
 			HSSFSheet sheet = workbook.createSheet();
 			workbook.setSheetName(0, "Hoja excel");
@@ -293,43 +278,28 @@ public class ReporteIniciativaXls extends VgcAction {
 			cell.setCellStyle(headerStyle);
 			cell.setCellValue(header);
 
-			Object[][] data = new Object[iniciativas.size() + 1][8];
-
-			data[0][0] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.entidad");
-			data[0][1] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa");
-			data[0][2] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje");
-			data[0][3] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha");
-			data[0][4] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable");
-			data[0][5] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio");
-			data[0][6] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo");
-			data[0][7] = messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo");
-			
-			
+			HSSFRow dataRow = sheet.createRow(1);			
+			dataRow.createCell(0)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.entidad"));
+			dataRow.createCell(1)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa"));
+			dataRow.createCell(2)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje"));
+			dataRow.createCell(3)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha"));
+			dataRow.createCell(4)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable"));
+			dataRow.createCell(5)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio"));
+			dataRow.createCell(6)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo"));
+			dataRow.createCell(7)
+					.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));				
 
 			if (iniciativas.size() > 0) {
-				
-				HSSFRow dataRow = sheet.createRow(1);			
-				dataRow.createCell(0)
-						.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.entidad"));
-				dataRow.createCell(1).setCellValue(
-						messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa"));
-				dataRow.createCell(2).setCellValue(
-						messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje"));
-				dataRow.createCell(3)
-						.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha"));
-				dataRow.createCell(4).setCellValue(
-						messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable"));
-				dataRow.createCell(5)
-						.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio"));
-				dataRow.createCell(6)
-						.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo"));
-				dataRow.createCell(7)
-						.setCellValue(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));				
-				
+
 				for (Iterator<Iniciativa> iter = iniciativas.iterator(); iter.hasNext();) {
-					
-					
-					
+
 					Iniciativa iniciativa = (Iniciativa) iter.next();
 
 					HSSFRow dataRow1 = sheet.createRow(x + 1);
@@ -361,6 +331,7 @@ public class ReporteIniciativaXls extends VgcAction {
 			if (organizacionesSub.size() > 0 || organizacionesSub != null) {
 				for (Iterator<OrganizacionStrategos> iter = organizacionesSub.iterator(); iter.hasNext();) {
 					OrganizacionStrategos organizacion = (OrganizacionStrategos) iter.next();
+										
 					filtros.put("organizacionId", organizacion.getOrganizacionId().toString());
 					if (reporte.getFiltro().getHistorico() != null && reporte.getFiltro().getHistorico()
 							.byteValue() == HistoricoType.getFiltroHistoricoNoMarcado())
@@ -371,7 +342,7 @@ public class ReporteIniciativaXls extends VgcAction {
 					if (reporte.getFiltro().getNombre() != null)
 						filtros.put("nombre", reporte.getFiltro().getNombre());
 					if (!tipoI.equals("0")) {
-						filtros.put("tipoId", tipoI);
+						filtro.put("tipoId", tipoI);
 					}
 					if (todos.equals("false")) {
 						filtros.put("anio", ano);
@@ -379,10 +350,11 @@ public class ReporteIniciativaXls extends VgcAction {
 
 					List<Iniciativa> iniciativaSub = iniciativaservice
 							.getIniciativas(0, 0, "nombre", "ASC", true, filtros).getLista();
-					
+
 					if (iniciativas.size() > 0) {
 						for (Iterator<Iniciativa> iter1 = iniciativas.iterator(); iter1.hasNext();) {
 							Iniciativa iniciativa = (Iniciativa) iter1.next();
+							
 							HSSFRow dataRow1 = sheet.createRow(x + 1);
 							dataRow1.createCell(1).setCellValue(iniciativa.getOrganizacion().getNombre());
 							dataRow1.createCell(2).setCellValue(iniciativa.getNombre());
@@ -409,34 +381,7 @@ public class ReporteIniciativaXls extends VgcAction {
 						}
 					}
 				}
-			}
-			
-
-			for (int i = 0; i < data.length; ++i) {
-				HSSFRow dataRow = sheet.createRow(i + 1);
-
-				Object[] d = data[i];
-				String orgName = (String) d[0];
-				String iniciativaName = (String) d[1];
-				String porcentaje = (String) d[2];
-				String fecha = (String) d[3];
-				String responsable = (String) d[4];
-				String anio = (String) d[5];
-				String objetivo = (String) d[6];
-				String tipo = (String) d[7];
-
-				dataRow.createCell(0).setCellValue(orgName);
-				dataRow.createCell(1).setCellValue(iniciativaName);
-				dataRow.createCell(2).setCellValue(porcentaje);
-				dataRow.createCell(3).setCellValue(fecha);
-				dataRow.createCell(4).setCellValue(responsable);
-				dataRow.createCell(5).setCellValue(anio);
-				dataRow.createCell(6).setCellValue(objetivo);
-				dataRow.createCell(7).setCellValue(tipo);
-			}
-
-			HSSFRow dataRow = sheet.createRow(1 + data.length);
-
+			}			
 			Date date = new Date();
 			SimpleDateFormat hourdateFormat = new SimpleDateFormat("HHmmss_ddMMyyyy");
 
@@ -532,6 +477,14 @@ public class ReporteIniciativaXls extends VgcAction {
 						filtros.put("historicoDate", "IS NOT NULL");
 					if (reporte.getFiltro().getNombre() != null)
 						filtros.put("nombre", reporte.getFiltro().getNombre());
+					if (reporte.getFiltro().getNombre() != null)
+						filtros.put("nombre", reporte.getFiltro().getNombre());
+					if (!tipoI.equals("0")) {
+						filtros.put("tipoId", tipoI);
+					}
+					if (todos.equals("false")) {
+						filtros.put("anio", ano);
+					}
 
 					List<Iniciativa> iniciativas = iniciativaservice
 							.getIniciativas(0, 0, "nombre", "ASC", true, filtros).getLista();

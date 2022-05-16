@@ -238,7 +238,7 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 
 				documento.add(lineaEnBlanco(getConfiguracionPagina(request).getFuente()));
 			}
-
+			
 			filtros.put("organizacionId",
 					((OrganizacionStrategos) request.getSession().getAttribute("organizacion")).getOrganizacionId());
 			if (reporte.getFiltro().getHistorico() != null
@@ -258,46 +258,41 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 				filtros.put("anio", ano);
 			}
 
+			List<Iniciativa> iniciativas = iniciativaservice.getIniciativas(0, 0, "nombre", "ASC", true, filtros)
+					.getLista();
+			
 			TablaPDF tabla = null;
 			tabla = new TablaPDF(getConfiguracionPagina(request), request);
-			int[] columnas = new int[8];
-			columnas[0] = 21;
-			columnas[1] = 27;
+			int[] columnas = new int[7];
+			columnas[0] = 27;
+			columnas[1] = 10;
 			columnas[2] = 10;
-			columnas[3] = 10;
-			columnas[4] = 20;
-			columnas[5] = 10;
-			columnas[6] = 20;
-			columnas[7] = 10;
+			columnas[3] = 20;
+			columnas[4] = 10;
+			columnas[5] = 20;
+			columnas[6] = 10;
 
 			tabla.setAmplitudTabla(100);
 			tabla.crearTabla(columnas);
 
 			tabla.setAlineacionHorizontal(1);
-
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.entidad"));
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa"));
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje"));
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha"));
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable"));
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio"));
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo"));
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));
-
-			tabla.setDefaultAlineacionHorizontal();
-
-			List<Iniciativa> iniciativas = iniciativaservice.getIniciativas(0, 0, "nombre", "ASC", true, filtros)
-					.getLista();
-
+									
 			if (iniciativas.size() > 0) {
-				for (Iterator<Iniciativa> iter = iniciativas.iterator(); iter.hasNext();) {
+				
+				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa"));
+				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje"));
+				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha"));
+				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable"));
+				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio"));
+				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo"));
+				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));
 
+				tabla.setDefaultAlineacionHorizontal();
+				for (Iterator<Iniciativa> iter = iniciativas.iterator(); iter.hasNext();) {
 					Iniciativa iniciativa = (Iniciativa) iter.next();
-					tabla.setAlineacionHorizontal(0);
-					dibujarTabla( iniciativa, null, tabla,  request, documento, false, true, false);					
+					dibujarTabla( iniciativa,null, tabla,  request, documento, true, false, false);
 				}
-				documento.add(tabla.getTabla());
-			} else {
+			}else {
 				documento.add(lineaEnBlanco(fuente));
 
 				fuente.setColor(0, 0, 255);
@@ -306,16 +301,15 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 				texto.setIndentationLeft(50);
 				documento.add(texto);
 				fuente.setColor(0, 0, 0);
-
 				documento.add(lineaEnBlanco(fuente));
-			}
-
+			}	
+			documento.add(tabla.getTabla());
+						
 			// suborganizaciones
-
 			if (organizacionesSub.size() > 0 || organizacionesSub != null) {
 				for (Iterator<OrganizacionStrategos> iter = organizacionesSub.iterator(); iter.hasNext();) {
 					OrganizacionStrategos organizacion = (OrganizacionStrategos) iter.next();
-
+										
 					if (organizacion != null) {
 
 						Font font = new Font(getConfiguracionPagina(request).getCodigoFuente());
@@ -346,20 +340,48 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 					if (todos.equals("false")) {
 						filtros.put("anio", ano);
 					}
-
-					int x = 0;
+					
 					List<Iniciativa> iniciativasSub = iniciativaservice
 							.getIniciativas(0, 0, "nombre", "ASC", true, filtros).getLista();
 
 					if (iniciativasSub.size() > 0) {
+						
+						TablaPDF tabla1 = null;
+						tabla1 = new TablaPDF(getConfiguracionPagina(request), request);
+						int[] columnas1 = new int[8];
+						columnas1[0] = 21;
+						columnas1[1] = 27;
+						columnas1[2] = 10;
+						columnas1[3] = 10;
+						columnas1[4] = 20;
+						columnas1[5] = 10;
+						columnas1[6] = 20;
+						columnas1[7] = 10;
+
+						tabla1.setAmplitudTabla(100);
+						tabla1.crearTabla(columnas1);
+
+						tabla1.setAlineacionHorizontal(1);
+
+						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.entidad"));
+						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa"));
+						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje"));
+						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha"));
+						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable"));
+						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio"));
+						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo"));
+						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));
+
+						tabla1.setDefaultAlineacionHorizontal();
 						for (Iterator<Iniciativa> iter1 = iniciativasSub.iterator(); iter1.hasNext();) {
 
 							Iniciativa iniciativa = (Iniciativa) iter1.next();
-							tabla.setAlineacionHorizontal(0);
-							dibujarTabla( iniciativa,null, tabla,  request, documento, false, true, false);								
-						}
-						documento.add(tabla.getTabla());
-					} else {
+							tabla1.setAlineacionHorizontal(0);							
+							dibujarTabla( iniciativa,null, tabla1,  request, documento, false, true, false);													
+						}	
+						documento.add(tabla1.getTabla());
+					}					
+					else {
 						documento.add(lineaEnBlanco(fuente));
 
 						fuente.setColor(0, 0, 255);
@@ -370,10 +392,9 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 						fuente.setColor(0, 0, 0);
 
 						documento.add(lineaEnBlanco(fuente));
-					}
-				}
+					}					
+				}									
 			}
-
 		}
 		// todas las organizaciones
 		else {
@@ -396,40 +417,14 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 				
 
 				Font fuente = getConfiguracionPagina(request).getFuente();
-				MessageResources messageResources = getResources(request);
-				TablaPDF tabla = null;
-				tabla = new TablaPDF(getConfiguracionPagina(request), request);
-				int[] columnas = new int[9];
-				columnas[0] = 21;
-				columnas[1] = 15;
-				columnas[2] = 25;
-				columnas[3] = 7;
-				columnas[4] = 7;
-				columnas[5] = 15;
-				columnas[6] = 7;
-				columnas[7] = 15;
-				columnas[8] = 10;
-
-				tabla.setAmplitudTabla(100);
-				tabla.crearTabla(columnas);
-
-				tabla.setAlineacionHorizontal(1);
-
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.ruta"));
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.entidad"));
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa"));
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje"));
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha"));
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable"));
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio"));
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo"));
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));
-
-				tabla.setDefaultAlineacionHorizontal();
+				MessageResources messageResources = getResources(request);				
 
 				for (Iterator<OrganizacionStrategos> iter = organizaciones.iterator(); iter.hasNext();) {
 
 					OrganizacionStrategos organizacion = (OrganizacionStrategos) iter.next();
+					
+					
+					
 					if (organizacion != null) {			
 						Font font = new Font(getConfiguracionPagina(request).getCodigoFuente());
 
@@ -463,14 +458,43 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 							.getIniciativas(0, 0, "nombre", "ASC", true, filtros).getLista();
 
 					if (iniciativas.size() > 0) {
+						
+						TablaPDF tabla = null;
+						tabla = new TablaPDF(getConfiguracionPagina(request), request);
+						int[] columnas = new int[9];
+						columnas[0] = 21;
+						columnas[1] = 15;
+						columnas[2] = 25;
+						columnas[3] = 7;
+						columnas[4] = 7;
+						columnas[5] = 15;
+						columnas[6] = 7;
+						columnas[7] = 15;
+						columnas[8] = 10;
 
+						tabla.setAmplitudTabla(100);
+						tabla.crearTabla(columnas);
+
+						tabla.setAlineacionHorizontal(1);
+
+						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.ruta"));
+						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.entidad"));
+						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa"));
+						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje"));
+						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha"));
+						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable"));
+						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio"));
+						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo"));
+						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));
+						
+						tabla.setDefaultAlineacionHorizontal();
 						
 						for (Iterator<Iniciativa> iter1 = iniciativas.iterator(); iter1.hasNext();) {
 							Iniciativa iniciativa = (Iniciativa) iter1.next();
-							tabla.setAlineacionHorizontal(0);
+							tabla.setAlineacionHorizontal(0);							
 							dibujarTabla( iniciativa,organizacion, tabla,  request, documento, false, false, true);	
 						}
-						
+						documento.add(tabla.getTabla());
 					} else {
 						documento.add(lineaEnBlanco(fuente));
 
@@ -481,11 +505,8 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 						documento.add(texto);
 						fuente.setColor(0, 0, 0);
 						documento.add(lineaEnBlanco(fuente));
-
-					}
-					
-				}		
-				documento.add(tabla.getTabla());
+					}					
+				}						
 			}
 		}
 
