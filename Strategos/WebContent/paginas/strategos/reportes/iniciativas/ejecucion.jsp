@@ -199,7 +199,7 @@
 							<logic:notEmpty name="reporteForm" property="planId">
 								<tr>
 									<td align="left"><vgcutil:message key="jsp.reportes.iniciativa.ejecucion.plantilla.plan" /> : </td>
-									<td colspan="3"><b><bean:write name="reporteForm" property="nombrePlan" /></b></td> 
+									<td colspan="1"><b><bean:write name="reporteForm" property="nombrePlan" /></b></td> 
 								</tr>
 							</logic:notEmpty>
 							
@@ -278,7 +278,7 @@
 								</td>
 								
 							</tr>												
-							<%-- 														
+																				
 							<tr>
 								<td colspan="3">
 									&nbsp;
@@ -295,7 +295,7 @@
 								
 								</td>
 							</tr>
-							--%>							
+														
 														
 							<tr>
 								<td colspan="3">
@@ -342,7 +342,7 @@
 							<!-- Organizacion Seleccionada-->
 							<tr>
 								<td align="left"><vgcutil:message key="jsp.reportes.iniciativa.ejecucion.plantilla.organizacion" /> : </td>
-								<td colspan="3"><b><bean:write name="reporteForm" property="nombreOrganizacion" /></b></td>
+								<td colspan="1"><b><bean:write name="reporteForm" property="nombreOrganizacion" /></b></td>
 							</tr>
 							<!-- Plan Seleccionado -->
 							<logic:notEmpty name="reporteForm" property="planId">
@@ -432,7 +432,7 @@
 							<!-- Organizacion Seleccionada-->
 							<tr>
 								<td align="left"><vgcutil:message key="jsp.reportes.iniciativa.ejecucion.plantilla.organizacion" /> : </td>
-								<td colspan="15" width="300"><b><bean:write name="reporteForm" property="nombreOrganizacion" /></b></td>
+								<td colspan="1" width="300"><b><bean:write name="reporteForm" property="nombreOrganizacion" /></b></td>
 							</tr>
 							<!-- Plan Seleccionado -->
 							<logic:notEmpty name="reporteForm" property="planId">
