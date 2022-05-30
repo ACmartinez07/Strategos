@@ -797,7 +797,11 @@ public class ReporteForm extends EditarObjetoForm
 	{
 		return new Byte(AlcanceStatus.ALCANCE_SUB_ORGANIZACION);
 	}
-
+	
+	public Byte getAlcanceObjetivoOrganizacion() 
+	{
+		return new Byte(AlcanceStatus.ALCANCE_OBJETIVO_ORGANIZACION);
+	}
 
 	public Byte getPeriodoAlCorte() 
 	{
@@ -1106,6 +1110,7 @@ public class ReporteForm extends EditarObjetoForm
 		private static final byte ALCANCE_PLAN = 2;
 		private static final byte ALCANCE_ORGANIZACION = 3;
 		private static final byte ALCANCE_SUB_ORGANIZACION = 4;
+		private static final byte ALCANCE_OBJETIVO_ORGANIZACION = 5;
 		
 		public static Byte getAlcanceStatus(Byte alcance)
 		{
@@ -1117,6 +1122,8 @@ public class ReporteForm extends EditarObjetoForm
 				return new Byte(ALCANCE_ORGANIZACION);
 			else if (alcance == ALCANCE_SUB_ORGANIZACION)
 				return new Byte(ALCANCE_SUB_ORGANIZACION);
+			else if (alcance == ALCANCE_OBJETIVO_ORGANIZACION)
+				return new Byte(ALCANCE_OBJETIVO_ORGANIZACION);
 			else
 				return null;
 		}

@@ -93,12 +93,29 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 		MessageResources mensajes = getResources(request);
 		ReporteForm reporte = new ReporteForm();
 		reporte.clear();
+		Font fuente = getConfiguracionPagina(request).getFuente();
+		Font fontTitulos = new Font(getConfiguracionPagina(request).getCodigoFuente());
+		fontTitulos.setSize(12);
+		fontTitulos.setStyle(Font.BOLD);
 
 		String alcance = (request.getParameter("alcance"));
 		String orgId = (request.getParameter("organizacionId"));
 		String tipo = (request.getParameter("tipo"));
 		String ano = (request.getParameter("ano"));
 		String todos = (request.getParameter("todos"));
+		String estatus = (request.getParameter("estatus"));
+		
+		TablaPDF tablaFiltros = null;
+		tablaFiltros = new TablaPDF(getConfiguracionPagina(request), request);
+		
+		Paragraph textoFiltros = new Paragraph("Filtros del reporte: ", fontTitulos);
+		documento.add(textoFiltros);
+		documento.add(lineaEnBlanco(fuente));
+		crearTablaFiltros(tablaFiltros, mensajes, documento, request, todos, tipo, estatus, ano, fuente);
+		documento.add(tablaFiltros.getTabla());
+		
+		documento.add(lineaEnBlanco(fuente));
+		documento.add(lineaEnBlanco(fuente));
 
 		Map<String, Object> filtros = new HashMap<String, Object>();
 		Paragraph texto;
@@ -125,7 +142,7 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 				font.setSize(VgcFormatoReporte.TAMANO_FUENTE_TITULO);
 				font.setStyle(Font.NORMAL);
 
-				Paragraph textoOrg = new Paragraph("Organización: " + org.getNombre(), font);
+				Paragraph textoOrg = new Paragraph("Organización: " + org.getNombre(), fontTitulos);
 				textoOrg.setAlignment(Element.ALIGN_LEFT);
 				documento.add(textoOrg);
 
@@ -167,42 +184,24 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 			if (todos.equals("false")) {
 				filtros.put("anio", ano);
 			}
-
-			Font fuente = getConfiguracionPagina(request).getFuente();
+			if (reporte.getEstatus() != null)
+				filtros.put("estatus", reporte.getEstatus());
+			
 			MessageResources messageResources = getResources(request);
 
 			TablaPDF tabla = null;
 			tabla = new TablaPDF(getConfiguracionPagina(request), request);
-			int[] columnas = new int[7];
+			
+			crearTablaTitulo(tabla, messageResources);
 
 			List<Iniciativa> iniciativas = iniciativaservice.getIniciativas(0, 0, "nombre", "ASC", true, filtros)
 					.getLista();
 
-			columnas[0] = 27;
-			columnas[1] = 10;
-			columnas[2] = 10;
-			columnas[3] = 20;
-			columnas[4] = 10;
-			columnas[5] = 20;
-			columnas[6] = 10;
-
-			tabla.setAmplitudTabla(100);
-			tabla.crearTabla(columnas);
-
-			tabla.setAlineacionHorizontal(1);
-
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa"));
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje"));
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha"));
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable"));
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio"));
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo"));
-			tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));
 
 			if (iniciativas.size() > 0) {
 				for (Iterator<Iniciativa> iter = iniciativas.iterator(); iter.hasNext();) {
 					Iniciativa iniciativa = (Iniciativa) iter.next();
-					dibujarTabla( iniciativa, null, tabla,  request, documento, true, false, false);
+					dibujarTabla(iniciativa, null, tabla, request, documento);
 				}
 				documento.add(tabla.getTabla());
 			}
@@ -217,8 +216,7 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 			List<OrganizacionStrategos> organizacionesSub = organizacionservice.getOrganizacionHijas(
 					((OrganizacionStrategos) request.getSession().getAttribute("organizacion")).getOrganizacionId(),
 					true);
-
-			Font fuente = getConfiguracionPagina(request).getFuente();
+			
 			MessageResources messageResources = getResources(request);
 
 			OrganizacionStrategos org = (OrganizacionStrategos) organizacionservice.load(OrganizacionStrategos.class,
@@ -232,13 +230,13 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 				font.setSize(VgcFormatoReporte.TAMANO_FUENTE_TITULO);
 				font.setStyle(Font.NORMAL);
 
-				Paragraph textoOrg = new Paragraph("Organización: " + org.getNombre(), font);
+				Paragraph textoOrg = new Paragraph("Organización: " + org.getNombre(), fontTitulos);
 				textoOrg.setAlignment(Element.ALIGN_LEFT);
 				documento.add(textoOrg);
 
 				documento.add(lineaEnBlanco(getConfiguracionPagina(request).getFuente()));
 			}
-			
+
 			filtros.put("organizacionId",
 					((OrganizacionStrategos) request.getSession().getAttribute("organizacion")).getOrganizacionId());
 			if (reporte.getFiltro().getHistorico() != null
@@ -257,59 +255,43 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 			if (todos.equals("false")) {
 				filtros.put("anio", ano);
 			}
+			if (reporte.getEstatus() != null)
+				filtros.put("estatus", reporte.getEstatus());
 
 			List<Iniciativa> iniciativas = iniciativaservice.getIniciativas(0, 0, "nombre", "ASC", true, filtros)
 					.getLista();
-			
+
 			TablaPDF tabla = null;
 			tabla = new TablaPDF(getConfiguracionPagina(request), request);
-			int[] columnas = new int[7];
-			columnas[0] = 27;
-			columnas[1] = 10;
-			columnas[2] = 10;
-			columnas[3] = 20;
-			columnas[4] = 10;
-			columnas[5] = 20;
-			columnas[6] = 10;
+			
 
-			tabla.setAmplitudTabla(100);
-			tabla.crearTabla(columnas);
-
-			tabla.setAlineacionHorizontal(1);
-									
 			if (iniciativas.size() > 0) {
 				
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa"));
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje"));
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha"));
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable"));
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio"));
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo"));
-				tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));
+				crearTablaTitulo(tabla, messageResources);
 
-				tabla.setDefaultAlineacionHorizontal();
 				for (Iterator<Iniciativa> iter = iniciativas.iterator(); iter.hasNext();) {
 					Iniciativa iniciativa = (Iniciativa) iter.next();
-					dibujarTabla( iniciativa,null, tabla,  request, documento, true, false, false);
+					dibujarTabla(iniciativa, null, tabla, request, documento);
 				}
-			}else {
+				documento.add(tabla.getTabla());
+			} else {
 				documento.add(lineaEnBlanco(fuente));
 
 				fuente.setColor(0, 0, 255);
 				texto = new Paragraph(mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.noiniciativas",
-						"INICIATIVAS", "PERSPECTIVA"), fuente);
+						"INICIATIVAS", "ORGANIZACIÓN"), fuente);
 				texto.setIndentationLeft(50);
 				documento.add(texto);
 				fuente.setColor(0, 0, 0);
 				documento.add(lineaEnBlanco(fuente));
-			}	
-			documento.add(tabla.getTabla());
-						
+			}
+			
+
 			// suborganizaciones
 			if (organizacionesSub.size() > 0 || organizacionesSub != null) {
 				for (Iterator<OrganizacionStrategos> iter = organizacionesSub.iterator(); iter.hasNext();) {
 					OrganizacionStrategos organizacion = (OrganizacionStrategos) iter.next();
-										
+
 					if (organizacion != null) {
 
 						Font font = new Font(getConfiguracionPagina(request).getCodigoFuente());
@@ -318,7 +300,7 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 						font.setSize(VgcFormatoReporte.TAMANO_FUENTE_TITULO);
 						font.setStyle(Font.NORMAL);
 
-						Paragraph textoOrg = new Paragraph("Organización: " + organizacion.getNombre(), font);
+						Paragraph textoOrg = new Paragraph("Organización: " + organizacion.getNombre(), fontTitulos);
 						textoOrg.setAlignment(Element.ALIGN_LEFT);
 						documento.add(textoOrg);
 
@@ -340,60 +322,38 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 					if (todos.equals("false")) {
 						filtros.put("anio", ano);
 					}
-					
+					if (reporte.getEstatus() != null)
+						filtros.put("estatus", reporte.getEstatus());
+
 					List<Iniciativa> iniciativasSub = iniciativaservice
 							.getIniciativas(0, 0, "nombre", "ASC", true, filtros).getLista();
 
 					if (iniciativasSub.size() > 0) {
-						
+
 						TablaPDF tabla1 = null;
 						tabla1 = new TablaPDF(getConfiguracionPagina(request), request);
-						int[] columnas1 = new int[8];
-						columnas1[0] = 21;
-						columnas1[1] = 27;
-						columnas1[2] = 10;
-						columnas1[3] = 10;
-						columnas1[4] = 20;
-						columnas1[5] = 10;
-						columnas1[6] = 20;
-						columnas1[7] = 10;
-
-						tabla1.setAmplitudTabla(100);
-						tabla1.crearTabla(columnas1);
-
-						tabla1.setAlineacionHorizontal(1);
-
-						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.entidad"));
-						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa"));
-						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje"));
-						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha"));
-						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable"));
-						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio"));
-						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo"));
-						tabla1.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));
-
-						tabla1.setDefaultAlineacionHorizontal();
+						
+						crearTablaTitulo(tabla1, messageResources);
+						
 						for (Iterator<Iniciativa> iter1 = iniciativasSub.iterator(); iter1.hasNext();) {
 
-							Iniciativa iniciativa = (Iniciativa) iter1.next();
-							tabla1.setAlineacionHorizontal(0);							
-							dibujarTabla( iniciativa,null, tabla1,  request, documento, false, true, false);													
-						}	
+							Iniciativa iniciativa = (Iniciativa) iter1.next();							
+							dibujarTabla(iniciativa, null, tabla1, request, documento);
+						}
 						documento.add(tabla1.getTabla());
-					}					
-					else {
+					} else {
 						documento.add(lineaEnBlanco(fuente));
 
 						fuente.setColor(0, 0, 255);
 						texto = new Paragraph(mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.noiniciativas",
-								"INICIATIVAS", "PERSPECTIVA"), fuente);
+								"INICIATIVAS", "ORGANIZACIÓN"), fuente);
 						texto.setIndentationLeft(50);
 						documento.add(texto);
 						fuente.setColor(0, 0, 0);
 
 						documento.add(lineaEnBlanco(fuente));
-					}					
-				}									
+					}
+				}
 			}
 		}
 		// todas las organizaciones
@@ -415,29 +375,25 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 
 			if (organizaciones.size() > 0) {
 				
-
-				Font fuente = getConfiguracionPagina(request).getFuente();
-				MessageResources messageResources = getResources(request);				
+				MessageResources messageResources = getResources(request);
 
 				for (Iterator<OrganizacionStrategos> iter = organizaciones.iterator(); iter.hasNext();) {
 
 					OrganizacionStrategos organizacion = (OrganizacionStrategos) iter.next();
-					
-					
-					
-					if (organizacion != null) {			
+
+					if (organizacion != null) {
 						Font font = new Font(getConfiguracionPagina(request).getCodigoFuente());
 
 						// Nombre de la Organizacion, plan y periodo del reporte
 						font.setSize(VgcFormatoReporte.TAMANO_FUENTE_TITULO);
 						font.setStyle(Font.NORMAL);
 
-						Paragraph textoOrg = new Paragraph("Organización: " + organizacion.getNombre(), font);
+						Paragraph textoOrg = new Paragraph("Organización: " + organizacion.getNombre(), fontTitulos);
 						textoOrg.setAlignment(Element.ALIGN_LEFT);
 						documento.add(textoOrg);
 						documento.add(lineaEnBlanco(getConfiguracionPagina(request).getFuente()));
 					}
-										
+
 					filtros.put("organizacionId", organizacion.getOrganizacionId().toString());
 					if (reporte.getFiltro().getHistorico() != null && reporte.getFiltro().getHistorico()
 							.byteValue() == HistoricoType.getFiltroHistoricoNoMarcado())
@@ -453,46 +409,22 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 					if (todos.equals("false")) {
 						filtros.put("anio", ano);
 					}
+					if (reporte.getEstatus() != null)
+						filtros.put("estatus", reporte.getEstatus());
 
 					List<Iniciativa> iniciativas = iniciativaservice
 							.getIniciativas(0, 0, "nombre", "ASC", true, filtros).getLista();
 
 					if (iniciativas.size() > 0) {
-						
+
 						TablaPDF tabla = null;
 						tabla = new TablaPDF(getConfiguracionPagina(request), request);
-						int[] columnas = new int[9];
-						columnas[0] = 21;
-						columnas[1] = 15;
-						columnas[2] = 25;
-						columnas[3] = 7;
-						columnas[4] = 7;
-						columnas[5] = 15;
-						columnas[6] = 7;
-						columnas[7] = 15;
-						columnas[8] = 10;
-
-						tabla.setAmplitudTabla(100);
-						tabla.crearTabla(columnas);
-
-						tabla.setAlineacionHorizontal(1);
-
-						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.ruta"));
-						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.entidad"));
-						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa"));
-						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje"));
-						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha"));
-						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable"));
-						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio"));
-						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo"));
-						tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));
 						
-						tabla.setDefaultAlineacionHorizontal();
-						
+						crearTablaTitulo(tabla, messageResources);
+
 						for (Iterator<Iniciativa> iter1 = iniciativas.iterator(); iter1.hasNext();) {
-							Iniciativa iniciativa = (Iniciativa) iter1.next();
-							tabla.setAlineacionHorizontal(0);							
-							dibujarTabla( iniciativa,organizacion, tabla,  request, documento, false, false, true);	
+							Iniciativa iniciativa = (Iniciativa) iter1.next();							
+							dibujarTabla(iniciativa, organizacion, tabla, request, documento);
 						}
 						documento.add(tabla.getTabla());
 					} else {
@@ -500,13 +432,13 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 
 						fuente.setColor(0, 0, 255);
 						texto = new Paragraph(mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.noiniciativas",
-								"INICIATIVAS", "PERSPECTIVA"), fuente);
+								"INICIATIVAS", "ORGANIZACIÓN"), fuente);
 						texto.setIndentationLeft(50);
 						documento.add(texto);
 						fuente.setColor(0, 0, 0);
 						documento.add(lineaEnBlanco(fuente));
-					}					
-				}						
+					}
+				}
 			}
 		}
 
@@ -537,108 +469,187 @@ public class ReporteIniciativaPdf extends VgcReporteBasicoAction {
 		return objetivo;
 	}
 	
-	public void dibujarTabla(Iniciativa iniciativa,OrganizacionStrategos organizacion, TablaPDF tabla, HttpServletRequest request, Document documento, Boolean solaOrg, Boolean sub, Boolean todas) throws Exception {
-						
-		if(solaOrg == true) {			
-			
-			tabla.agregarCelda(iniciativa.getNombre());
-			tabla.agregarCelda(iniciativa.getPorcentajeCompletadoFormateado());
-			if (iniciativa.getFechaUltimaMedicion() == null) {
-				tabla.agregarCelda("");
-			} else {
-				tabla.agregarCelda(iniciativa.getFechaUltimaMedicion());
-			}
+	private TablaPDF crearTablaTitulo(TablaPDF tabla, MessageResources messageResources) throws Exception {
+		int[] columnas = new int[7];		
+		columnas[0] = 27;
+		columnas[1] = 10;
+		columnas[2] = 10;
+		columnas[3] = 20;
+		columnas[4] = 10;
+		columnas[5] = 20;
+		columnas[6] = 10;
 
-			if (iniciativa.getResponsableLograrMeta() == null) {
-				tabla.agregarCelda("");
-			} else {
-				tabla.agregarCelda(iniciativa.getResponsableLograrMeta().getNombre());
-			}
-			if (iniciativa.getAnioFormulacion() == null) {
-				tabla.agregarCelda("");
-			} else {
-				tabla.agregarCelda(iniciativa.getAnioFormulacion());
-			}
+		tabla.setAmplitudTabla(100);
+		tabla.crearTabla(columnas);
 
-			tabla.agregarCelda(obtenerObjetivo(iniciativa));
+		tabla.setColorFondo(128, 128, 128);
+		tabla.setColorLetra(255, 255, 255);
+		tabla.setTamanoFont(10);
+		tabla.setFormatoFont(Font.BOLD);
+		tabla.setAlineacionHorizontal(1);
 
-			if (iniciativa.getTipoProyecto() == null) {
-				tabla.agregarCelda("");
-			} else {
-				tabla.agregarCelda(iniciativa.getTipoProyecto().getNombre());
-			}
-		}else if(sub == true) {
-			tabla.agregarCelda(iniciativa.getOrganizacion().getNombre());
-			tabla.agregarCelda(iniciativa.getNombre());
-			tabla.agregarCelda(iniciativa.getPorcentajeCompletadoFormateado());
-			if (iniciativa.getFechaUltimaMedicion() == null) {
-				tabla.agregarCelda("");
-			} else {
-				tabla.agregarCelda(iniciativa.getFechaUltimaMedicion());
-			}
+		tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.iniciativa"));
+		tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.porcentaje"));
+		tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.fecha"));
+		tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.responsable"));
+		tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.anio"));
+		tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.objetivo"));
+		tabla.agregarCelda(messageResources.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));
+		
+		tabla.setColorFondo(255, 255, 255);
+		tabla.setColorLetra(0, 0, 0);
+		tabla.setTamanoFont(8);
+		tabla.setFormatoFont(Font.NORMAL);
+		
+		return tabla;		
+	}
 
-			if (iniciativa.getResponsableLograrMeta() == null) {
-				tabla.agregarCelda("");
-			} else {
-				tabla.agregarCelda(iniciativa.getResponsableLograrMeta().getNombre());
-			}
-			if (iniciativa.getAnioFormulacion() == null) {
-				tabla.agregarCelda("");
-			} else {
-				tabla.agregarCelda(iniciativa.getAnioFormulacion());
-			}
+	public void dibujarTabla(Iniciativa iniciativa, OrganizacionStrategos organizacion, TablaPDF tabla,
+			HttpServletRequest request, Document documento)
+			throws Exception {
 
-			tabla.agregarCelda(obtenerObjetivo(iniciativa));
-
-			if (iniciativa.getTipoProyecto() == null) {
-				tabla.agregarCelda("");
-			} else {
-				tabla.agregarCelda(iniciativa.getTipoProyecto().getNombre());
-			}						
+		tabla.agregarCelda(iniciativa.getNombre());
+		tabla.agregarCelda(iniciativa.getPorcentajeCompletadoFormateado());
+		if (iniciativa.getFechaUltimaMedicion() == null) {
+			tabla.agregarCelda("");
+		} else {
+			tabla.agregarCelda(iniciativa.getFechaUltimaMedicion());
 		}
-		else if(todas == true) {
 
-			String ruta = null;
-			OrganizacionStrategos org = new OrganizacionStrategos();
-			ruta = organizacion.getNombre() + "/";
-			org = organizacion.getPadre();
-			while (org != null) {
-				ruta = org.getNombre() + "/" + ruta;
-				if (org.getPadre() == null) {
-					org = null;
-				} else {
-					org = org.getPadre();
-				}
-			}
+		if (iniciativa.getResponsableLograrMeta() == null) {
+			tabla.agregarCelda("");
+		} else {
+			tabla.agregarCelda(iniciativa.getResponsableLograrMeta().getNombre());
+		}
+		if (iniciativa.getAnioFormulacion() == null) {
+			tabla.agregarCelda("");
+		} else {
+			tabla.agregarCelda(iniciativa.getAnioFormulacion());
+		}
 
-			tabla.agregarCelda(ruta);
-			tabla.agregarCelda(iniciativa.getOrganizacion().getNombre());
-			tabla.agregarCelda(iniciativa.getNombre());
-			tabla.agregarCelda(iniciativa.getPorcentajeCompletadoFormateado());
-			if (iniciativa.getFechaUltimaMedicion() == null) {
-				tabla.agregarCelda("");
-			} else {
-				tabla.agregarCelda(iniciativa.getFechaUltimaMedicion());
-			}
+		tabla.agregarCelda(obtenerObjetivo(iniciativa));
 
-			if (iniciativa.getResponsableLograrMeta() == null) {
-				tabla.agregarCelda("");
-			} else {
-				tabla.agregarCelda(iniciativa.getResponsableLograrMeta().getNombre());
-			}
-			if (iniciativa.getAnioFormulacion() == null) {
-				tabla.agregarCelda("");
-			} else {
-				tabla.agregarCelda(iniciativa.getAnioFormulacion());
-			}
+		if (iniciativa.getTipoProyecto() == null) {
+			tabla.agregarCelda("");
+		} else {
+			tabla.agregarCelda(iniciativa.getTipoProyecto().getNombre());
+		}
 
-			tabla.agregarCelda(obtenerObjetivo(iniciativa));
+	}
+			
+	private TablaPDF crearTablaFiltros(TablaPDF tabla, MessageResources mensajes, Document documento, HttpServletRequest request,  String todos, String tipo, String estatus, String ano, Font fuente) throws Exception {
+		
+		String tipoT = obtenerTipo(Long.parseLong(tipo));
+		String estatusT = obtenerEstatus(estatus);
+		String anio = "";
+		if (todos.equals("false")) {
+			anio = String.valueOf(Integer.parseInt(ano));
+		} else {
+			anio = "Todos";
+		}
+		String alcanceT = "";
+		if(request.getParameter("alcance").equals("1"))
+			alcanceT = "Organización seleccionada";
+		else if(request.getParameter("alcance").equals("4"))
+			alcanceT = "Organización seleccionada y Sub-Organizaciones";
+		else 
+			alcanceT = "Todas las Organizaciones";
+				
+		int[] columnas = new int[4];
+		columnas[0] = 20;
+		columnas[1] = 15;
+		columnas[2] = 10;
+		columnas[3] = 15;
+		
+		tabla.setAmplitudTabla(100);
+		tabla.crearTabla(columnas);
+		tabla.setColorFondo(128, 128, 128);
+		tabla.setColorLetra(255, 255, 255);
+		tabla.setTamanoFont(10);
+		tabla.setFormatoFont(Font.BOLD);
+		tabla.setAlineacionHorizontal(1);
+	
+		tabla.agregarCelda(mensajes.getMessage("jsp.editariniciativa.ficha.alcance") + " del Reporte");
+		tabla.agregarCelda(mensajes.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));
+		tabla.agregarCelda(mensajes.getMessage("jsp.editariniciativa.ficha.estatus"));
+		tabla.agregarCelda(mensajes.getMessage("jsp.gestionariniciativas.filtro.anio"));
+		
+		tabla.setColorFondo(255, 255, 255);
+		tabla.setColorLetra(0, 0, 0);
+		tabla.setTamanoFont(8);
+		tabla.setFormatoFont(Font.NORMAL);
+		
+		tabla.agregarCelda(alcanceT);
+		tabla.agregarCelda(tipoT);
+		tabla.agregarCelda(estatusT);
+		tabla.agregarCelda(anio);
+		
+		return tabla;		
+	}
+	
+	public String obtenerEstatus(String estatus) {
+		String nombre = "";
+		Integer est = Integer.parseInt(estatus);
 
-			if (iniciativa.getTipoProyecto() == null) {
-				tabla.agregarCelda("");
-			} else {
-				tabla.agregarCelda(iniciativa.getTipoProyecto().getNombre());
-			}
-		}			
+		switch (est) {
+		case 0:
+			nombre = "Sin Iniciar";
+			break;
+		case 1:
+			nombre = "Sin Iniciar Desfasadas";
+			break;
+		case 2:
+			nombre = "En Ejecucion sin Retrasos";
+			break;
+		case 3:
+			nombre = "En Ejecucion con Retrasos Superables";
+			break;
+		case 4:
+			nombre = "En Ejecucion con Retrasos Significativos";
+			break;
+		case 5:
+			nombre = "Concluidas";
+			break;
+		case 6:
+			nombre = "Cancelado";
+			break;
+		case 7:
+			nombre = "Suspendido";
+			break;
+		case 8:
+			nombre = "Todos";
+			break;
+		}
+		return nombre;
+	}
+	
+	public String obtenerTipo(Long tipo) {
+		String nombre = "";
+
+		if (tipo == 656054) {
+			nombre = "Estrategicos Dependencias";
+		}
+		if (tipo == 656056) {
+			nombre = "Bid";
+		}
+		if (tipo == 656058) {
+			nombre = "Cooperación";
+		}
+		if (tipo == 656060) {
+			nombre = "Bpin";
+		}
+		if (tipo == 1253394) {
+			nombre = "Iniciativa Estratégica";
+		}
+		if (tipo == 1253396) {
+			nombre = "Proyecto de Dependencia";
+		}
+		if (tipo == 1253398) {
+			nombre = "Proyecto Preventivo";
+		}
+		if (tipo == 0) {
+			nombre = "Todos";
+		}
+		return nombre;
 	}
 }
