@@ -169,25 +169,25 @@ public class ReporteIniciativaXls extends VgcAction {
 					Iniciativa iniciativa = (Iniciativa) iter.next();
 					
 					HSSFRow dataRow1 = sheet.createRow(x + 1);
-					dataRow1.createCell(1).setCellValue(iniciativa.getOrganizacion().getNombre());
-					dataRow1.createCell(2).setCellValue(iniciativa.getNombre());
-					dataRow1.createCell(3).setCellValue(iniciativa.getPorcentajeCompletadoFormateado());
-					dataRow1.createCell(4).setCellValue(iniciativa.getFechaUltimaMedicion());
+					dataRow1.createCell(0).setCellValue(iniciativa.getOrganizacion().getNombre());
+					dataRow1.createCell(1).setCellValue(iniciativa.getNombre());
+					dataRow1.createCell(2).setCellValue(iniciativa.getPorcentajeCompletadoFormateado());
+					dataRow1.createCell(3).setCellValue(iniciativa.getFechaUltimaMedicion());
 					if (iniciativa.getResponsableLograrMeta() == null) {
-						dataRow1.createCell(5).setCellValue("");
+						dataRow1.createCell(4).setCellValue("");
 
 					} else {
-						dataRow1.createCell(5).setCellValue(iniciativa.getResponsableLograrMeta().getNombre());
+						dataRow1.createCell(4).setCellValue(iniciativa.getResponsableLograrMeta().getNombre());
 
 					}
 
-					dataRow1.createCell(6).setCellValue(iniciativa.getAnioFormulacion());
-					dataRow1.createCell(7).setCellValue(obtenerObjetivo(iniciativa));
+					dataRow1.createCell(5).setCellValue(iniciativa.getAnioFormulacion());
+					dataRow1.createCell(6).setCellValue(obtenerObjetivo(iniciativa));
 
 					if (iniciativa.getTipoProyecto() == null) {
-						dataRow1.createCell(8).setCellValue("");
+						dataRow1.createCell(7).setCellValue("");
 					} else {
-						dataRow1.createCell(8).setCellValue(iniciativa.getTipoProyecto().getNombre());
+						dataRow1.createCell(7).setCellValue(iniciativa.getTipoProyecto().getNombre());
 					}
 
 					x = x + 1;
@@ -303,25 +303,25 @@ public class ReporteIniciativaXls extends VgcAction {
 					Iniciativa iniciativa = (Iniciativa) iter.next();
 
 					HSSFRow dataRow1 = sheet.createRow(x + 1);
-					dataRow1.createCell(1).setCellValue(iniciativa.getOrganizacion().getNombre());
-					dataRow1.createCell(2).setCellValue(iniciativa.getNombre());
-					dataRow1.createCell(3).setCellValue(iniciativa.getPorcentajeCompletadoFormateado());
-					dataRow1.createCell(4).setCellValue(iniciativa.getFechaUltimaMedicion());
+					dataRow1.createCell(0).setCellValue(iniciativa.getOrganizacion().getNombre());
+					dataRow1.createCell(1).setCellValue(iniciativa.getNombre());
+					dataRow1.createCell(2).setCellValue(iniciativa.getPorcentajeCompletadoFormateado());
+					dataRow1.createCell(3).setCellValue(iniciativa.getFechaUltimaMedicion());
 					if (iniciativa.getResponsableLograrMeta() == null) {
-						dataRow1.createCell(5).setCellValue("");
+						dataRow1.createCell(4).setCellValue("");
 
 					} else {
-						dataRow1.createCell(5).setCellValue(iniciativa.getResponsableLograrMeta().getNombre());
+						dataRow1.createCell(4).setCellValue(iniciativa.getResponsableLograrMeta().getNombre());
 
 					}
 
-					dataRow1.createCell(6).setCellValue(iniciativa.getAnioFormulacion());
-					dataRow1.createCell(7).setCellValue(obtenerObjetivo(iniciativa));
+					dataRow1.createCell(5).setCellValue(iniciativa.getAnioFormulacion());
+					dataRow1.createCell(6).setCellValue(obtenerObjetivo(iniciativa));
 
 					if (iniciativa.getTipoProyecto() == null) {
-						dataRow1.createCell(8).setCellValue("");
+						dataRow1.createCell(7).setCellValue("");
 					} else {
-						dataRow1.createCell(8).setCellValue(iniciativa.getTipoProyecto().getNombre());
+						dataRow1.createCell(7).setCellValue(iniciativa.getTipoProyecto().getNombre());
 					}
 
 					x = x + 1;
@@ -350,38 +350,40 @@ public class ReporteIniciativaXls extends VgcAction {
 
 					List<Iniciativa> iniciativaSub = iniciativaservice
 							.getIniciativas(0, 0, "nombre", "ASC", true, filtros).getLista();
+					System.out.println("Si llega aqui");
 
-					if (iniciativas.size() > 0) {
-						for (Iterator<Iniciativa> iter1 = iniciativas.iterator(); iter1.hasNext();) {
+					if (iniciativaSub.size() > 0) {
+						for (Iterator<Iniciativa> iter1 = iniciativaSub.iterator(); iter1.hasNext();) {
 							Iniciativa iniciativa = (Iniciativa) iter1.next();
 							
 							HSSFRow dataRow1 = sheet.createRow(x + 1);
-							dataRow1.createCell(1).setCellValue(iniciativa.getOrganizacion().getNombre());
-							dataRow1.createCell(2).setCellValue(iniciativa.getNombre());
-							dataRow1.createCell(3).setCellValue(iniciativa.getPorcentajeCompletadoFormateado());
-							dataRow1.createCell(4).setCellValue(iniciativa.getFechaUltimaMedicion());
+							dataRow1.createCell(0).setCellValue(iniciativa.getOrganizacion().getNombre());
+							dataRow1.createCell(1).setCellValue(iniciativa.getNombre());
+							dataRow1.createCell(2).setCellValue(iniciativa.getPorcentajeCompletadoFormateado());
+							dataRow1.createCell(3).setCellValue(iniciativa.getFechaUltimaMedicion());
 							if (iniciativa.getResponsableLograrMeta() == null) {
-								dataRow1.createCell(5).setCellValue("");
+								dataRow1.createCell(4).setCellValue("");
 
 							} else {
-								dataRow1.createCell(5).setCellValue(iniciativa.getResponsableLograrMeta().getNombre());
+								dataRow1.createCell(4).setCellValue(iniciativa.getResponsableLograrMeta().getNombre());
 
 							}
 
-							dataRow1.createCell(6).setCellValue(iniciativa.getAnioFormulacion());
-							dataRow1.createCell(7).setCellValue(obtenerObjetivo(iniciativa));
+							dataRow1.createCell(5).setCellValue(iniciativa.getAnioFormulacion());
+							dataRow1.createCell(6).setCellValue(obtenerObjetivo(iniciativa));
 
 							if (iniciativa.getTipoProyecto() == null) {
-								dataRow1.createCell(8).setCellValue("");
+								dataRow1.createCell(7).setCellValue("");
 							} else {
-								dataRow1.createCell(8).setCellValue(iniciativa.getTipoProyecto().getNombre());
+								dataRow1.createCell(7).setCellValue(iniciativa.getTipoProyecto().getNombre());
 							}
 
 							x = x + 1;
+							System.out.println("Si llega aqui");	
 						}
 					}
 				}
-			}			
+			}				
 			Date date = new Date();
 			SimpleDateFormat hourdateFormat = new SimpleDateFormat("HHmmss_ddMMyyyy");
 

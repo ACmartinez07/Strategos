@@ -961,8 +961,10 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 				tabla.agregarCelda(
 						Image.getInstance(new URL(url + "/paginas/strategos/indicadores/imagenes/alertaAmarilla.gif")));
 		}
-		tabla.agregarCelda(
-				iniciativa.getResponsableSeguimiento() != null ? iniciativa.getResponsableSeguimiento() : "");
+		if(iniciativa.getResponsableSeguimiento() != null )
+			tabla.agregarCelda(iniciativa.getResponsableSeguimiento().getNombre());
+		else
+			tabla.agregarCelda("  ");
 	}
 
 	private void crearTablaActividad(ReporteForm reporte, PryActividad actividad, Indicador indicador, Font font,
