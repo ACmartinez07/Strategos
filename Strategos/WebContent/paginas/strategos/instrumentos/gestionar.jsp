@@ -216,6 +216,10 @@
     	abrirVentanaModal('<html:rewrite action="/instrumentos/reporteProyectosAsociados" />?' + url, "reporteProyectosAsociados", 490, 450);		
 	}
 	
+	function asignarPesos(){
+		abrirVentanaModal('<html:rewrite action="/instrumentos/asignarPesos" />', "instrumento", 730, 600);
+	}
+	
 </script>
 
 <%-- Representación de la Forma --%>
@@ -251,6 +255,12 @@
 					</vgcinterfaz:menuBotones>
 				</vgcinterfaz:contenedorMenuHorizontalItem>
 			
+				<%-- Menú: Mediciones --%>
+				<vgcinterfaz:contenedorMenuHorizontalItem>
+					<vgcinterfaz:menuBotones id="menuMedicionesIndicadores" key="menu.mediciones">
+						<vgcinterfaz:botonMenu key="menu.edicion.asignarpesos" onclick="asignarPesos();" permisoId="INSTRUMENTOS_ASIGNARPESOS" />												
+					</vgcinterfaz:menuBotones>
+				</vgcinterfaz:contenedorMenuHorizontalItem>
 
 				<%-- Menú: Ver --%>
 				<vgcinterfaz:contenedorMenuHorizontalItem>

@@ -36,6 +36,8 @@
 		<forward name="reporteInstrumentoEjecucion" path="/paginas/strategos/instrumentos/resumidaEjecucion.jsp" />
 		<forward name="reporteInstrumentoEjecucionDetalle" path="/paginas/strategos/instrumentos/resumidaEjecucionDetalle.jsp" />
 		<forward name="reporteProyectosAsociados" path="/paginas/strategos/instrumentos/reporteProyectosAsociados.jsp" />
+		
+		<forward name="asignarPesosInstrumentos" path="/paginas/strategos/instrumentos/asignarPesos.jsp" />
 								
 	</global-forwards>
 
@@ -174,6 +176,9 @@
 			<set-property property="secure" value="false" />
 			<forward name="seleccionarOrganizacion" path="/paginas/strategos/instrumentos/seleccionarOrganizacion.jsp" />
 		</action>
+		
+		<!-- Mapeo del Action: Generar Reporte Proyectos Asociados-->
+		<action path="/instrumentos/asignarPesos" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.AsignarPesosIniciativasInstrumentoAction" scope="request" name="editarInstrumentosForm" parameter="asignarPesosInstrumentos"></action>
 				
 	</action-mappings>
 
