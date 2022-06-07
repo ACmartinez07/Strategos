@@ -17,6 +17,7 @@ public class InstrumentoIniciativa
   private Iniciativa iniciativa;
   private Instrumentos instrumento;
   private List<Medicion> mediciones;
+  private Double peso;
   
   
   public InstrumentoIniciativa(InstrumentoIniciativaPK pk)
@@ -64,6 +65,16 @@ public class InstrumentoIniciativa
   public void setMediciones(List<Medicion> mediciones)
   {
     this.mediciones = mediciones;
+  }
+  
+  public Double getPeso()
+  {
+    return peso;
+  }
+  
+  public void setPeso(Double peso)
+  {
+    this.peso = peso;
   }
   
   public String toString()

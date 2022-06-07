@@ -1,6 +1,7 @@
 package com.visiongc.app.strategos.instrumentos;
 
 import com.visiongc.app.strategos.StrategosService;
+import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativa;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.commons.util.PaginaLista;
 import com.visiongc.framework.model.Usuario;
@@ -19,5 +20,9 @@ public abstract interface StrategosInstrumentosService
   public abstract int asociarInstrumento(Long paramLong1, Long paramLong2, Usuario paramUsuario);
   
   public abstract int desasociarInstrumento(Long paramLong1, Long paramLong2, Usuario paramUsuario);  
+  
+  public abstract List<InstrumentoIniciativa> getIniciativasInstrumento(Long paramLong);
+  
+  public abstract int saveIniciativaInstrumento(List<InstrumentoIniciativa> paramList, Usuario paramUsuario);
   
 }

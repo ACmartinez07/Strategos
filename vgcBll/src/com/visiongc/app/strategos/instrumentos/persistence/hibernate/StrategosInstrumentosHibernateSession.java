@@ -12,11 +12,13 @@ import org.hibernate.criterion.Restrictions;
 
 
 import com.visiongc.app.strategos.instrumentos.model.Cooperante;
+import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativa;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosCooperantesPersistenceSession;
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosInstrumentosPersistenceSession;
 import com.visiongc.app.strategos.persistence.hibernate.StrategosHibernateSession;
 import com.visiongc.commons.util.PaginaLista;
+import com.visiongc.framework.model.Usuario;
 
 
 public class StrategosInstrumentosHibernateSession extends StrategosHibernateSession implements StrategosInstrumentosPersistenceSession{
@@ -137,4 +139,37 @@ public class StrategosInstrumentosHibernateSession extends StrategosHibernateSes
 	    
 	    return paginaLista;
 	  }
+	
+	public List<InstrumentoIniciativa> getIniciativasInstrumento(Long instrumentoId) {
+		Query consulta = session.createQuery("select instrumentoIniciativa from InstrumentoIniciativa instrumentoIniciativa where instrumentoIniciativa.pk.instrumentoId = :instrumentoId");
+		consulta.setLong("instrumentoId", instrumentoId.longValue());
+		
+		return consulta.list();
+	}
+
+	public int updatePesos(InstrumentoIniciativa instrumentoIniciativa, Usuario Usuario) {
+		
+		String sql = "update InstrumentoIniciativa instrumentoIniciativa set instrumentoIniciativa.peso = :peso ";
+		String sqlNulo = "update InstrumentoIniciativa instrumentoIniciativa set instrumentoIniciativa.peso = null ";
+		
+		String sqlWhere = "where instrumentoIniciativa.pk.instrumentoId = :instrumentoId";
+		sqlWhere = sqlWhere + " and instrumentoIniciativa.pk.iniciativaId = :iniciativaId";
+		
+		Query update = null;
+		if(instrumentoIniciativa.getPeso() != null) {
+			update = session.createQuery(sql + sqlWhere);
+		}else {
+			update = session.createQuery(sqlNulo + sqlWhere);
+		}
+		update.setLong("instrumentoId", instrumentoIniciativa.getPk().getInstrumentoId().longValue());
+		update.setLong("iniciativaId", instrumentoIniciativa.getPk().getIniciativaId().longValue());
+		
+		if(instrumentoIniciativa.getPeso() != null) {
+			update.setDouble("peso", instrumentoIniciativa.getPeso().doubleValue());
+		}
+		
+		int actualizados = update.executeUpdate();
+		
+		return actualizados != 0 ? 10000 : 10001;
+	}
 }

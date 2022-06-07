@@ -1,5 +1,7 @@
 package com.visiongc.app.strategos.instrumentos.impl;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import com.visiongc.app.strategos.categoriasmedicion.StrategosCategoriasService;
@@ -18,8 +20,7 @@ import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativaPK;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosCooperantesPersistenceSession;
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosInstrumentosPersistenceSession;
-import com.visiongc.app.strategos.portafolios.model.PortafolioIniciativa;
-import com.visiongc.app.strategos.portafolios.model.PortafolioIniciativaPK;
+
 import com.visiongc.commons.util.PaginaLista;
 import com.visiongc.commons.util.VgcMessageResources;
 import com.visiongc.commons.util.lang.ChainedRuntimeException;
@@ -233,7 +234,62 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 	    }
 	    
 	    return resultado;
-	  }  
-	  
+	  }
+
+
+	
+	public List<InstrumentoIniciativa> getIniciativasInstrumento(Long instrumentoId){
+		return persistenceSession.getIniciativasInstrumento(instrumentoId);
+	}	
+	
+	public int saveIniciativaInstrumento(List<InstrumentoIniciativa> instrumentoIniciativas, Usuario usuario) {
+		
+		boolean transActiva =  false;
+		int resultado = 10000;
+		String[] fieldNames = new String[2];
+		Object[] fieldValues = new Object[2];
+		
+		try {
+			if( !persistenceSession.isTransactionActive()) {
+				persistenceSession.beginTransaction();
+				transActiva =true;
+			}
+			
+			for (Iterator<InstrumentoIniciativa> iter = instrumentoIniciativas.iterator(); iter.hasNext();) {
+				InstrumentoIniciativa instrumentoIniciativa = (InstrumentoIniciativa)iter.next();
+				
+				fieldNames[0] = "pk.iniciativaId";
+				fieldValues[0] = instrumentoIniciativa.getPk().getIniciativaId();
+				fieldNames[0] = "pk.instrumentoId";
+				fieldValues[0] = instrumentoIniciativa.getPk().getInstrumentoId();
+				
+				if(persistenceSession.existsObject(instrumentoIniciativa, fieldNames, fieldValues)) {
+					resultado = persistenceSession.updatePesos(instrumentoIniciativa, usuario);
+				}
+				if(resultado != 10000) {
+					break;
+				}
+			}
+			if(transActiva) {
+				if(resultado == 10000) {
+					persistenceSession.commitTransaction();					
+				}else {
+					persistenceSession.rollbackTransaction();
+					transActiva = false;
+				}
+			}
+				
+		}catch(Throwable t){
+			if(transActiva)
+				persistenceSession.rollbackTransaction();
+			throw new ChainedRuntimeException(t.getMessage(), t);
+		}
+		
+		return resultado;
+	}
+	
+	public int updatePesos(InstrumentoIniciativa instrumentoIniciativa, Usuario ususario) {
+		return persistenceSession.updatePesos(instrumentoIniciativa, ususario);
+	}
 	 
 }

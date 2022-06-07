@@ -217,7 +217,15 @@
 	}
 	
 	function asignarPesos(){
-		abrirVentanaModal('<html:rewrite action="/instrumentos/asignarPesos" />', "instrumento", 730, 600);
+		
+		if ((document.gestionarInstrumentosForm.seleccionados.value == null) || (document.gestionarInstrumentosForm.seleccionados.value == "")) 
+		{
+			alert('<vgcutil:message key="jsp.seleccionar.noseleccion" />');
+			return;
+		}
+		
+		var instrumentoId = document.gestionarInstrumentosForm.seleccionados.value;
+		abrirVentanaModal('<html:rewrite action="/instrumentos/asignarPesos" />?id='+ instrumentoId, "instrumento", 730, 600);
 	}
 	
 </script>
