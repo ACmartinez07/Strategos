@@ -260,10 +260,10 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 				
 				fieldNames[0] = "pk.iniciativaId";
 				fieldValues[0] = instrumentoIniciativa.getPk().getIniciativaId();
-				fieldNames[0] = "pk.instrumentoId";
-				fieldValues[0] = instrumentoIniciativa.getPk().getInstrumentoId();
+				fieldNames[1] = "pk.instrumentoId";
+				fieldValues[1] = instrumentoIniciativa.getPk().getInstrumentoId();
 				
-				if(persistenceSession.existsObject(instrumentoIniciativa, fieldNames, fieldValues)) {
+				if(persistenceSession.existsObject(instrumentoIniciativa, fieldNames, fieldValues)) {					
 					resultado = persistenceSession.updatePesos(instrumentoIniciativa, usuario);
 				}
 				if(resultado != 10000) {

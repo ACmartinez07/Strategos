@@ -134,10 +134,9 @@ public class AsignarPesosIniciativasPortafolioAction extends VgcAction
 				  portafolioIniciativa.setPk(pk);
 				  if ((request.getParameter(nombre) != null) && (!request.getParameter(nombre).equals("")))
 					  portafolioIniciativa.setPeso(new Double(VgcFormatter.parsearNumeroFormateado(request.getParameter(nombre))));
-				  portafolioIniciativas.add(portafolioIniciativa);
+				  portafolioIniciativas.add(portafolioIniciativa);				  
 			  }
-		  }
-	    
+		  }		  
 		  return strategosPortafoliosService.saveIniciativasPortafolio(portafolioIniciativas, getUsuarioConectado(request));
 	}
 }

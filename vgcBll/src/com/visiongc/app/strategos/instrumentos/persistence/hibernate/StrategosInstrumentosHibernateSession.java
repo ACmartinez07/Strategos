@@ -169,6 +169,7 @@ public class StrategosInstrumentosHibernateSession extends StrategosHibernateSes
 		}
 		
 		int actualizados = update.executeUpdate();
+				
 		
 		return actualizados != 0 ? 10000 : 10001;
 	}

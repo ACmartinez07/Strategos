@@ -104,7 +104,7 @@ public class StrategosPortafoliosHibernateSession extends StrategosHibernateSess
       update.setDouble("peso", portafolioIniciativa.getPeso().doubleValue());
     }
     int actualizados = update.executeUpdate();
-    
+        
     return actualizados != 0 ? 10000 : 10001;
   }
 }

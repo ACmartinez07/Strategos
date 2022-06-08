@@ -22,6 +22,7 @@ import com.visiongc.app.strategos.iniciativas.model.Iniciativa;
 import com.visiongc.app.strategos.instrumentos.StrategosInstrumentosService;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.app.strategos.organizaciones.model.OrganizacionStrategos;
+import com.visiongc.app.strategos.util.StatusUtil;
 import com.visiongc.app.strategos.web.struts.instrumentos.forms.EditarInstrumentosForm;
 import com.visiongc.commons.VgcReturnCode;
 import com.visiongc.commons.struts.action.VgcAction;
@@ -59,15 +60,15 @@ public class AsignarPesosIniciativasInstrumentoAction extends VgcAction{
 	    	editarInstrumentosForm.setInstrumentoId(id);
 	    	
 	    	if (request.getParameter("funcion") != null) 
-		    {
-	    		System.out.print("Si entro en la funcion");
+		    {	    		
 	    		String funcion = request.getParameter("funcion");
-	    		if (funcion.equals("guardar")) {
-	    			System.out.print("ALCANZO A ENTRAR AQUI");
+	    		if (funcion.equals("guardar")) {	    			
 	    			int respuesta = VgcReturnCode.DB_OK;
-	    			respuesta = guardarPesos(strategosInstrumentosService, editarInstrumentosForm, request);
-	    			//if(respuesta == VgcReturnCode.DB_OK)
-	    				
+	    			respuesta = guardarPesos(strategosInstrumentosService, editarInstrumentosForm, request);	
+	    			if (respuesta == VgcReturnCode.DB_OK)
+	    				editarInstrumentosForm.setStatus(StatusUtil.getStatusSuccess());
+		    	    else
+		    	    	editarInstrumentosForm.setStatus(StatusUtil.getStatusInvalido());
 	    		}
 		    }
 	    	
@@ -80,7 +81,6 @@ public class AsignarPesosIniciativasInstrumentoAction extends VgcAction{
 	    	}
 	    		    		    	
 	    	editarInstrumentosForm.setNombreCorto(instrumento.getNombreCorto());
-	    	//editarInstrumentosForm.setInstru
 	    	
 	    	paginaIniciativas = new PaginaLista();
 	    	paginaIniciativas.setLista(instrumentoIniciativas);
@@ -89,6 +89,7 @@ public class AsignarPesosIniciativasInstrumentoAction extends VgcAction{
 	    }else {
 	    	if(editarInstrumentosForm != null) {
 	    		editarInstrumentosForm.clear();	   	
+	    		editarInstrumentosForm.setStatus(StatusUtil.getStatusInvalido());
 	    	}
 	    	ActionMessages messages = getMessages(request);
 	    	messages.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage("action.calcularregistro.noencontrado"));
@@ -105,9 +106,7 @@ public class AsignarPesosIniciativasInstrumentoAction extends VgcAction{
 	    return mapping.findForward(forward);
 	}
 	
-	private int guardarPesos(StrategosInstrumentosService strategosInstrumentosService, EditarInstrumentosForm editarInstrumentosForm, HttpServletRequest request ) throws Exception {
-		
-		System.out.print("VAS MUY LEJOS");
+	private int guardarPesos(StrategosInstrumentosService strategosInstrumentosService, EditarInstrumentosForm editarInstrumentosForm, HttpServletRequest request ) throws Exception {			
 		List<InstrumentoIniciativa> instrumentoIniciativas = new ArrayList<InstrumentoIniciativa>();
 		Map<?, ?> nombresParametros = request.getParameterMap();
 		
@@ -123,12 +122,10 @@ public class AsignarPesosIniciativasInstrumentoAction extends VgcAction{
 				pk.setInstrumentoId(editarInstrumentosForm.getInstrumentoId());
 				instrumentoIniciativa.setPk(pk);
 				if ((request.getParameter(nombre) != null) && (!request.getParameter(nombre).equals("")))
-					instrumentoIniciativa.setPeso(new Double(VgcFormatter.parsearNumeroFormateado(request.getParameter(nombre))));
-					System.out.println("\n NP:" + new Double(VgcFormatter.parsearNumeroFormateado(request.getParameter(nombre))) + "\n");
+					instrumentoIniciativa.setPeso(new Double(VgcFormatter.parsearNumeroFormateado(request.getParameter(nombre))));					
 				instrumentoIniciativas.add(instrumentoIniciativa);
 			}
-		}
-		
+		}		
 		return strategosInstrumentosService.saveIniciativaInstrumento(instrumentoIniciativas, getUsuarioConectado(request));
 		
 	}

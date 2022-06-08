@@ -4,7 +4,10 @@
 <%@ taglib uri="/tags/struts-logic" prefix="logic"%>
 <%@ taglib uri="/tags/vgc-util" prefix="vgcutil"%>
 <%@ taglib uri="/tags/vgc-interfaz" prefix="vgcinterfaz"%>
+
 <%@ page errorPage="/paginas/comunes/errorJsp.jsp"%>
+
+<%-- Modificado por: Andres Martinez (04/06/2022) --%>
 
 <tiles:insert definition="doc.selectorLayout" flush="true">
 
@@ -15,7 +18,10 @@
 	<%-- Cuerpo --%>
 	<tiles:put name="body" type="String">
 		
+		<%-- Funciones JavaScript locales de la página Jsp --%>
 		<script type="text/javascript">
+		
+			var _setCloseParent = false;
 		
 			function cancelar() 
 			{
@@ -26,21 +32,6 @@
 			{
 				if (_setCloseParent)
 					cancelar();
-			}
-			
-			function guardar() 
-			{
-				if (validar()) 
-				{
-					window.document.editarInstrumentosForm.action='<html:rewrite action="/instrumentos/asignarPesos" />?id=' + document.editarInstrumentosForm.instrumentoId.value + '&funcion=guardar';
-					window.document.editarInstrumentosForm.submit();
-				}
-			}
-	
-			function actualizar() 
-			{
-				window.document.editarInstrumentosForm.action='<html:rewrite action="/instrumentos/asignarPesos" />?id=' + document.editarInstrumentosForm.instrumentoId.value;
-				window.document.editarInstrumentosForm.submit();
 			}
 			
 			function validar() 
@@ -65,6 +56,21 @@
 				} 
 				else 
 					return true;
+			}
+			
+			function guardar() 
+			{
+				if (validar()) 
+				{
+					window.document.editarInstrumentosForm.action='<html:rewrite action="/instrumentos/asignarPesos" />?id=' + document.editarInstrumentosForm.instrumentoId.value + '&funcion=guardar';
+					window.document.editarInstrumentosForm.submit();
+				}
+			}
+	
+			function actualizar() 
+			{
+				window.document.editarInstrumentosForm.action='<html:rewrite action="/instrumentos/asignarPesos" />?id=' + document.editarInstrumentosForm.instrumentoId.value;
+				window.document.editarInstrumentosForm.submit();
 			}
 			
 			function actualizarPesoTotal(validar) 
@@ -145,7 +151,7 @@
 							<td width="100px">
 								<logic:notEmpty name="editarInstrumentosForm" property="nombreCorto">
 									<logic:notEmpty name="editarInstrumentosForm" property="nombreCorto">
-										<b><vgcutil:message key="jsp.asignar.pesos.portafolio.portafolio" /></b>
+										<b><vgcutil:message key="jsp.asignar.pesos.instrumento.instrumento" /></b>
 									</logic:notEmpty>
 								</logic:notEmpty>
 							</td>
@@ -263,7 +269,21 @@
 	
 			actualizarPesoTotal();		
 		</script>
-		
+		<script>
+			<logic:equal name="editarInstrumentosForm" property="status" value="0">
+				_setCloseParent = false;
+				showAlert('<vgcutil:message key="action.guardarregistro.actualizados.ok" />', 80, 300);
+				refrescarPadre();
+			</logic:equal>
+			<logic:equal name="editarInstrumentosForm" property="status" value="1">
+				_setCloseParent = false;
+				showAlert('<vgcutil:message key="action.guardarregistro.actualizados.no.ok" />', 80, 300);
+			</logic:equal>
+			<logic:equal name="editarInstrumentosForm" property="status" value="2">
+				_setCloseParent = true;
+				showAlert('<vgcutil:message key="action.editarregistro.noencontrado" />', 80, 300);
+			</logic:equal>
+		</script>
 		
 		
 	</tiles:put>

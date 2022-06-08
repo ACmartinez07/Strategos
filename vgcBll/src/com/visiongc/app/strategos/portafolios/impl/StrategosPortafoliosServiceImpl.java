@@ -1153,8 +1153,8 @@ public class StrategosPortafoliosServiceImpl extends StrategosServiceImpl implem
         fieldNames[1] = "pk.portafolioId";
         fieldValues[1] = portafolioIniciativa.getPk().getPortafolioId();
         
-        if (persistenceSession.existsObject(portafolioIniciativa, fieldNames, fieldValues)) {
-          resultado = persistenceSession.updatePesos(portafolioIniciativa, usuario);
+        if (persistenceSession.existsObject(portafolioIniciativa, fieldNames, fieldValues)) {        	
+        	resultado = persistenceSession.updatePesos(portafolioIniciativa, usuario);
         }
         if (resultado != 10000) {
           break;
