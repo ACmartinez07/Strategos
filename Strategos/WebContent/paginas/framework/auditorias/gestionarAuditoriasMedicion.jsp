@@ -139,8 +139,9 @@
 				if(document.gestionarAuditoriasMedicionForm.fechaHasta.value != null || document.gestionarAuditoriasMedicionForm.fechaHasta.value !=''){
 					queryString = queryString + '&fechaHasta=' + document.gestionarAuditoriasMedicionForm.fechaHasta.value ;
 				}
-				if(document.gestionarAuditoriasMedicionForm.accion.value != null || document.gestionarAuditoriasMedicionForm.accion.value !=''){
+				if(document.gestionarAuditoriasMedicionForm.accion.value != null || document.gestionarAuditoriasMedicionForm.accion.value !=''){				
 					queryString = queryString + '&accion=' + document.gestionarAuditoriasMedicionForm.accion.value ;
+					
 				}
 				if(document.gestionarAuditoriasMedicionForm.usuario.value != null || document.gestionarAuditoriasMedicionForm.usuario.value !=''){
 					queryString = queryString + '&usuario=' + document.gestionarAuditoriasMedicionForm.usuario.value ;
@@ -162,7 +163,13 @@
 					queryString = queryString + '&fechaHasta=' + document.gestionarAuditoriasMedicionForm.fechaHasta.value ;
 				}
 				if(document.gestionarAuditoriasMedicionForm.accion.value != null || document.gestionarAuditoriasMedicionForm.accion.value !=''){
-					queryString = queryString + '&accion=' + document.gestionarAuditoriasMedicionForm.accion.value ;
+					if(document.gestionarAuditoriasMedicionForm.accion.value == 'Inserción'){
+						queryString = queryString + '&accion=insercion'	
+					}else if(document.gestionarAuditoriasMedicionForm.accion.value == 'Modificación'){
+						queryString = queryString + '&accion=modificacion'	
+					}else if(document.gestionarAuditoriasMedicionForm.accion.value == 'Inserción-Modificación'){
+						queryString = queryString + '&accion=insercion-modificacion'	
+					}
 				}
 				if(document.gestionarAuditoriasMedicionForm.usuario.value != null || document.gestionarAuditoriasMedicionForm.usuario.value !=''){
 					queryString = queryString + '&usuario=' + document.gestionarAuditoriasMedicionForm.usuario.value ;
@@ -306,7 +313,7 @@
 									<vgcutil:message key="jsp.framework.gestionarauditorias.medicion.filtro.insercion" />
 								</html:option>
 								<html:option value="Modificación">
-									<vgcutil:message key="jsp.framework.gestionarauditorias.medicion.filtro.modificacion" />
+									<vgcutil:message key="jsp.framework.gestionarauditorias.medicion.filtro.modificacion"   />
 								</html:option>
 								<html:option value="Inserción-Modificación">
 									<vgcutil:message key="jsp.framework.gestionarauditorias.medicion.filtro.inser.modificacion" />

@@ -280,4 +280,32 @@ public class GestionarActividadesForm extends VisorListaForm
 	{
 		this.nombreIniciativa = nombreIniciativa;
 	}
+	
+	public void clear() {
+		this.iniciativaId = new Long(0L);
+		this.iniciativaClaseId = null;
+		this.organizacionId = null;
+		this.frecuenciaIniciativa = null;
+		this.proyectoId = null;
+		this.planId = null;
+		this.listaActividades = null;
+		this.soloLectura = null;
+		this.iniciativaVinculada = null;
+		this.nombreIniciativaSingular = null;
+		this.nombreActividadSingular = null;
+		this.nombreIniciativaPlural = null;
+		this.nombreActividadPlural = null;
+		this.filtroNombre = null;
+		this.mostrarGantt = null;
+		this.frecuenciaGantt = null;
+		this.frecuenciasGantt = null;
+		this.totalPixeles = null;
+		this.escalaSuperior = null;
+		this.escalaInferior = null;
+		this.zoom = null;
+		this.respuesta = null;
+		this.bloqueado = null;
+		this.nombreIniciativa = null;
+		this.desdeInstrumento = null;
+	}
 }

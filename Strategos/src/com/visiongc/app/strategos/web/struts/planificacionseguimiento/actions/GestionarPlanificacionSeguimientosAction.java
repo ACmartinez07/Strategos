@@ -31,6 +31,7 @@ public class GestionarPlanificacionSeguimientosAction extends VgcAction
 		
 
 		GestionarActividadesForm gestionarActividadesForm = (GestionarActividadesForm)form;
+		gestionarActividadesForm.clear();
 
 		String iniciativaId = request.getParameter("iniciativaId");
 		Boolean desdeInstrumento = (request.getParameter("desdeInstrumento") != null && request.getParameter("desdeInstrumento") != "") ? Boolean.valueOf(request.getParameter("desdeInstrumento")) : null;

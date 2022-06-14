@@ -53,8 +53,11 @@ public class AuditoriasMapStrutsActionRight
     actionRight = new StrutsActionRight("framework.auditorias.reportemedicionproyectoxls", true, false, null);
     mapa.put("framework.auditorias.reportemedicionproyectoxls", actionRight);
     
-   
+    actionRight = new StrutsActionRight("framework.auditorias.reporteauditoriamedicionpdf", true, false, null);
+    mapa.put("framework.auditorias.reporteauditoriamedicionpdf", actionRight);
             
+    actionRight = new StrutsActionRight("framework.auditorias.reporteauditoriamedicionexcel", true, false, null);
+    mapa.put("framework.auditorias.reporteauditoriamedicionexcel", actionRight);
     
   }
   
@@ -69,7 +72,7 @@ public class AuditoriasMapStrutsActionRight
       }
       catch (Exception e)
       {
-        throw new ChainedRuntimeException("El mapeo de acciones a permisos de Auditorías no está configurado correctamente.", e);
+        throw new ChainedRuntimeException("El mapeo de acciones a permisos de Auditorï¿½as no estï¿½ configurado correctamente.", e);
       }
     }
     
