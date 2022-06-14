@@ -66,7 +66,14 @@ public class ReporteAuditoriaMedicionPdfAction extends VgcReporteBasicoAction
 		String usuario = request.getParameter("usuario");
 		String fechaDesde = request.getParameter("fechaDesde");
 		String fechaHasta = request.getParameter("fechaHasta");
-		String accion = request.getParameter("accion");
+		String accion = "";		
+		if(request.getParameter("accion").equals("insercion")) {
+			accion = "inserci贸n";
+		}else if(request.getParameter("accion").equals("modificacion")) {
+			accion = "modificaci贸n";
+		}else if(request.getParameter("accion").equals("insercion-modificacion")) {
+			accion = "inserci贸n-modificaci贸n";
+		}
 		String organizacion = request.getParameter("organizacion");
 		
 		String atributoOrden = request.getParameter("atributoOrden");
@@ -190,7 +197,7 @@ public class ReporteAuditoriaMedicionPdfAction extends VgcReporteBasicoAction
 	    	
 	    	Double valorAnt= aud.getValorAnterior();
 	    	
-	    	if(aud.getAccion().equals("Inserci髇")){
+	    	if(aud.getAccion().equals("Inserci锟絥")){
 	    		tablaDetalle.agregarCelda("");
 			}else{
 				tablaDetalle.agregarCelda(Long.toString(valorAnt.longValue()));

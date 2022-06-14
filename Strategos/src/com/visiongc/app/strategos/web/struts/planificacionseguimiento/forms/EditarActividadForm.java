@@ -666,8 +666,11 @@ public class EditarActividadForm extends EditarObjetoForm
     	this.responsableCargarEjecutadoId = null;
     	this.responsableCargarEjecutado = null;
     	this.responsableFijarMetaId = null;
+    	this.responsableFijarMeta = null;
     	this.responsableLograrMetaId = null;
+    	this.responsableLograrMeta = null;
     	this.responsableSeguimientoId = null;
+    	this.responsableSeguimiento = null;
     	Date ahora = new Date();
     	this.comienzoPlan = VgcFormatter.formatearFecha(ahora, "formato.fecha.corta");
     	this.finPlan = VgcFormatter.formatearFecha(ahora, "formato.fecha.corta");

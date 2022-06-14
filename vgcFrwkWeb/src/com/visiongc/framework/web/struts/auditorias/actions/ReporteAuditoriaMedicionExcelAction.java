@@ -92,7 +92,15 @@ public class ReporteAuditoriaMedicionExcelAction extends VgcAction {
 		String usuario = request.getParameter("usuario");
 		String fechaDesde = request.getParameter("fechaDesde");
 		String fechaHasta = request.getParameter("fechaHasta");
-		String accion = request.getParameter("accion");
+		String accion = "";		
+		if(request.getParameter("accion").equals("insert")) {
+			accion = "inserciÃ³n";
+		}else if(request.getParameter("accion").equals("modificacion")) {
+			accion = "modificaciÃ³n";
+		}else if(request.getParameter("accion").equals("insercion-modificacion")) {
+			accion = "inserciÃ³n-modificaciÃ³n";
+		}
+		
 		String organizacion = request.getParameter("organizacion");
 		
 		String atributoOrden = request.getParameter("atributoOrden");
@@ -120,13 +128,13 @@ public class ReporteAuditoriaMedicionExcelAction extends VgcAction {
 		HSSFWorkbook objWB = new HSSFWorkbook();
 
 		// Creamos la celda, aplicamos el estilo y definimos
-		// el tipo de dato que contendrá la celda
+		// el tipo de dato que contendrï¿½ la celda
 		HSSFCell celda = null;
 
 		// Creo la hoja
-		HSSFSheet hoja1 = objWB.createSheet("Auditoria Medición");
+		HSSFSheet hoja1 = objWB.createSheet("Auditoria Mediciï¿½n");
 
-		// Proceso la información y genero el xls.
+		// Proceso la informaciï¿½n y genero el xls.
 		int numeroFila = 1;
 		int numeroCelda = 1;
 		HSSFRow fila = hoja1.createRow(numeroFila++); 
@@ -147,7 +155,7 @@ public class ReporteAuditoriaMedicionExcelAction extends VgcAction {
 			
 
 			// Creamos la celda, aplicamos el estilo y definimos
-			// el tipo de dato que contendrá la celda
+			// el tipo de dato que contendrï¿½ la celda
 			
 			numeroCelda = 1;
 			fila = hoja1.createRow(numeroFila++);
@@ -264,7 +272,7 @@ public class ReporteAuditoriaMedicionExcelAction extends VgcAction {
 				
 				Double valorAnt= aud.getValorAnterior();
 				
-				if(aud.getAccion().equals("Inserción")){
+				if(aud.getAccion().equals("Inserciï¿½n")){
 					celda = fila.createCell(numeroCelda++);
 					celda.setCellValue("");
 				}else{
@@ -302,7 +310,7 @@ public class ReporteAuditoriaMedicionExcelAction extends VgcAction {
 	    forward="exito";
 		 
 			
-		/** Código de lógica de Negocio del action	*/
+		/** Cï¿½digo de lï¿½gica de Negocio del action	*/
 
 		/** Otherwise, return "success" */
 		return mapping.findForward(forward);     	  	

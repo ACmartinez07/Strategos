@@ -71,7 +71,7 @@ public class EditarActividadAction extends VgcAction
 	    
 	    Boolean desdeInstrumento = (request.getParameter("desdeInstrumento") != null && request.getParameter("desdeInstrumento") != "") ? Boolean.valueOf(request.getParameter("desdeInstrumento")) : null;
 		
-		
+	    
 	    
 		boolean verForm = getPermisologiaUsuario(request).tienePermiso("ACTIVIDAD_VIEWALL");
 		boolean editarForm = getPermisologiaUsuario(request).tienePermiso("ACTIVIDAD_EDIT");
@@ -84,7 +84,7 @@ public class EditarActividadAction extends VgcAction
 	    {
 	    	bloqueado = !strategosPryActividadesService.lockForUpdate(request.getSession().getId(), actividadId, null);
 	    	editarActividadForm.setBloqueado(new Boolean(bloqueado));
-	    	
+	    	editarActividadForm.clear();	    	
 	    	PryActividad pryActividad = (PryActividad)strategosPryActividadesService.load(PryActividad.class, new Long(actividadId));
 
 	    	if (pryActividad != null)
@@ -93,7 +93,7 @@ public class EditarActividadAction extends VgcAction
 	    		if (bloqueado)
 	    			messages.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage("action.editarregistro.bloqueado"));
 
-	    		editarActividadForm.clear();
+	    		
 
 	    		if (inicializar)
 	    			editarActividadForm.setStatus(StatusUtil.getStatusInit());

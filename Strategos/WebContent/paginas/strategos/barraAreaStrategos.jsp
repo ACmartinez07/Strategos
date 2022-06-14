@@ -334,7 +334,8 @@
 		</logic:notEmpty>
 
 		
-		<!-- 	
+		<!-- 	Riesgo -->
+		
 		<vgcinterfaz:botonBarraAreas permisoId="" onclick="bancoProyectos();" nombre="riesgo" urlImage="/paginas/strategos/imagenes/portafolio.gif" >
 			<vgcutil:message key="barraareas.strategos.banco" />
 		</vgcinterfaz:botonBarraAreas>
@@ -350,7 +351,7 @@
 				</logic:equal>
 			</logic:notEmpty>
 		</logic:notEmpty>
-		Riesgo -->
+		
 	
 		<!-- Plan -->
 		<logic:empty scope="session" name="activarPlan">
