@@ -139,15 +139,30 @@
 				if(document.gestionarAuditoriasMedicionForm.fechaHasta.value != null || document.gestionarAuditoriasMedicionForm.fechaHasta.value !=''){
 					queryString = queryString + '&fechaHasta=' + document.gestionarAuditoriasMedicionForm.fechaHasta.value ;
 				}
-				if(document.gestionarAuditoriasMedicionForm.accion.value != null || document.gestionarAuditoriasMedicionForm.accion.value !=''){				
-					queryString = queryString + '&accion=' + document.gestionarAuditoriasMedicionForm.accion.value ;
-					
+				if(document.gestionarAuditoriasMedicionForm.accion.value != null || document.gestionarAuditoriasMedicionForm.accion.value !=''){
+					if(document.gestionarAuditoriasMedicionForm.accion.value == 'Inserción'){
+						queryString = queryString + '&accion=insercion'	
+					}else if(document.gestionarAuditoriasMedicionForm.accion.value == 'Modificación'){
+						queryString = queryString + '&accion=modificacion'	
+					}else if(document.gestionarAuditoriasMedicionForm.accion.value == 'Inserción-Modificación'){
+						queryString = queryString + '&accion=insercion-modificacion'	
+					}else{
+						queryString = queryString + '&accion=' + document.gestionarAuditoriasMedicionForm.accion.value;
+					}
 				}
 				if(document.gestionarAuditoriasMedicionForm.usuario.value != null || document.gestionarAuditoriasMedicionForm.usuario.value !=''){
-					queryString = queryString + '&usuario=' + document.gestionarAuditoriasMedicionForm.usuario.value ;
+					if(document.gestionarAuditoriasMedicionForm.usuarioId.value != 0){
+						queryString = queryString + '&usuario=' + document.gestionarAuditoriasMedicionForm.usuarioId.value ;	
+					}else{
+						queryString = queryString + '&usuario=';
+					}					
 				}
 				if(document.gestionarAuditoriasMedicionForm.organizacion.value != null || document.gestionarAuditoriasMedicionForm.organizacion.value !=''){
-					queryString = queryString + '&organizacion=' + document.gestionarAuditoriasMedicionForm.organizacion.value ;
+					if(document.gestionarAuditoriasMedicionForm.organizacionId.value != 0){
+						queryString = queryString + '&organizacion=' + document.gestionarAuditoriasMedicionForm.organizacionId.value ;	
+					}else{
+						queryString = queryString + '&organizacion=';
+					}						
 				}
 				
 				window.location.href='<sslext:rewrite action="/framework/auditorias/reporteAuditoriaMedicionExcel"/>' + queryString;	
@@ -169,13 +184,23 @@
 						queryString = queryString + '&accion=modificacion'	
 					}else if(document.gestionarAuditoriasMedicionForm.accion.value == 'Inserción-Modificación'){
 						queryString = queryString + '&accion=insercion-modificacion'	
+					}else{
+						queryString = queryString + '&accion=' + document.gestionarAuditoriasMedicionForm.accion.value;
 					}
 				}
 				if(document.gestionarAuditoriasMedicionForm.usuario.value != null || document.gestionarAuditoriasMedicionForm.usuario.value !=''){
-					queryString = queryString + '&usuario=' + document.gestionarAuditoriasMedicionForm.usuario.value ;
+					if(document.gestionarAuditoriasMedicionForm.usuarioId.value != 0){
+						queryString = queryString + '&usuario=' + document.gestionarAuditoriasMedicionForm.usuarioId.value ;	
+					}else{
+						queryString = queryString + '&usuario=';
+					}					
 				}
 				if(document.gestionarAuditoriasMedicionForm.organizacion.value != null || document.gestionarAuditoriasMedicionForm.organizacion.value !=''){
-					queryString = queryString + '&organizacion=' + document.gestionarAuditoriasMedicionForm.organizacion.value ;
+					if(document.gestionarAuditoriasMedicionForm.organizacionId.value != 0){
+						queryString = queryString + '&organizacion=' + document.gestionarAuditoriasMedicionForm.organizacionId.value ;	
+					}else{
+						queryString = queryString + '&organizacion=';
+					}						
 				}
 				
 				abrirReporte('<html:rewrite action="/framework/auditorias/reporteAuditoriaMedicionPdf"/>'+ queryString, 'auditoriasResumido', '750', '550');
@@ -195,10 +220,33 @@
 				document.gestionarAuditoriasForm.organizacionId.value = '';
 				document.gestionarAuditoriasForm.organizacion.value = '';
 			}
+			
+			function seleccionarUsuario() 
+			{
+				abrirSelectorUsuarios('gestionarAuditoriasMedicionForm', 'usuario', 'usuarioId', null, null, null, null);
+			}
+			
+			function limpiarUsuario() 
+			{
+				document.gestionarAuditoriasMedicionForm.usuarioId.value = '';
+				document.gestionarAuditoriasMedicionForm.usuario.value = '';
+			}
+			
+			function limpiarInstanciaNombre() 
+			{
+				document.gestionarAuditoriasMedicionForm.organizacionId.value = '';
+				document.gestionarAuditoriasMedicionForm.organizacion.value = '';
+			}
+			
+			function seleccionarOrganizaciones() 
+		    {
+				abrirSelectorOrganizaciones('gestionarAuditoriasMedicionForm', 'organizacion', 'organizacionId', null);
+			}
 
 		</script>
 
 		<jsp:include flush="true" page="/paginas/framework/usuarios/usuariosJs.jsp"></jsp:include>
+		<jsp:include flush="true" page="/paginas/strategos/organizaciones/organizacionesJs.jsp"></jsp:include>
 
 		<%-- Funciones JavaScript externas de la página Jsp --%>
 		<jsp:include page="/componentes/calendario/calendario.jsp"></jsp:include>
@@ -324,14 +372,18 @@
 						</tr>
 						<tr class="barraFiltrosForma">
 							<td width="120px"><vgcutil:message key="jsp.framework.gestionarauditorias.columna.usuario" /></td>
-							<td width="320px"><html:text property="usuario" styleClass="cuadroTexto" size="30" /></td>
-							<td width="30px">&nbsp;</td>
+							<td width="320px"><html:text property="usuario" styleClass="cuadroTexto" size="50" /></td>
+							<td width="30px"><html:hidden property="usuarioId" />
+								<img style="cursor:pointer" onclick="seleccionarUsuario()" src="<html:rewrite page='/componentes/fichaDatos/selector.gif'/>" border="0" width="10" height="10" title='Seleccionar Usuario'>&nbsp;<img style="cursor:pointer" onclick="limpiarUsuario()" src="<html:rewrite page='/componentes/formulario/salir.gif'/>" border="0" width="10" height="10" title="<vgcutil:message key='boton.limpiar.alt' />">
+							</td>
 							<td>&nbsp;</td>
 						</tr>
 						<tr class="barraFiltrosForma">
 							<td width="120px"><vgcutil:message key="jsp.framework.gestionarauditorias.medicion.columna.organizacion" /></td>
 							<td width="320px"><html:text property="organizacion" styleClass="cuadroTexto" size="50" /></td>
-							<td width="30px">&nbsp;</td>
+							<td width="30px"><html:hidden property="organizacionId" />
+								<img style="cursor:pointer" onclick="seleccionarOrganizaciones();" src="<html:rewrite page='/componentes/fichaDatos/selector.gif'/>" border="0" width="10" height="10" title='Seleccionar Organizacion'>&nbsp;<img style="cursor:pointer" onclick="limpiarInstanciaNombre()" src="<html:rewrite page='/componentes/formulario/salir.gif'/>" border="0" width="10" height="10" title="<vgcutil:message key="boton.limpiar.alt" />">
+							</td>							
 							<td>&nbsp;</td>
 						</tr>
 						

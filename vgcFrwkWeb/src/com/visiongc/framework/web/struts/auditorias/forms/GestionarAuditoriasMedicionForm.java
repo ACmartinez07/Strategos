@@ -16,9 +16,11 @@ public class GestionarAuditoriasMedicionForm extends VisorGenericoForm
 	private String fechaHasta;
 	private List acciones;  
 	private String organizacion;
+	private Long organizacionId;	
 	private String periodo;
 	private String periodoFinal;
 	private String usuario;
+	private Long usuarioId;
 	private String indicador;
 	private String detalle;
 	
@@ -118,6 +120,20 @@ public class GestionarAuditoriasMedicionForm extends VisorGenericoForm
 		this.acciones = acciones;
 	}
 	
+	public Long getUsuarioId() {
+		return usuarioId;
+	}
+
+	public void setUsuarioId(Long usuarioId) {
+		this.usuarioId = usuarioId;
+	}
 	
+	public void setOrganizacionId(Long organizacionId) {
+		this.organizacionId = organizacionId;
+	}
+	
+	public Long getOrganizacionId() {
+		return this.organizacionId;
+	}
   
 }

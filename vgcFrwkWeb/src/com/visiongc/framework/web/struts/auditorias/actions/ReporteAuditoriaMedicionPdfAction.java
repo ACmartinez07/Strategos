@@ -4,7 +4,9 @@ import com.lowagie.text.Document;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.Paragraph;
+import com.visiongc.app.strategos.impl.StrategosServiceFactory;
 import com.visiongc.app.strategos.indicadores.model.Indicador;
+import com.visiongc.app.strategos.organizaciones.StrategosOrganizacionesService;
 import com.visiongc.app.strategos.organizaciones.model.OrganizacionStrategos;
 import com.visiongc.app.strategos.seriestiempo.model.SerieTiempo;
 import com.visiongc.commons.report.TablaBasicaPDF;
@@ -34,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.util.MessageResources;
+import com.visiongc.framework.model.Usuario;
 
 public class ReporteAuditoriaMedicionPdfAction extends VgcReporteBasicoAction
 {
@@ -57,13 +60,15 @@ public class ReporteAuditoriaMedicionPdfAction extends VgcReporteBasicoAction
 	 MessageResources messageResources = getResources(request); 
 	  
 	 AuditoriaMedicionService auditoriaMedicionService = FrameworkServiceFactory.getInstance().openAuditoriaMedicionService();
+	 UsuariosService usuariosService = FrameworkServiceFactory.getInstance().openUsuariosService();
+	 StrategosOrganizacionesService strategosOrganizacionesService = StrategosServiceFactory.getInstance().openStrategosOrganizacionesService();
 	  
 	 List<AuditoriaMedicion> auditorias = new ArrayList();
 	 
 	 Map<String, Object> filtros = new HashMap();
 	    
 		
-		String usuario = request.getParameter("usuario");
+		String usuarioId = request.getParameter("usuario");
 		String fechaDesde = request.getParameter("fechaDesde");
 		String fechaHasta = request.getParameter("fechaHasta");
 		String accion = "";		
@@ -74,12 +79,10 @@ public class ReporteAuditoriaMedicionPdfAction extends VgcReporteBasicoAction
 		}else if(request.getParameter("accion").equals("insercion-modificacion")) {
 			accion = "inserción-modificación";
 		}
-		String organizacion = request.getParameter("organizacion");
-		
+		String organizacionId = request.getParameter("organizacion");
 		String atributoOrden = request.getParameter("atributoOrden");
-	    
 	    String tipoOrden = request.getParameter("tipoOrden");
-		
+	    
 	    String[] ordenArray = new String[1];
 	    String[] tipoOrdenArray = new String[1];
 	    ordenArray[0] = atributoOrden;
@@ -89,12 +92,20 @@ public class ReporteAuditoriaMedicionPdfAction extends VgcReporteBasicoAction
 	        filtros.put("fechaDesde", FechaUtil.convertirStringToDate(fechaDesde, VgcResourceManager.getResourceApp("formato.fecha.corta")));
 	    if ((fechaHasta != null) && (!fechaHasta.equals("")))
 	        filtros.put("fechaHasta", FechaUtil.convertirStringToDate(fechaHasta, VgcResourceManager.getResourceApp("formato.fecha.corta")));
-	    if ((usuario != null) && (!usuario.equals("")))
-	    	filtros.put("usuario", usuario);
+	    if ((usuarioId != null) && (!usuarioId.equals(""))) {
+	    	Usuario usuario = (Usuario)usuariosService.load(Usuario.class, new Long(usuarioId));
+	    	
+	    	if ((usuario != null) && (!usuario.getFullName().equals("")))
+    			filtros.put("usuario", usuario.getFullName());
+	    }
 	    if ((accion != null) && (!accion.equals("")))
 	    	filtros.put("accion", accion);
-	    if ((organizacion != null) && (!organizacion.equals("")))
-	    	filtros.put("organizacion", organizacion);
+	    if ((organizacionId != null) && (!organizacionId.equals(""))) {
+	    	OrganizacionStrategos organizacion = (OrganizacionStrategos)strategosOrganizacionesService.load(OrganizacionStrategos.class, new Long(organizacionId));
+	    	
+	    	if ((organizacion != null) && (!organizacion.getNombre().equals("")))
+		    	filtros.put("organizacion", organizacion.getNombre());
+	    }
 		
 		 
 		auditorias= auditoriaMedicionService.getAuditoriasMedicion(ordenArray, tipoOrdenArray, true, filtros);
@@ -214,6 +225,8 @@ public class ReporteAuditoriaMedicionPdfAction extends VgcReporteBasicoAction
 	 
 	 documento.newPage();
 	 auditoriaMedicionService.close();
+	 usuariosService.close();
+	 strategosOrganizacionesService.close();
 	 
   }
   

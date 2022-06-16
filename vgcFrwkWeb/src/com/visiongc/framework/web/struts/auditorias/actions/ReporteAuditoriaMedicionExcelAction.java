@@ -44,6 +44,9 @@ import java.math.BigDecimal;
 import com.lowagie.text.Document;
 
 import com.lowagie.text.Paragraph;
+import com.visiongc.app.strategos.impl.StrategosServiceFactory;
+import com.visiongc.app.strategos.organizaciones.StrategosOrganizacionesService;
+import com.visiongc.app.strategos.organizaciones.model.OrganizacionStrategos;
 import com.visiongc.app.strategos.seriestiempo.model.SerieTiempo;
 import com.visiongc.commons.report.Tabla;
 import com.visiongc.commons.report.TablaBasicaPDF;
@@ -83,13 +86,15 @@ public class ReporteAuditoriaMedicionExcelAction extends VgcAction {
 	    MessageResources messageResources = getResources(request);
 	    
 	    AuditoriaMedicionService auditoriaMedicionService = FrameworkServiceFactory.getInstance().openAuditoriaMedicionService();
+	    UsuariosService usuariosService = FrameworkServiceFactory.getInstance().openUsuariosService();
+		StrategosOrganizacionesService strategosOrganizacionesService = StrategosServiceFactory.getInstance().openStrategosOrganizacionesService();
 		  
 		List<AuditoriaMedicion> auditorias = new ArrayList();
 		
 		Map<String, Object> filtros = new HashMap();
 	    
 		
-		String usuario = request.getParameter("usuario");
+		String usuarioId = request.getParameter("usuario");
 		String fechaDesde = request.getParameter("fechaDesde");
 		String fechaHasta = request.getParameter("fechaHasta");
 		String accion = "";		
@@ -101,7 +106,7 @@ public class ReporteAuditoriaMedicionExcelAction extends VgcAction {
 			accion = "inserción-modificación";
 		}
 		
-		String organizacion = request.getParameter("organizacion");
+		String organizacionId = request.getParameter("organizacion");
 		
 		String atributoOrden = request.getParameter("atributoOrden");
 	    
@@ -116,12 +121,20 @@ public class ReporteAuditoriaMedicionExcelAction extends VgcAction {
 	        filtros.put("fechaDesde", FechaUtil.convertirStringToDate(fechaDesde, VgcResourceManager.getResourceApp("formato.fecha.corta")));
 	    if ((fechaHasta != null) && (!fechaHasta.equals("")))
 	        filtros.put("fechaHasta", FechaUtil.convertirStringToDate(fechaHasta, VgcResourceManager.getResourceApp("formato.fecha.corta")));
-	    if ((usuario != null) && (!usuario.equals("")))
-	    	filtros.put("usuario", usuario);
+	    if ((usuarioId != null) && (!usuarioId.equals(""))) {
+	    	Usuario usuario = (Usuario)usuariosService.load(Usuario.class, new Long(usuarioId));
+	    	
+	    	if ((usuario != null) && (!usuario.getFullName().equals("")))
+    			filtros.put("usuario", usuario.getFullName());
+	    }
 	    if ((accion != null) && (!accion.equals("")))
 	    	filtros.put("accion", accion);
-	    if ((organizacion != null) && (!organizacion.equals("")))
-	    	filtros.put("organizacion", organizacion);
+	    if ((organizacionId != null) && (!organizacionId.equals(""))) {
+	    	OrganizacionStrategos organizacion = (OrganizacionStrategos)strategosOrganizacionesService.load(OrganizacionStrategos.class, new Long(organizacionId));
+	    	
+	    	if ((organizacion != null) && (!organizacion.getNombre().equals("")))
+		    	filtros.put("organizacion", organizacion.getNombre());
+	    }
 		 
 		auditorias= auditoriaMedicionService.getAuditoriasMedicion(ordenArray, tipoOrdenArray, true, filtros);
 		 
