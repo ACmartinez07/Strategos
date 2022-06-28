@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto ElementoPlantillaPlan de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (30/10/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.planes.model.ElementoPlantillaPlanes" table="metodologia_template">
+
+		<!-- Atributo clave de ElementoPlantillaPlan -->
+		<id name="elementoId" type="java.lang.Long" column="metodologia_template_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para ElementoPlantillaPlan -->
+		<property name="plantillaPlanesId" type="java.lang.Long" column="metodologia_id"/>
+		<property name="nombre" type="java.lang.String" column="nombre" length="50" not-null="true"/>
+		<property name="orden" type="java.lang.Integer" column="orden"/>
+		<property name="tipo" type="java.lang.Byte" column="tipo"/>
+
+		<!-- Asociación muchos a uno -->
+		<many-to-one name="plantillaPlanes" class="com.visiongc.app.strategos.planes.model.PlantillaPlanes" update="false" insert="false">
+			<column name="metodologia_id" />
+		</many-to-one>
+
+	</class>
+
+</hibernate-mapping>

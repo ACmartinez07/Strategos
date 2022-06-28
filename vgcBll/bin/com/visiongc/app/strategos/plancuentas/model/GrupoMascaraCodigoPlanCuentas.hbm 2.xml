@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Modificado por: Kerwin Arias (19/05/2012) -->
+<!-- Descripción: Mapeo del objeto GrupoMascaraCodigoPlanCuentas de la Base de Datos -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.plancuentas.model.GrupoMascaraCodigoPlanCuentas" table="masc_cod_plan_cuentas_grupo">
+
+		<!-- Atributo clave de GrupoMascaraCodigoPlanCuentas -->
+		<composite-id name="pk" class="com.visiongc.app.strategos.plancuentas.model.GrupoMascaraCodigoPlanCuentasPK">
+			<key-property name="mascaraId" column="mascara_id" type="java.lang.Long" />
+			<key-property name="nivel" column="nivel" type="java.lang.Integer" />
+		</composite-id>
+
+		<!-- Atributos del objeto conceptual GrupoMascaraCodigoPlanCuentas -->
+		<property name="mascara" type="java.lang.String" column="mascara" />
+		<property name="nombre" type="java.lang.String" column="nombre" />
+
+		<!-- Asociación muchos a uno hacia MascaraCodigoPlanCuentas -->
+		<many-to-one name="madre" class="com.visiongc.app.strategos.plancuentas.model.MascaraCodigoPlanCuentas" update="false" insert="false">
+			<column name="mascara_id" />
+		</many-to-one>
+
+	</class>
+
+</hibernate-mapping>

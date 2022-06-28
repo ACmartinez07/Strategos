@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto SerieTiempo de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (18/07/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.app.strategos.seriestiempo.model.SerieTiempo" table="serie_tiempo">
+
+		<!-- Atributo clave-->
+		<id name="serieId" type="java.lang.Long" column="serie_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para Serie Tiempo -->
+		<property name="nombre" type="java.lang.String" column="nombre" not-null="true" unique="true" length="50" />
+		<property name="fija" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="fija" />
+		<property name="oculta" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="oculta" />
+		<property name="identificador" type="java.lang.String" column="identificador" not-null="true" unique="true" length="5" />
+		<property name="preseleccionada" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="preseleccionada" />
+
+	</class>
+</hibernate-mapping>

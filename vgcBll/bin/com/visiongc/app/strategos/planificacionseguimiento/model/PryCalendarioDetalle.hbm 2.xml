@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto PryCalendarioDetalle de la Base de Datos -->
+<!-- Creado por: Kerwin Arias (29/04/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.planificacionseguimiento.model.PryCalendarioDetalle" table="pry_calendario_detalle">
+
+		<!-- Atributo clave de PryCalendarioDetalle -->
+		<id name="calendarioId" type="java.lang.Long" column="calendario_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para PryCalendarioDetalle -->
+		<property name="fecha" type="java.util.Date" column="fecha" />
+		<property name="feriado" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="feriado" />
+
+	</class>
+</hibernate-mapping>

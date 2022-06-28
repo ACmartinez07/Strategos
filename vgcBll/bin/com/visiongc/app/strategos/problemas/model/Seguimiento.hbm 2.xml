@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto Seguimiento de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (25/11/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.problemas.model.Seguimiento" table="seguimiento">
+
+		<!-- Atributo clave de seguimientoId  -->
+		<id name="seguimientoId" type="java.lang.Long" column="seguimiento_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para Seguimiento  -->
+		<property name="estadoId" type="java.lang.Long" column="estado_id" />
+		<property name="accionId" type="java.lang.Long" column="accion_id" />
+		<property name="fechaEmision" type="java.util.Date" column="fecha_emision" />
+		<property name="fechaRecepcion" type="java.util.Date" column="fecha_recepcion" />
+		<property name="recepcionEnviado" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="recepcion_enviado" />
+		<property name="fechaAprobacion" type="java.util.Date" column="fecha_aprobacion" />
+		<property name="emisionEnviado" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="emision_enviado" />
+		<property name="preparadoPor" type="java.lang.String" column="preparado_por" />
+		<property name="aprobadoPor" type="java.lang.String" column="aprobado_por" />
+		<property name="aprobado" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="aprobado" />
+		<property name="creado" type="java.util.Date" column="creado" />
+		<property name="modificado" type="java.util.Date" column="modificado" />
+		<property name="creadoId" type="java.lang.Long" column="creado_id" />
+		<property name="modificadoId" type="java.lang.Long" column="modificado_id" />
+		<property name="numeroReporte" type="java.lang.Integer" column="numero_de_reporte" />
+		<property name="readOnly" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="read_only" />
+		<property name="claveCorreo" type="java.lang.String" column="clave_correo" />
+
+		<!-- Asociación muchos a uno para Acciones-->
+		<many-to-one name="accion" class="com.visiongc.app.strategos.problemas.model.Accion" lazy="false" fetch="join" column="accion_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación muchos a uno para Estado-->
+		<many-to-one name="estado" class="com.visiongc.app.strategos.estadosacciones.model.EstadoAcciones" lazy="false" fetch="join" column="estado_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a muchos para MemoSeguimiento -->
+		<set name="memosSeguimiento" fetch="select" lazy="true" inverse="true" cascade="persist, merge, save-update, delete, delete-orphan">
+			<key>
+				<column name="seguimiento_id" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.problemas.model.MemoSeguimiento" />
+		</set>
+
+	</class>
+
+</hibernate-mapping>

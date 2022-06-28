@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+	<!-- Descripción: Mapeo de un objeto Plomemas de la Base de Datos -->
+	<!-- Modificado por: Kerwin Arias (01/10/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.portafolios.model.PortafolioIniciativa" table="portafolio_iniciativa">
+
+		<!-- Atributo clave de MemoIniciativas -->
+		<composite-id name="pk" class="com.visiongc.app.strategos.portafolios.model.PortafolioIniciativaPK">
+			<key-property name="iniciativaId" column="iniciativa_id" type="java.lang.Long" />
+			<key-property name="portafolioId" column="portafolio_id" type="java.lang.Long" />
+		</composite-id>
+
+		<!-- Atributos del objeto conceptual -->
+		<property name="peso" column="peso" type="java.lang.Double" />
+				
+		<!-- Asociación muchos a uno para Iniciativa -->
+		<many-to-one name="iniciativa" class="com.visiongc.app.strategos.iniciativas.model.Iniciativa" unique="true" insert="false" update="false">
+			<column name="iniciativa_id" />
+		</many-to-one>
+
+		<!-- Asociación muchos a uno para Portafolio -->
+		<many-to-one name="portafolio" class="com.visiongc.app.strategos.portafolios.model.Portafolio" unique="true" insert="false" update="false">
+			<column name="portafolio_id" />
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

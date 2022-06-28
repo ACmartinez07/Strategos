@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto ResultadoEspecificoIniciativa de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (18/04/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.app.strategos.portafolios.model.IndicadorPortafolio" table="indicador_por_portafolio">
+
+		<!-- Atributo clave de MemoIniciativas -->
+		<composite-id name="pk" class="com.visiongc.app.strategos.portafolios.model.IndicadorPortafolioPK">
+			<key-property name="portafolioId" column="portafolioId" type="java.lang.Long" />
+			<key-property name="indicadorId" column="indicador_id" type="java.lang.Long" />
+		</composite-id>
+
+		<!-- Atributos del objeto conceptual -->
+		<property name="tipo" column="tipo" type="java.lang.Byte" />
+
+		<!-- Asociación muchos a uno para Portafolio -->
+		<many-to-one name="portafolio" class="com.visiongc.app.strategos.portafolios.model.Portafolio" unique="true" insert="false" update="false">
+			<column name="portafolioId" />
+		</many-to-one>
+
+		<!-- Asociación muchos a uno para Indicador -->
+		<many-to-one name="indicador" class="com.visiongc.app.strategos.indicadores.model.Indicador" unique="true" insert="false" update="false">
+			<column name="indicador_id" />
+		</many-to-one>
+
+	</class>
+
+</hibernate-mapping>

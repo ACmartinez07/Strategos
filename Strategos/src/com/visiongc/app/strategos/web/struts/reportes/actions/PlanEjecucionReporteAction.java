@@ -226,7 +226,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 		
 		Font fontTitulos = new Font(getConfiguracionPagina(request).getCodigoFuente());
 		fontTitulos.setSize(14);
-		fontTitulos.setStyle(Font.BOLD);		
+		fontTitulos.setStyle(Font.BOLD);	 	
 		Integer nivel = 0;
 		inicioTamanoPagina = lineasxPagina(fuente);
 		tamanoPagina = inicioTamanoPagina;
@@ -788,6 +788,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 			StrategosMedicionesService strategosMedicionesService,
 			StrategosIndicadoresService strategosIndicadoresService, MessageResources mensajes,
 			HttpServletRequest request) throws Exception {
+		
 		StrategosMetasService strategosMetasService = StrategosServiceFactory.getInstance().openStrategosMetasService();
 		StrategosPryActividadesService strategosPryActividadesService = StrategosServiceFactory.getInstance()
 				.openStrategosPryActividadesService();

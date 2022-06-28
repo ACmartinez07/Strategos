@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto Reporte de la Base de Datos -->
+<!-- Creado por: Kerwin Arias (20/10/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.reportes.model.ReporteGrafico" table="reporte_grafico">
+
+		<!-- Atributo clave de responsable -->
+		<id name="reporteId" type="java.lang.Long" column="reporte_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para  responsable -->
+		<property name="nombre" type="java.lang.String" column="nombre" length="50"/>
+		<property name="configuracion" type="java.lang.String" column="configuracion" />
+		<property name="usuarioId" type="java.lang.Long" column="usuario_id" />
+		<property name="descripcion" type="java.lang.String" column="descripcion" length="1000"/>
+		<property name="publico" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="publico" />
+		<property name="tipo" type="java.lang.Byte" column="tipo" />
+		<property name="fecha" type="java.util.Date" column="fecha" />
+		<property name="indicadores" type="java.lang.String" column="indicadores" />
+		<property name="organizaciones" type="java.lang.String" column="organizaciones" />
+		<property name="periodoIni" type="java.lang.String" column="periodo_ini" />
+		<property name="periodoFin" type="java.lang.String" column="periodo_fin" />
+		<property name="tiempo" type="java.lang.String" column="tiempo" />
+		<property name="graficoId" type="java.lang.String" column="grafico_id" />
+		
+		<!-- Asociación uno a uno hacia Usuario -->
+		<many-to-one name="usuario" class="com.visiongc.framework.model.Usuario" column="usuario_id" unique="true" insert="false" update="false" lazy="false"></many-to-one>
+	</class>
+</hibernate-mapping>

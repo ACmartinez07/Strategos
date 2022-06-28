@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto Iniciativa de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (19/11/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.iniciativas.model.util.IniciativaEstatus" table="iniciativa_estatus">
+
+		<!-- Atributo clave de Iniciativas -->
+		<id name="id" type="java.lang.Long" column="id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para Iniciativas -->
+		<property name="nombre" type="java.lang.String" column="nombre" length="50" />
+		<property name="porcentajeInicial" type="java.lang.Double" column="porcentaje_inicial" />
+		<property name="porcentajeFinal" type="java.lang.Double" column="porcentaje_final" />
+		<property name="sistema" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="sistema" />
+		<property name="bloquearMedicion" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="bloquear_medicion" />
+		<property name="bloquearIndicadores" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="bloquear_indicadores" />
+
+	</class>
+
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto MemoProblema de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (25/11/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.app.strategos.problemas.model.MemoProblema" table="problema_memo">
+
+		<!-- Clave compuesta  -->
+		<composite-id name="pk" class="com.visiongc.app.strategos.problemas.model.MemoProblemaPK">
+			<key-property name="problemaId" column="problema_id" type="java.lang.Long" />
+			<key-property name="tipo" column="tipo" type="java.lang.Byte" />
+		</composite-id>
+
+		<!-- Atributos del objeto conceptual para  Problemas  -->
+		<property name="memo" type="java.lang.String" column="memo" />
+
+		<!-- Asociación muchos a uno para Problemas -->
+		<many-to-one name="problema" class="com.visiongc.app.strategos.problemas.model.Problema" update="false" insert="false">
+			<column name="problema_id" />
+		</many-to-one>
+
+	</class>
+
+</hibernate-mapping>
+

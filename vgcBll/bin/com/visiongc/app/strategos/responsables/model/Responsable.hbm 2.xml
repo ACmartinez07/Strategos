@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto Responsable de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (20/10/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.app.strategos.responsables.model.Responsable" table="responsable">
+
+		<!-- Atributo clave de responsable -->
+		<id name="responsableId" type="java.lang.Long" column="responsable_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para  responsable -->
+		<property name="usuarioId" type="java.lang.Long" column="usuario_id" />
+		<property name="nombre" type="java.lang.String" column="nombre" />
+		<property name="cargo" type="java.lang.String" column="cargo" />
+		<property name="ubicacion" type="java.lang.String" column="ubicacion" />
+		<property name="email" type="java.lang.String" column="email" />
+		<property name="notas" type="java.lang.String" column="notas" />
+		<property name="tipo" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="tipo" />
+		<property name="esGrupo" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="grupo" />
+		<property name="organizacionId" type="java.lang.Long" column="organizacion_id" />
+
+		<!-- Asociación uno a uno hacia Usuario -->
+		<many-to-one name="usuario" class="com.visiongc.framework.model.Usuario" column="usuario_id" unique="true" insert="false" update="false" lazy="false"></many-to-one>
+
+		<!-- Asociación uno a uno hacia Organización -->
+		<many-to-one name="organizacion" class="com.visiongc.app.strategos.organizaciones.model.OrganizacionStrategos" column="organizacion_id" unique="true" insert="false" update="false" lazy="false"></many-to-one>
+
+		<!-- Asociación muchos a muchos hacia Responsable -->
+		<set name="responsables" lazy="false" table="responsable_grupo">
+			<key>
+				<column name="padre_id" />
+			</key>
+			<many-to-many class="com.visiongc.app.strategos.responsables.model.Responsable" column="responsable_id" />
+		</set>
+
+	</class>
+
+</hibernate-mapping>

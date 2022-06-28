@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto IniciativaPerspectiva de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (03/10/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.app.strategos.planes.model.IniciativaPerspectiva" table="iniciativa_por_perspectiva">
+
+		<!-- Atributo clave de IniciativaPerspectiva -->
+		<composite-id name="pk" class="com.visiongc.app.strategos.planes.model.IniciativaPerspectivaPK">
+			<key-property name="perspectivaId" column="perspectiva_id" type="java.lang.Long"/>
+			<key-property name="iniciativaId" column="iniciativa_id" type="java.lang.Long"/>			
+		</composite-id>
+
+		<!-- Asociación muchos a uno para Iniciativa -->
+		<many-to-one name="iniciativa" class="com.visiongc.app.strategos.iniciativas.model.Iniciativa" unique="true" update="false" insert="false">
+			<column name="iniciativa_id" />
+		</many-to-one>
+
+		<!-- Asociación muchos a uno para Perspectiva -->
+		<many-to-one name="perspectiva" class="com.visiongc.app.strategos.planes.model.Perspectiva" unique="true" update="false" insert="false">
+			<column name="perspectiva_id" />
+		</many-to-one>
+
+	</class>
+
+</hibernate-mapping>

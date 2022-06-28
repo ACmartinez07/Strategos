@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Creado por: Kerwin Arias (12/01/2012) -->
+
+<!-- Modificado por: Kerwin Arias (28/08/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.framework.model.MessageResource" table="afw_message_resource">
+
+		<id name="clave" type="java.lang.String" column="clave" length="200">
+			<generator class="assigned" />
+		</id>
+
+
+		<property name="valor" type="java.lang.String" column="valor" length="2000" not-null="true" />
+
+	</class>
+
+</hibernate-mapping>

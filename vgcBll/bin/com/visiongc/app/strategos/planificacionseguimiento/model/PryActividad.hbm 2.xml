@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto PryActividad de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (30/10/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.planificacionseguimiento.model.PryActividad" table="pry_actividad">
+
+		<!-- Atributo clave de PryActividad -->
+		<id name="actividadId" type="java.lang.Long" column="actividad_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para PryActividad -->
+		<property name="proyectoId" type="java.lang.Long" column="proyecto_id" />
+		<property name="padreId" type="java.lang.Long" column="padre_id" />
+		<property name="nombre" type="java.lang.String" column="nombre" length="50" />
+		<property name="unidadId" type="java.lang.Long" column="unidad_id" />
+		<property name="descripcion" type="java.lang.String" column="descripcion" length="2000" />
+		<property name="comienzoPlan" type="java.util.Date" column="comienzo_plan" />
+		<property name="comienzoReal" type="java.util.Date" column="comienzo_real" />
+		<property name="finPlan" type="java.util.Date" column="fin_plan" />
+		<property name="finReal" type="java.util.Date" column="fin_real" />
+		<property name="duracionPlan" type="java.lang.Double" column="duracion_plan" />
+		<property name="duracionReal" type="java.lang.Double" column="duracion_real" />
+		<property name="fila" type="java.lang.Integer" column="fila" />
+		<property name="nivel" type="java.lang.Integer" column="nivel" />
+		<property name="compuesta" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="compuesta" />
+		<property name="creado" type="java.util.Date" column="creado" />
+		<property name="modificado" type="java.util.Date" column="modificado" />
+		<property name="creadoId" type="java.lang.Long" column="creado_id" />
+		<property name="modificadoId" type="java.lang.Long" column="modificado_id" />
+		<property name="indicadorId" type="java.lang.Long" column="indicador_id" />
+		<property name="naturaleza" type="java.lang.Byte" column="naturaleza" />
+		<property name="responsableFijarMetaId" type="java.lang.Long" column="resp_fijar_meta_id" />
+		<property name="responsableLograrMetaId" type="java.lang.Long" column="resp_lograr_meta_id" />
+		<property name="responsableSeguimientoId" type="java.lang.Long" column="resp_seguimiento_id" />
+		<property name="responsableCargarMetaId" type="java.lang.Long" column="resp_cargar_meta_id" />
+		<property name="responsableCargarEjecutadoId" type="java.lang.Long" column="resp_cargar_ejecutado_id" />
+		<property name="claseId" type="java.lang.Long" column="clase_id" />
+		<property name="tipoMedicion" type="java.lang.Byte" column="tipo_medicion" />
+		<property name="objetoAsociadoId" type="java.lang.Long" column="objeto_asociado_id" />
+		<property name="objetoAsociadoClassName" type="java.lang.String" column="objeto_asociado_ClassName" />
+		<property name="alerta" type="java.lang.Byte" column="crecimiento" />
+		<property name="porcentajeCompletado" type="java.lang.Double" column="porcentaje_completado" />
+		<property name="porcentajeEjecutado" type="java.lang.Double" column="porcentaje_ejecutado" />
+		<property name="porcentajeEsperado" type="java.lang.Double" column="porcentaje_esperado" />
+		<property name="fechaUltimaMedicion" type="java.lang.String" column="fecha_ultima_medicion" length="10" />
+
+		<!-- Asociación uno a muchos para PryActividad -->
+		<set name="hijos" lazy="true" order-by="fila">
+			<key>
+				<column name="padre_id" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.planificacionseguimiento.model.PryActividad" />
+		</set>
+
+		<!-- Asociación muchos a uno para PryActividad -->
+		<many-to-one name="padre" class="com.visiongc.app.strategos.planificacionseguimiento.model.PryActividad" not-null="false" insert="false" update="false">
+			<column name="padre_id" />
+		</many-to-one>
+
+
+		<!-- Asociación uno a uno para unidad de medida -->
+		<many-to-one name="unidadMedida" class="com.visiongc.app.strategos.unidadesmedida.model.UnidadMedida" lazy="false" fetch="join" column="unidad_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para responsableFijarMeta -->
+		<many-to-one name="responsableFijarMeta" class="com.visiongc.app.strategos.responsables.model.Responsable" lazy="false" fetch="join" column="resp_fijar_meta_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para responsableLograrMeta -->
+		<many-to-one name="responsableLograrMeta" class="com.visiongc.app.strategos.responsables.model.Responsable" lazy="false" fetch="join" column="resp_lograr_meta_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para responsableSeguimiento -->
+		<many-to-one name="responsableSeguimiento" class="com.visiongc.app.strategos.responsables.model.Responsable" lazy="false" fetch="join" column="resp_seguimiento_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para responsableCargarMeta -->
+		<many-to-one name="responsableCargarMeta" class="com.visiongc.app.strategos.responsables.model.Responsable" lazy="false" fetch="join" column="resp_cargar_meta_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para responsableCargarEjecutado -->
+		<many-to-one name="responsableCargarEjecutado" class="com.visiongc.app.strategos.responsables.model.Responsable" lazy="false" fetch="join" column="resp_cargar_ejecutado_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para PryActividad -->
+		<one-to-one name="pryInformacionActividad" class="com.visiongc.app.strategos.planificacionseguimiento.model.PryInformacionActividad" cascade="persist, merge, save-update, delete"></one-to-one>
+
+	</class>
+
+</hibernate-mapping>

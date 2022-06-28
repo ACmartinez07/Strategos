@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -43,6 +45,7 @@ import org.apache.struts.actions.DownloadAction;
 import org.apache.struts.util.MessageResources;
 
 import com.lowagie.text.Element;
+import com.lowagie.text.Image;
 import com.lowagie.text.Paragraph;
 import com.visiongc.app.strategos.explicaciones.StrategosExplicacionesService;
 import com.visiongc.app.strategos.explicaciones.model.Explicacion;
@@ -104,7 +107,7 @@ public class PlanConsolidadoReporteXLSAction extends VgcAction
 			String nombre) {
 
 		/**
-		 * Se agrega el url porque este es un nivel de navegación válido
+		 * Se agrega el url porque este es un nivel de navegaciï¿½n vï¿½lido
 		 */
 
 		navBar.agregarUrl(url, nombre);
@@ -130,6 +133,7 @@ public class PlanConsolidadoReporteXLSAction extends VgcAction
 	    	reporte.setTipoPeriodo(request.getParameter("tipoPeriodo") != null ? Byte.parseByte(request.getParameter("tipoPeriodo")) : reporte.getPeriodoAlCorte());
 	    	reporte.setVisualizarIndicadores((request.getParameter("visualizarIndicadores") != null ? (request.getParameter("visualizarIndicadores").equals("1") ? true : false) : false));
 	    	reporte.setVisualizarIniciativas((request.getParameter("visualizarIniciativas") != null ? (request.getParameter("visualizarIniciativas").equals("1") ? true : false) : false));
+	    	reporte.setVisualizarActividad((request.getParameter("visualizarActividades") != null ? (request.getParameter("visualizarActividades").equals("1") ? true : false) : false));
 
 			Byte selectHitoricoType = (request.getParameter("selectHitoricoType") != null && request.getParameter("selectHitoricoType") != "") ? Byte.parseByte(request.getParameter("selectHitoricoType")) : HistoricoType.getFiltroHistoricoNoMarcado();
 			FiltroForm filtro = new FiltroForm();
@@ -185,7 +189,7 @@ public class PlanConsolidadoReporteXLSAction extends VgcAction
 		StrategosPerspectivasService strategosPerspectivasService = StrategosServiceFactory.getInstance().openStrategosPerspectivasService();
 	    StrategosIndicadoresService strategosIndicadoresService = StrategosServiceFactory.getInstance().openStrategosIndicadoresService();
 	    StrategosIniciativasService strategosIniciativasService = StrategosServiceFactory.getInstance().openStrategosIniciativasService();
-	    StrategosMedicionesService strategosMedicionesService = StrategosServiceFactory.getInstance().openStrategosMedicionesService();
+	    StrategosMedicionesService strategosMedicionesService = StrategosServiceFactory.getInstance().openStrategosMedicionesService();	    
 	    
 	    Plan plan = (Plan)strategosPerspectivasService.load(Plan.class, reporte.getPlanId());
 	    reporte.setPlantillaPlanes((PlantillaPlanes)strategosPerspectivasService.load(PlantillaPlanes.class, new Long(plan.getMetodologiaId())));
@@ -210,19 +214,19 @@ public class PlanConsolidadoReporteXLSAction extends VgcAction
 		//HSSFWorkbook objWB = new HSSFWorkbook();
 
 		// Creamos la celda, aplicamos el estilo y definimos
-		// el tipo de dato que contendrá la celda
+		// el tipo de dato que contendrï¿½ la celda
 		Cell celda = null;
 
 		// Creo la hoja
 		Sheet hoja1 = objWB.createSheet("Consolidado Plan");
 
-		// Proceso la información y genero el xls.
+		// Proceso la informaciï¿½n y genero el xls.
 		int numeroFila = 1;
 		int numeroCelda = 1;
 		Row fila = hoja1.createRow(numeroFila++);
 
 		// Creamos la celda, aplicamos el estilo y definimos
-		// el tipo de dato que contendrá la celda
+		// el tipo de dato que contendrï¿½ la celda
 		celda = fila.createCell(numeroCelda);
 		celda.setCellType(HSSFCell.CELL_TYPE_STRING);
 		celda.setCellValue(mensajes.getMessage("jsp.reportes.plan.consolidado.titulo"));
@@ -361,14 +365,13 @@ public class PlanConsolidadoReporteXLSAction extends VgcAction
 				celda = fila.createCell(numeroCelda);
 				celda.setCellValue("");
 			}
+						
 		}
 		
 	    strategosPerspectivasService.close();
 	    strategosIndicadoresService.close();
 	    strategosIniciativasService.close();
-	    strategosMedicionesService.close();
-		
-		
+	    strategosMedicionesService.close();	    
 		
 		 
         Date date = new Date();
@@ -1091,7 +1094,38 @@ public class PlanConsolidadoReporteXLSAction extends VgcAction
 				celda.setCellType(HSSFCell.CELL_TYPE_STRING);
 				celda.setCellValue(texto);
 				
+			}		
+			
+			if (reporte.getVisualizarActividad())
+			{
+				for (Iterator<Iniciativa> iter = iniciativas.iterator(); iter.hasNext();)
+				{
+					Iniciativa iniciativa = (Iniciativa)iter.next();
+										
+					numeroCelda = 1;
+					fila = hoja.createRow(numeroFila++);
+					celda = fila.createCell(numeroCelda);
+					celda.setCellValue("");
+					
+					// Subtitulo de actividades 									
+					String subTitulo = mensajes.getMessage("jsp.modulo.actividad.titulo.singular") + " : " + iniciativa.getNombre(); 
+					if (subTitulo != null)
+					{
+						numeroCelda = 1;
+						fila = hoja.createRow(numeroFila++);
+						celda = fila.createCell(numeroCelda);
+						celda.setCellValue(subTitulo);
+					}
+					
+					numeroFila = dibujarInformacionActividad(numeroFila, nivel, reporte, iniciativa, objWB, hoja,strategosMedicionesService, strategosIndicadoresService, mensajes, request);
+					
+					numeroCelda = 1;
+					fila = hoja.createRow(numeroFila++);
+					celda = fila.createCell(numeroCelda);
+					celda.setCellValue("");
+				}	
 			}
+			
 		}
 		else
 		{
@@ -1109,6 +1143,161 @@ public class PlanConsolidadoReporteXLSAction extends VgcAction
 		strategosPryActividadesService.close();
 		
 		return numeroFila;
+	}
+	
+	private int dibujarInformacionActividad(int numeroFila, int nivel , ReporteForm reporte, Iniciativa iniciativa, Workbook objWB, Sheet hoja, StrategosMedicionesService strategosMedicionesService, StrategosIndicadoresService strategosIndicadoresService, MessageResources mensajes, HttpServletRequest request) throws Exception {
+				
+		StrategosMetasService strategosMetasService = StrategosServiceFactory.getInstance().openStrategosMetasService();
+		StrategosPryActividadesService strategosPryActividadesService = StrategosServiceFactory.getInstance()
+				.openStrategosPryActividadesService();
+		
+		Map<String, Object> filtros = new HashMap<String, Object>();
+		String texto;
+		Date fechaAh = new Date();
+		Date fechaFi = new Date();
+		
+		Cell celda = null;
+		Row fila;
+		int numeroCelda = 1;
+		
+		filtros = new HashMap<String, Object>();
+		filtros.put("proyectoId", iniciativa.getProyectoId());
+		
+		List<PryActividad> actividades = strategosPryActividadesService
+				.getActividades(0, 0, "fila", "ASC", true, filtros).getLista();
+		
+		if (actividades.size() > 0)
+		{
+		    String[][] columnas = new String[10][2];
+		    int contador = 0;
+		    columnas[contador][0] = "15";
+		    columnas[contador][1] = mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.titulo.actividades");
+		    
+		    contador++;
+		    columnas[contador][0] = "100";
+		    columnas[contador][1] = mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.titulo.inicio");
+
+		    contador++;
+		    columnas[contador][0] = "15";
+		    columnas[contador][1] = mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.titulo.culminacion");
+
+		    contador++;
+		    columnas[contador][0] = "30";
+		    columnas[contador][1] = mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.titulo.peso");
+
+		    contador++;
+		    columnas[contador][0] = "35";
+		    columnas[contador][1] = mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.titulo.duracion");
+		    
+		    contador++;
+		    columnas[contador][0] = "30";
+		    columnas[contador][1] = mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.titulo.alerta");
+
+		    contador++;
+		    columnas[contador][0] = "35";
+		    columnas[contador][1] = mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.titulo.porcentaje.ejecutado");
+		    
+		    contador++;
+		    columnas[contador][0] = "30";
+		    columnas[contador][1] = mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.titulo.porcentaje.programado");
+		    
+		    contador++;
+		    columnas[contador][0] = "50";
+		    columnas[contador][1] = mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.titulo.responsable");
+		    
+		    contador++;
+		    columnas[contador][0] = "30";
+		    columnas[contador][1] = mensajes.getMessage("action.reporte.estatus.iniciativa.nombre.dias.diferencia");
+		    
+			numeroFila = crearEncabezado(columnas, numeroFila, reporte, mensajes, strategosMedicionesService, strategosIndicadoresService, objWB, hoja, request);
+			
+			for (Iterator<PryActividad> iter = actividades.iterator(); iter.hasNext();) {
+				PryActividad actividad = (PryActividad) iter.next();
+				
+				numeroCelda = 1;
+				
+				
+				fila = hoja.createRow(numeroFila++);
+				celda = fila.createCell(numeroCelda++);
+				//celda.setCellStyle(getEstiloCuerpo(objWB));
+				celda.setCellType(HSSFCell.CELL_TYPE_STRING);
+				celda.setCellValue(actividad.getNombre());
+				
+				celda = fila.createCell(numeroCelda++);
+				//celda.setCellStyle(getEstiloCuerpo(objWB));
+				celda.setCellType(HSSFCell.CELL_TYPE_STRING);
+				celda.setCellValue(VgcFormatter.formatearFecha(actividad.getComienzoPlan(), "formato.fecha.corta"));
+				
+				celda = fila.createCell(numeroCelda++);
+				//celda.setCellStyle(getEstiloCuerpo(objWB));
+				celda.setCellType(HSSFCell.CELL_TYPE_STRING);
+				celda.setCellValue(VgcFormatter.formatearFecha(actividad.getFinPlan(), "formato.fecha.corta"));
+				
+				celda = fila.createCell(numeroCelda++);
+				//celda.setCellStyle(getEstiloCuerpo(objWB));
+				celda.setCellType(HSSFCell.CELL_TYPE_STRING);
+				celda.setCellValue(VgcFormatter.formatearNumero(actividad.getPeso()));
+				
+				celda = fila.createCell(numeroCelda++);
+				//celda.setCellStyle(getEstiloCuerpo(objWB));
+				celda.setCellType(HSSFCell.CELL_TYPE_STRING);
+				celda.setCellValue(VgcFormatter.formatearNumero(actividad.getDuracionPlan()));
+																
+				texto = null;
+				//String url = obtenerCadenaRecurso(request);
+				if (actividad.getAlerta() == null)
+					celda.setCellValue("");
+				else if (actividad.getAlerta().byteValue() == AlertaIndicador.getAlertaRoja().byteValue())
+					texto = "Roja";					
+				else if (actividad.getAlerta().byteValue() == AlertaIndicador.getAlertaVerde().byteValue())
+					texto = "Verde";
+				else if (actividad.getAlerta().byteValue() == AlertaIndicador.getAlertaAmarilla().byteValue())
+					texto = "Amarillo";													    										
+				celda = fila.createCell(numeroCelda++);
+				//celda.setCellStyle(getEstiloCuerpo(objWB));
+				celda.setCellType(HSSFCell.CELL_TYPE_STRING);
+				celda.setCellValue(texto);
+				
+				celda = fila.createCell(numeroCelda++);
+				//celda.setCellStyle(getEstiloCuerpo(objWB));
+				celda.setCellType(HSSFCell.CELL_TYPE_STRING);
+				celda.setCellValue(actividad.getPorcentajeEjecutado() != null ? actividad.getPorcentajeEjecutadoFormateado() : "");
+				
+				celda = fila.createCell(numeroCelda++);
+				//celda.setCellStyle(getEstiloCuerpo(objWB));
+				celda.setCellType(HSSFCell.CELL_TYPE_STRING);				
+				celda.setCellValue(actividad.getPorcentajeEsperado() != null ? actividad.getPorcentajeEsperadoFormateado() : "");
+				
+				celda = fila.createCell(numeroCelda++);
+				//celda.setCellStyle(getEstiloCuerpo(objWB));
+				if(actividad.getResponsableSeguimiento() != null)
+					texto = actividad.getResponsableSeguimiento().getNombre();
+				else
+					texto = "";
+				celda.setCellType(HSSFCell.CELL_TYPE_STRING);
+				celda.setCellValue(texto);
+				
+				//Dias 	
+				
+				texto = "";
+				fechaAh = actividad.getComienzoPlan();
+				fechaFi = actividad.getFinPlan();
+				
+				if(fechaAh != null && fechaFi != null) {	
+					int milisecondsByDay = 86400000;					
+					int dias = (int) ((fechaFi.getTime()-fechaAh.getTime()) / milisecondsByDay);
+					texto = ""+dias;
+				}else {
+					texto = "";
+				}
+				
+				celda = fila.createCell(numeroCelda++);
+				//celda.setCellStyle(getEstiloCuerpo(objWB));
+				celda.setCellType(HSSFCell.CELL_TYPE_STRING);
+				celda.setCellValue(texto);
+			}								
+		}
+		return numeroFila;		
 	}
 	
 	public Date obtenerFechaFinal(List<PryActividad> actividades) {
@@ -1136,7 +1325,7 @@ public class PlanConsolidadoReporteXLSAction extends VgcAction
 		fuente.setFontName(HSSFFont.FONT_ARIAL);
 		fuente.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 
-		// Luego creamos el objeto que se encargará de aplicar el estilo a la
+		// Luego creamos el objeto que se encargarï¿½ de aplicar el estilo a la
 		// celda
 		CellStyle estiloCelda = objWB.createCellStyle();
 		estiloCelda.setWrapText(true);
@@ -1144,7 +1333,7 @@ public class PlanConsolidadoReporteXLSAction extends VgcAction
 		estiloCelda.setVerticalAlignment(HSSFCellStyle.VERTICAL_TOP);
 		estiloCelda.setFont(fuente);
 
-		// También, podemos establecer bordes...
+		// Tambiï¿½n, podemos establecer bordes...
 		estiloCelda.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);
 		estiloCelda.setBottomBorderColor((short) 8);
 		estiloCelda.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);
@@ -1170,7 +1359,7 @@ public class PlanConsolidadoReporteXLSAction extends VgcAction
 		fuente.setFontName(HSSFFont.FONT_ARIAL);
 		fuente.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
 
-		// Luego creamos el objeto que se encargará de aplicar el estilo a la
+		// Luego creamos el objeto que se encargarï¿½ de aplicar el estilo a la
 		// celda
 		CellStyle estiloCelda = objWB.createCellStyle();
 		estiloCelda.setWrapText(true);
@@ -1178,7 +1367,7 @@ public class PlanConsolidadoReporteXLSAction extends VgcAction
 		estiloCelda.setVerticalAlignment(HSSFCellStyle.VERTICAL_TOP);
 		estiloCelda.setFont(fuente);
 
-		// También, podemos establecer bordes...
+		// Tambiï¿½n, podemos establecer bordes...
 		estiloCelda.setBorderBottom(HSSFCellStyle.BORDER_MEDIUM);
 		estiloCelda.setBottomBorderColor((short) 8);
 		estiloCelda.setBorderLeft(HSSFCellStyle.BORDER_MEDIUM);

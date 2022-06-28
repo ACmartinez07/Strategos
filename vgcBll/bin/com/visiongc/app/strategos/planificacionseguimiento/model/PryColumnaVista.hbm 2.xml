@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto PryColumnaVista de la Base de Datos -->
+<!-- Creado por: Kerwin Arias (28/04/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.planificacionseguimiento.model.PryColumnaVista" table="pry_columna_vista">
+
+		<!-- Atributo clave -->
+		<composite-id name="pk" class="com.visiongc.app.strategos.planificacionseguimiento.model.PryColumnaVistaPK">
+			<key-property name="columnaId" column="columna_id" type="java.lang.Long" />
+			<key-property name="vistaId" column="vista_id" type="java.lang.Long" />
+		</composite-id>
+
+		<!-- Atributos del objeto conceptual -->
+		<property name="alineacion" type="java.lang.Byte" column="alineacion" />
+		<property name="ancho" type="java.lang.Integer" column="ancho_java" />
+		<property name="orden" type="java.lang.Integer" column="orden" />
+
+		<!-- Asociación uno a uno para organizacion -->
+		<many-to-one name="pryVista" class="com.visiongc.app.strategos.planificacionseguimiento.model.PryVista" column="vista_id" unique="true" insert="false" update="false"></many-to-one>
+
+	</class>
+
+</hibernate-mapping>

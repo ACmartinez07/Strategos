@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Creado por: Kerwin Arias (18/01/2012) -->
+<!-- Modificado por: Kerwin Arias (28/08/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.framework.model.PermisoGrupo" table="afw_permiso_grupo">
+
+		<composite-id name="pk" class="com.visiongc.framework.model.PermisoGrupoPK">
+			<key-property name="permisoId" column="permiso_id" type="java.lang.String" length="10" />
+
+			<key-property name="grupoId" column="grupo_id" type="java.lang.Long" length="10" />
+
+		</composite-id>
+
+
+		<!-- Associations -->
+
+
+		<!-- end of derived association(s) -->
+
+	</class>
+
+</hibernate-mapping>
