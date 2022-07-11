@@ -97,10 +97,13 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 		reporte.clear();
 
 		// Obtencion del request
-		String tipo = (request.getParameter("tipo"));
+		//String tipo = (request.getParameter("tipo"));
+		String tipo = "1";
 		String ano = (request.getParameter("ano"));
-		String estatus = (request.getParameter("estatus"));		
-		String todos = (request.getParameter("todos"));
+		//String estatus = (request.getParameter("estatus"));
+		String estatus = "1";		
+		//String todos = (request.getParameter("todos"));
+		String todos =  "1";
 		Font fuente = getConfiguracionPagina(request).getFuente();
 
 		/* Parametros para el reporte */
@@ -119,7 +122,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 		reporte.setAnoFinal(request.getParameter("anoFinal"));
 		reporte.setAlcance(request.getParameter("alcance") != null ? Byte.parseByte(request.getParameter("alcance"))
 				: reporte.getAlcancePlan());
-		reporte.setAno(Integer.parseInt(ano));
+		reporte.setAno(2022);
 		reporte.setTipo(Long.parseLong(tipo));
 		reporte.setEstatus(estatus);
 		// Visualizar Objetivos

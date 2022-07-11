@@ -225,7 +225,7 @@
 		}
 		
 		var instrumentoId = document.gestionarInstrumentosForm.seleccionados.value;
-		abrirVentanaModal('<html:rewrite action="/instrumentos/asignarPesos" />?id='+ instrumentoId, "instrumento", 730, 600);
+		abrirVentanaModal('<html:rewrite action="/instrumentos/asignarPesos" />?id='+ instrumentoId, "instrumento", 710, 550);
 	}
 	
 </script>

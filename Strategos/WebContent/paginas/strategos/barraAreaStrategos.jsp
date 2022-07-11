@@ -334,14 +334,15 @@
 		</logic:notEmpty>
 
 		
-		<!-- 	Riesgo -->
 		
+		<!-- Banco Proyectos
 		<vgcinterfaz:botonBarraAreas permisoId="" onclick="bancoProyectos();" nombre="riesgo" urlImage="/paginas/strategos/imagenes/portafolio.gif" >
 			<vgcutil:message key="barraareas.strategos.banco" />
-		</vgcinterfaz:botonBarraAreas>
+		</vgcinterfaz:botonBarraAreas> --> 
+		
 		
 
-				
+		<!-- 	Riesgo 
 		<logic:notEmpty scope="session" name="activarRiesgo">
 			<logic:notEmpty scope="session" name="activarRiesgo" property="objeto">
 				<logic:equal scope="session" name="activarRiesgo" property="objeto.activo" value="true">
@@ -351,7 +352,7 @@
 				</logic:equal>
 			</logic:notEmpty>
 		</logic:notEmpty>
-		
+		-->
 	
 		<!-- Plan -->
 		<logic:empty scope="session" name="activarPlan">
@@ -418,11 +419,13 @@
 			</logic:notEmpty>
 		</logic:notEmpty>
 		
-		<!-- Instrumentos -->		 
+		<!-- Instrumentos 	 -->	
 	
 		<vgcinterfaz:botonBarraAreas permisoId="INSTRUMENTOS" onclick="gestionarInstrumentos();" nombre="instrumentos" urlImage="/paginas/strategos/imagenes/riesgo.gif">
 			<vgcutil:message key="barraareas.strategos.instrumentos" />
 		</vgcinterfaz:botonBarraAreas>
+		
+		
 			 	
 		
 			 	

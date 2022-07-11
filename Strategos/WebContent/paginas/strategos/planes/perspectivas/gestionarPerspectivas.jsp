@@ -65,17 +65,20 @@
 	
 	function nuevaPerspectiva() 
 	{		
-		abrirVentanaModal('<html:rewrite action="/planes/perspectivas/crearPerspectiva"/>', "PerspectivaAdd", 680, 460);
+		//abrirVentanaModal('<html:rewrite action="/planes/perspectivas/crearPerspectiva"/>', "PerspectivaAdd", 680, 460);
+		window.location.href = '<html:rewrite action="/planes/perspectivas/crearPerspectiva" />';
 	}
 	
 	function modificarPerspectiva() 
 	{
 		<logic:equal scope="session" name="editarPerspectiva" value="true">			
-			abrirVentanaModal('<html:rewrite action="/planes/perspectivas/modificarPerspectiva"/>?perspectivaId=<bean:write name="perspectiva" property="perspectivaId" scope="session" />', "PerspectivaEdit", 680, 460);
+			//abrirVentanaModal('<html:rewrite action="/planes/perspectivas/modificarPerspectiva"/>?perspectivaId=<bean:write name="perspectiva" property="perspectivaId" scope="session" />', "PerspectivaEdit", 680, 460);
+			window.location.href = '<html:rewrite action="/planes/perspectivas/modificarPerspectiva" />?perspectivaId=<bean:write name="perspectiva" property="perspectivaId" scope="session" />';
 		</logic:equal>
 		<logic:notEqual scope="session" name="editarPerspectiva" value="true">
 			<logic:equal scope="session" name="verPerspectiva" value="true">				
 				abrirVentanaModal('<html:rewrite action="/planes/perspectivas/verPerspectiva"/>?perspectivaId=<bean:write name="perspectiva" property="perspectivaId" scope="session" />', "PerspectivaEdit", 680, 460);
+				window.location.href = '<html:rewrite action="/planes/perspectivas/verPerspectiva"/>?perspectivaId=<bean:write name="perspectiva" property="perspectivaId" scope="session" />';
 			</logic:equal>
 		</logic:notEqual>
 	}

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.indicadores.model.InsumoFormula" table="conjunto_formula">
+
+		<composite-id name="pk" class="com.visiongc.app.strategos.indicadores.model.InsumoFormulaPK">
+			<key-property name="padreId" column="padre_id" type="java.lang.Long" />
+			<key-property name="indicadorId" column="indicador_id" type="java.lang.Long" />
+			<key-property name="serieId" column="serie_id" type="java.lang.Long" />
+			<key-property name="insumoSerieId" column="insumo_serie_id" type="java.lang.Long" />
+		</composite-id>
+
+		<!-- Associations -->
+		<!-- derived association(s) for compound key -->
+		<!-- bi-directional many-to-one association to Indicador -->
+		<many-to-one name="padre" class="com.visiongc.app.strategos.indicadores.model.Indicador" update="false" insert="false" fetch="select">
+			<column name="padre_id" />
+		</many-to-one>
+
+		<!-- bi-directional many-to-one association to Indicador -->
+		<many-to-one name="insumo" class="com.visiongc.app.strategos.indicadores.model.Indicador" update="false" insert="false" fetch="select">
+			<column name="indicador_id" />
+		</many-to-one>
+
+		<!-- bi-directional many-to-one association to SerieTiempo -->
+		<many-to-one name="serieTiempo" class="com.visiongc.app.strategos.seriestiempo.model.SerieTiempo" update="false" insert="false" fetch="select">
+			<column name="serie_id" />
+		</many-to-one>
+
+		<!-- bi-directional many-to-one association to SerieTiempo -->
+		<many-to-one name="insumoSerieTiempo" class="com.visiongc.app.strategos.seriestiempo.model.SerieTiempo" update="false" insert="false" fetch="select">
+			<column name="insumo_serie_id" />
+		</many-to-one>
+
+		<!-- bi-directional many-to-one association to Formula -->
+		<many-to-one name="formula" class="com.visiongc.app.strategos.indicadores.model.Formula" update="false" insert="false" lazy="true" fetch="select">
+			<column name="padre_id"></column>
+			<column name="serie_id"></column>
+		</many-to-one>
+		<!-- end of derived association(s) -->
+		
+	</class>
+</hibernate-mapping>

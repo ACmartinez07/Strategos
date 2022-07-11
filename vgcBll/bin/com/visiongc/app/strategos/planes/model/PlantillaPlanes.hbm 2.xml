@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto PlantillaPlanes de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (26/05/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.planes.model.PlantillaPlanes" table="metodologia">
+
+		<!-- Atributo clave de la Plantilla  -->
+		<id name="plantillaPlanesId" type="java.lang.Long" column="metodologia_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para PlantillaPlanes -->
+		<property name="nombre" type="java.lang.String" column="nombre" length="50" not-null="true" />
+		<property name="descripcion" type="java.lang.String" column="descripcion" />
+		<property name="creado" type="java.util.Date" column="creado" />
+		<property name="modificado" type="java.util.Date" column="modificado" />
+		<property name="creadoId" type="java.lang.Long" column="creado_id" />
+		<property name="modificadoId" type="java.lang.Long" column="modificado_id" />
+		<property name="nombreIndicadorSingular" type="java.lang.String" length="50" column="indicador_nombre" />
+		<property name="nombreIniciativaSingular" type="java.lang.String" length="50" column="iniciativa_nombre" />
+		<property name="nombreActividadSingular" type="java.lang.String" length="50" column="actividad_nombre" />
+		<property name="tipo" type="java.lang.Byte" column="tipo" />
+
+		<!-- Asociación uno a muchos con ElementoPlantillaPlanes -->
+		<set name="elementos" fetch="select" lazy="true" inverse="true" cascade="persist, merge, save-update, delete, delete-orphan" order-by="orden asc">
+			<key>
+				<column name="metodologia_id" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.planes.model.ElementoPlantillaPlanes" />
+		</set>
+
+	</class>
+
+</hibernate-mapping>

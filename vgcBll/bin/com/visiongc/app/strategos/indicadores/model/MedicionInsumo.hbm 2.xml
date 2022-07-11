@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.app.strategos.indicadores.model.MedicionInsumo"
+		table="medicion_insumo">
+
+		
+		<property name="indicadorId" type="java.lang.Long" column="indicador_id" />
+		<property name="formulaId" type="java.lang.Long" column="formula_id" />
+		<property name="inventario" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="inventario" />
+		<property name="organizacionId" type="java.lang.Long" column="organizacion_id" />
+		<property name="periodoInicial" type="java.lang.Integer" column="periodo_inicial" />
+		<property name="periodoFinal" type="java.lang.Integer" column="periodo_final" />
+		<property name="anoInicial" type="java.lang.Integer" column="ano_inicial" />
+		<property name="anoFinal" type="java.lang.Integer" column="ano_final" />
+		<property name="resultado" type="java.lang.Double" not-null="false" column="resultado" />
+
+		<!-- Associations -->
+		
+	</class>
+</hibernate-mapping>
