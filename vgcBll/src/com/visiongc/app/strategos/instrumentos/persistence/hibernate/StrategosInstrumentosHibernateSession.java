@@ -173,4 +173,23 @@ public class StrategosInstrumentosHibernateSession extends StrategosHibernateSes
 		
 		return actualizados != 0 ? 10000 : 10001;
 	}
+
+	
+	public Instrumentos getValoresOriginales(Long instrumentoId) {
+		
+		Instrumentos instrumento = null;
+		
+		String hqlQuery = "select frecuencia, instrumentoId from Instrumentos instrumento where instrumento.instrumentoId = :instrumentoId";
+		
+		List<Object[]> resultado = session.createQuery(hqlQuery).setLong("iniciativaId", instrumentoId.longValue()).list();
+		if(resultado.size() > 0) {
+			instrumento = new Instrumentos();
+			
+			Object[] valores = (Object[])resultado.get(0);
+			
+			instrumento.setFrecuencia((Byte)valores[0]);
+		}
+		
+		return null;
+	}
 }

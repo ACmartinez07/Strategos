@@ -7,6 +7,7 @@ import com.visiongc.app.strategos.persistence.StrategosPersistenceSession;
 import com.visiongc.commons.util.PaginaLista;
 import com.visiongc.framework.model.Usuario;
 import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativa;
+import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 
 public abstract interface StrategosInstrumentosPersistenceSession extends StrategosPersistenceSession{
 	
@@ -15,4 +16,6 @@ public abstract interface StrategosInstrumentosPersistenceSession extends Strate
 	  public abstract List<InstrumentoIniciativa> getIniciativasInstrumento(Long paramLong);
 	  
 	  public abstract int updatePesos(InstrumentoIniciativa paramInstrumentoIniciativa, Usuario paramUsuario);
+	  
+	  public abstract Instrumentos getValoresOriginales(Long paramLong);
 }

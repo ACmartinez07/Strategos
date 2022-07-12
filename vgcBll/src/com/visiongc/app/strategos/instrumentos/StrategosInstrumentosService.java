@@ -15,7 +15,7 @@ public abstract interface StrategosInstrumentosService
   
   public abstract int deleteInstrumentos(Instrumentos paramInstrumento, Usuario paramUsuario);
   
-  public abstract int saveInstrumentos(Instrumentos paramInstrumento, Usuario paramUsuario);
+  public abstract int saveInstrumentos(Instrumentos paramInstrumento, Usuario paramUsuario, Boolean paramBoolean);
   
   public abstract int asociarInstrumento(Long paramLong1, Long paramLong2, Usuario paramUsuario);
   
