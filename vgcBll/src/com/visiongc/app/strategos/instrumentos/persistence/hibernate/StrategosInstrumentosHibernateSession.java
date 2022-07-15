@@ -10,13 +10,14 @@ import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
-
+import com.visiongc.app.strategos.indicadores.model.ClaseIndicadores;
 import com.visiongc.app.strategos.instrumentos.model.Cooperante;
 import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativa;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosCooperantesPersistenceSession;
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosInstrumentosPersistenceSession;
 import com.visiongc.app.strategos.persistence.hibernate.StrategosHibernateSession;
+import com.visiongc.commons.util.ListaMap;
 import com.visiongc.commons.util.PaginaLista;
 import com.visiongc.framework.model.Usuario;
 
@@ -191,5 +192,36 @@ public class StrategosInstrumentosHibernateSession extends StrategosHibernateSes
 		}
 		
 		return null;
+	}
+	
+	public Instrumentos getInstrumentoByIndicador(long indicadorId) {
+		
+		String sql = "select nre Instrumentos(instrumento.instrumentoId) from Instrumentos instrumento, IndicadorInstrumento indicadorInstrumento where instrumento.instrumentoId = indicadorInstrumento.pk.instrumentoId and indicadorInstrumento.pk.indicadorId=:indicadorId";
+		
+		Query consulta = session.createQuery(sql);
+		consulta.setLong("indicadorId", indicadorId);
+		
+		Instrumentos instrumento = (Instrumentos)consulta.uniqueResult();
+		
+		if(instrumento != null) {
+			return (Instrumentos)load(Instrumentos.class, new Long(instrumento.getInstrumentoId().longValue()));
+		}
+		
+		return null;
+	}
+	
+	public ListaMap getDependenciasCiclicasInstrumento(Instrumentos instrumento) {
+		ListaMap dependenciasCiclicas = new ListaMap();
+		
+		Criteria consulta = null;
+		
+		if(instrumento.getClaseId() != null) {
+			consulta = session.createCriteria(ClaseIndicadores.class);
+			consulta.add(Restrictions.eq("claseId", instrumento.getClaseId()));
+			List clases = consulta.list();
+			dependenciasCiclicas.add(clases, "clases");
+		}
+		
+		return dependenciasCiclicas;
 	}
 }

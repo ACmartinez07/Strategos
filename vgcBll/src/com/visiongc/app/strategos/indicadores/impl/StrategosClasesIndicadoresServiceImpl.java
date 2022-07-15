@@ -153,6 +153,8 @@ public class StrategosClasesIndicadoresServiceImpl
   
   public int saveClaseIndicadores(ClaseIndicadores clase, Usuario usuario)
   {
+	  
+	System.out.print("Inicia a guardar clase indicador\n\n");
     boolean transActiva = false;
     int resultado = 10000;
     String[] fieldNames = new String[3];
@@ -172,17 +174,22 @@ public class StrategosClasesIndicadoresServiceImpl
       fieldValues[2] = clase.getOrganizacionId();
       if ((clase.getClaseId() == null) || (clase.getClaseId().longValue() == 0L))
       {
+    	  
+    	System.out.print("\n\nNO Existe clase id\n\n");
         if (this.persistenceSession.existsObject(clase, fieldNames, fieldValues))
         {
           resultado = 10003;
         }
         else
         {
+        	System.out.print("\n\nNo se que pasa aca pero entra aca id\n\n");
           clase.setClaseId(new Long(this.persistenceSession.getUniqueId()));
           
           Date fechaInsercionIniciativa = new Date();
           clase.setCreado(new Date(fechaInsercionIniciativa.getTime()));
           clase.setCreadoId(usuario.getUsuarioId());
+          
+          System.out.print(clase);
           
           resultado = this.persistenceSession.insert(clase, usuario);
         }

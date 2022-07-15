@@ -20,7 +20,7 @@ public interface VgcPersistenceSession
 
     public abstract void lock(Object obj);
 
-    public abstract int insert(Object obj, Usuario usuario);
+    public abstract int insert(Object obj, Usuario usuario);    
 
     public abstract int update(Object obj, Usuario usuario);
 

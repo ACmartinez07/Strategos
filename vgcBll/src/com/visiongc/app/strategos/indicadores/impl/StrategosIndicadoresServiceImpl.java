@@ -600,6 +600,8 @@ public class StrategosIndicadoresServiceImpl
   
   private void setSeriesIndicadorForSave(Indicador indicador)
   {
+	  
+	  System.out.print("\n\nEntra a set series indicador for save\n\n");
       if(indicador.getSeriesIndicador() == null)
       {
           indicador.setSeriesIndicador(new HashSet());
@@ -642,6 +644,8 @@ public class StrategosIndicadoresServiceImpl
   
   public int saveIndicador(Indicador indicador, Usuario usuario)
   {
+	  
+	  System.out.print("\n\nLlega a save Indicador\n\n");
     boolean transActiva = false;
     boolean transActivaViene = false;
     int resultado = 10000;

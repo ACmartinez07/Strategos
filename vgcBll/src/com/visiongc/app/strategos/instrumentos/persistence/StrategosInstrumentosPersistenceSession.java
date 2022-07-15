@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.visiongc.app.strategos.persistence.StrategosPersistenceSession;
+import com.visiongc.commons.util.ListaMap;
 import com.visiongc.commons.util.PaginaLista;
 import com.visiongc.framework.model.Usuario;
 import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativa;
@@ -18,4 +19,8 @@ public abstract interface StrategosInstrumentosPersistenceSession extends Strate
 	  public abstract int updatePesos(InstrumentoIniciativa paramInstrumentoIniciativa, Usuario paramUsuario);
 	  
 	  public abstract Instrumentos getValoresOriginales(Long paramLong);
+	  
+	  public abstract Instrumentos getInstrumentoByIndicador(long indicadorId);
+	  
+	  public abstract ListaMap getDependenciasCiclicasInstrumento(Instrumentos paramInstrumento);
 }

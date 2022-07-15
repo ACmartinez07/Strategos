@@ -159,7 +159,7 @@ public class GuardarInstrumentosAction extends VgcAction
     instrumento.setResponsableCgi(editarInstrumentosForm.getResponsableCgi());
     
  
-    respuesta = strategosInstrumentosService.saveInstrumentos(instrumento, getUsuarioConectado(request));
+    respuesta = strategosInstrumentosService.saveInstrumentos(instrumento, getUsuarioConectado(request), true);
 
     if (respuesta == 10000)
     {

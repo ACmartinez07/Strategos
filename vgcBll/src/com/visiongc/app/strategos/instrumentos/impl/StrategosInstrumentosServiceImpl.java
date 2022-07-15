@@ -1,5 +1,6 @@
 package com.visiongc.app.strategos.instrumentos.impl;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,9 +9,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.visiongc.app.strategos.categoriasmedicion.StrategosCategoriasService;
-import com.visiongc.app.strategos.categoriasmedicion.model.CategoriaMedicion;
-import com.visiongc.app.strategos.categoriasmedicion.persistence.StrategosCategoriasPersistenceSession;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import com.visiongc.app.strategos.impl.StrategosServiceFactory;
 import com.visiongc.app.strategos.impl.StrategosServiceImpl;
 import com.visiongc.app.strategos.indicadores.StrategosClasesIndicadoresService;
@@ -28,34 +34,32 @@ import com.visiongc.app.strategos.indicadores.model.util.TipoClaseIndicadores;
 import com.visiongc.app.strategos.indicadores.model.util.TipoCorte;
 import com.visiongc.app.strategos.indicadores.model.util.TipoFuncionIndicador;
 import com.visiongc.app.strategos.indicadores.model.util.TipoMedicion;
-import com.visiongc.app.strategos.iniciativas.StrategosTipoProyectoService;
-import com.visiongc.app.strategos.iniciativas.model.IndicadorIniciativa;
-import com.visiongc.app.strategos.iniciativas.model.Iniciativa;
-import com.visiongc.app.strategos.iniciativas.model.util.ConfiguracionIniciativa;
-import com.visiongc.app.strategos.iniciativas.model.util.TipoProyecto;
-import com.visiongc.app.strategos.iniciativas.persistence.StrategosTipoProyectoPersistenceSession;
-import com.visiongc.app.strategos.instrumentos.StrategosCooperantesService;
 import com.visiongc.app.strategos.instrumentos.StrategosInstrumentosService;
-import com.visiongc.app.strategos.instrumentos.model.Cooperante;
 import com.visiongc.app.strategos.instrumentos.model.IndicadorInstrumento;
 import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativa;
 import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativaPK;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
-import com.visiongc.app.strategos.instrumentos.persistence.StrategosCooperantesPersistenceSession;
+import com.visiongc.app.strategos.instrumentos.model.util.ConfiguracionInstrumento;
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosInstrumentosPersistenceSession;
 import com.visiongc.app.strategos.seriestiempo.model.SerieTiempo;
 import com.visiongc.app.strategos.servicio.Servicio;
 import com.visiongc.app.strategos.unidadesmedida.StrategosUnidadesService;
 import com.visiongc.app.strategos.unidadesmedida.model.UnidadMedida;
+import com.visiongc.commons.impl.VgcAbstractService;
 import com.visiongc.commons.util.PaginaLista;
 import com.visiongc.commons.util.VgcMessageResources;
+import com.visiongc.commons.util.VgcResourceManager;
 import com.visiongc.commons.util.lang.ChainedRuntimeException;
+import com.visiongc.framework.FrameworkService;
+import com.visiongc.framework.impl.FrameworkServiceFactory;
+import com.visiongc.framework.model.Configuracion;
 import com.visiongc.framework.model.Usuario;
 
 public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl implements StrategosInstrumentosService {
 
 	private StrategosInstrumentosPersistenceSession persistenceSession = null;
-
+		
+	
 	public StrategosInstrumentosServiceImpl(StrategosInstrumentosPersistenceSession persistenceSession,
 			boolean persistenceOwned, StrategosServiceFactory serviceFactory, VgcMessageResources messageResources) {
 		super(persistenceSession, persistenceOwned, serviceFactory, messageResources);
@@ -99,13 +103,15 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 				persistenceSession.rollbackTransaction();
 				throw new ChainedRuntimeException(t.getMessage(), t);
 			}
-		}
+		}		
 
 		return resultado;
 
 	}
 
 	public int saveInstrumentos(Instrumentos instrumento, Usuario usuario, Boolean actualizarIndicador) {
+		
+		System.out.print("\n\nEntra a saveInstrumentos (serviceImpl) \n\n");
 
 		boolean transActiva = false;
 		int resultado = 10000;
@@ -121,29 +127,38 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 			fieldValues[0] = instrumento.getNombreCorto();
 
 			if ((instrumento.getInstrumentoId() == null) || (instrumento.getInstrumentoId().longValue() == 0L)) {
+				
+				System.out.print("\n\nNO Existe Instrumento \n\n");
+				
 				if (persistenceSession.existsObject(instrumento, fieldNames, fieldValues)) {
 					resultado = 10003;
 				} else {
 					instrumento.setInstrumentoId(new Long(persistenceSession.getUniqueId()));
-					resultado = persistenceSession.insert(instrumento, usuario);
-
+					
+					System.out.print("\n\nPrevio a Insert Instrumento, usuario \n\n");
+					persistenceSession.insert(instrumento, usuario);
+					
+					System.out.print("\n\nResultado: \n\n" +  resultado);
+					
+					System.out.print("\n\nPrevio a saveClaseIndicadores \n\n");
 					resultado = saveClaseIndicadores(instrumento, usuario);
-					if (resultado == 10000) {
-						ConfiguracionIniciativa configuracionIniciativa = getConfiguracionIniciativa();
+					if (resultado == 10000 ) {
+						ConfiguracionInstrumento configuracionInstrumento = getConfiguracionInstrumento();
 						resultado = saveIndicadorAutomatico(instrumento,
-								TipoFuncionIndicador.getTipoFuncionSeguimiento(), usuario);
-						if ((resultado == 10000)
-								&& (configuracionIniciativa.getIniciativaIndicadorPresupuestoMostrar().booleanValue()))
+								TipoFuncionIndicador.getTipoFuncionSeguimiento(), configuracionInstrumento, usuario);
+						if ((resultado == 10000) && (configuracionInstrumento
+								.getInstrumentoIndicadorPresupuestoMostrar().booleanValue()))
 							resultado = saveIndicadorAutomatico(instrumento,
-									TipoFuncionIndicador.getTipoFuncionPresupuesto(), usuario);
+									TipoFuncionIndicador.getTipoFuncionPresupuesto(), configuracionInstrumento,
+									usuario);
 						if ((resultado == 10000)
-								&& (configuracionIniciativa.getIniciativaIndicadorEficaciaMostrar().booleanValue()))
+								&& (configuracionInstrumento.getInstrumentoIndicadorEficaciaMostrar().booleanValue()))
 							resultado = saveIndicadorAutomatico(instrumento,
-									TipoFuncionIndicador.getTipoFuncionEficacia(), usuario);
-						if ((resultado == 10000)
-								&& (configuracionIniciativa.getIniciativaIndicadorEficienciaMostrar().booleanValue())) {
+									TipoFuncionIndicador.getTipoFuncionEficacia(), configuracionInstrumento, usuario);
+						if ((resultado == 10000) && (configuracionInstrumento.getInstrumentoIndicadorEficienciaMostrar()
+								.booleanValue())) {
 							resultado = saveIndicadorAutomatico(instrumento,
-									TipoFuncionIndicador.getTipoFuncionEficiencia(), usuario);
+									TipoFuncionIndicador.getTipoFuncionEficiencia(), configuracionInstrumento, usuario);
 						}
 					}
 					if (resultado == 10000) {
@@ -155,6 +170,9 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 				}
 
 			} else {
+				
+				System.out.print("\n\nExiste Instrumento \n\n");
+				
 				String[] idFieldNames = new String[1];
 				Object[] idFieldValues = new Object[1];
 
@@ -170,24 +188,24 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 							Instrumentos instrumentoOriginal = getValoresOriginales(instrumento.getInstrumentoId());
 							if (instrumentoOriginal.getFrecuencia().byteValue() != instrumento.getFrecuencia()
 									.byteValue()) {
-								ConfiguracionIniciativa configuracionIniciativa = getConfiguracionIniciativa();
+								ConfiguracionInstrumento configuracionInstrumento = getConfiguracionInstrumento();
 								resultado = updateIndicadorAutomatico(instrumento,
-										TipoFuncionIndicador.getTipoFuncionSeguimiento(), configuracionIniciativa,
+										TipoFuncionIndicador.getTipoFuncionSeguimiento(), configuracionInstrumento,
 										usuario);
-								if ((resultado == 10000) && (configuracionIniciativa
-										.getIniciativaIndicadorPresupuestoMostrar().booleanValue()))
+								if ((resultado == 10000) && (configuracionInstrumento
+										.getInstrumentoIndicadorPresupuestoMostrar().booleanValue()))
 									resultado = updateIndicadorAutomatico(instrumento,
-											TipoFuncionIndicador.getTipoFuncionPresupuesto(), configuracionIniciativa,
+											TipoFuncionIndicador.getTipoFuncionPresupuesto(), configuracionInstrumento,
 											usuario);
-								if ((resultado == 10000) && (configuracionIniciativa
-										.getIniciativaIndicadorEficaciaMostrar().booleanValue()))
+								if ((resultado == 10000) && (configuracionInstrumento
+										.getInstrumentoIndicadorEficaciaMostrar().booleanValue()))
 									resultado = updateIndicadorAutomatico(instrumento,
-											TipoFuncionIndicador.getTipoFuncionEficacia(), configuracionIniciativa,
+											TipoFuncionIndicador.getTipoFuncionEficacia(), configuracionInstrumento,
 											usuario);
-								if ((resultado == 10000) && (configuracionIniciativa
-										.getIniciativaIndicadorEficienciaMostrar().booleanValue())) {
+								if ((resultado == 10000) && (configuracionInstrumento
+										.getInstrumentoIndicadorEficienciaMostrar().booleanValue())) {
 									resultado = updateIndicadorAutomatico(instrumento,
-											TipoFuncionIndicador.getTipoFuncionEficiencia(), configuracionIniciativa,
+											TipoFuncionIndicador.getTipoFuncionEficiencia(), configuracionInstrumento,
 											usuario);
 								}
 							} else {
@@ -195,7 +213,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 										.getInstance().openStrategosIndicadoresService();
 								Indicador indicador = null;
 								String nombre = "";
-								// configuracion
+								ConfiguracionInstrumento configuracionInstrumento = null;
 
 								if (resultado == 10000) {
 									Long indicadorId = instrumento
@@ -203,19 +221,13 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 									if (indicadorId != null) {
 										indicador = (Indicador) strategosIndicadoresService.load(Indicador.class,
 												indicadorId);
-										/*
-										 * if (iniciativa.getAlertaZonaVerde() != null)
-										 * indicador.setAlertaMetaZonaVerde(new
-										 * Double(iniciativa.getAlertaZonaVerde().doubleValue()));
-										 * if(iniciativa.getAlertaZonaAmarilla() != null) {
-										 * indicador.setAlertaMetaZonaAmarilla(new
-										 * Double(iniciativa.getAlertaZonaAmarilla().doubleValue())); }
-										 */
 
-										// configuracion
+										configuracionInstrumento = getConfiguracionInstrumento();
 										nombre = "";
-										if (configuracion) {
-											nombre = configuracion + " - ";
+										if (configuracionInstrumento.getInstrumentoIndicadorAvanceAnteponer()
+												.booleanValue()) {
+											nombre = configuracionInstrumento.getInstrumentoIndicadorAvanceNombre()
+													+ " - ";
 											nombre = nombre + instrumento.getNombreCorto();
 										}
 										if (nombre.length() > 100)
@@ -249,7 +261,8 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 										indicador = (Indicador) strategosIndicadoresService.load(Indicador.class,
 												indicadorId);
 										nombre = "";
-										nombre = configuracion;
+										nombre = configuracionInstrumento.getInstrumentoIndicadorPresupuestoNombre()
+												+ " - ";
 										nombre = nombre + instrumento.getNombreCorto();
 										if (nombre.length() > 100)
 											nombre = nombre.substring(0, 100);
@@ -282,7 +295,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 										indicador = (Indicador) strategosIndicadoresService.load(Indicador.class,
 												indicadorId);
 										nombre = "";
-										nombre = configuracionIniciativa.getIniciativaIndicadorEficaciaNombre() + " - ";
+										nombre = configuracionInstrumento.getInstrumentoIndicadorEficaciaNombre() + " - ";
 										nombre = nombre + instrumento.getNombreCorto();
 										if (nombre.length() > 100)
 											nombre = nombre.substring(0, 100);
@@ -315,7 +328,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 										indicador = (Indicador) strategosIndicadoresService.load(Indicador.class,
 												indicadorId);
 										nombre = "";
-										nombre = configuracionIniciativa.getIniciativaIndicadorEficienciaNombre()
+										nombre = configuracionInstrumento.getInstrumentoIndicadorEficienciaNombre()
 												+ " - ";
 										nombre = nombre + instrumento.getNombreCorto();
 										if (nombre.length() > 100)
@@ -351,11 +364,11 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 					}
 				}
 			}
-			/*String valorEnteEjecutorVacio = "-";
-		      if ((instrumento.getEnteEjecutor() == "") || (iniciativa.getEnteEjecutor() == null)) {
-		        iniciativa.setEnteEjecutor(valorEnteEjecutorVacio);
-		      }
-		    */
+			/*
+			 * String valorEnteEjecutorVacio = "-"; if ((instrumento.getEnteEjecutor() ==
+			 * "") || (iniciativa.getEnteEjecutor() == null)) {
+			 * iniciativa.setEnteEjecutor(valorEnteEjecutorVacio); }
+			 */
 			if (transActiva) {
 				if (resultado == 10000) {
 					persistenceSession.commitTransaction();
@@ -364,14 +377,14 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 				}
 				transActiva = false;
 			}
-			
-			if ((!transActiva) && (resultado == 10000))
-		      {
-		        List<Object> indicadores = new ArrayList();
-		        indicadores.add(instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()));
-		        resultado = new Servicio().calcular(Servicio.EjecutarTipo.getEjecucionAlerta().byteValue(), indicadores, usuario);
-		      }
-			
+
+			if ((!transActiva) && (resultado == 10000)) {
+				List<Object> indicadores = new ArrayList();
+				indicadores.add(instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()));
+				resultado = new Servicio().calcular(Servicio.EjecutarTipo.getEjecucionAlerta().byteValue(), indicadores,
+						usuario);
+			}
+
 		} catch (Throwable t) {
 			if (transActiva) {
 				persistenceSession.rollbackTransaction();
@@ -512,19 +525,26 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 	}
 
 	private int saveClaseIndicadores(Instrumentos instrumento, Usuario usuario) {
+		
+		System.out.print("\n\nEntra a saveCLaseIndicadores");
 
 		StrategosClasesIndicadoresService strategosClasesIndicadoresService = StrategosServiceFactory.getInstance()
 				.openStrategosClasesIndicadoresService(this);
 
 		ClaseIndicadores clase = new ClaseIndicadores();
-		ClaseIndicadores claseRoot = strategosClasesIndicadoresService.getClaseRaizIniciativa(instrumento.getInstrumentoId(), TipoClaseIndicadores.getTipoClasePlanificacionSeguimiento(), messageResources.getResource("instrumento.clase.nombre"), usuario);
+		ClaseIndicadores claseRoot = strategosClasesIndicadoresService.getClaseRaizIniciativa(
+				instrumento.getInstrumentoId(), TipoClaseIndicadores.getTipoClasePlanificacionSeguimiento(),
+				messageResources.getResource("iniciativa.clase.nombre"), usuario);
 
 		clase.setPadreId(claseRoot.getClaseId());
-		clase.setNombre(instrumento.getNombreCorto());		
+		clase.setNombre(instrumento.getNombreCorto());
+		clase.setOrganizacionId(1L);
 		clase.setTipo(TipoClaseIndicadores.getTipoClasePlanificacionSeguimiento());
 		clase.setVisible(new Boolean(true));
 
+		System.out.print("\n\nPrevio a Entra a saveCLaseIndicadores de indicadores service");
 		int resultado = strategosClasesIndicadoresService.saveClaseIndicadores(clase, usuario);
+		System.out.print("\n\nSigue de claseIndicadores\n\n");
 		if (resultado == 10003) {
 			Map<String, Object> filtros = new HashMap();
 
@@ -539,103 +559,104 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 		}
 
 		if (resultado == 10000) {
-			// instrumentos.setClaseId(clase.getClaseId());
+			instrumento.setClaseId(clase.getClaseId());
+			System.out.print("\n\nClaseId; " + instrumento.getClaseId() + "\n\n");
 		}
 		strategosClasesIndicadoresService.close();
 
+		
+		System.out.print("\n\nResultado; " + resultado + "\n\n");
 		return resultado;
 	}
 
-	private int saveIndicadorAutomatico(Instrumentos instrumento, Byte tipo, Usuario usuario) {
+	private int saveIndicadorAutomatico(Instrumentos instrumento, Byte tipo,
+			ConfiguracionInstrumento configuracionInstrumento, Usuario usuario) {
 
 		int resultado = 10000;
-	    
-	    StrategosIndicadoresService strategosIndicadoresService = StrategosServiceFactory.getInstance().openStrategosIndicadoresService(this);
-	    Indicador indicador = new Indicador();	  
-	    indicador.setClaseId(instrumento.getClaseId());
-	    String nombre = "";
-	    if ((tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionSeguimiento().byteValue()) && (configuracionIniciativa.getIniciativaIndicadorAvanceAnteponer().booleanValue())) {
-	      nombre = configuracionIniciativa.getIniciativaIndicadorAvanceNombre() + " - ";
-	    } else if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionPresupuesto().byteValue()) {
-	      nombre = configuracionIniciativa.getIniciativaIndicadorPresupuestoNombre() + " - ";
-	    } else if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionEficacia().byteValue()) {
-	      nombre = configuracionIniciativa.getIniciativaIndicadorEficaciaNombre() + " - ";
-	    } else if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionEficiencia().byteValue())
-	      nombre = configuracionIniciativa.getIniciativaIndicadorEficienciaNombre() + " - ";
-	    nombre = nombre + instrumento.getNombreCorto();
-	    if (nombre.length() > 100)
-	      nombre = nombre.substring(0, 100);
-	    indicador.setNombre(nombre);
-	    if (nombre.length() > 50)
-	      nombre = nombre.substring(0, 50);
-	    indicador.setNombreCorto(nombre);
-	    indicador.setFrecuencia(instrumento.getFrecuencia());
-	    if (tipo.byteValue() != TipoFuncionIndicador.getTipoFuncionPresupuesto().byteValue())
-	    {
-	      StrategosUnidadesService strategosUnidadesService = StrategosServiceFactory.getInstance().openStrategosUnidadesService(this);
-	      UnidadMedida porcentaje = strategosUnidadesService.getUnidadMedidaPorcentaje();
-	      indicador.setUnidadId(porcentaje.getUnidadId());
-	      strategosUnidadesService.close();
-	    }
-	    indicador.setPrioridad(PrioridadIndicador.getPrioridadIndicadorBaja());
-	    indicador.setMostrarEnArbol(new Boolean(true));
-	    if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionPresupuesto().byteValue()) {
-	      indicador.setCaracteristica(Caracteristica.getCaracteristicaCondicionValorMaximo());
-	    } else
-	      indicador.setCaracteristica(Caracteristica.getCaracteristicaRetoAumento());
-	    indicador.setTipoFuncion(tipo);
-	    indicador.setGuia(new Boolean(false));
-	    indicador.setValorInicialCero(new Boolean(true));	    
-	    indicador.setNumeroDecimales(new Byte("2"));	    
-	    indicador.setNaturaleza(Naturaleza.getNaturalezaSimple());
-	    if ((tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionEficacia().byteValue()) || (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionEficiencia().byteValue()))
-	    {
-	      indicador.setCorte(TipoCorte.getTipoCorteTransversal());
-	      indicador.setTipoCargaMedicion(TipoMedicion.getTipoMedicionAlPeriodo());
-	      if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionEficacia().byteValue())
-	      {
-	        indicador.setNaturaleza(Naturaleza.getNaturalezaFormula());
-	        resultado = crearIndicadorFormulaEficacia(instrumento, indicador);
-	      }
-	      else if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionEficiencia().byteValue())
-	      {
-	        indicador.setNaturaleza(Naturaleza.getNaturalezaFormula());
-	        resultado = crearIndicadorFormulaEficiencia(instrumento, indicador);
-	      }
-	    }
-	    else if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionPresupuesto().byteValue())
-	    {
-	      indicador.setCorte(TipoCorte.getTipoCorteTransversal());
-	      indicador.setTipoCargaMedicion(TipoMedicion.getTipoMedicionAlPeriodo());
-	    }
-	    else
-	    {
-	      indicador.setCorte(TipoCorte.getTipoCorteLongitudinal());
-	      indicador.setTipoCargaMedicion(TipoMedicion.getTipoMedicionEnPeriodo());
-	    }
-	    
-	    if (resultado == 10000)
-	      resultado = strategosIndicadoresService.saveIndicador(indicador, usuario);
-	    if (resultado == 10003)
-	    {
-	      Map<String, Object> filtros = new HashMap();
-	      
-	      filtros.put("claseId", indicador.getClaseId());
-	      filtros.put("nombre", indicador.getNombre());
-	      List<Indicador> inds = strategosIndicadoresService.getIndicadores(0, 0, "nombre", "ASC", true, filtros, null, null, Boolean.valueOf(false)).getLista();
-	      if (inds.size() > 0)
-	      {
-	        indicador = (Indicador)inds.get(0);
-	        resultado = 10000;
-	      }
-	    }
-	    
-	    if (resultado == 10000) {
-	      instrumento.setIndicadorId(indicador.getIndicadorId(), tipo);
-	    }
-	    strategosIndicadoresService.close();
-	    
-	    return resultado;
+		
+		System.out.print("\n\nEntra a save indicador automatico\n\n");
+
+		StrategosIndicadoresService strategosIndicadoresService = StrategosServiceFactory.getInstance()
+				.openStrategosIndicadoresService(this);
+		Indicador indicador = new Indicador();
+		indicador.setClaseId(instrumento.getClaseId());
+		String nombre = "";
+		if ((tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionSeguimiento().byteValue())
+				&& (configuracionInstrumento.getInstrumentoIndicadorAvanceAnteponer().booleanValue())) {
+			nombre = configuracionInstrumento.getInstrumentoIndicadorAvanceNombre() + " - ";
+		} else if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionPresupuesto().byteValue()) {
+			nombre = configuracionInstrumento.getInstrumentoIndicadorPresupuestoNombre() + " - ";
+		} else if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionEficacia().byteValue()) {
+			nombre = configuracionInstrumento.getInstrumentoIndicadorEficaciaNombre() + " - ";
+		} else if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionEficiencia().byteValue())
+			nombre = configuracionInstrumento.getInstrumentoIndicadorEficienciaNombre() + " - ";
+		nombre = nombre + instrumento.getNombreCorto();
+		if (nombre.length() > 100)
+			nombre = nombre.substring(0, 100);
+		indicador.setNombre(nombre);
+		if (nombre.length() > 50)
+			nombre = nombre.substring(0, 50);
+		indicador.setNombreCorto(nombre);
+		indicador.setFrecuencia(instrumento.getFrecuencia());
+		if (tipo.byteValue() != TipoFuncionIndicador.getTipoFuncionPresupuesto().byteValue()) {
+			StrategosUnidadesService strategosUnidadesService = StrategosServiceFactory.getInstance()
+					.openStrategosUnidadesService(this);
+			UnidadMedida porcentaje = strategosUnidadesService.getUnidadMedidaPorcentaje();
+			indicador.setUnidadId(porcentaje.getUnidadId());
+			strategosUnidadesService.close();
+		}
+		indicador.setPrioridad(PrioridadIndicador.getPrioridadIndicadorBaja());
+		indicador.setMostrarEnArbol(new Boolean(true));
+		if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionPresupuesto().byteValue()) {
+			indicador.setCaracteristica(Caracteristica.getCaracteristicaCondicionValorMaximo());
+		} else
+			indicador.setCaracteristica(Caracteristica.getCaracteristicaRetoAumento());
+		indicador.setTipoFuncion(tipo);
+		indicador.setGuia(new Boolean(false));
+		indicador.setValorInicialCero(new Boolean(true));
+		indicador.setNumeroDecimales(new Byte("2"));
+		indicador.setNaturaleza(Naturaleza.getNaturalezaSimple());
+		if ((tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionEficacia().byteValue())
+				|| (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionEficiencia().byteValue())) {
+			indicador.setCorte(TipoCorte.getTipoCorteTransversal());
+			indicador.setTipoCargaMedicion(TipoMedicion.getTipoMedicionAlPeriodo());
+			if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionEficacia().byteValue()) {
+				indicador.setNaturaleza(Naturaleza.getNaturalezaFormula());
+				resultado = crearIndicadorFormulaEficacia(instrumento, indicador);
+			} else if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionEficiencia().byteValue()) {
+				indicador.setNaturaleza(Naturaleza.getNaturalezaFormula());
+				resultado = crearIndicadorFormulaEficiencia(instrumento, indicador);
+			}
+		} else if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionPresupuesto().byteValue()) {
+			indicador.setCorte(TipoCorte.getTipoCorteTransversal());
+			indicador.setTipoCargaMedicion(TipoMedicion.getTipoMedicionAlPeriodo());
+		} else {
+			indicador.setCorte(TipoCorte.getTipoCorteLongitudinal());
+			indicador.setTipoCargaMedicion(TipoMedicion.getTipoMedicionEnPeriodo());
+		}
+
+		if (resultado == 10000)
+			resultado = strategosIndicadoresService.saveIndicador(indicador, usuario);
+		if (resultado == 10003) {
+			Map<String, Object> filtros = new HashMap();
+
+			filtros.put("claseId", indicador.getClaseId());
+			filtros.put("nombre", indicador.getNombre());
+			List<Indicador> inds = strategosIndicadoresService
+					.getIndicadores(0, 0, "nombre", "ASC", true, filtros, null, null, Boolean.valueOf(false))
+					.getLista();
+			if (inds.size() > 0) {
+				indicador = (Indicador) inds.get(0);
+				resultado = 10000;
+			}
+		}
+
+		if (resultado == 10000) {
+			instrumento.setIndicadorId(indicador.getIndicadorId(), tipo);
+		}
+		strategosIndicadoresService.close();
+
+		return resultado;
 	}
 
 	public int asociarIndicador(Instrumentos instrumento, Usuario usuario) {
@@ -644,6 +665,8 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 		int resultado = 10000;
 		String[] fieldNames = new String[2];
 		Object[] fieldValues = new Object[2];
+		
+		System.out.print("\n\nEntra a Asociar indicador\n\n");
 
 		try {
 
@@ -712,7 +735,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 	}
 
 	public int updateIndicadorAutomatico(Instrumentos instrumento, Byte tipo,
-			ConfiguracionIniciativa configuracionIniciativa, Usuario usuario) {
+			ConfiguracionInstrumento configuracionInstrumento, Usuario usuario) {
 
 		int resultado = 10000;
 
@@ -722,126 +745,214 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 	public Instrumentos getValoresOriginales(Long instrumentoId) {
 		return persistenceSession.getValoresOriginales(instrumentoId);
 	}
-	
-	private int crearIndicadorFormulaEficacia(Instrumentos instrumento, Indicador indicador)
-	  {
-	    int resultado = 10000;
-	    
-	    SerieIndicador serieReal = null;
-	    Set<SerieIndicador> seriesIndicador = indicador.getSeriesIndicador();
-	    for (Iterator<SerieIndicador> i = seriesIndicador.iterator(); i.hasNext();)
-	    {
-	      SerieIndicador serie = (SerieIndicador)i.next();
-	      if (serie.getPk().getSerieId().byteValue() == SerieTiempo.getSerieReal().getSerieId().byteValue())
-	      {
-	        serieReal = serie;
-	        break;
-	      }
-	    }
-	    
-	    Formula formulaIndicador = new Formula();
-	    formulaIndicador.setInsumos(new HashSet());
-	    
-	    StrategosIndicadoresService strategosIndicadoresService = StrategosServiceFactory.getInstance().openStrategosIndicadoresService(this);
-	    Indicador indicadorInsumo = (Indicador)strategosIndicadoresService.load(Indicador.class, instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()));
-	    strategosIndicadoresService.close();
-	    
-	    String formula = "";
-	    if (instrumento.getTipoMedicion().byteValue() == TipoMedicion.getTipoMedicionAlPeriodo().byteValue())
-	    {
-	      formula = 
-	        "([" + instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()).toString() + ".0]" + "/" + "[" + instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()).toString() + ".1])*100";
-	    }
-	    else
-	    {
-	      formula = 
-	        "([" + instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()).toString() + ".0]:S" + "/" + "[" + instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()).toString() + ".1]:S)*100";
-	    }
-	    
-	    formulaIndicador.setExpresion(formula);
-	    
-	    InsumoFormula insumoFormula = new InsumoFormula();
-	    insumoFormula.setPk(new InsumoFormulaPK());
-	    insumoFormula.getPk().setPadreId(indicador.getIndicadorId());
-	    insumoFormula.getPk().setSerieId(new Long("0"));
-	    insumoFormula.getPk().setIndicadorId(instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()));
-	    insumoFormula.getPk().setInsumoSerieId(new Long("0"));
-	    formulaIndicador.getInsumos().add(insumoFormula);
-	    
-	    insumoFormula = new InsumoFormula();
-	    insumoFormula.setPk(new InsumoFormulaPK());
-	    insumoFormula.getPk().setPadreId(indicador.getIndicadorId());
-	    insumoFormula.getPk().setSerieId(new Long("0"));
-	    insumoFormula.getPk().setIndicadorId(instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()));
-	    insumoFormula.getPk().setInsumoSerieId(new Long("1"));
-	    formulaIndicador.getInsumos().add(insumoFormula);
-	    
-	    serieReal.getFormulas().add(formulaIndicador);
-	    
-	    return resultado;
-	  }
 
-	private int crearIndicadorFormulaEficiencia(Instrumentos instrumento, Indicador indicador)
-	  {
-	    int resultado = 10000;
-	    
-	    SerieIndicador serieReal = null;
-	    Set<SerieIndicador> seriesIndicador = indicador.getSeriesIndicador();
-	    for (Iterator<SerieIndicador> i = seriesIndicador.iterator(); i.hasNext();)
-	    {
-	      SerieIndicador serie = (SerieIndicador)i.next();
-	      if (serie.getPk().getSerieId().byteValue() == SerieTiempo.getSerieReal().getSerieId().byteValue())
-	      {
-	        serieReal = serie;
-	        break;
-	      }
-	    }
-	    
-	    Formula formulaIndicador = new Formula();
-	    formulaIndicador.setInsumos(new HashSet());
-	    
-	    String formula = "";
-	    if (instrumento.getTipoMedicion().byteValue() == TipoMedicion.getTipoMedicionAlPeriodo().byteValue())
-	    {
-	      formula = 
-	      
-	        "([" + instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()).toString() + "." + SerieTiempo.getSerieReal().getSerieId().byteValue() + "]" + "*" + "[" + instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionPresupuesto()).toString() + "." + SerieTiempo.getSerieMaximo().getSerieId().byteValue() + "])" + "/" + "[" + instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionPresupuesto()).toString() + "." + SerieTiempo.getSerieReal().getSerieId().byteValue() + "]";
-	    }
-	    else
-	    {
-	      formula = 
-	      
-	        "([" + instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()).toString() + "." + SerieTiempo.getSerieReal().getSerieId().byteValue() + "]:S" + "*" + "[" + instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionPresupuesto()).toString() + "." + SerieTiempo.getSerieMaximo().getSerieId().byteValue() + "])" + "/" + "[" + instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionPresupuesto()).toString() + "." + SerieTiempo.getSerieReal().getSerieId().byteValue() + "]";
-	    }
-	    
-	    formulaIndicador.setExpresion(formula);
-	    
-	    InsumoFormula insumoFormula = new InsumoFormula();
-	    insumoFormula.setPk(new InsumoFormulaPK());
-	    insumoFormula.getPk().setPadreId(indicador.getIndicadorId());
-	    insumoFormula.getPk().setSerieId(SerieTiempo.getSerieReal().getSerieId());
-	    insumoFormula.getPk().setIndicadorId(instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()));
-	    insumoFormula.getPk().setInsumoSerieId(SerieTiempo.getSerieReal().getSerieId());
-	    formulaIndicador.getInsumos().add(insumoFormula);
-	    
-	    insumoFormula = new InsumoFormula();
-	    insumoFormula.setPk(new InsumoFormulaPK());
-	    insumoFormula.getPk().setPadreId(indicador.getIndicadorId());
-	    insumoFormula.getPk().setSerieId(SerieTiempo.getSerieReal().getSerieId());
-	    insumoFormula.getPk().setIndicadorId(instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionPresupuesto()));
-	    insumoFormula.getPk().setInsumoSerieId(SerieTiempo.getSerieMaximo().getSerieId());
-	    formulaIndicador.getInsumos().add(insumoFormula);
-	    
-	    insumoFormula = new InsumoFormula();
-	    insumoFormula.setPk(new InsumoFormulaPK());
-	    insumoFormula.getPk().setPadreId(indicador.getIndicadorId());
-	    insumoFormula.getPk().setSerieId(SerieTiempo.getSerieReal().getSerieId());
-	    insumoFormula.getPk().setIndicadorId(instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionPresupuesto()));
-	    insumoFormula.getPk().setInsumoSerieId(SerieTiempo.getSerieReal().getSerieId());
-	    formulaIndicador.getInsumos().add(insumoFormula);
-	    
-	    serieReal.getFormulas().add(formulaIndicador);
-	    
-	    return resultado;
-	  }
+	private int crearIndicadorFormulaEficacia(Instrumentos instrumento, Indicador indicador) {
+		int resultado = 10000;
+
+		SerieIndicador serieReal = null;
+		Set<SerieIndicador> seriesIndicador = indicador.getSeriesIndicador();
+		for (Iterator<SerieIndicador> i = seriesIndicador.iterator(); i.hasNext();) {
+			SerieIndicador serie = (SerieIndicador) i.next();
+			if (serie.getPk().getSerieId().byteValue() == SerieTiempo.getSerieReal().getSerieId().byteValue()) {
+				serieReal = serie;
+				break;
+			}
+		}
+
+		Formula formulaIndicador = new Formula();
+		formulaIndicador.setInsumos(new HashSet());
+
+		StrategosIndicadoresService strategosIndicadoresService = StrategosServiceFactory.getInstance()
+				.openStrategosIndicadoresService(this);
+		Indicador indicadorInsumo = (Indicador) strategosIndicadoresService.load(Indicador.class,
+				instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()));
+		strategosIndicadoresService.close();
+
+		String formula = "";
+		if (instrumento.getTipoMedicion().byteValue() == TipoMedicion.getTipoMedicionAlPeriodo().byteValue()) {
+			formula = "([" + instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()).toString()
+					+ ".0]" + "/" + "["
+					+ instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()).toString()
+					+ ".1])*100";
+		} else {
+			formula = "([" + instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()).toString()
+					+ ".0]:S" + "/" + "["
+					+ instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()).toString()
+					+ ".1]:S)*100";
+		}
+
+		formulaIndicador.setExpresion(formula);
+
+		InsumoFormula insumoFormula = new InsumoFormula();
+		insumoFormula.setPk(new InsumoFormulaPK());
+		insumoFormula.getPk().setPadreId(indicador.getIndicadorId());
+		insumoFormula.getPk().setSerieId(new Long("0"));
+		insumoFormula.getPk()
+				.setIndicadorId(instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()));
+		insumoFormula.getPk().setInsumoSerieId(new Long("0"));
+		formulaIndicador.getInsumos().add(insumoFormula);
+
+		insumoFormula = new InsumoFormula();
+		insumoFormula.setPk(new InsumoFormulaPK());
+		insumoFormula.getPk().setPadreId(indicador.getIndicadorId());
+		insumoFormula.getPk().setSerieId(new Long("0"));
+		insumoFormula.getPk()
+				.setIndicadorId(instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()));
+		insumoFormula.getPk().setInsumoSerieId(new Long("1"));
+		formulaIndicador.getInsumos().add(insumoFormula);
+
+		serieReal.getFormulas().add(formulaIndicador);
+
+		return resultado;
+	}
+
+	private int crearIndicadorFormulaEficiencia(Instrumentos instrumento, Indicador indicador) {
+		int resultado = 10000;
+
+		SerieIndicador serieReal = null;
+		Set<SerieIndicador> seriesIndicador = indicador.getSeriesIndicador();
+		for (Iterator<SerieIndicador> i = seriesIndicador.iterator(); i.hasNext();) {
+			SerieIndicador serie = (SerieIndicador) i.next();
+			if (serie.getPk().getSerieId().byteValue() == SerieTiempo.getSerieReal().getSerieId().byteValue()) {
+				serieReal = serie;
+				break;
+			}
+		}
+
+		Formula formulaIndicador = new Formula();
+		formulaIndicador.setInsumos(new HashSet());
+
+		String formula = "";
+		if (instrumento.getTipoMedicion().byteValue() == TipoMedicion.getTipoMedicionAlPeriodo().byteValue()) {
+			formula =
+
+					"([" + instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()).toString() + "."
+							+ SerieTiempo.getSerieReal().getSerieId().byteValue() + "]" + "*" + "["
+							+ instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionPresupuesto()).toString()
+							+ "." + SerieTiempo.getSerieMaximo().getSerieId().byteValue() + "])" + "/" + "["
+							+ instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionPresupuesto()).toString()
+							+ "." + SerieTiempo.getSerieReal().getSerieId().byteValue() + "]";
+		} else {
+			formula =
+
+					"([" + instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()).toString() + "."
+							+ SerieTiempo.getSerieReal().getSerieId().byteValue() + "]:S" + "*" + "["
+							+ instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionPresupuesto()).toString()
+							+ "." + SerieTiempo.getSerieMaximo().getSerieId().byteValue() + "])" + "/" + "["
+							+ instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionPresupuesto()).toString()
+							+ "." + SerieTiempo.getSerieReal().getSerieId().byteValue() + "]";
+		}
+
+		formulaIndicador.setExpresion(formula);
+
+		InsumoFormula insumoFormula = new InsumoFormula();
+		insumoFormula.setPk(new InsumoFormulaPK());
+		insumoFormula.getPk().setPadreId(indicador.getIndicadorId());
+		insumoFormula.getPk().setSerieId(SerieTiempo.getSerieReal().getSerieId());
+		insumoFormula.getPk()
+				.setIndicadorId(instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()));
+		insumoFormula.getPk().setInsumoSerieId(SerieTiempo.getSerieReal().getSerieId());
+		formulaIndicador.getInsumos().add(insumoFormula);
+
+		insumoFormula = new InsumoFormula();
+		insumoFormula.setPk(new InsumoFormulaPK());
+		insumoFormula.getPk().setPadreId(indicador.getIndicadorId());
+		insumoFormula.getPk().setSerieId(SerieTiempo.getSerieReal().getSerieId());
+		insumoFormula.getPk()
+				.setIndicadorId(instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionPresupuesto()));
+		insumoFormula.getPk().setInsumoSerieId(SerieTiempo.getSerieMaximo().getSerieId());
+		formulaIndicador.getInsumos().add(insumoFormula);
+
+		insumoFormula = new InsumoFormula();
+		insumoFormula.setPk(new InsumoFormulaPK());
+		insumoFormula.getPk().setPadreId(indicador.getIndicadorId());
+		insumoFormula.getPk().setSerieId(SerieTiempo.getSerieReal().getSerieId());
+		insumoFormula.getPk()
+				.setIndicadorId(instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionPresupuesto()));
+		insumoFormula.getPk().setInsumoSerieId(SerieTiempo.getSerieReal().getSerieId());
+		formulaIndicador.getInsumos().add(insumoFormula);
+
+		serieReal.getFormulas().add(formulaIndicador);
+
+		return resultado;
+	}
+
+	public ConfiguracionInstrumento getConfiguracionInstrumento() {
+		ConfiguracionInstrumento configuracionInstrumento = new ConfiguracionInstrumento();
+		try {
+			FrameworkService frameworkService = FrameworkServiceFactory.getInstance().openFrameworkService();
+			Configuracion configuracion = frameworkService.getConfiguracion("Strategos.Configuracion.Instrumentos");
+			frameworkService.close();
+
+			if (configuracion != null) {
+
+				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+				DocumentBuilder db = dbf.newDocumentBuilder();
+				Document doc = db.parse(new ByteArrayInputStream(configuracion.getValor().getBytes("UTF-8")));
+				doc.getDocumentElement().normalize();
+				NodeList nList = doc.getElementsByTagName("properties");
+				Element eElement = (Element) nList.item(0);
+
+				configuracionInstrumento.setInstrumentoNombre(VgcAbstractService.getTagValue("nombre", eElement));
+
+				nList = doc.getElementsByTagName("indicador");
+				if (nList.getLength() > 0) {
+					for (int i = 0; i < nList.getLength(); i++) {
+						Node node = nList.item(i);
+						Element elemento = (Element) node;
+
+						Byte tipo = VgcAbstractService.getTagValue("tipo", elemento) != ""
+								? Byte.valueOf(Byte.parseByte(getTagValue("tipo", elemento)))
+								: null;
+						if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionSeguimiento().byteValue()) {
+							configuracionInstrumento.setInstrumentoIndicadorAvanceNombre(
+									VgcAbstractService.getTagValue("nombre", elemento));
+							configuracionInstrumento.setInstrumentoIndicadorAvanceMostrar(
+									Boolean.valueOf(VgcAbstractService.getTagValue("crear", elemento).equals("1")));
+							configuracionInstrumento.setInstrumentoIndicadorAvanceAnteponer(
+									Boolean.valueOf(VgcAbstractService.getTagValue("anteponer", elemento).equals("1")));
+						} else if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionPresupuesto().byteValue()) {
+							configuracionInstrumento.setInstrumentoIndicadorPresupuestoNombre(
+									VgcAbstractService.getTagValue("nombre", elemento));
+							configuracionInstrumento.setInstrumentoIndicadorPresupuestoMostrar(
+									Boolean.valueOf(VgcAbstractService.getTagValue("crear", elemento).equals("1")));
+						} else if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionEficacia().byteValue()) {
+							configuracionInstrumento.setInstrumentoIndicadorEficaciaNombre(
+									VgcAbstractService.getTagValue("nombre", elemento));
+							configuracionInstrumento.setInstrumentoIndicadorEficaciaMostrar(
+									Boolean.valueOf(VgcAbstractService.getTagValue("crear", elemento).equals("1")));
+						} else if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionEficiencia().byteValue()) {
+							configuracionInstrumento.setInstrumentoIndicadorEficienciaNombre(
+									VgcAbstractService.getTagValue("nombre", elemento));
+							configuracionInstrumento.setInstrumentoIndicadorEficienciaMostrar(
+									Boolean.valueOf(VgcAbstractService.getTagValue("crear", elemento).equals("1")));
+						}
+					}
+					
+					
+				}
+			} else {
+				VgcMessageResources messageResources = VgcResourceManager.getMessageResources("StrategosWeb");
+
+				configuracionInstrumento
+						.setInstrumentoNombre(messageResources.getResource("jsp.modulo.iniciativa.titulo.singular"));
+				configuracionInstrumento.setInstrumentoIndicadorAvanceNombre(
+						messageResources.getResource("jsp.configuracion.sistema.iniciativas.indicador.avance.nombre"));
+				configuracionInstrumento.setInstrumentoIndicadorAvanceMostrar(Boolean.valueOf(true));
+				configuracionInstrumento.setInstrumentoIndicadorPresupuestoNombre(messageResources
+						.getResource("jsp.configuracion.sistema.iniciativas.indicador.presupuesto.nombre"));
+				configuracionInstrumento.setInstrumentoIndicadorPresupuestoMostrar(Boolean.valueOf(true));
+				configuracionInstrumento.setInstrumentoIndicadorEficaciaNombre(messageResources
+						.getResource("jsp.configuracion.sistema.iniciativas.indicador.eficacia.nombre"));
+				configuracionInstrumento.setInstrumentoIndicadorEficaciaMostrar(Boolean.valueOf(true));
+				configuracionInstrumento.setInstrumentoIndicadorEficienciaNombre(messageResources
+						.getResource("jsp.configuracion.sistema.iniciativas.indicador.eficiencia.nombre"));
+				configuracionInstrumento.setInstrumentoIndicadorEficienciaMostrar(Boolean.valueOf(true));
+				configuracionInstrumento.setInstrumentoIndicadorAvanceAnteponer(Boolean.valueOf(true));
+			}
+		} catch (Exception localException) {
+		}
+
+		return configuracionInstrumento;
+	}
 }

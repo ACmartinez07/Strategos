@@ -51,9 +51,5 @@ public abstract interface StrategosIniciativasPersistenceSession
   
   public abstract int desMarcarHistorico(String paramString);
   
-  public abstract List<Iniciativa> getIniciativasEjecutar(Long paramLong1, Long paramLong2, Long paramLong3, Integer paramInteger1);
-
-
-  
-  
+  public abstract List<Iniciativa> getIniciativasEjecutar(Long paramLong1, Long paramLong2, Long paramLong3, Integer paramInteger1);  
 }
