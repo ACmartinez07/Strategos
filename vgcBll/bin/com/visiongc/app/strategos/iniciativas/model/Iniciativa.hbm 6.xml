@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto Iniciativa de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (19/11/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.iniciativas.model.Iniciativa" table="iniciativa">
+
+		<!-- Atributo clave de Iniciativas -->
+		<id name="iniciativaId" type="java.lang.Long" column="iniciativa_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para Iniciativas -->
+		<property name="nombre" type="java.lang.String" column="nombre" length="250" />
+		<property name="nombreLargo" type="java.lang.String" column="nombre_largo" length="300" />
+		<property name="proyectoId" type="java.lang.Long" column="proyecto_id" />
+		<property name="tipoAlerta" type="java.lang.Byte" column="tipo_alerta" />
+		<property name="alertaZonaVerde" type="java.lang.Double" column="alerta_zv" />
+		<property name="alertaZonaAmarilla" type="java.lang.Double" column="alerta_za" />
+		<property name="organizacionId" type="java.lang.Long" column="organizacion_id" />
+		<property name="frecuencia" type="java.lang.Byte" column="frecuencia" />
+		<property name="enteEjecutor" type="java.lang.String" column="contratista" />
+		<property name="naturaleza" type="java.lang.Byte" column="naturaleza" />
+		<property name="responsableFijarMetaId" type="java.lang.Long" column="resp_fijar_meta_id" />
+		<property name="responsableLograrMetaId" type="java.lang.Long" column="resp_lograr_meta_id" />
+		<property name="responsableSeguimientoId" type="java.lang.Long" column="resp_seguimiento_id" />
+		<property name="responsableCargarMetaId" type="java.lang.Long" column="resp_cargar_meta_id" />
+		<property name="responsableCargarEjecutadoId" type="java.lang.Long" column="resp_cargar_ejecutado_id" />
+		<property name="claseId" type="java.lang.Long" column="clase_id" />
+		<property name="soloLectura" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="read_only" />
+		<property name="porcentajeCompletado" type="java.lang.Double" column="porcentaje_completado" />
+		<property name="alerta" type="java.lang.Byte" column="crecimiento" />
+		<property name="fechaUltimaMedicion" type="java.lang.String" column="fecha_ultima_medicion" length="10" />
+		<property name="anioFormulacion" type="java.lang.String" column="anio_form_proy" length="4" />
+		<property name="tipoMedicion" type="java.lang.Byte" column="tipo_medicion" />
+		<property name="historicoDate" type="java.util.Date" column="historico_date" />
+		<property name="estatusId" type="java.lang.Long" column="estatusId" />
+		<property name="tipoId" type="java.lang.Long" column="tipoId" />		
+		
+		<!-- Campos nuevos -->
+		<property name="responsableProyecto" type="java.lang.String" column="responsable_proyecto" length="150" />
+		<property name="cargoResponsable" type="java.lang.String" column="cargo_responsable" length="50" />
+		<property name="organizacionesInvolucradas" type="java.lang.String" column="organizaciones_involucradas" length="250" />
+		<property name="objetivoEstrategico" type="java.lang.String" column="objetivo_estrategico" length="250" />
+		<property name="fuenteFinanciacion" type="java.lang.String" column="fuente_financiacion" length="50" />
+		<property name="montoFinanciamiento" type="java.lang.String" column="monto_financiamiento" length="50" />
+		<property name="iniciativaEstrategica" type="java.lang.String" column="iniciativa_estrategica" length="150" />
+		<property name="liderIniciativa" type="java.lang.String" column="lider_iniciativa" length="150" />
+		<property name="tipoIniciativa" type="java.lang.String" column="tipo_iniciativa" length="150" />
+		<property name="poblacionBeneficiada" type="java.lang.String" column="poblacion_beneficiada" length="450" />
+		<property name="contexto" type="java.lang.String" column="contexto" length="450" />
+		<property name="definicionProblema" type="java.lang.String" column="definicion_problema" length="450" />
+		<property name="alcance" type="java.lang.String" column="alcance" length="450" />
+		<property name="objetivoGeneral" type="java.lang.String" column="objetivo_general" length="450" />
+		<property name="objetivoEspecificos" type="java.lang.String" column="objetivos_especificos" length="450" />
+
+		<!-- Asociación uno a uno para organizacion -->
+		<many-to-one name="organizacion" class="com.visiongc.app.strategos.organizaciones.model.OrganizacionStrategos" column="organizacion_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para Responsable -->
+		<many-to-one name="responsableFijarMeta" class="com.visiongc.app.strategos.responsables.model.Responsable" lazy="false" fetch="join" column="resp_fijar_meta_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para Responsable -->
+		<many-to-one name="responsableLograrMeta" class="com.visiongc.app.strategos.responsables.model.Responsable" lazy="false" fetch="join" column="resp_lograr_meta_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para Responsable -->
+		<many-to-one name="responsableSeguimiento" class="com.visiongc.app.strategos.responsables.model.Responsable" lazy="false" fetch="join" column="resp_seguimiento_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para Responsable -->
+		<many-to-one name="responsableCargarMeta" class="com.visiongc.app.strategos.responsables.model.Responsable" lazy="false" fetch="join" column="resp_cargar_meta_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para Responsable -->
+		<many-to-one name="responsableCargarEjecutado" class="com.visiongc.app.strategos.responsables.model.Responsable" lazy="false" fetch="join" column="resp_cargar_ejecutado_id" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para Estatus -->
+		<many-to-one name="estatus" class="com.visiongc.app.strategos.iniciativas.model.util.IniciativaEstatus" lazy="false" fetch="join" column="estatusId" unique="true" insert="false" update="false"></many-to-one>
+
+		<!-- Asociación uno a uno para Estatus -->
+		<many-to-one name="tipoProyecto" class="com.visiongc.app.strategos.iniciativas.model.util.TipoProyecto" lazy="false" fetch="join" column="tipoId" unique="true" insert="false" update="false"></many-to-one>
+				
+		<!-- Asociación uno a uno para MemoIniciativa -->
+		<one-to-one name="memoIniciativa" class="com.visiongc.app.strategos.iniciativas.model.MemoIniciativa" cascade="persist, merge, save-update, delete"></one-to-one>
+
+		<!-- Asociación uno a muchos para Resultado Específico -->
+		<set name="resultadosEspecificosIniciativa" lazy="true" inverse="true" order-by="ano" cascade="persist, merge, save-update, delete, delete-orphan">
+			<key>
+				<column name="iniciativa_id" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.iniciativas.model.ResultadoEspecificoIniciativa" />
+		</set>
+
+		<!-- Asociación uno a muchos para IniciativaPerspectivas -->
+		<set name="iniciativaPerspectivas" fetch="select" lazy="true" inverse="true" cascade="none">
+			<key>
+				<column name="iniciativa_id" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.planes.model.IniciativaPerspectiva" />
+		</set>
+		
+		<!-- Asociación uno a muchos para IniciativaPlanes -->
+		<set name="iniciativaPlanes" fetch="select" lazy="true" inverse="true" cascade="none">
+			<key>
+				<column name="iniciativa_id" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.planes.model.IniciativaPlan" />
+		</set>
+
+		<!-- Asociación uno a muchos para IniciativaIndicadores -->
+		<set name="iniciativaIndicadores" fetch="select" lazy="true" inverse="true" cascade="none">
+			<key>
+				<column name="iniciativa_id" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.iniciativas.model.IndicadorIniciativa" />
+		</set>
+
+	</class>
+
+</hibernate-mapping>

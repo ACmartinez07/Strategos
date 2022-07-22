@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+	
+	<class name="com.visiongc.app.strategos.instrumentos.model.IndicadorInstrumento" table="indicador_por_instrumento">
+	
+		<composite-id name="pk" class="com.visiongc.app.strategos.instrumentos.model.IndicadorInstrumentoPK">
+			<key-property name="instrumentoId" column="instrumentoId" type="java.lang.Long" />
+			<key-property name="indicadorId" column="indicadorId" type="java.lang.Long" />
+		</composite-id>
+		
+		<property name="tipo" column="tipo" type="java.lang.Byte" />
+		
+		<many-to-one name="instrumento" class="com.visiongc.app.strategos.instrumentos.model.Instrumentos" unique="true" insert="false" update="false">
+			<column name="instrumento_id" />
+		</many-to-one>
+		
+		<many-to-one name="indicador" class="com.visiongc.app.strategos.indicadores.model.Indicador" unique="true" insert="false" update="false">
+			<column name="indicador_id" />
+		</many-to-one>
+		
+	</class>
+	
+</hibernate-mapping>

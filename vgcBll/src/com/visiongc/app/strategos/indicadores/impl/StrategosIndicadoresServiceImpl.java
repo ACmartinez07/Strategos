@@ -601,7 +601,8 @@ public class StrategosIndicadoresServiceImpl
   private void setSeriesIndicadorForSave(Indicador indicador)
   {
 	  
-	  System.out.print("\n\nEntra a set series indicador for save\n\n");
+	  System.out.print("\n\nEntra a set series indicador for save");
+	  System.out.print("\n\nEntra a set series indicador for save"+ indicador.getSeriesIndicador());            
       if(indicador.getSeriesIndicador() == null)
       {
           indicador.setSeriesIndicador(new HashSet());
@@ -612,40 +613,39 @@ public class StrategosIndicadoresServiceImpl
           serieIndicador.getPk().setIndicadorId(indicador.getIndicadorId());
           serieIndicador.setFormulas(new HashSet());
           serieIndicador.setNaturaleza(indicador.getNaturaleza());
-          indicador.getSeriesIndicador().add(serieIndicador);
+          indicador.getSeriesIndicador().add(serieIndicador);          
       }
       for(Iterator i = indicador.getSeriesIndicador().iterator(); i.hasNext();)
       {
+    	      	  
           SerieIndicador serieIndicador = (SerieIndicador)i.next();
           Byte naturaleza = indicador.getNaturaleza();
           serieIndicador.setNaturaleza(naturaleza);
-          serieIndicador.getPk().setIndicadorId(indicador.getIndicadorId());
+          serieIndicador.getPk().setIndicadorId(indicador.getIndicadorId());         
+                    
           if(serieIndicador.getFormulas() != null && serieIndicador.getFormulas().size() > 0)
-          {
+          {        	  
               for(Iterator j = serieIndicador.getFormulas().iterator(); j.hasNext();)
-              {
+              {            	  
                   Formula formula = (Formula)j.next();
                   formula.setPk(new FormulaPK());
                   formula.getPk().setSerieId(serieIndicador.getPk().getSerieId());
                   formula.getPk().setIndicadorId(indicador.getIndicadorId());
                   if(formula.getInsumos() != null && formula.getInsumos().size() > 0)
-                  {
+                  {                	  
                       InsumoFormula insumo;
                       for(Iterator k = formula.getInsumos().iterator(); k.hasNext(); insumo.getPk().setPadreId(indicador.getIndicadorId()))
                           insumo = (InsumoFormula)k.next();
-
-                  }
+                      
+                  }                  
               }
-
           }
       }
 
   }
   
   public int saveIndicador(Indicador indicador, Usuario usuario)
-  {
-	  
-	  System.out.print("\n\nLlega a save Indicador\n\n");
+  {	  	 
     boolean transActiva = false;
     boolean transActivaViene = false;
     int resultado = 10000;
@@ -674,18 +674,16 @@ public class StrategosIndicadoresServiceImpl
         else {
           indicador.setIndicadorId(new Long(persistenceSession.getUniqueId()));
           
-          setSeriesIndicadorForSave(indicador);
-          
+          setSeriesIndicadorForSave(indicador);                  
           if ((indicador.getNaturaleza().equals(Naturaleza.getNaturalezaCualitativoNominal())) || (indicador.getNaturaleza().equals(Naturaleza.getNaturalezaCualitativoOrdinal())))
           {
             for (Iterator i = indicador.getEscalaCualitativa().iterator(); i.hasNext();) {
               CategoriaIndicador categoriaIndicador = (CategoriaIndicador)i.next();
               categoriaIndicador.getPk().setIndicadorId(indicador.getIndicadorId());
+              System.out.print("\n\n Indicador frecuencia"+indicador.getFrecuencia());
             }
           }
-          
-          resultado = persistenceSession.insert(indicador, usuario);
-          
+          resultado = persistenceSession.insert(indicador, usuario);          
           if ((resultado == 10000) && (indicador.getPlanId() != null) && (indicador.getPerspectivaId() != null))
           {
             StrategosPerspectivasService strategosPerspectivasService = StrategosServiceFactory.getInstance().openStrategosPerspectivasService(this);

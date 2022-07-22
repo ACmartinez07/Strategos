@@ -28,4 +28,6 @@ public abstract interface StrategosClasesIndicadoresService
   public abstract ClaseIndicadores getClaseRaizIniciativa(Long paramLong, Byte paramByte, String paramString, Usuario paramUsuario);
   
   public abstract ClaseIndicadores getClaseRaizPlan(Long paramLong, Byte paramByte, String paramString, Usuario paramUsuario);
+  
+  public abstract ClaseIndicadores getClaseRaizInstrumento(Long paramLong, Byte tipo, String nombre, Usuario usuario) ;	
 }

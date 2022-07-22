@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration SYSTEM "hibernate-configuration-3.0.dtd">
+
+<!-- Modificado por: Kerwin Arias (07/03/2012) -->
+
+<hibernate-configuration>
+	<session-factory>
+
+		<!-- Configuración de la Base de Datos -->
+		<!-- Postgress -->
+		<!-- 
+		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/strategosPlus?compatible=7.1</property>
+		-->
+		<!--
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		-->
+		<!--
+		<property name="hibernate.connection.username">sa</property>
+		<property name="hibernate.connection.password">vision</property>
+		-->
+		<!-- Oracle -->
+		<!-- Coneccion directa -->
+		<!--
+		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		<property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:STRATEGOS</property>
+		-->
+		<!--
+		<property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+		-->
+		<!--
+		<property name="hibernate.connection.username">STRATEGOS</property>
+		<property name="hibernate.connection.password">vision</property>
+		-->
+
+		<!-- SQL Server -->
+		<!--
+		<property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+		-->
+
+		<!-- Coneccion JDBC -->
+		<property name="hibernate.connection.datasource">java:comp/env/jdbc/Strategos</property>
+		<!-- <property name="hibernate.connection.datasource">java:comp/env/jdbc/MBlandas</property>-->
+
+		<!-- Pool de Conexiones -->
+		<!-- <property name="hibernate.connection.pool_size">100</property> -->
+		<!-- <property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property> -->
+		<!-- <property name="hibernate.c3p0.idle_test_period">5</property> --><!-- Si este numero es mayor que 0, C3P0 hará una prueba en todas las conexiones que estén dormidas pero sigan en el pool cada X segundos para permitir que sigan activas -->
+		<!-- <property name="hibernate.c3p0.acquire_increment">1</property> --><!-- Determina cuantas conexiones intentará adquirir C3P0 cuando se saturen las conexiones del pool -->
+		<!-- <property name="hibernate.c3p0.max_size">5</property> --><!-- indica el número máximo de conexiones que podrá tener en cualquier momento el pool. -->
+		<!-- <property name="hibernate.c3p0.max_statements">10</property> --><!-- indica el tamaño del caché de PreparedStatements que guardará C3P0. Un cero indica que el caché está deshabilitado -->
+		<!-- <property name="hibernate.c3p0.min_size">2</property> --><!-- indica el número mínimo de conexiones que podrá tener en cualquier momento el pool -->
+		<!-- <property name="hibernate.c3p0.timeout">50</property> --><!-- es el número de segundos q una conexión puede estar en el pool sin ser utilizada antes de ser descartada o eliminada -->
+		
+		<!-- Sustitución de valores en comparaciones booleanas -->
+		<property name="hibernate.query.substitutions">true 1, false 0</property>
+		<property name="show_sql">false</property>
+
+	</session-factory>
+
+</hibernate-configuration>

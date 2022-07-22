@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto ResultadoEspecificoIniciativa de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (18/04/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.app.strategos.iniciativas.model.ResultadoEspecificoIniciativa" table="iniciativa_ano">
+
+		<!-- Atributo clave de MemoIniciativas -->
+		<composite-id name="pk" class="com.visiongc.app.strategos.iniciativas.model.ResultadoEspecificoIniciativaPK">
+			<key-property name="iniciativaId" column="iniciativa_id" type="java.lang.Long" />
+			<key-property name="ano" column="ano" type="java.lang.Integer" />
+		</composite-id>
+
+		<!-- Atributos del objeto conceptual -->
+		<property name="resultado" column="resultado" type="java.lang.String" />
+
+		<!-- Asociación muchos a uno para Iniciativa -->
+		<many-to-one name="iniciativa" class="com.visiongc.app.strategos.iniciativas.model.Iniciativa" unique="true" insert="false" update="false">
+			<column name="iniciativa_id" />
+		</many-to-one>
+
+	</class>
+
+</hibernate-mapping>

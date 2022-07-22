@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto Pagina de la Base de Datos -->
+<!-- @autor : Kerwin Arias 06/06/2008-->
+<hibernate-mapping>
+
+	<class name="com.visiongc.app.strategos.presentaciones.model.Pagina"
+		table="pagina">
+
+		<!-- Atributo clave de Pagina  -->
+		<id name="paginaId" type="java.lang.Long" column="pagina_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para  unidad de medida  -->
+		<property name="vistaId" type="java.lang.Long" column="vista_id" not-null="false" />
+		<property name="portafolioId" type="java.lang.Long" column="portafolioId" not-null="false" />
+		<property name="descripcion" type="java.lang.String" column="descripcion" length="2000" not-null="false" />
+		<property name="filas" type="java.lang.Byte" column="filas" not-null="true" />
+		<property name="columnas" type="java.lang.Byte" column="columnas" not-null="true" />
+		<property name="ancho" type="java.lang.Integer" column="ancho" not-null="true" />
+		<property name="alto" type="java.lang.Integer" column="alto" not-null="true" />
+		<property name="numero" type="java.lang.Integer" column="numero" not-null="true" />
+
+		<!-- Associations -->
+
+		<!-- bi-directional many-to-one association to Vista -->
+		<many-to-one name="vista"
+			class="com.visiongc.app.strategos.presentaciones.model.Vista" not-null="false" column="vista_id" insert="false" update="false">
+		</many-to-one>
+
+		<many-to-one name="portafolio"
+			class="com.visiongc.app.strategos.portafolios.model.Portafolio" not-null="false" column="portafolioId" insert="false" update="false">
+		</many-to-one>
+				
+		<!-- bi-directional one-to-many association to Celda -->
+		<set name="celdas" lazy="true" inverse="true"
+			order-by="fila, columna"
+			cascade="persist, merge, save-update, delete, delete-orphan">
+			<key not-null="true" column="pagina_id" />
+			<one-to-many class="com.visiongc.app.strategos.presentaciones.model.Celda" />
+		</set>
+
+
+	</class>
+
+</hibernate-mapping>

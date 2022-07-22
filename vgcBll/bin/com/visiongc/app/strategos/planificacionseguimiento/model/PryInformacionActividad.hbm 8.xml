@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto PryInformacionActividad de la Base de Datos -->
+<!-- Creado por: Kerwin Arias (30/04/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.app.strategos.planificacionseguimiento.model.PryInformacionActividad" table="inc_actividad">
+
+		<!-- Atributo clave de PryInformacionActividad -->
+		<id name="actividadId" type="java.lang.Long" column="actividad_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para PryInformacionActividad -->
+		<property name="productoEsperado" type="java.lang.String" column="producto_esperado" />
+		<property name="recursosHumanos" type="java.lang.String" column="recurso_humano" />
+		<property name="recursosMateriales" type="java.lang.String" column="recurso_material" />
+		<property name="peso" type="java.lang.Double" column="peso" />
+		<property name="porcentajeAmarillo" type="java.lang.Double" column="alerta_za" />
+		<property name="porcentajeVerde" type="java.lang.Double" column="alerta_zv" />
+
+	</class>
+
+</hibernate-mapping>

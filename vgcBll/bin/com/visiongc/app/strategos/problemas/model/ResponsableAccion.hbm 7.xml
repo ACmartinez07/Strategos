@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto ResponsableAccion de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (25/11/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.app.strategos.problemas.model.ResponsableAccion" table="responsable_por_accion">
+
+		<!-- Atributo clave de ResponsableAccion -->
+		<composite-id name="pk" class="com.visiongc.app.strategos.problemas.model.ResponsableAccionPK">
+			<key-property name="accionId" column="accion_id" type="java.lang.Long" />
+			<key-property name="responsableId" column="responsable_id" type="java.lang.Long" />
+		</composite-id>
+
+		<!-- Atributos del objeto conceptual para ResponsableAccion -->
+		<property name="tipo" type="java.lang.Byte" column="tipo" />
+
+		<!-- Asociación muchos a uno para Acción -->
+		<many-to-one name="accion" class="com.visiongc.app.strategos.problemas.model.Accion" unique="true" insert="false" update="false">
+			<column name="accion_id" />
+		</many-to-one>
+
+		<!-- Asociación muchos a uno para Responsable -->
+		<many-to-one name="responsable" class="com.visiongc.app.strategos.responsables.model.Responsable" unique="true" insert="false" update="false">
+			<column name="responsable_id" />
+		</many-to-one>
+
+	</class>
+
+</hibernate-mapping>

@@ -17,7 +17,7 @@ public abstract interface StrategosInstrumentosService
   
   public abstract int deleteInstrumentos(Instrumentos paramInstrumento, Usuario paramUsuario);
   
-  public abstract int saveInstrumentos(Instrumentos paramInstrumento, Usuario paramUsuario, Boolean paramBoolean);
+  public abstract int saveInstrumentos(Instrumentos paramInstrumento, Usuario paramUsuario, Boolean paraBoolean);
   
   public abstract int asociarInstrumento(Long paramLong1, Long paramLong2, Usuario paramUsuario);
   
@@ -28,15 +28,7 @@ public abstract interface StrategosInstrumentosService
   public abstract int saveIniciativaInstrumento(List<InstrumentoIniciativa> paramList, Usuario paramUsuario);
   
   public abstract int updatePesos(InstrumentoIniciativa paramInstrumento, Usuario paramUsuario);
-  
-  public abstract int asociarIndicador(Instrumentos paramInstrumento, Usuario paramUsuario);
-  
-  public abstract int desasociarIndicadores(IndicadorInstrumento paramIndicadorInstrumento, Usuario paramUsuario);
-  
-  public abstract int updateIndicadorAutomatico(Instrumentos paramInstrumento, Byte paramByte, ConfiguracionInstrumento paramConfigurcionInstrumento, Usuario paramUsuario);
-  
-  public abstract Instrumentos getValoresOriginales(Long paramLong);
-  
+     
   public abstract ConfiguracionInstrumento getConfiguracionInstrumento();
   
 }

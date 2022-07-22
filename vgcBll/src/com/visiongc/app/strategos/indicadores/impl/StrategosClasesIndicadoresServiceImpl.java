@@ -124,6 +124,29 @@ public class StrategosClasesIndicadoresServiceImpl
     return clase;
   }
   
+  private ClaseIndicadores crearClaseRaizInstrumento(Long organizacionId, Byte tipo, Long padreId, String nombre, Usuario usuario) {
+
+		ClaseIndicadores clase = new ClaseIndicadores();
+
+		clase.setClaseId(new Long(0L));
+		clase.setPadreId(padreId);
+		clase.setNombre(nombre);
+		clase.setOrganizacionId(organizacionId);
+		clase.setDescripcion(null);
+		clase.setEnlaceParcial(null);
+		clase.setTipo(tipo);
+		clase.setVisible(new Boolean(false));
+		
+		int respuesta = saveClaseIndicadores(clase, usuario);
+		if (respuesta == 10000) {
+			clase = (ClaseIndicadores) this.persistenceSession.load(ClaseIndicadores.class, clase.getClaseId());
+		} else {
+			clase = null;
+		}
+
+		return clase;
+	}
+  
   private ClaseIndicadores crearClaseRaizPlan(Long organizacionId, Byte tipo, Long padreId, String nombre, Usuario usuario)
   {
     ClaseIndicadores clase = new ClaseIndicadores();
@@ -152,9 +175,7 @@ public class StrategosClasesIndicadoresServiceImpl
   }
   
   public int saveClaseIndicadores(ClaseIndicadores clase, Usuario usuario)
-  {
-	  
-	System.out.print("Inicia a guardar clase indicador\n\n");
+  {	  	
     boolean transActiva = false;
     int resultado = 10000;
     String[] fieldNames = new String[3];
@@ -173,24 +194,18 @@ public class StrategosClasesIndicadoresServiceImpl
       fieldValues[1] = clase.getPadreId();
       fieldValues[2] = clase.getOrganizacionId();
       if ((clase.getClaseId() == null) || (clase.getClaseId().longValue() == 0L))
-      {
-    	  
-    	System.out.print("\n\nNO Existe clase id\n\n");
+      {    	      	
         if (this.persistenceSession.existsObject(clase, fieldNames, fieldValues))
         {
           resultado = 10003;
         }
         else
-        {
-        	System.out.print("\n\nNo se que pasa aca pero entra aca id\n\n");
+        {        	
           clase.setClaseId(new Long(this.persistenceSession.getUniqueId()));
           
           Date fechaInsercionIniciativa = new Date();
           clase.setCreado(new Date(fechaInsercionIniciativa.getTime()));
-          clase.setCreadoId(usuario.getUsuarioId());
-          
-          System.out.print(clase);
-          
+          clase.setCreadoId(usuario.getUsuarioId());                              
           resultado = this.persistenceSession.insert(clase, usuario);
         }
       }
@@ -410,6 +425,29 @@ public class StrategosClasesIndicadoresServiceImpl
     }
     return claseRaizIniciativa;
   }
+  
+  public ClaseIndicadores getClaseRaizInstrumento(Long organizacionId, Byte tipo, String nombre, Usuario usuario) {		
+		
+		ClaseIndicadores claseRoot = getClaseRaiz(organizacionId, TipoClaseIndicadores.getTipoClaseIndicadores(),
+				usuario);
+		
+		Map<String, Object> filtros = new HashMap();
+		
+		filtros.put("organizacionId", organizacionId.toString());
+		filtros.put("padreId", claseRoot.getClaseId());
+		filtros.put("nombre", nombre);
+		
+		ClaseIndicadores claseRaizInstrumento = null;
+		
+		List<ClaseIndicadores> clases = this.persistenceSession.getClases(null, null, filtros);
+		if (clases.size() == 0) {
+			claseRaizInstrumento = crearClaseRaizInstrumento(organizacionId, tipo, claseRoot.getClaseId(), nombre, usuario);			
+		} else if (clases.size() == 1) {
+			claseRaizInstrumento = (ClaseIndicadores) clases.get(0);
+		}
+		
+		return claseRaizInstrumento;
+	}
   
   public List<ClaseIndicadores> getClasesHijas(Long clasePadreId, Boolean visible)
   {

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto PryCalendario de la Base de Datos -->
+
+<!-- Modificado por: Kerwin Arias (11/06/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.app.strategos.planificacionseguimiento.model.PryCalendario" table="pry_calendario">
+
+		<!-- Atributo clave de PryCalendario -->
+		<id name="calendarioId" type="java.lang.Long" column="calendario_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para PryCalendario -->
+		<property name="proyectoId" type="java.lang.Long" column="proyecto_id" />
+		<property name="nombre" type="java.lang.String" column="nombre" length="50" />
+		<property name="domingo" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="dom" />
+		<property name="lunes" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="lun" />
+		<property name="martes" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="mar" />
+		<property name="miercoles" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="mie" />
+		<property name="jueves" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="jue" />
+		<property name="viernes" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="vie" />
+		<property name="sabado" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="sab" />
+
+		<!-- Asociación uno a muchos para MemoOrganizacion -->
+		<set name="excepciones" order-by="fecha" fetch="select" lazy="false" inverse="true" cascade="persist, merge, save-update, delete, delete-orphan">
+			<key>
+				<column name="calendario_id" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.planificacionseguimiento.model.PryCalendarioDetalle" />
+		</set>
+
+	</class>
+
+</hibernate-mapping>

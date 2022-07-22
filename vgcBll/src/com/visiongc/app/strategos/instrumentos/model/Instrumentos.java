@@ -38,7 +38,7 @@ public class Instrumentos implements Serializable {
 	private String observaciones;
 	private Cooperante cooperante;
 	private TipoConvenio tipoConvenio;
-	private Byte frecuencia;
+	private Byte frecuencia = new Byte((byte) 0);
 	private Long claseId;
 	private Byte tipoMedicion;
 

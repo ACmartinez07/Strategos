@@ -8,10 +8,11 @@
 	
 	
 		
-		<Resource name="jdbc/Strategos" auth="Container" type="javax.sql.DataSource" username="postgres" password="Canela3108" 
-		removeAbandoned="true" removeAbandonedTimeout="60" logAbandoned="true" maxActive="8" maxIdle="30" minIdle="8"
+		<Resource name="jdbc/Strategos" auth="Container" type="javax.sql.DataSource" username="sa" password="Password*********" 
+		removeAbandoned="true" removeAbandonedTimeout="60" logAbandoned="true" maxActive="8" maxIdle="30" minIdle="1" 
 		maxWait="10000" validationQuery="SELECT 1 FROM afw_sistema"
-		driverClassName="org.postgresql.Driver" url="jdbc:postgresql://localhost:5433/Strategos?compatible=7.1"/>
+		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
+		url="jdbc:sqlserver://localhost:1433;databaseName=Strategos2018;user=sa;password=Password*********;"/>
 		
 			
 </Context>
