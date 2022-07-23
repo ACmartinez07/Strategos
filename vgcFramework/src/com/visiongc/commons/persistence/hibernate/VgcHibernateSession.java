@@ -325,9 +325,7 @@ public class VgcHibernateSession implements VgcPersistenceSession
 	}
 
 	public int insert(Object objeto, Usuario usuario) 
-	{
-		
-		System.out.print("\n\nEntra al insert \n\n");
+	{			
 		try 
 		{
 			if (objeto instanceof Collection) 

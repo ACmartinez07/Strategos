@@ -439,16 +439,17 @@ public class StrategosIniciativasServiceImpl extends StrategosServiceImpl implem
 			if (!persistenceSession.isTransactionActive()) {
 				persistenceSession.beginTransaction();
 				transActiva = true;
-			}
-
+			}			
 			for (Iterator<IndicadorIniciativa> iter = iniciativa.getIniciativaIndicadores().iterator(); iter
 					.hasNext();) {
-				IndicadorIniciativa iniciativaIndicador = (IndicadorIniciativa) iter.next();
-
+				IndicadorIniciativa iniciativaIndicador = (IndicadorIniciativa) iter.next();				
 				fieldNames[0] = "pk.indicadorId";
 				fieldValues[0] = iniciativaIndicador.getPk().getIndicadorId();
 				fieldNames[1] = "pk.iniciativaId";
 				fieldValues[1] = iniciativaIndicador.getPk().getIniciativaId();
+				System.out.print("\nEntra al for\n"+ fieldNames);
+				System.out.print("\nEntra al for\n"+ fieldValues);
+				System.out.print("\nEntra al for\n"+ iniciativaIndicador.getPk().getIniciativaId());
 				if (!persistenceSession.existsObject(iniciativaIndicador, fieldNames, fieldValues))
 					resultado = persistenceSession.insert(iniciativaIndicador, usuario);
 				if (resultado != 10000) {

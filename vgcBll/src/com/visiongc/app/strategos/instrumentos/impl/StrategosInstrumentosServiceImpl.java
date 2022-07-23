@@ -86,16 +86,22 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 			}
 
 			if (instrumento.getInstrumentoId() != null) {
+				
+				/*System.out.print("\n\nEl instrumento existe\n");	
 				if (resultado == 10000) {
+					System.out.print("\n\nEl instrumento existe\n");
+					System.out.print("\nEl resultado sigue siendo\n"+ instrumento.getInstrumentoIndicadores());
+					System.out.print("\n\nEl instrumento existe\n");
 					for (Iterator<IndicadorInstrumento> iter = instrumento.getInstrumentoIndicadores().iterator(); iter
 							.hasNext();) {
+						System.out.print("\nEntra al for\n");
 						IndicadorInstrumento instrumentoIndicadores = (IndicadorInstrumento) iter.next();
 						resultado = desasociarIndicadores(instrumentoIndicadores, usuario);
 						if (resultado != 10000) {
 							break;
 						}
 					}
-				}
+				}*/
 				if (resultado == 10000) {
 					resultado = persistenceSession.delete(instrumento, usuario);
 				}
@@ -473,12 +479,9 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 				.openStrategosIndicadoresService(this);
 		Indicador indicador = new Indicador();
 		indicador.setClaseId(instrumento.getClaseId());
-		String nombre = "";
-			
-		if ((tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionSeguimiento().byteValue())
-				&& (configuracionInstrumento.getInstrumentoIndicadorAvanceAnteponer().booleanValue())) {
-			nombre = configuracionInstrumento.getInstrumentoIndicadorAvanceNombre() + " - ";
-		}
+		indicador.setOrganizacionId(19L);
+		String nombre = "";					
+		nombre = configuracionInstrumento.getInstrumentoIndicadorAvanceNombre() + " - ";		
 		nombre = nombre + instrumento.getNombreCorto();
 		if (nombre.length() > 100)
 			nombre = nombre.substring(0, 100);
@@ -489,23 +492,16 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 		
 		indicador.setNombreCorto(nombre);
 		indicador.setFrecuencia(instrumento.getFrecuencia());
-		
-		if (tipo.byteValue() != TipoFuncionIndicador.getTipoFuncionPresupuesto().byteValue()) {
+				
 			
-			StrategosUnidadesService strategosUnidadesService = StrategosServiceFactory.getInstance().openStrategosUnidadesService(this);		
-			UnidadMedida porcentaje = strategosUnidadesService.getUnidadMedidaPorcentaje();
-			indicador.setUnidadId(porcentaje.getUnidadId());		
-			strategosUnidadesService.close();
-		}			
+		StrategosUnidadesService strategosUnidadesService = StrategosServiceFactory.getInstance().openStrategosUnidadesService(this);		
+		UnidadMedida porcentaje = strategosUnidadesService.getUnidadMedidaPorcentaje();
+		indicador.setUnidadId(porcentaje.getUnidadId());		
+		strategosUnidadesService.close();
+				
 		
 		indicador.setPrioridad(PrioridadIndicador.getPrioridadIndicadorBaja());
-		indicador.setMostrarEnArbol(new Boolean(true));
-		if (tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionPresupuesto().byteValue()) {
-			indicador.setCaracteristica(Caracteristica.getCaracteristicaCondicionValorMaximo());
-		} else
-			indicador.setCaracteristica(Caracteristica.getCaracteristicaRetoAumento());
-		
-		
+		indicador.setMostrarEnArbol(new Boolean(true));						
 		indicador.setTipoFuncion(tipo);
 		indicador.setGuia(new Boolean(false));
 		indicador.setValorInicialCero(new Boolean(true));
@@ -539,40 +535,43 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 	
 	public int asociarIndicador(Instrumentos instrumento, Usuario usuario) {
 		boolean transActiva = false;
-		int resultado = 10000;
+		System.out.print("\nEntra a asociarindicador\n");
+		int resultado = 10000;		
 		String[] fieldNames = new String[2];
 		Object[] fieldValues = new Object[2];
 		try {
+			
 			if (!persistenceSession.isTransactionActive()) {
-				persistenceSession.beginTransaction();
+				persistenceSession.beginTransaction();			
 				transActiva = true;
-				
-				for (Iterator<IndicadorInstrumento> iter = instrumento.getInstrumentoIndicadores().iterator(); iter
-						.hasNext();) {
-					IndicadorInstrumento instrumentoIndicador = (IndicadorInstrumento) iter.next();
+			}			
+			for (Iterator<IndicadorInstrumento> iter = instrumento.getInstrumentoIndicadores().iterator(); iter.hasNext();) {					
+				IndicadorInstrumento instrumentoIndicador = (IndicadorInstrumento) iter.next();					
+				fieldNames[0] = "pk.indicadorId";
+				fieldValues[0] = instrumentoIndicador.getPk().getIndicadorId();
+				fieldNames[1] = "pk.instrumentoId";
+				fieldValues[1] = instrumentoIndicador.getPk().getInstrumentoId();
+				persistenceSession.existsObject(instrumentoIndicador, fieldNames, fieldValues);
+				System.out.print("\nEntra al if\n"+ instrumentoIndicador);
+				if (!persistenceSession.existsObject(instrumentoIndicador, fieldNames, fieldValues))
 					
-					fieldNames[0] = "pk.indicadorId";
-					fieldValues[0] = instrumentoIndicador.getPk().getIndicadorId();
-					fieldNames[1] = "pk.iniciativaId";
-					fieldValues[1] = instrumentoIndicador.getPk().getInstrumentoId();
-					if (!persistenceSession.existsObject(instrumentoIndicador, fieldNames, fieldValues))
-						resultado = persistenceSession.insert(instrumentoIndicador, usuario);
-					if (resultado != 10000) {
-						break;
-					}
-				}
-				if (transActiva) {
-					persistenceSession.commitTransaction();
-					transActiva = false;
+					resultado = persistenceSession.insert(instrumentoIndicador, usuario);
+					System.out.print("\nLo inserta\n");
+				if (resultado != 10000) {
+					break;
 				}
 			}
-		}
+			if (transActiva) {
+				persistenceSession.commitTransaction();
+				transActiva = false;
+			}					
+		}		
 		catch (Throwable t) {
 			if (transActiva)
 				persistenceSession.rollbackTransaction();
 			throw new ChainedRuntimeException(t.getMessage(), t);
 		}
-
+		System.out.print("\nSalef\n");
 		return resultado;
 	}
 	

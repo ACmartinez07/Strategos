@@ -599,10 +599,7 @@ public class StrategosIndicadoresServiceImpl
   }
   
   private void setSeriesIndicadorForSave(Indicador indicador)
-  {
-	  
-	  System.out.print("\n\nEntra a set series indicador for save");
-	  System.out.print("\n\nEntra a set series indicador for save"+ indicador.getSeriesIndicador());            
+  {	  	          
       if(indicador.getSeriesIndicador() == null)
       {
           indicador.setSeriesIndicador(new HashSet());
@@ -667,7 +664,7 @@ public class StrategosIndicadoresServiceImpl
       fieldValues[1] = indicador.getClaseId();
       
       if ((indicador.getIndicadorId() == null) || (indicador.getIndicadorId().longValue() == 0L))
-      {
+      {    	  
         if (persistenceSession.existsObject(indicador, fieldNames, fieldValues)) {
           resultado = 10003;
         }
@@ -679,10 +676,9 @@ public class StrategosIndicadoresServiceImpl
           {
             for (Iterator i = indicador.getEscalaCualitativa().iterator(); i.hasNext();) {
               CategoriaIndicador categoriaIndicador = (CategoriaIndicador)i.next();
-              categoriaIndicador.getPk().setIndicadorId(indicador.getIndicadorId());
-              System.out.print("\n\n Indicador frecuencia"+indicador.getFrecuencia());
+              categoriaIndicador.getPk().setIndicadorId(indicador.getIndicadorId());              
             }
-          }
+          }          
           resultado = persistenceSession.insert(indicador, usuario);          
           if ((resultado == 10000) && (indicador.getPlanId() != null) && (indicador.getPerspectivaId() != null))
           {
