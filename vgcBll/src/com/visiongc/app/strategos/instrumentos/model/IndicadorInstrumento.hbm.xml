@@ -6,8 +6,8 @@
 	<class name="com.visiongc.app.strategos.instrumentos.model.IndicadorInstrumento" table="indicador_por_instrumento">
 	
 		<composite-id name="pk" class="com.visiongc.app.strategos.instrumentos.model.IndicadorInstrumentoPK">
-			<key-property name="instrumentoId" column="instrumentoId" type="java.lang.Long" />
-			<key-property name="indicadorId" column="indicadorId" type="java.lang.Long" />
+			<key-property name="instrumentoId" column="instrumento_Id" type="java.lang.Long" />
+			<key-property name="indicadorId" column="indicador_Id" type="java.lang.Long" />
 		</composite-id>
 		
 		<property name="tipo" column="tipo" type="java.lang.Byte" />

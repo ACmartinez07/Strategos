@@ -39,6 +39,13 @@
 		<!-- Asociación uno a uno para Estatus -->
 		<many-to-one name="tipoConvenio" class="com.visiongc.app.strategos.instrumentos.model.TipoConvenio" lazy="false" fetch="join" column="tipos_convenio_id" unique="true" insert="false" update="false"></many-to-one>
 		
+		<!-- Asociación uno a muchos para IniciativaIndicadores -->
+		<set name="instrumentoIndicadores" fetch="select" lazy="true" inverse="true" cascade="none">
+			<key>
+				<column name="instrumento_id" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.instrumentos.model.IndicadorInstrumento" />
+		</set>
 		
 		
 	</class>

@@ -81,7 +81,7 @@
 		<mapping resource="com/visiongc/app/strategos/indicadores/model/Formula.hbm.xml" />
 		<mapping resource="com/visiongc/app/strategos/indicadores/model/InsumoFormula.hbm.xml" />
 		<mapping resource="com/visiongc/app/strategos/indicadores/model/TransaccionIndicador.hbm.xml" />
-		<mapping resource="com/visiongc/app/strategos/indicadores/model/IndicadorAsignarInventario.hbm.xml" />
+		<mapping resource="com/visiongc/app/strategos/indicadores/model/IndicadorAsignarInventario.hbm.xml" />		
 		
 		<!-- Planificación y Seguimiento -->
 		<mapping resource="com/visiongc/app/strategos/planificacionseguimiento/model/PryActividad.hbm.xml" />
@@ -106,6 +106,7 @@
 		<mapping resource="com/visiongc/app/strategos/instrumentos/model/Instrumentos.hbm.xml" />
 		<mapping resource="com/visiongc/app/strategos/instrumentos/model/TipoConvenio.hbm.xml" /> 
 		<mapping resource="com/visiongc/app/strategos/instrumentos/model/InstrumentoIniciativa.hbm.xml" />
+		<mapping resource="com/visiongc/app/strategos/instrumentos/model/IndicadorInstrumento.hbm.xml" />
 
 		<!-- Plan Cuentas -->
 		<mapping resource="com/visiongc/app/strategos/plancuentas/model/MascaraCodigoPlanCuentas.hbm.xml" />

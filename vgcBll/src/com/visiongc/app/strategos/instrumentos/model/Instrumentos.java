@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.visiongc.app.strategos.iniciativas.model.IndicadorIniciativa;
 import com.visiongc.app.strategos.iniciativas.model.IndicadorIniciativaPK;
+import com.visiongc.app.strategos.model.util.Frecuencia;
 
 public class Instrumentos implements Serializable {
 
@@ -38,7 +39,7 @@ public class Instrumentos implements Serializable {
 	private String observaciones;
 	private Cooperante cooperante;
 	private TipoConvenio tipoConvenio;
-	private Byte frecuencia = new Byte((byte) 0);
+	private Byte frecuencia;
 	private Long claseId;
 	private Byte tipoMedicion;
 
@@ -294,7 +295,7 @@ public class Instrumentos implements Serializable {
 	}
 
 	public void setFrecuencia(Byte frecuencia) {
-		this.frecuencia = frecuencia;
+		this.frecuencia = Frecuencia.getFrecuenciaTrimestral();
 	}
 
 	public Long getClaseId() {

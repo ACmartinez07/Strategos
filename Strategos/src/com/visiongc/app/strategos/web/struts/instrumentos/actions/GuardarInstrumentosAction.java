@@ -8,6 +8,7 @@ import com.visiongc.app.strategos.iniciativas.model.util.TipoProyecto;
 import com.visiongc.app.strategos.instrumentos.StrategosCooperantesService;
 import com.visiongc.app.strategos.instrumentos.StrategosInstrumentosService;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
+import com.visiongc.app.strategos.model.util.Frecuencia;
 import com.visiongc.app.strategos.util.PeriodoUtil;
 import com.visiongc.app.strategos.web.struts.categoriasmedicion.forms.EditarCategoriaMedicionForm;
 import com.visiongc.app.strategos.web.struts.instrumentos.forms.EditarInstrumentosForm;
@@ -156,8 +157,7 @@ public class GuardarInstrumentosAction extends VgcAction
     instrumento.setProductos(editarInstrumentosForm.getProductos());
     instrumento.setRecursosDolares(editarInstrumentosForm.getRecursosDolares());
     instrumento.setRecursosPesos(editarInstrumentosForm.getRecursosPesos());
-    instrumento.setResponsableCgi(editarInstrumentosForm.getResponsableCgi());
-    
+    instrumento.setResponsableCgi(editarInstrumentosForm.getResponsableCgi());        
  
     respuesta = strategosInstrumentosService.saveInstrumentos(instrumento, getUsuarioConectado(request), true);
 

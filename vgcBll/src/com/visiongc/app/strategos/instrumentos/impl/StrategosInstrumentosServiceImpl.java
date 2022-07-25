@@ -87,21 +87,17 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 
 			if (instrumento.getInstrumentoId() != null) {
 				
-				/*System.out.print("\n\nEl instrumento existe\n");	
-				if (resultado == 10000) {
-					System.out.print("\n\nEl instrumento existe\n");
-					System.out.print("\nEl resultado sigue siendo\n"+ instrumento.getInstrumentoIndicadores());
-					System.out.print("\n\nEl instrumento existe\n");
+					
+				if (resultado == 10000) {					
 					for (Iterator<IndicadorInstrumento> iter = instrumento.getInstrumentoIndicadores().iterator(); iter
-							.hasNext();) {
-						System.out.print("\nEntra al for\n");
+							.hasNext();) {						
 						IndicadorInstrumento instrumentoIndicadores = (IndicadorInstrumento) iter.next();
 						resultado = desasociarIndicadores(instrumentoIndicadores, usuario);
 						if (resultado != 10000) {
 							break;
 						}
 					}
-				}*/
+				}
 				if (resultado == 10000) {
 					resultado = persistenceSession.delete(instrumento, usuario);
 				}
@@ -175,6 +171,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 					resultado = 10003;
 				} else {
 					if (actualizarIndicador.booleanValue()) {
+						System.out.print("Llega a editar el instrumento");
 						if (instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()) != null) {
 							Instrumentos instrumentoOriginal = getValoresOriginales(instrumento.getInstrumentoId());
 							if (instrumentoOriginal.getFrecuencia().byteValue() != instrumento.getFrecuencia().byteValue()) {
@@ -534,8 +531,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 	}
 	
 	public int asociarIndicador(Instrumentos instrumento, Usuario usuario) {
-		boolean transActiva = false;
-		System.out.print("\nEntra a asociarindicador\n");
+		boolean transActiva = false;		
 		int resultado = 10000;		
 		String[] fieldNames = new String[2];
 		Object[] fieldValues = new Object[2];
@@ -550,13 +546,9 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 				fieldNames[0] = "pk.indicadorId";
 				fieldValues[0] = instrumentoIndicador.getPk().getIndicadorId();
 				fieldNames[1] = "pk.instrumentoId";
-				fieldValues[1] = instrumentoIndicador.getPk().getInstrumentoId();
-				persistenceSession.existsObject(instrumentoIndicador, fieldNames, fieldValues);
-				System.out.print("\nEntra al if\n"+ instrumentoIndicador);
-				if (!persistenceSession.existsObject(instrumentoIndicador, fieldNames, fieldValues))
-					
-					resultado = persistenceSession.insert(instrumentoIndicador, usuario);
-					System.out.print("\nLo inserta\n");
+				fieldValues[1] = instrumentoIndicador.getPk().getInstrumentoId();				
+				if (!persistenceSession.existsObject(instrumentoIndicador, fieldNames, fieldValues))					
+					resultado = persistenceSession.insert(instrumentoIndicador, usuario);					
 				if (resultado != 10000) {
 					break;
 				}
@@ -570,8 +562,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 			if (transActiva)
 				persistenceSession.rollbackTransaction();
 			throw new ChainedRuntimeException(t.getMessage(), t);
-		}
-		System.out.print("\nSalef\n");
+		}		
 		return resultado;
 	}
 	
@@ -609,12 +600,11 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 	public int updateIndicadorAutomatico(Instrumentos instrumento, Byte tipo,
 			ConfiguracionInstrumento configuracionInstrumento, Usuario usuario) {
 		int resultado = 10000;
-		StrategosIndicadoresService strategosIndicadoresService = StrategosServiceFactory.getInstance()
+		/*StrategosIndicadoresService strategosIndicadoresService = StrategosServiceFactory.getInstance()
 				.openStrategosIndicadoresService();
 		Long indicadorId = instrumento.getIndicadorId(tipo);
 		if (indicadorId != null) {
-			Indicador indicador = (Indicador) strategosIndicadoresService.load(Indicador.class, indicadorId);
-			indicador.setFrecuencia(instrumento.getFrecuencia());
+			Indicador indicador = (Indicador) strategosIndicadoresService.load(Indicador.class, indicadorId);			
 			
 			String nombre = "";
 			if ((tipo.byteValue() == TipoFuncionIndicador.getTipoFuncionSeguimiento().byteValue())
@@ -643,7 +633,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 				}
 			}
 		}
-		strategosIndicadoresService.close();
+		strategosIndicadoresService.close();*/
 
 		return resultado;
 	}

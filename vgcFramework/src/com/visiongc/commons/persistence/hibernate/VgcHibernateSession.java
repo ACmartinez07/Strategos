@@ -1169,9 +1169,8 @@ public class VgcHibernateSession implements VgcPersistenceSession
 	 * 
 	 *  (10/04/2012)
 	 */
-	public boolean existsObject(Object objeto, String fieldNames[], Object fieldValues[]) {
+	public boolean existsObject(Object objeto, String fieldNames[], Object fieldValues[]) {			
 		return existsObject(objeto, fieldNames, fieldValues, null, null);
-
 	}
 
 	/**
@@ -1179,25 +1178,24 @@ public class VgcHibernateSession implements VgcPersistenceSession
 	 * 
 	 *  (10/04/2012)
 	 */
-	public boolean existsObject(Object objeto, String fieldNames[], Object fieldValues[], String idFieldNames[], Object idFieldValues[]) {
-
+	public boolean existsObject(Object objeto, String fieldNames[], Object fieldValues[], String idFieldNames[], Object idFieldValues[]) {		
 		String sql = "select count(*) from " + objeto.getClass().getName();
 		boolean caseSensitive = FrameworkConfiguration.getInstance().getBoolean("com.visiongc.framework.persistence.save.casesensitive");
 
 		sql = sql + " where ";
-		for (int i = 0; i < fieldNames.length; i++) {
-			if (fieldValues[i] == null) {
+		for (int i = 0; i < fieldNames.length; i++) {			
+			if (fieldValues[i] == null) {				
 				sql = sql + fieldNames[i] + " is null and ";
-			} else if (fieldValues[i].getClass().getName().equals("java.lang.String")) {
+			} else if (fieldValues[i].getClass().getName().equals("java.lang.String")) {				
 				if (caseSensitive) {
 					sql = sql + fieldNames[i] + "=? and ";
 				} else {
 					sql = sql + "lower(" + fieldNames[i] + ")=? and ";
-				}
-			} else {
+				}				
+			} else {				
 				sql = sql + fieldNames[i] + "=? and ";
-			}
-		}
+			}			
+		}		
 		if (idFieldNames == null) {
 			sql = sql.substring(0, sql.length() - 5);
 		} else {
@@ -1216,20 +1214,20 @@ public class VgcHibernateSession implements VgcPersistenceSession
 				}
 			}
 			sql = sql.substring(0, sql.length() - 5) + ")";
-		}
+		}		
 
-		Query consulta = session.createQuery(sql);
-		int ajuste = 0;
+		Query consulta = session.createQuery(sql);		
+		int ajuste = 0;		
 		for (int i = 0; i < fieldValues.length; i++) {
-			if (fieldValues[i] != null) {
+			if (fieldValues[i] != null) {				
 				if (fieldValues[i].getClass().getName().equals("java.lang.String")) {
 					if (caseSensitive) {
 						consulta.setString(i + ajuste, ((String) fieldValues[i]));
 					} else {
 						consulta.setString(i + ajuste, ((String) fieldValues[i]).toLowerCase());
 					}
-				} else if (fieldValues[i].getClass().getName().equals("java.lang.Long")) {
-					consulta.setLong(i + ajuste, ((Long) fieldValues[i]).longValue());
+				} else if (fieldValues[i].getClass().getName().equals("java.lang.Long")) {					
+					consulta.setLong(i + ajuste, ((Long) fieldValues[i]).longValue());					
 				} else if (fieldValues[i].getClass().getName().equals("java.lang.Byte")) {
 					consulta.setByte(i + ajuste, ((Byte) fieldValues[i]).byteValue());
 				} else if (fieldValues[i].getClass().getName().equals("java.util.Date")) {
@@ -1242,7 +1240,7 @@ public class VgcHibernateSession implements VgcPersistenceSession
 			} else {
 				ajuste--;
 			}
-		}
+		}		
 		if (idFieldNames != null) {
 			ajuste = ajuste + fieldValues.length;
 			for (int i = 0; i < idFieldValues.length; i++) {
@@ -1269,7 +1267,7 @@ public class VgcHibernateSession implements VgcPersistenceSession
 				}
 			}
 
-		}
+		}		
 
 		Object total = consulta.list().get(0);
 
