@@ -157,7 +157,8 @@ public class GuardarInstrumentosAction extends VgcAction
     instrumento.setProductos(editarInstrumentosForm.getProductos());
     instrumento.setRecursosDolares(editarInstrumentosForm.getRecursosDolares());
     instrumento.setRecursosPesos(editarInstrumentosForm.getRecursosPesos());
-    instrumento.setResponsableCgi(editarInstrumentosForm.getResponsableCgi());        
+    instrumento.setResponsableCgi(editarInstrumentosForm.getResponsableCgi());       
+    instrumento.setFrecuencia(Frecuencia.getFrecuenciaTrimestral());
  
     respuesta = strategosInstrumentosService.saveInstrumentos(instrumento, getUsuarioConectado(request), true);
 

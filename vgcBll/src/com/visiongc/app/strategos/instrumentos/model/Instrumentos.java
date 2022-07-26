@@ -295,7 +295,7 @@ public class Instrumentos implements Serializable {
 	}
 
 	public void setFrecuencia(Byte frecuencia) {
-		this.frecuencia = Frecuencia.getFrecuenciaTrimestral();
+		this.frecuencia = frecuencia;
 	}
 
 	public Long getClaseId() {

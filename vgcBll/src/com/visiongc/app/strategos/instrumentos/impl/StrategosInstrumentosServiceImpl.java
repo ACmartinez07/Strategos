@@ -171,9 +171,10 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 					resultado = 10003;
 				} else {
 					if (actualizarIndicador.booleanValue()) {
-						System.out.print("Llega a editar el instrumento");
+						
 						if (instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()) != null) {
 							Instrumentos instrumentoOriginal = getValoresOriginales(instrumento.getInstrumentoId());
+							System.out.print("\nLlega a editar el instrumento\n");
 							if (instrumentoOriginal.getFrecuencia().byteValue() != instrumento.getFrecuencia().byteValue()) {
 								ConfiguracionInstrumento configuracionInstrumento = getConfiguracionInstrumento();	
 								resultado = updateIndicadorAutomatico(instrumento,
@@ -600,7 +601,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 	public int updateIndicadorAutomatico(Instrumentos instrumento, Byte tipo,
 			ConfiguracionInstrumento configuracionInstrumento, Usuario usuario) {
 		int resultado = 10000;
-		/*StrategosIndicadoresService strategosIndicadoresService = StrategosServiceFactory.getInstance()
+		StrategosIndicadoresService strategosIndicadoresService = StrategosServiceFactory.getInstance()
 				.openStrategosIndicadoresService();
 		Long indicadorId = instrumento.getIndicadorId(tipo);
 		if (indicadorId != null) {
@@ -633,7 +634,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 				}
 			}
 		}
-		strategosIndicadoresService.close();*/
+		strategosIndicadoresService.close();
 
 		return resultado;
 	}

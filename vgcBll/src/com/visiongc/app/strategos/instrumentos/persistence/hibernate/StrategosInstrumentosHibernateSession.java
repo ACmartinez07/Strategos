@@ -16,6 +16,7 @@ import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativa;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosCooperantesPersistenceSession;
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosInstrumentosPersistenceSession;
+import com.visiongc.app.strategos.model.util.Frecuencia;
 import com.visiongc.app.strategos.persistence.hibernate.StrategosHibernateSession;
 import com.visiongc.commons.util.ListaMap;
 import com.visiongc.commons.util.PaginaLista;
@@ -180,18 +181,18 @@ public class StrategosInstrumentosHibernateSession extends StrategosHibernateSes
 		
 		Instrumentos instrumento = null;
 		
-		String hqlQuery = "select frecuencia, instrumentoId from Instrumentos instrumento where instrumento.instrumentoId = :instrumentoId";
+		String hqlQuery = "select instrumentoId from Instrumentos instrumento where instrumento.instrumentoId = :instrumentoId";
 		
-		List<Object[]> resultado = session.createQuery(hqlQuery).setLong("iniciativaId", instrumentoId.longValue()).list();
+		List<Long> resultado = session.createQuery(hqlQuery).setLong("instrumentoId", instrumentoId.longValue()).list();
 		if(resultado.size() > 0) {
 			instrumento = new Instrumentos();
 			
-			Object[] valores = (Object[])resultado.get(0);
+			Long valores = (Long)resultado.get(0);
 			
-			instrumento.setFrecuencia((Byte)valores[0]);
+			instrumento.setFrecuencia(Frecuencia.getFrecuenciaTrimestral());
 		}
 		
-		return null;
+		return instrumento;
 	}
 	
 	public Instrumentos getInstrumentoByIndicador(long indicadorId) {
