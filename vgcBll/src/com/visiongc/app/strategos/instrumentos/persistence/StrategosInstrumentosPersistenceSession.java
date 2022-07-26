@@ -23,4 +23,6 @@ public abstract interface StrategosInstrumentosPersistenceSession extends Strate
 	  public abstract Instrumentos getInstrumentoByIndicador(long indicadorId);
 	  
 	  public abstract ListaMap getDependenciasCiclicasInstrumento(Instrumentos paramInstrumento);
+	  
+	  public abstract ListaMap getDependenciasInstrumento(Instrumentos paramInstrumento);
 }

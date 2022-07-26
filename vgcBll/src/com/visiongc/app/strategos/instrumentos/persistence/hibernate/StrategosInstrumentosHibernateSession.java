@@ -11,6 +11,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
 import com.visiongc.app.strategos.indicadores.model.ClaseIndicadores;
+import com.visiongc.app.strategos.iniciativas.model.Iniciativa;
 import com.visiongc.app.strategos.instrumentos.model.Cooperante;
 import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativa;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
@@ -18,6 +19,7 @@ import com.visiongc.app.strategos.instrumentos.persistence.StrategosCooperantesP
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosInstrumentosPersistenceSession;
 import com.visiongc.app.strategos.model.util.Frecuencia;
 import com.visiongc.app.strategos.persistence.hibernate.StrategosHibernateSession;
+import com.visiongc.app.strategos.planificacionseguimiento.model.PryActividad;
 import com.visiongc.commons.util.ListaMap;
 import com.visiongc.commons.util.PaginaLista;
 import com.visiongc.framework.model.Usuario;
@@ -209,20 +211,43 @@ public class StrategosInstrumentosHibernateSession extends StrategosHibernateSes
 		}
 		
 		return null;
-	}
+	}		
 	
-	public ListaMap getDependenciasCiclicasInstrumento(Instrumentos instrumento) {
-		ListaMap dependenciasCiclicas = new ListaMap();
-		
-		Criteria consulta = null;
-		
-		if(instrumento.getClaseId() != null) {
-			consulta = session.createCriteria(ClaseIndicadores.class);
-			consulta.add(Restrictions.eq("claseId", instrumento.getClaseId()));
-			List clases = consulta.list();
-			dependenciasCiclicas.add(clases, "clases");
-		}
-		
-		return dependenciasCiclicas;
-	}
+	public ListaMap getDependenciasCiclicasInstrumento(Instrumentos instrumento)
+	  {
+	    ListaMap dependenciasCiclicas = new ListaMap();
+	    
+	    Criteria consulta = null;
+	    
+	    if (instrumento.getClaseId() != null)
+	    {
+	      consulta = session.createCriteria(ClaseIndicadores.class);
+	      consulta.add(Restrictions.eq("claseId", instrumento.getClaseId()));
+	      List clases = consulta.list();
+	      dependenciasCiclicas.add(clases, "clases");
+	    }
+	    
+	    return dependenciasCiclicas;
+	  }
+	
+	public ListaMap getDependenciasInstrumento(Instrumentos instrumento)
+	  {
+	    ListaMap dependencias = new ListaMap();	    
+	    
+	    Criteria consulta = null;
+	    	    	    
+	    
+	    consulta = session.createCriteria(PryActividad.class);
+	    consulta.add(Restrictions.eq("objetoAsociadoId", instrumento.getInstrumentoId()));
+	    List objetosAsociados = consulta.list();
+	    dependencias.add(objetosAsociados, "objetosAsociados");
+	    
+	    consulta = session.createCriteria(PryActividad.class);
+	    consulta.add(Restrictions.eq("proyectoId", instrumento.getInstrumentoId()));
+	    List actividades = consulta.list();
+	    dependencias.add(actividades, "actividades");
+	    
+	    return dependencias;
+	  }
+	
 }

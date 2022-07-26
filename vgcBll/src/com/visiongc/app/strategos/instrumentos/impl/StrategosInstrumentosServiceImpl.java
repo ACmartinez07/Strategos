@@ -22,21 +22,12 @@ import com.visiongc.app.strategos.impl.StrategosServiceImpl;
 import com.visiongc.app.strategos.indicadores.StrategosClasesIndicadoresService;
 import com.visiongc.app.strategos.indicadores.StrategosIndicadoresService;
 import com.visiongc.app.strategos.indicadores.model.ClaseIndicadores;
-import com.visiongc.app.strategos.indicadores.model.Formula;
 import com.visiongc.app.strategos.indicadores.model.Indicador;
-import com.visiongc.app.strategos.indicadores.model.InsumoFormula;
-import com.visiongc.app.strategos.indicadores.model.InsumoFormulaPK;
-import com.visiongc.app.strategos.indicadores.model.SerieIndicador;
-import com.visiongc.app.strategos.indicadores.model.util.Caracteristica;
 import com.visiongc.app.strategos.indicadores.model.util.Naturaleza;
 import com.visiongc.app.strategos.indicadores.model.util.PrioridadIndicador;
 import com.visiongc.app.strategos.indicadores.model.util.TipoClaseIndicadores;
-import com.visiongc.app.strategos.indicadores.model.util.TipoCorte;
 import com.visiongc.app.strategos.indicadores.model.util.TipoFuncionIndicador;
-import com.visiongc.app.strategos.indicadores.model.util.TipoMedicion;
-import com.visiongc.app.strategos.iniciativas.model.IndicadorIniciativa;
 import com.visiongc.app.strategos.iniciativas.model.Iniciativa;
-import com.visiongc.app.strategos.iniciativas.model.util.ConfiguracionIniciativa;
 import com.visiongc.app.strategos.instrumentos.StrategosInstrumentosService;
 import com.visiongc.app.strategos.instrumentos.model.IndicadorInstrumento;
 import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativa;
@@ -44,11 +35,10 @@ import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativaPK;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.app.strategos.instrumentos.model.util.ConfiguracionInstrumento;
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosInstrumentosPersistenceSession;
-import com.visiongc.app.strategos.seriestiempo.model.SerieTiempo;
-import com.visiongc.app.strategos.servicio.Servicio;
 import com.visiongc.app.strategos.unidadesmedida.StrategosUnidadesService;
 import com.visiongc.app.strategos.unidadesmedida.model.UnidadMedida;
 import com.visiongc.commons.impl.VgcAbstractService;
+import com.visiongc.commons.util.ListaMap;
 import com.visiongc.commons.util.PaginaLista;
 import com.visiongc.commons.util.VgcMessageResources;
 import com.visiongc.commons.util.VgcResourceManager;
@@ -86,8 +76,9 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 			}
 
 			if (instrumento.getInstrumentoId() != null) {
+													
+				resultado = deleteDependenciasInstrumento(instrumento, usuario);
 				
-					
 				if (resultado == 10000) {					
 					for (Iterator<IndicadorInstrumento> iter = instrumento.getInstrumentoIndicadores().iterator(); iter
 							.hasNext();) {						
@@ -101,7 +92,9 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 				if (resultado == 10000) {
 					resultado = persistenceSession.delete(instrumento, usuario);
 				}
-								
+				if (resultado == 10000) {
+					resultado = deleteDependenciasCiclicasInstrumento(instrumento, usuario);
+				}				
 			}
 
 			if (resultado == 10000) {
@@ -124,6 +117,134 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 
 		return resultado;
 
+	}
+	
+	private int deleteDependenciasInstrumento(Instrumentos instrumento, Usuario usuario) {
+		boolean transActiva = false;
+		int resultado = 10000;
+		ListaMap dependencias = new ListaMap();
+		List listaObjetosRelacionados = new ArrayList();
+		
+		try {
+			if (!persistenceSession.isTransactionActive()) {
+				persistenceSession.beginTransaction();
+				transActiva = true;
+			}
+			
+			if (resultado == 10000) {
+				dependencias = persistenceSession.getDependenciasInstrumento(instrumento);
+				for (Iterator<?> i = dependencias.iterator(); i.hasNext();) {
+					listaObjetosRelacionados = (List) i.next();
+					
+					if ((listaObjetosRelacionados.size() > 0)&& ((listaObjetosRelacionados.get(0) instanceof ClaseIndicadores))) {
+						StrategosClasesIndicadoresService strategosClasesIndicadoresService = StrategosServiceFactory
+								.getInstance().openStrategosClasesIndicadoresService(this);
+
+						for (Iterator<ClaseIndicadores> j = listaObjetosRelacionados.iterator(); j.hasNext();) {
+							ClaseIndicadores clase = (ClaseIndicadores) j.next();
+
+							resultado = strategosClasesIndicadoresService.deleteClaseIndicadores(clase,
+									Boolean.valueOf(true), usuario);
+							if (resultado != 10000)
+								break;
+						}
+						if (resultado != 10000) {
+							break;
+						}
+					strategosClasesIndicadoresService.close();	
+					}
+				}
+			}	
+			if (resultado == 10000) {
+				if (transActiva) {
+					persistenceSession.commitTransaction();
+					transActiva = false;
+				}
+			} else if (transActiva) {
+				persistenceSession.rollbackTransaction();
+				transActiva = false;
+			}
+		}catch (Throwable t) {
+			if (transActiva) {
+				persistenceSession.rollbackTransaction();
+				throw new ChainedRuntimeException(t.getMessage(), t);
+			}
+		}
+
+		return resultado;
+	}
+	
+	
+	
+	private int deleteDependenciasCiclicasInstrumento(Instrumentos instrumento, Usuario usuario) {
+		boolean transActiva = false;
+		int resultado = 10000;
+		ListaMap dependencias = new ListaMap();
+		List listaObjetosRelacionados = new ArrayList();
+		try {
+			if (!persistenceSession.isTransactionActive()) {
+				persistenceSession.beginTransaction();
+				transActiva = true;
+			}
+
+			dependencias = persistenceSession.getDependenciasCiclicasInstrumento(instrumento);
+
+			for (Iterator i = dependencias.iterator(); i.hasNext();) {
+				listaObjetosRelacionados = (List) i.next();
+
+				if ((listaObjetosRelacionados.size() > 0)
+						&& ((listaObjetosRelacionados.get(0) instanceof ClaseIndicadores))) {
+					StrategosClasesIndicadoresService strategosClasesIndicadoresService = StrategosServiceFactory
+							.getInstance().openStrategosClasesIndicadoresService(this);
+
+					for (Iterator j = listaObjetosRelacionados.iterator(); j.hasNext();) {
+						ClaseIndicadores clase = (ClaseIndicadores) j.next();
+
+						resultado = strategosClasesIndicadoresService.deleteClaseIndicadores(clase,
+								Boolean.valueOf(true), usuario);
+
+						if (resultado != 10000) {
+							break;
+						}
+					}
+
+					strategosClasesIndicadoresService.close();
+				} else {
+					for (Iterator j = listaObjetosRelacionados.iterator(); j.hasNext();) {
+						Object objeto = j.next();
+
+						resultado = persistenceSession.delete(objeto, usuario);
+
+						if (resultado != 10000) {
+							break;
+						}
+					}
+				}
+
+				if (resultado != 10000) {
+					break;
+				}
+			}
+
+			if (resultado == 10000) {
+				if (transActiva) {
+					persistenceSession.commitTransaction();
+					transActiva = false;
+				}
+
+			} else if (transActiva) {
+				persistenceSession.rollbackTransaction();
+				transActiva = false;
+			}
+
+		} catch (Throwable t) {
+			if (transActiva) {
+				persistenceSession.rollbackTransaction();
+				throw new ChainedRuntimeException(t.getMessage(), t);
+			}
+		}
+
+		return resultado;
 	}
 
 	public int saveInstrumentos(Instrumentos instrumento, Usuario usuario, Boolean actualizarIndicador) {
@@ -173,8 +294,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 					if (actualizarIndicador.booleanValue()) {
 						
 						if (instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()) != null) {
-							Instrumentos instrumentoOriginal = getValoresOriginales(instrumento.getInstrumentoId());
-							System.out.print("\nLlega a editar el instrumento\n");
+							Instrumentos instrumentoOriginal = getValoresOriginales(instrumento.getInstrumentoId());						
 							if (instrumentoOriginal.getFrecuencia().byteValue() != instrumento.getFrecuencia().byteValue()) {
 								ConfiguracionInstrumento configuracionInstrumento = getConfiguracionInstrumento();	
 								resultado = updateIndicadorAutomatico(instrumento,
@@ -304,7 +424,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 			instrumentoIniciativa.getPk().setIniciativaId(iniciativaId);
 			instrumentoIniciativa.getPk().setInstrumentoId(instrumentoId);
 
-			resultado = persistenceSession.delete(instrumentoIniciativa, usuario);
+			resultado = persistenceSession.delete(instrumentoIniciativa, usuario);	
 
 			if (resultado == 10000) {
 				if (transActiva) {

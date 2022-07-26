@@ -1002,7 +1002,8 @@ public class StrategosIniciativasServiceImpl extends StrategosServiceImpl implem
 
 				for (Iterator<?> i = dependencias.iterator(); i.hasNext();) {
 					listaObjetosRelacionados = (List) i.next();
-
+					System.out.print("\ncaso #1" + listaObjetosRelacionados);
+					System.out.print("\ncaso #2" + listaObjetosRelacionados.get(0).toString() );
 					if ((listaObjetosRelacionados.size() > 0)
 							&& ((listaObjetosRelacionados.get(0) instanceof PryActividad))) {
 						StrategosPryActividadesService strategosPryActividadesService = StrategosServiceFactory
