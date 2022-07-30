@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Modificado por: Kerwin Arias (28/08/2012) -->
+
+<hibernate-mapping>
+	<!-- 
+		Created by the Middlegen Hibernate plugin 2.1
+		
+		http://boss.bekk.no/boss/middlegen/
+		http://www.hibernate.org/
+	-->
+
+	<class name="com.visiongc.framework.model.Permiso" table="afw_permiso">
+
+		<id name="permisoId" type="java.lang.String" column="permiso_id" length="50">
+			<generator class="assigned" />
+		</id>
+
+		<property name="padreId" type="java.lang.String" column="padre_id" length="50" insert="false" update="false" />
+
+		<property name="nivel" type="java.lang.Integer" column="nivel" length="2" />
+
+		<property name="grupo" type="java.lang.Integer" column="grupo" length="2" />
+
+		<property name="global" type="java.lang.Integer" column="global" length="1" />
+
+		<property name="permiso" type="java.lang.String" column="permiso" length="50" />
+
+		<!-- Associations -->
+
+		<!-- bi-directional one-to-many association to PermisoGrupo -->
+		<set name="grupos" lazy="true" inverse="true" table="afw_permiso_grupo">
+			<key>
+				<column name="permiso_id" />
+			</key>
+			<many-to-many class="com.visiongc.framework.model.Grupo" column="grupo_id" />
+		</set>
+
+		<!-- bi-directional one-to-many association to Permiso -->
+		<set name="hijos" lazy="true" inverse="true" order-by="grupo">
+			<key>
+				<column name="padre_id" />
+			</key>
+			<one-to-many class="com.visiongc.framework.model.Permiso" />
+		</set>
+
+		<!-- bi-directional many-to-one association to Permiso -->
+		<many-to-one name="padre" class="com.visiongc.framework.model.Permiso">
+			<column name="padre_id" />
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

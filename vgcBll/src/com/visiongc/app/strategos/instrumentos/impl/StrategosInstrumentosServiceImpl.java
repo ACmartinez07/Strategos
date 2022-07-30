@@ -23,10 +23,15 @@ import com.visiongc.app.strategos.indicadores.StrategosClasesIndicadoresService;
 import com.visiongc.app.strategos.indicadores.StrategosIndicadoresService;
 import com.visiongc.app.strategos.indicadores.model.ClaseIndicadores;
 import com.visiongc.app.strategos.indicadores.model.Indicador;
+import com.visiongc.app.strategos.indicadores.model.SerieIndicador;
+import com.visiongc.app.strategos.indicadores.model.SerieIndicadorPK;
+import com.visiongc.app.strategos.indicadores.model.util.Caracteristica;
 import com.visiongc.app.strategos.indicadores.model.util.Naturaleza;
 import com.visiongc.app.strategos.indicadores.model.util.PrioridadIndicador;
 import com.visiongc.app.strategos.indicadores.model.util.TipoClaseIndicadores;
+import com.visiongc.app.strategos.indicadores.model.util.TipoCorte;
 import com.visiongc.app.strategos.indicadores.model.util.TipoFuncionIndicador;
+import com.visiongc.app.strategos.indicadores.model.util.TipoMedicion;
 import com.visiongc.app.strategos.iniciativas.model.Iniciativa;
 import com.visiongc.app.strategos.instrumentos.StrategosInstrumentosService;
 import com.visiongc.app.strategos.instrumentos.model.IndicadorInstrumento;
@@ -35,6 +40,7 @@ import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativaPK;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.app.strategos.instrumentos.model.util.ConfiguracionInstrumento;
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosInstrumentosPersistenceSession;
+import com.visiongc.app.strategos.seriestiempo.model.SerieTiempo;
 import com.visiongc.app.strategos.unidadesmedida.StrategosUnidadesService;
 import com.visiongc.app.strategos.unidadesmedida.model.UnidadMedida;
 import com.visiongc.commons.impl.VgcAbstractService;
@@ -617,15 +623,21 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 		indicador.setUnidadId(porcentaje.getUnidadId());		
 		strategosUnidadesService.close();
 				
-		
 		indicador.setPrioridad(PrioridadIndicador.getPrioridadIndicadorBaja());
 		indicador.setMostrarEnArbol(new Boolean(true));						
+		indicador.setCaracteristica(Caracteristica.getCaracteristicaRetoAumento());
 		indicador.setTipoFuncion(tipo);
 		indicador.setGuia(new Boolean(false));
 		indicador.setValorInicialCero(new Boolean(true));
 		indicador.setNumeroDecimales(new Byte("2"));
 		indicador.setNaturaleza(Naturaleza.getNaturalezaSimple());						
 
+		indicador.setSeriesIndicador(new HashSet());
+		setSeriesTiempo(indicador);
+		
+		indicador.setCorte(TipoCorte.getTipoCorteLongitudinal());
+		indicador.setTipoCargaMedicion(TipoMedicion.getTipoMedicionEnPeriodo());
+		
 		if (resultado == 10000)
 			resultado = strategosIndicadoresService.saveIndicador(indicador, usuario);
 		
@@ -757,6 +769,31 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 		strategosIndicadoresService.close();
 
 		return resultado;
+	}
+	
+	private void setSeriesTiempo(Indicador indicador) {
+		indicador.getSeriesIndicador().clear();
+		String[] series = new String[2];
+		series[0] = SerieTiempo.getSerieRealId().toString();
+		if (indicador.getTipoFuncion().byteValue() == TipoFuncionIndicador.getTipoFuncionPresupuesto().byteValue()) {
+			series[1] = SerieTiempo.getSerieMaximoId().toString();
+		} else {
+			series[1] = SerieTiempo.getSerieProgramadoId().toString();
+		}
+		for (int i = 0; i < series.length; i++) {
+			String serie = series[i];
+			if ((serie != null) && (!serie.equals(""))) {
+				SerieIndicador serieIndicador = new SerieIndicador();
+				serieIndicador.setIndicador(indicador);
+				serieIndicador.setPk(new SerieIndicadorPK());
+				serieIndicador.getPk().setSerieId(new Long(serie));
+				serieIndicador.getPk().setIndicadorId(indicador.getIndicadorId());
+				serieIndicador.setFormulas(new HashSet());
+				serieIndicador.setNaturaleza(Naturaleza.getNaturalezaSimple());
+
+				indicador.getSeriesIndicador().add(serieIndicador);
+			}
+		}
 	}
 	
 	public Instrumentos getValoresOriginales(Long instrumentoId) {

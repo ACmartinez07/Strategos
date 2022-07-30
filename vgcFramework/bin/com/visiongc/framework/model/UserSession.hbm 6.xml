@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Modificado por: Kerwin Arias (28/08/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.framework.model.UserSession" table="afw_user_session">
+
+		<id name="sessionId" type="java.lang.String" column="session_id" length="100">
+			<generator class="assigned" />
+		</id>
+
+		<property name="usuarioId" type="java.lang.Long" column="usuario_id" />
+		<property name="personaId" type="java.lang.Long" column="persona_id" />
+		<property name="loginTs" type="java.sql.Timestamp" column="login_ts" />
+		<property name="remoteAddress" type="java.lang.String" column="remote_address" length="50" />
+		<property name="remoteHost" type="java.lang.String" column="remote_host" length="200" />
+		<property name="remoteUser" type="java.lang.String" column="remote_user" length="200" />
+		<property name="url" type="java.lang.String" column="url" length="100" />
+
+		<!-- Associations -->
+
+		<!-- bi-directional many-to-one association to Organizacion -->
+		<many-to-one name="usuario" class="com.visiongc.framework.model.Usuario" update="false" insert="false" lazy="true">
+			<column name="usuario_id" />
+		</many-to-one>
+
+	</class>
+
+</hibernate-mapping>

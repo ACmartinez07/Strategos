@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Modificado por: Kerwin Arias (28/08/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.framework.model.UsuarioGrupo" table="afw_usuario_grupo">
+
+		<composite-id name="pk" class="com.visiongc.framework.model.UsuarioGrupoPK">
+			<key-property name="usuarioId" column="usuario_id" type="java.lang.Long" length="10" />
+			<key-property name="grupoId" column="grupo_id" type="java.lang.Long" length="10" />
+			<key-property name="organizacionId" column="organizacion_id" type="java.lang.Long" length="10" />
+		</composite-id>
+		<property name="modificado" type="java.sql.Timestamp" column="modificado" length="8" />
+		<property name="modificadoId" type="java.lang.Long" column="modificado_id" length="10" />
+
+		<!-- Associations -->
+		<!-- derived association(s) for compound key -->
+		<!-- bi-directional many-to-one association to AfwGrupo -->
+		<many-to-one name="grupo" class="com.visiongc.framework.model.Grupo" update="false" insert="false">
+			<column name="grupo_id" />
+		</many-to-one>
+
+		<!-- bi-directional many-to-one association to Organizacion -->
+		<many-to-one name="organizacion" class="com.visiongc.framework.model.Organizacion" update="false" insert="false">
+			<column name="organizacion_id" />
+		</many-to-one>
+
+		<!-- bi-directional many-to-one association to Usuario -->
+		<many-to-one name="usuario" class="com.visiongc.framework.model.Usuario" update="false" insert="false">
+			<column name="usuario_id" />
+		</many-to-one>
+
+		<!-- end of derived association(s) -->
+
+	</class>
+
+</hibernate-mapping>

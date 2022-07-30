@@ -11,6 +11,9 @@
 
 <%-- Modificado por: Kerwin Arias (30/07/2012) --%>
 <%-- Funciones JavaScript locales de la página Jsp --%>
+
+<script type="text/javascript" src="<html:rewrite  page='/paginas/strategos/graficos/Grafico.js'/>"></script>
+
 <script type="text/javascript">
 	var _selectCondicionTypeIndex = 1;
 	var _altoPrefijoListo = false;
@@ -228,6 +231,13 @@
 		abrirVentanaModal('<html:rewrite action="/instrumentos/asignarPesos" />?id='+ instrumentoId, "instrumento", 710, 550);
 	}
 	
+	function verGraficoIndicador() 
+	{
+		var grafico = new Grafico();
+		grafico.url = '<html:rewrite action="/graficos/grafico"/>';		
+		grafico.ShowForm(true, document.gestionarInstrumentosForm.indicadorId.value, 'Indicador', '<bean:write name="gestionarInstrumentosForm" property="claseId"/>');						
+	}
+	
 </script>
 
 <%-- Representación de la Forma --%>
@@ -238,7 +248,8 @@
 	<html:hidden property="atributoOrden" />
 	<html:hidden property="tipoOrden" />
 	<html:hidden property="seleccionados" />
-	<html:hidden property="seleccionadoId" />
+	<html:hidden property="indicadorId" />
+	<html:hidden property="seleccionadoId" />		
 
 	<vgcinterfaz:contenedorForma idContenedor="body-instrumentos">
 
@@ -340,6 +351,11 @@
 					</vgcinterfaz:barraHerramientasBotonTitulo>
 				</vgcinterfaz:barraHerramientasBoton>					
 
+				<vgcinterfaz:barraHerramientasBoton permisoId="INDICADOR_EVALUAR_GRAFICO_GRAFICO" nombreImagen="grafico" pathImagenes="/paginas/strategos/indicadores/imagenes/barraHerramientas/" nombre="graficoIndicadorInstrumento" onclick="javascript:verGraficoIndicador();">
+					<vgcinterfaz:barraHerramientasBotonTitulo>
+						<vgcutil:message key="jsp.gestionarindicadores.barraherramientas.grafico" />
+					</vgcinterfaz:barraHerramientasBotonTitulo>
+				</vgcinterfaz:barraHerramientasBoton>
 			</vgcinterfaz:barraHerramientas>
 			
 			<%-- Filtro --%>

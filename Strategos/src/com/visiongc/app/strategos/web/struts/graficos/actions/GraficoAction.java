@@ -108,12 +108,13 @@ import com.visiongc.framework.model.Usuario;
  */
 public class GraficoAction extends VgcAction
 {
+	
 	public void updateNavigationBar(NavigationBar navBar, String url, String nombre)
 	{
 	}
 
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception
-	{
+	{		
 		super.execute(mapping, form, request, response);
 
 		String forward = mapping.getParameter();
@@ -142,7 +143,7 @@ public class GraficoAction extends VgcAction
 			request.setAttribute("ajaxResponse", "10000");
     	    return mapping.findForward("ajaxResponse");
 		}
-
+		
 		StrategosCeldasService strategosCeldasService = StrategosServiceFactory.getInstance().openStrategosCeldasService();
 		StrategosGraficosService strategosGraficosService = StrategosServiceFactory.getInstance().openStrategosGraficosService();
 		StrategosIndicadoresService strategosIndicadoresService = StrategosServiceFactory.getInstance().openStrategosIndicadoresService();
@@ -150,7 +151,7 @@ public class GraficoAction extends VgcAction
 		StrategosPaginasService strategosPaginasService = StrategosServiceFactory.getInstance().openStrategosPaginasService();
 		StrategosPortafoliosService strategosPortafoliosService = StrategosServiceFactory.getInstance().openStrategosPortafoliosService();
 		StrategosMedicionesService strategosMedicionesService = StrategosServiceFactory.getInstance().openStrategosMedicionesService();
-		StrategosIniciativasService strategosIniciativasService = StrategosServiceFactory.getInstance().openStrategosIniciativasService();
+		StrategosIniciativasService strategosIniciativasService = StrategosServiceFactory.getInstance().openStrategosIniciativasService();		
 		
 		MessageResources mensajes = getResources(request);
 		
@@ -198,19 +199,20 @@ public class GraficoAction extends VgcAction
 		  
 		if (graficoForm.getSource().equals("Indicador") || graficoForm.getSource().equals("Celda") || graficoForm.getSource().equals("Portafolio"))
 		{
-			Grafico grafico = new Grafico();
-			 
+			Grafico grafico = new Grafico();			
 			graficoForm.setVirtual(true);
 			String objetosIds = (request.getParameter("objetoId") != null && !request.getParameter("objetoId").equals("") ? request.getParameter("objetoId").replace("ID", "") : "");
 			Long objetoId = 0L;
 			boolean multipleObjetos = false;
 			List<Object> objetos = new ArrayList<Object>();
-			if (!objetosIds.equals("") && objetosIds.indexOf(",") == -1)
+			if (!objetosIds.equals("") && objetosIds.indexOf(",") == -1) {
 				objetoId = Long.parseLong(objetosIds);
+			}								
+				
 			else
 			{
 				multipleObjetos = true;
-				Byte frecuencia = null;
+				Byte frecuencia = null;								
 				if (graficoForm.getSource().equals("Indicador"))
 				{
 					String[] ids = objetosIds.split(",");
@@ -218,6 +220,7 @@ public class GraficoAction extends VgcAction
 					for (int i = 0; i < ids.length; i++)
 					{
 						Indicador indicador = (Indicador)strategosIndicadoresService.load(Indicador.class, new Long(Long.parseLong(ids[i])));
+						
 						if (frecuencia == null)
 							frecuencia = indicador.getFrecuencia();
 						if (frecuencia.byteValue() != indicador.getFrecuencia().byteValue())
@@ -244,7 +247,7 @@ public class GraficoAction extends VgcAction
 				request.getSession().removeAttribute("configuracionGrafico");
 			}
 			if (data.equals(""))
-			{
+			{				
 				if (graficoForm.getSource().equals("Celda") || graficoForm.getSource().equals("Portafolio"))
 				{
 					Long vistaId = (request.getParameter("vistaId") != null ? Long.parseLong(request.getParameter("vistaId")) : 0L);
@@ -539,7 +542,7 @@ public class GraficoAction extends VgcAction
 							}
 							indice = new Integer(indice.intValue() + 1);
 						}
-					}
+					}	
 
 					int anteriorCeldaIndice = celda.getIndice().intValue() - 1;
 					int proximaCeldaIndice = celda.getIndice().intValue() + 1;
@@ -573,15 +576,13 @@ public class GraficoAction extends VgcAction
 				res = new com.visiongc.app.strategos.web.struts.graficos.actions.SeleccionarGraficoAction().ReadXmlProperties(res, grafico);
 				graficoForm.setRespuesta(res);
 			
+												
 				GetObjeto(graficoForm, grafico); 
 				
 				graficoForm.setObjetoId(grafico.getObjetoId());
 				graficoForm.setClassName(grafico.getClassName());
-				
-												
-			
-			
-		}		// reporte grafico procesos		
+		}		
+		// reporte grafico procesos		
 		else
 		{
 			if (graficoForm.getVirtual() == null)
@@ -1121,19 +1122,19 @@ public class GraficoAction extends VgcAction
 	}
 	  
 	public ActionForm GetObjeto(GraficoForm graficoForm, Grafico grafico) throws ParserConfigurationException, SAXException, IOException
-	{
+	{		
 		if (grafico != null)
-		{
+		{			
 	    	graficoForm.setVirtual(true);
 	    	graficoForm.setId(grafico.getGraficoId());
 	    	graficoForm.setGraficoNombre(grafico.getNombre());
 	    	Boolean nombreTitulo = false;
-	    	Long claseComparativaId = 0L;
+	    	Long claseComparativaId = 0L;	    	
 	    	
 			DocumentBuilderFactory factory  =  DocumentBuilderFactory.newInstance();;
 	        DocumentBuilder builder = factory.newDocumentBuilder();
 	        Document doc = builder.parse(new InputSource(new StringReader(TextEncoder.deleteCharInvalid(grafico.getConfiguracion()))));
-			NodeList lista = doc.getElementsByTagName("properties");
+			NodeList lista = doc.getElementsByTagName("properties");			
 			
 			for (int i = 0; i < lista.getLength() ; i ++) 
 			{
@@ -1306,7 +1307,7 @@ public class GraficoAction extends VgcAction
 				}
 				else
 					graficoForm.setImpVsAnoAnterior(false);
-			}
+			}			
 			
 			lista = doc.getElementsByTagName("indicador");
 			if (lista.getLength() > 0)
@@ -1514,7 +1515,7 @@ public class GraficoAction extends VgcAction
 										datosSerie.setSerieIndicador(serieIndicador);
 								        datosSerie.setIndicador(indicador);
 								        datosSerie.setPlanId(planId);
-								        datosSerie.setNombreLeyenda(nombreLeyenda + " Año Anterior");
+								        datosSerie.setNombreLeyenda(nombreLeyenda + " Aï¿½o Anterior");
 
 								        color = ColorUtil.getRndColorRGB();
 							        	colorDecimal = ColorUtil.convertRGBDecimal(color);
@@ -1553,18 +1554,17 @@ public class GraficoAction extends VgcAction
 							graficoForm.getSeries().add(datosSerie);
 						}
 					}
-				}
-				
+				}				
 				if (indicadorId != null)
-				{
+				{					
 					Indicador indicador = (Indicador)strategosIndicadoresService.load(Indicador.class, new Long(indicadorId));
 					if (indicador != null)
-					{
-						graficoForm.setIndicadorId(indicador.getIndicadorId());
+					{						
+						graficoForm.setIndicadorId(indicador.getIndicadorId());						
 						if (indicador.getNaturaleza().byteValue() == Naturaleza.getNaturalezaFormula().byteValue())
-							graficoForm.setShowDuppont(true);						
+							graficoForm.setShowDuppont(true);							
 						if (graficoForm.getAcumular() == null)
-							graficoForm.setAcumular(indicador.getCorte().byteValue() == TipoCorte.getTipoCorteLongitudinal().byteValue() && indicador.getTipoCargaMedicion().byteValue() == TipoMedicion.getTipoMedicionEnPeriodo().byteValue());
+							graficoForm.setAcumular(indicador.getCorte().byteValue() == TipoCorte.getTipoCorteLongitudinal().byteValue() && indicador.getTipoCargaMedicion().byteValue() == TipoMedicion.getTipoMedicionEnPeriodo().byteValue());						
 					}
 				}
 				if (graficoForm.getAcumular() == null)
@@ -1582,7 +1582,6 @@ public class GraficoAction extends VgcAction
 				graficoForm.setUbicacionOrganizacion(null);
 			}
 		}
-
 		return graficoForm; 
 	}
   
@@ -2272,7 +2271,7 @@ public class GraficoAction extends VgcAction
 		elemento.appendChild(text);
 		raiz.appendChild(elemento);
 		
-		//año inicial
+		//aï¿½o inicial
 		
 		if(reporte != null && reporte.getPeriodoIni() != null) {
 			
@@ -2308,7 +2307,7 @@ public class GraficoAction extends VgcAction
 			
 		}
 		
-		//año final
+		//aï¿½o final
 
 		if(reporte != null && reporte.getPeriodoFin() != null) {
 			

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Modificado por: Kerwin Arias (03/04/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.framework.auditoria.model.ObjetoAuditable" table="afw_objeto_auditable">
+
+		<id name="objetoId" type="java.lang.Long" column="objeto_id">
+			<generator class="assigned" />
+		</id>
+
+		<property name="nombreClase" type="java.lang.String" column="nombre_clase" not-null="true" />
+
+		<property name="nombreCampoId" type="java.lang.String" column="nombre_campo_id" not-null="true" />
+
+		<property name="nombreCampoNombre" type="java.lang.String" column="nombre_campo_nombre" not-null="true" />
+
+		<property name="auditoriaActiva" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="auditoria_activa" />
+
+		<!-- Associations -->
+
+		<!-- one-to-many association to UserSession -->
+		<set name="atributosAuditables" lazy="false" fetch="join" inverse="true">
+			<key>
+				<column name="objeto_id" />
+			</key>
+			<one-to-many class="com.visiongc.framework.auditoria.model.ObjetoAuditableAtributo" />
+		</set>
+
+	</class>
+
+</hibernate-mapping>

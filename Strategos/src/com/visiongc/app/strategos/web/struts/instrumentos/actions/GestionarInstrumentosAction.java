@@ -18,6 +18,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 import com.visiongc.app.strategos.impl.StrategosServiceFactory;
+import com.visiongc.app.strategos.indicadores.StrategosIndicadoresService;
 import com.visiongc.app.strategos.indicadores.model.Indicador;
 import com.visiongc.app.strategos.indicadores.model.util.TipoFuncionIndicador;
 import com.visiongc.app.strategos.instrumentos.StrategosCooperantesService;
@@ -76,6 +77,7 @@ public class GestionarInstrumentosAction extends VgcAction
 		
 		
 		Long instrumentoId = null;
+		Long indicadorId = null;		
 		if (request.getParameter("instrumentoId") != null && request.getParameter("instrumentoId") != "")
 			instrumentoId = Long.parseLong(request.getParameter("instrumentoId"));
 		else if (instrumentoSeleccionadoId != null)
@@ -106,10 +108,7 @@ public class GestionarInstrumentosAction extends VgcAction
 		gestionarInstrumentosForm.setAnio(anio);
 		gestionarInstrumentosForm.setCooperanteId(cooperanteId);
 		gestionarInstrumentosForm.setTiposConvenioId(tiposConvenioId);
-		gestionarInstrumentosForm.setNombreCorto(nombreCorto);
-		//gestionarInstrumentosForm.setEstatus(estatus);
-		
-		
+		gestionarInstrumentosForm.setNombreCorto(nombreCorto);		
 		
 		StrategosInstrumentosService strategosInstrumentosService = StrategosServiceFactory.getInstance().openStrategosInstrumentosService();
 		StrategosTiposConvenioService strategosTiposConvenioService = StrategosServiceFactory.getInstance().openStrategosTiposConvenioService();
@@ -191,10 +190,11 @@ public class GestionarInstrumentosAction extends VgcAction
 			
 			if ((gestionarInstrumentosForm.getSeleccionados() == null) || (gestionarInstrumentosForm.getSeleccionados().equals(""))) 
 			{
-				instrumentoId = ((Instrumentos)paginaInstrumentos.getLista().get(0)).getInstrumentoId();
+				instrumentoId = ((Instrumentos)paginaInstrumentos.getLista().get(0)).getInstrumentoId();					
+		
 				if (!instrumentoEnLaLista)
 				{
-					instrumentoIdFocus = instrumentoId;
+					instrumentoIdFocus = instrumentoId;					
 					instrumentoEnLaLista = true;
 				}
 				else
@@ -202,7 +202,9 @@ public class GestionarInstrumentosAction extends VgcAction
 					instrumentoId = instrumentoIdFocus;
 					instrumentoEnLaLista = false;
 				}
-				gestionarInstrumentosForm.setSeleccionados(instrumentoId.toString());
+				gestionarInstrumentosForm.setSeleccionados(instrumentoId.toString());	
+				indicadorId = obtenerIndicadorId(instrumentoId.toString(), paginaInstrumentos, gestionarInstrumentosForm);
+				gestionarInstrumentosForm.setIndicadorId(indicadorId.toString());			
 			}
 			else
 			{
@@ -216,14 +218,21 @@ public class GestionarInstrumentosAction extends VgcAction
 					}
 				}
 				
-				if (instrumentoEnLaLista)
-					instrumentoIdFocus = new Long(gestionarInstrumentosForm.getSeleccionados());
+				if (instrumentoEnLaLista) {
+					instrumentoIdFocus = new Long(gestionarInstrumentosForm.getSeleccionados());	
+					indicadorId = obtenerIndicadorId(instrumentoIdFocus.toString(), paginaInstrumentos, gestionarInstrumentosForm);
+					gestionarInstrumentosForm.setIndicadorId(indicadorId.toString());			
+				}
 				else
 				{
 					instrumentoId = ((Instrumentos)paginaInstrumentos.getLista().get(0)).getInstrumentoId();
+					indicadorId = ((Instrumentos)paginaInstrumentos.getLista().get(0)).getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento());					
 					instrumentoIdFocus = instrumentoId;
 					instrumentoEnLaLista = true;
+					
 					gestionarInstrumentosForm.setSeleccionados(instrumentoId.toString());
+					indicadorId = obtenerIndicadorId(instrumentoId.toString(), paginaInstrumentos, gestionarInstrumentosForm);
+					gestionarInstrumentosForm.setIndicadorId(indicadorId.toString());					
 				}
 			}
 
@@ -300,10 +309,24 @@ public class GestionarInstrumentosAction extends VgcAction
 	    request.setAttribute("paginaInstrumentos", paginaInstrumentos);
 	    
 	    GestionarIniciativasForm gestionarIniciativasForm = new GestionarIniciativasForm(); 
-	    gestionarIniciativasForm.setSource("Instrumentos");
-	    
+	    gestionarIniciativasForm.setSource("Instrumentos");	  	    	   	   
+	    	    
 	    strategosInstrumentosService.close();
 	    
 		return mapping.findForward(forward);
+	}
+	
+	private Long obtenerIndicadorId(String instrumentoId, PaginaLista paginaInstrumentos, GestionarInstrumentosForm gestionarInstrumentosForm){
+		Long indicadorId = null;		
+		Long instru = Long.parseLong(instrumentoId);
+		for (Iterator<Instrumentos> iter = paginaInstrumentos.getLista().iterator(); iter.hasNext(); ) 
+		{
+			Instrumentos instrumento = (Instrumentos)iter.next();
+			if (instrumento.getInstrumentoId().longValue() == instru.longValue())
+			{
+				indicadorId = instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento());									
+			}
+		}	
+		return indicadorId;
 	}
 }
