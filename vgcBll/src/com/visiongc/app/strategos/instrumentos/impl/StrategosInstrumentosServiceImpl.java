@@ -1,7 +1,9 @@
 package com.visiongc.app.strategos.instrumentos.impl;
 
 import java.io.ByteArrayInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -81,8 +83,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 				transActiva = true;
 			}
 
-			if (instrumento.getInstrumentoId() != null) {
-													
+			if (instrumento.getInstrumentoId() != null) {												
 				resultado = deleteDependenciasInstrumento(instrumento, usuario);
 				
 				if (resultado == 10000) {					
@@ -90,10 +91,14 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 							.hasNext();) {						
 						IndicadorInstrumento instrumentoIndicadores = (IndicadorInstrumento) iter.next();
 						resultado = desasociarIndicadores(instrumentoIndicadores, usuario);
+						
 						if (resultado != 10000) {
 							break;
 						}
 					}
+				}
+				if (resultado == 10000) {
+					
 				}
 				if (resultado == 10000) {
 					resultado = persistenceSession.delete(instrumento, usuario);
@@ -137,20 +142,19 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 				transActiva = true;
 			}
 			
-			if (resultado == 10000) {
+			if (resultado == 10000) {				
 				dependencias = persistenceSession.getDependenciasInstrumento(instrumento);
+				
 				for (Iterator<?> i = dependencias.iterator(); i.hasNext();) {
 					listaObjetosRelacionados = (List) i.next();
 					
 					if ((listaObjetosRelacionados.size() > 0)&& ((listaObjetosRelacionados.get(0) instanceof ClaseIndicadores))) {
 						StrategosClasesIndicadoresService strategosClasesIndicadoresService = StrategosServiceFactory
-								.getInstance().openStrategosClasesIndicadoresService(this);
-
+								.getInstance().openStrategosClasesIndicadoresService(this);					
 						for (Iterator<ClaseIndicadores> j = listaObjetosRelacionados.iterator(); j.hasNext();) {
-							ClaseIndicadores clase = (ClaseIndicadores) j.next();
-
+							ClaseIndicadores clase = (ClaseIndicadores) j.next();							
 							resultado = strategosClasesIndicadoresService.deleteClaseIndicadores(clase,
-									Boolean.valueOf(true), usuario);
+									true, usuario);
 							if (resultado != 10000)
 								break;
 						}
@@ -193,16 +197,14 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 				transActiva = true;
 			}
 
-			dependencias = persistenceSession.getDependenciasCiclicasInstrumento(instrumento);
-
+			dependencias = persistenceSession.getDependenciasCiclicasInstrumento(instrumento);		
 			for (Iterator i = dependencias.iterator(); i.hasNext();) {
 				listaObjetosRelacionados = (List) i.next();
 
 				if ((listaObjetosRelacionados.size() > 0)
 						&& ((listaObjetosRelacionados.get(0) instanceof ClaseIndicadores))) {
 					StrategosClasesIndicadoresService strategosClasesIndicadoresService = StrategosServiceFactory
-							.getInstance().openStrategosClasesIndicadoresService(this);
-
+							.getInstance().openStrategosClasesIndicadoresService(this);					
 					for (Iterator j = listaObjetosRelacionados.iterator(); j.hasNext();) {
 						ClaseIndicadores clase = (ClaseIndicadores) j.next();
 
@@ -513,10 +515,12 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 				.openStrategosClasesIndicadoresService(this);
 		
 		ClaseIndicadores clase = new ClaseIndicadores();		
-		ClaseIndicadores claseRoot = strategosClasesIndicadoresService.getClaseRaizInstrumento(19L, TipoClaseIndicadores.getTipoClasePlanificacionSeguimiento(),"Indicadores Instrumentos Cooperación", usuario);	
+		ClaseIndicadores claseRoot = strategosClasesIndicadoresService.getClaseRaizInstrumento(19L, TipoClaseIndicadores.getTipoClasePlanificacionSeguimiento(),messageResources.getResource("instrumento.clase.nombre"), usuario);	
 
-		clase.setPadreId(claseRoot.getClaseId());
-		clase.setNombre(instrumento.getNombreCorto());		
+	
+		clase.setPadreId(claseRoot.getClaseId());		
+		clase.setNombre(instrumento.getNombreCorto());	
+		clase.setHijos(null);
 		clase.setOrganizacionId(19L);		
 		clase.setTipo(TipoClaseIndicadores.getTipoClasePlanificacionSeguimiento());
 		clase.setVisible(new Boolean(true));
@@ -530,15 +534,15 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 			filtros.put("organizacionId", clase.getOrganizacionId().toString());
 			filtros.put("nombre", clase.getNombre());
 			filtros.put("padreId", clase.getPadreId());
-			List<ClaseIndicadores> clases = strategosClasesIndicadoresService.getClases(filtros);
+			List<ClaseIndicadores> clases = strategosClasesIndicadoresService.getClases(filtros);			
 			if (clases.size() > 0) {
 				clase = (ClaseIndicadores) clases.get(0);
 				resultado = 10000;
 			}
 		}
 
-		if (resultado == 10000) {
-			instrumento.setClaseId(clase.getClaseId());			
+		if (resultado == 10000) {			
+		 	instrumento.setClaseId(clase.getClaseId());		 	
 		}
 		strategosClasesIndicadoresService.close();
 

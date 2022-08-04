@@ -20,7 +20,8 @@
 
 	function nuevoIndicador() 
 	{		
-		abrirVentanaModal('<html:rewrite action="/indicadores/crearIndicador" />?inicializar=true&planId=<bean:write name="gestionarPlanForm" property="planId" />&perspectivaId=<bean:write name="gestionarPlanForm" property="perspectivaId" />',"IndicadorAdd", 880, 670);
+		//abrirVentanaModal('<html:rewrite action="/indicadores/crearIndicador" />?inicializar=true&planId=<bean:write name="gestionarPlanForm" property="planId" />&perspectivaId=<bean:write name="gestionarPlanForm" property="perspectivaId" />',"IndicadorAdd", 880, 670);
+		window.location.href = '<html:rewrite action="/indicadores/crearIndicador" />?inicializar=true&planId=<bean:write name="gestionarPlanForm" property="planId" />&perspectivaId=<bean:write name="gestionarPlanForm" property="perspectivaId" />';
 	}
 
 	function modificarIndicador() 
@@ -28,11 +29,14 @@
 		if (verificarElementoUnicoSeleccionMultiple(document.gestionarIndicadoresPlanForm.seleccionados))
 		{
 			<logic:equal name="gestionarIndicadoresPlanForm" property="editarForma" value="true">				
-				abrirVentanaModal('<html:rewrite action="/indicadores/modificarIndicador"/>?planId=<bean:write name="gestionarPlanForm" property="planId" />&indicadorId=' + document.gestionarIndicadoresPlanForm.seleccionados.value, "IndicadorEdit", 880, 670);
+				//abrirVentanaModal('<html:rewrite action="/indicadores/modificarIndicador"/>?planId=<bean:write name="gestionarPlanForm" property="planId" />&indicadorId=' + document.gestionarIndicadoresPlanForm.seleccionados.value, "IndicadorEdit", 880, 670);
+				window.location.href = '<html:rewrite action="/indicadores/modificarIndicador"/>?planId=<bean:write name="gestionarPlanForm" property="planId" />&indicadorId=' + document.gestionarIndicadoresPlanForm.seleccionados.value;
+				
 			</logic:equal>
 			<logic:notEqual name="gestionarIndicadoresPlanForm" property="editarForma" value="true">
 				<logic:equal name="gestionarIndicadoresPlanForm" property="verForma" value="true">					
-					abrirVentanaModal('<html:rewrite action="/indicadores/verIndicador"/>?planId=<bean:write name="gestionarPlanForm" property="planId" />&indicadorId=' + document.gestionarIndicadoresPlanForm.seleccionados.value, "IndicadorEdit", 880, 670);
+					//abrirVentanaModal('<html:rewrite action="/indicadores/verIndicador"/>?planId=<bean:write name="gestionarPlanForm" property="planId" />&indicadorId=' + document.gestionarIndicadoresPlanForm.seleccionados.value, "IndicadorEdit", 880, 670);
+					window.location.href = '<html:rewrite action="/indicadores/verIndicador"/>?planId=<bean:write name="gestionarPlanForm" property="planId" />&indicadorId=' + document.gestionarIndicadoresPlanForm.seleccionados.value;
 				</logic:equal>
 			</logic:notEqual>
 		}

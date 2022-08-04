@@ -856,7 +856,7 @@
 							<tr>
 								<td style="text-align: left; width: 200px;"><vgcutil:message key="jsp.editaractividad.ficha.responsablelograrmeta" /></td>
 								<td>
-									<html:text style="width: 350px;" property="responsableLograrMeta" onkeypress="ejecutarPorDefecto(event)" size="46" readonly="true" disabled="<%= Boolean.parseBoolean(bloquearForma) %>" maxlength="50" styleClass="cuadroTexto" />&nbsp;
+									<html:text style="width: 350px;" property="responsableLograrMeta" onkeypress="ejecutarPorDefecto(event)" size="46" readonly="true" disabled="<%= Boolean.parseBoolean(bloquearForma) %>" maxlength="50" styleClass="cuadroTexto" />&nbsp;									
 									<logic:notEqual name="editarActividadForm" property="bloqueado" value="true">
 										<logic:empty name="editarActividadForm" property="asociadaNombre">
 											<img style="cursor: pointer" onclick="seleccionarResponsableLograrMeta();" src="<html:rewrite page='/componentes/fichaDatos/selector.gif'/>" border="0" width="11" height="11" title="<vgcutil:message key="jsp.editaractividad.ficha.seleccionarresponsable" />">&nbsp;<img style="cursor: pointer" onclick="limpiarResponsable(document.editarActividadForm.responsableLograrMetaId, document.editarActividadForm.responsableLograrMeta);" src="<html:rewrite page='/componentes/calendario/eliminar.gif'/>" border="0" width="10" height="10" title="<vgcutil:message key="boton.limpiar.alt" />">

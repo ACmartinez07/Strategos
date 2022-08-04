@@ -39,6 +39,7 @@
 				url = url + '&tipoPeriodo=' + (document.reporteForm.tipoPeriodo[0].checked ? "1" : "2");
 				url = url + '&visualizarIndicadores=' + (document.getElementById("checkIndicadores").checked ? "1" : "0");
 				url = url + '&visualizarIniciativas=' + (document.getElementById("checkIniciativas").checked ? "1" : "0");
+				url = url + '&visualizarActividades=' + (document.getElementById("checkActividad").checked ? "1" : "0");
 				url = url + '&selectHitoricoType=' + (document.reporteForm.historico[0].checked ? "0" : (document.reporteForm.historico[1].checked ? "2" : "1"));
 				url = url + "&orientacion=H";
 				
@@ -245,6 +246,7 @@
 												<vgcutil:message key="jsp.reportes.plan.ejecucion.plantilla.visualizar.indicadores" />
 											</td>
 										</tr>
+										
 										<tr>
 											<td colspan="3">
 												&nbsp;&nbsp;
@@ -269,6 +271,14 @@
 												<input type="radio" id="historico" name="historico" value="1" class="botonSeleccionSimple">
 											</td>
 											<td colspan="2"><vgcutil:message key="jsp.reportes.plan.ejecucion.reporte.iniciativa.marcada.no.historico" /></td>
+										</tr>
+										<!-- Actividades -->
+										<tr>
+											<td colspan="3">
+												&nbsp;&nbsp; 
+												<input type="checkbox" name="checkActividad" id="checkActividad" checked>
+												<vgcutil:message key="jsp.reportes.iniciativa.ejecucion.plantilla.visualizar.actividades" />
+											</td>
 										</tr>
 									</table>
 								</td>

@@ -27,6 +27,7 @@ public class EditarInstrumentosForm extends EditarObjetoForm
 	private String fechaTerminacionTexto;
 	private String fechaProrroga;
 	private String fechaProrrogaTexto;
+	private Byte alcance;
 
 	private Double recursosPesos;
 	private Double recursosDolares;
@@ -41,7 +42,27 @@ public class EditarInstrumentosForm extends EditarObjetoForm
 	private List<TipoConvenio> convenios;
 	private List<Cooperante> cooperantes;
 	
-		
+	private String fechaFinal;
+	private String respuesta;
+	private Integer ano;
+	private Integer mesInicial;
+	private Integer mesFinal;
+	private List<Long> indicadores;
+	private Long claseId;
+	private Long organizacionId;
+	private Long indicadorId;
+	private Long iniciativaId;
+	private String altoForma;
+
+	
+	public Byte getAlcance() {
+		return alcance;
+	}
+
+	public void setAlcance(Byte alcance) {
+		this.alcance = alcance;
+	}
+
 	public Long getInstrumentoId() {
 		return instrumentoId;
 	}
@@ -256,6 +277,94 @@ public class EditarInstrumentosForm extends EditarObjetoForm
 
 	public void setCooperantes(List<Cooperante> cooperantes) {
 		this.cooperantes = cooperantes;
+	}
+		
+	public String getFechaFinal() {
+		return fechaFinal;
+	}
+
+	public void setFechaFinal(String fechaFinal) {
+		this.fechaFinal = fechaFinal;
+	}
+
+	public String getRespuesta() {
+		return respuesta;
+	}
+
+	public void setRespuesta(String respuesta) {
+		this.respuesta = respuesta;
+	}
+
+	public Integer getAno() {
+		return ano;
+	}
+
+	public void setAno(Integer ano) {
+		this.ano = ano;
+	}
+
+	public Integer getMesInicial() {
+		return mesInicial;
+	}
+
+	public void setMesInicial(Integer mesInicial) {
+		this.mesInicial = mesInicial;
+	}
+
+	public Integer getMesFinal() {
+		return mesFinal;
+	}
+
+	public void setMesFinal(Integer mesFinal) {
+		this.mesFinal = mesFinal;
+	}
+
+	public List<Long> getIndicadores() {
+		return indicadores;
+	}
+
+	public void setIndicadores(List<Long> indicadores) {
+		this.indicadores = indicadores;
+	}
+
+	public Long getClaseId() {
+		return claseId;
+	}
+
+	public void setClaseId(Long claseId) {
+		this.claseId = claseId;
+	}
+
+	public Long getOrganizacionId() {
+		return organizacionId;
+	}
+
+	public void setOrganizacionId(Long organizacionId) {
+		this.organizacionId = organizacionId;
+	}
+
+	public Long getIndicadorId() {
+		return indicadorId;
+	}
+
+	public void setIndicadorId(Long indicadorId) {
+		this.indicadorId = indicadorId;
+	}
+
+	public Long getIniciativaId() {
+		return iniciativaId;
+	}
+
+	public void setIniciativaId(Long iniciativaId) {
+		this.iniciativaId = iniciativaId;
+	}
+
+	public String getAltoForma() {
+		return altoForma;
+	}
+
+	public void setAltoForma(String altoForma) {
+		this.altoForma = altoForma;
 	}
 
 	public void clear() {

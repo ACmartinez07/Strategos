@@ -228,13 +228,20 @@
 			else 
 				return false;
 		}
-
+		
+		let identificadorTiempoDeEspera;
+		
+		function cerrarModal(){				
+			this.close();
+			window.location.reload();
+		}
+		
 		function guardar() 
 		{
 			if (validar(document.editarUsuarioForm))
 			{
 				activarBloqueoEspera();
-				document.editarUsuarioForm.submit();
+				document.editarUsuarioForm.submit();				
 			}
 		}
 		

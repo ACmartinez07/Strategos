@@ -64,7 +64,7 @@
 			{
 				window.document.editarClaseIndicadoresForm.action = '<html:rewrite action="/indicadores/clasesindicadores/cancelarClaseIndicadores"/>';
 				window.document.editarClaseIndicadoresForm.submit();
-				this.close();
+				
 			}
 
 			<%-- Esta funcion Guarda la Clase Indicador que se esta creando si Pulso Enter --%>			

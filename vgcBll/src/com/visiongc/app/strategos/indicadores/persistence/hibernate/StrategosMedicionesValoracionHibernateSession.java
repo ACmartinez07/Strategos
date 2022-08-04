@@ -1124,7 +1124,7 @@ public class StrategosMedicionesValoracionHibernateSession extends StrategosHibe
     
     double valorAcumulado = 0.0;
     
-    int tamaño=mediciones.size();
+    int tamano=mediciones.size();
     int cont=0;
     
     for (Iterator<MedicionValoracion> iter = mediciones.iterator(); iter.hasNext();)
@@ -1159,7 +1159,7 @@ public class StrategosMedicionesValoracionHibernateSession extends StrategosHibe
         medicion = med;
       }
       
-      if(tamaño == cont){
+      if(tamano == cont){
     	  valorAcumulado=valorAcumulado+ med.getValor(); 
       }
     }

@@ -11,13 +11,17 @@
 
 <%-- Modificado por: Kerwin Arias (30/07/2012) --%>
 <%-- Funciones JavaScript locales de la página Jsp --%>
+
+<script type="text/javascript" src="<html:rewrite  page='/paginas/strategos/graficos/Grafico.js'/>"></script>
+
 <script type="text/javascript">
 	var _selectCondicionTypeIndex = 1;
 	var _altoPrefijoListo = false;
 	var _showFiltroInst = false;
 
 	function nuevoInstrumento(){		
-		abrirVentanaModal('<html:rewrite action="/instrumentos/crearInstrumento"/>', "InstrumentoAdd", 1130, 650);
+		//abrirVentanaModal('<html:rewrite action="/instrumentos/crearInstrumento"/>', "InstrumentoAdd", 1130, 650);
+		window.location.href='<html:rewrite action="/instrumentos/crearInstrumento" />';
 	}
 	
 	function modificarInstrumento(instrumentoId) 
@@ -29,7 +33,8 @@
 		}
 		var instrumentoId = document.gestionarInstrumentosForm.seleccionados.value;
 		
-		abrirVentanaModal('<html:rewrite action="/instrumentos/modificarInstrumento"/>?instrumentoId=' + instrumentoId , "InstrumentoEdit", 1130, 650);
+		//abrirVentanaModal('<html:rewrite action="/instrumentos/modificarInstrumento"/>?instrumentoId=' + instrumentoId , "InstrumentoEdit", 1130, 650);
+		window.location.href='<html:rewrite action="/instrumentos/modificarInstrumento" />?instrumentoId=' + instrumentoId;
 	}
 
 	function eliminarInstrumento(instrumentoId) 
@@ -91,7 +96,7 @@
 		if (anio != null)
 			url = url + '&anio=' + anio.value;
 		var estatus = document.getElementById('estatus');
-		if (estatus != null)
+		if (estatus != null && estatus.value != 0)
 			url = url + '&estatus=' + estatus.value;	
 		var convenio = document.getElementById('selectTipoConvenio');
 		if (convenio != null)
@@ -193,6 +198,59 @@
 		
 	}
 	
+	function reporteProyectosAsociados(){
+		url = '&instrumentoId=' + document.gestionarInstrumentosForm.seleccionados.value;		
+		
+		var filtroNombre = document.getElementById('nombreCorto');
+		if (filtroNombre != null)
+			url = url + '&nombreCorto=' + filtroNombre.value;
+		var anio = document.getElementById('anio');
+		if (anio != null)
+			url = url + '&anio=' + anio.value;
+		var estatus = document.getElementById('estatus');
+		if (estatus != null)
+			url = url + '&estatus=' + estatus.value;	
+		var convenio = document.getElementById('selectTipoConvenio');
+		if (convenio != null)
+			url = url + '&con=' + convenio.value;	
+		var cooperativo = document.getElementById('selectCooperante');
+		if (cooperativo != null)
+			url = url + '&cop=' + cooperativo.value;
+    	abrirVentanaModal('<html:rewrite action="/instrumentos/reporteProyectosAsociados" />?' + url, "reporteProyectosAsociados", 490, 450);		
+	}
+	
+	function asignarPesos(){
+		
+		if ((document.gestionarInstrumentosForm.seleccionados.value == null) || (document.gestionarInstrumentosForm.seleccionados.value == "")) 
+		{
+			alert('<vgcutil:message key="jsp.seleccionar.noseleccion" />');
+			return;
+		}
+		
+		var instrumentoId = document.gestionarInstrumentosForm.seleccionados.value;
+		abrirVentanaModal('<html:rewrite action="/instrumentos/asignarPesos" />?id='+ instrumentoId, "instrumento", 710, 550);
+	}
+	
+	function verGraficoIndicador() 
+	{
+			
+		
+		var grafico = new Grafico();
+		grafico.url = '<html:rewrite action="/graficos/grafico"/>?indicadorId='+ document.gestionarInstrumentosForm.indicadorId.value +'&funcion=' + 'indicador' ;
+		grafico.ShowForm(true, document.gestionarInstrumentosForm.indicadorId.value, 'Indicador');
+	}
+	
+	function calcularIndicadores(){
+		if ((document.gestionarInstrumentosForm.seleccionados.value == null) || (document.gestionarInstrumentosForm.seleccionados.value == "")) 
+		{
+			alert('<vgcutil:message key="jsp.seleccionar.noseleccion" />');
+			return;
+		}
+		
+		var url = document.gestionarInstrumentosForm.seleccionados.value;
+		abrirVentanaModal('<html:rewrite action="/instrumentos/calcularIndicadores" />?id=' + url, "calcularIndicadores", 490, 450);
+	}
+	
 </script>
 
 <%-- Representación de la Forma --%>
@@ -203,7 +261,8 @@
 	<html:hidden property="atributoOrden" />
 	<html:hidden property="tipoOrden" />
 	<html:hidden property="seleccionados" />
-	<html:hidden property="seleccionadoId" />
+	<html:hidden property="indicadorId" />
+	<html:hidden property="seleccionadoId" />	
 
 	<vgcinterfaz:contenedorForma idContenedor="body-instrumentos">
 
@@ -228,6 +287,12 @@
 					</vgcinterfaz:menuBotones>
 				</vgcinterfaz:contenedorMenuHorizontalItem>
 			
+				<%-- Menú: Mediciones --%>
+				<vgcinterfaz:contenedorMenuHorizontalItem>
+					<vgcinterfaz:menuBotones id="menuMedicionesIndicadores" key="menu.mediciones">
+						<vgcinterfaz:botonMenu key="menu.edicion.asignarpesos" onclick="asignarPesos();" permisoId="INSTRUMENTOS_ASIGNARPESOS" />												
+					</vgcinterfaz:menuBotones>
+				</vgcinterfaz:contenedorMenuHorizontalItem>
 
 				<%-- Menú: Ver --%>
 				<vgcinterfaz:contenedorMenuHorizontalItem>
@@ -242,6 +307,7 @@
 					<vgcinterfaz:menuBotones id="menuEvaluacionIniciativas" key="menu.evaluacion">						
 						<vgcinterfaz:botonMenu key="jsp.gestionariniciativas.menu.reportes.resumido" onclick="reporteInstrumentosEjecucion();" permisoId="INSTRUMENTOS" />
 						<vgcinterfaz:botonMenu key="jsp.gestionariniciativas.menu.reportes.detallado" onclick="reporteInstrumentosEjecucionDetalle();" permisoId="INSTRUMENTOS" />
+						<vgcinterfaz:botonMenu key="jsp.reporte.instrumentos.proyectos.asociados" onclick="reporteProyectosAsociados();" permisoId="INSTRUMENTOS" />
 					</vgcinterfaz:menuBotones>
 				</vgcinterfaz:contenedorMenuHorizontalItem>
 
@@ -296,8 +362,19 @@
 					<vgcinterfaz:barraHerramientasBotonTitulo>
 						<vgcutil:message key="menu.ver.filtro" />
 					</vgcinterfaz:barraHerramientasBotonTitulo>
-				</vgcinterfaz:barraHerramientasBoton>					
+				</vgcinterfaz:barraHerramientasBoton>	
+				<vgcinterfaz:barraHerramientasSeparador />
+				<vgcinterfaz:barraHerramientasBoton nombreImagen="calculo" pathImagenes="/paginas/strategos/indicadores/imagenes/barraHerramientas/" nombre="calcularIndicadores" onclick="javascript:calcularIndicadores();">
+					<vgcinterfaz:barraHerramientasBotonTitulo>
+						<vgcutil:message key="jsp.gestionarindicadores.barraherramientas.calcular" />
+					</vgcinterfaz:barraHerramientasBotonTitulo>
+				</vgcinterfaz:barraHerramientasBoton>				
 
+				<vgcinterfaz:barraHerramientasBoton permisoId="INDICADOR_EVALUAR_GRAFICO_GRAFICO" nombreImagen="grafico" pathImagenes="/paginas/strategos/indicadores/imagenes/barraHerramientas/" nombre="graficoIndicadorInstrumento" onclick="javascript:verGraficoIndicador();">
+					<vgcinterfaz:barraHerramientasBotonTitulo>
+						<vgcutil:message key="jsp.gestionarindicadores.barraherramientas.grafico" />
+					</vgcinterfaz:barraHerramientasBotonTitulo>
+				</vgcinterfaz:barraHerramientasBoton>
 			</vgcinterfaz:barraHerramientas>
 			
 			<%-- Filtro --%>
@@ -322,7 +399,7 @@
 						<vgcutil:message key="jsp.pagina.instrumentos.nombre" />
 					</vgcinterfaz:columnaVisorLista>
 									
-					<vgcinterfaz:columnaVisorLista nombre="tipo" width="150px">
+					<vgcinterfaz:columnaVisorLista nombre="tipo" width="400px">
 						<vgcutil:message key="jsp.pagina.instrumentos.tipo" />
 					</vgcinterfaz:columnaVisorLista>
 					
@@ -330,7 +407,7 @@
 						<vgcutil:message key="jsp.pagina.instrumentos.cooperante" />
 					</vgcinterfaz:columnaVisorLista>	
 							
-					<vgcinterfaz:columnaVisorLista nombre="fecha" width="100px" >
+					<vgcinterfaz:columnaVisorLista nombre="fecha" width="150px" >
 						<vgcutil:message key="jsp.pagina.instrumentos.fecha" />
 					</vgcinterfaz:columnaVisorLista>	
 					
@@ -338,21 +415,17 @@
 						<vgcutil:message key="jsp.pagina.instrumentos.fecha.terminacion" />
 					</vgcinterfaz:columnaVisorLista>
 					
-					<vgcinterfaz:columnaVisorLista nombre="descripcion" width="350px" >
+					<vgcinterfaz:columnaVisorLista nombre="descripcion" width="1020px" >
 						<vgcutil:message key="jsp.pagina.instrumentos.descripcion" />
 					</vgcinterfaz:columnaVisorLista>
 										
-					<vgcinterfaz:columnaVisorLista nombre="estatus" width="100px" >
+					<vgcinterfaz:columnaVisorLista nombre="estatus" width="200px" >
 						<vgcutil:message key="jsp.pagina.instrumentos.estatus" />
 					</vgcinterfaz:columnaVisorLista>
 					
-					<vgcinterfaz:columnaVisorLista nombre="unidad" width="200px" >
+					<vgcinterfaz:columnaVisorLista nombre="unidad" width="820px" >
 						<vgcutil:message key="jsp.pagina.instrumentos.unidad" />
-					</vgcinterfaz:columnaVisorLista>
-					
-					<vgcinterfaz:columnaVisorLista nombre="objetivo" width="500px" >
-						<vgcutil:message key="jsp.pagina.instrumentos.objetivo" />
-					</vgcinterfaz:columnaVisorLista>
+					</vgcinterfaz:columnaVisorLista>										
 														
 					<vgcinterfaz:columnaVisorLista nombre="responsable" width="250px" >
 						<vgcutil:message key="jsp.pagina.instrumentos.responsable.cgi" />
@@ -428,11 +501,7 @@
 						
 						<vgcinterfaz:valorFilaColumnaVisorLista nombre="unidad">
 							<bean:write name="instrumentos" property="areasCargo" />
-						</vgcinterfaz:valorFilaColumnaVisorLista>
-											
-						<vgcinterfaz:valorFilaColumnaVisorLista nombre="objetivo">
-							<bean:write name="instrumentos" property="objetivoInstrumento" />
-						</vgcinterfaz:valorFilaColumnaVisorLista>					
+						</vgcinterfaz:valorFilaColumnaVisorLista>																						
 											
 						<vgcinterfaz:valorFilaColumnaVisorLista nombre="responsable">
 							<bean:write name="instrumentos" property="responsableCgi" />

@@ -28,6 +28,7 @@
 		<forward name="reporteConsolidado" path="/paginas/strategos/reportes/planes/consolidado.jsp" />
 		<forward name="reportePortafolioDetallado" path="/paginas/strategos/reportes/portafolio/reporteDetallado.jsp" />
 		<forward name="reportePortafolioResumido" path="/paginas/strategos/reportes/portafolio/reporteResumido.jsp" />
+		<forward name="reporteIniciativaDatosBasicos" path="/paginas/strategos/reportes/iniciativas/datosBasicos.jsp" />
 		
 	</global-forwards>
 
@@ -120,9 +121,15 @@
 		<!-- Mapeo del Action: Generar Reporte Ejecucion de la Iniciativa-->
 		<action path="/reportes/iniciativas/ejecucionReporte" type="com.visiongc.app.strategos.web.struts.reportes.actions.PlanEjecucionReporteAction"></action>
 		
+		<!-- Mapeo del Action: Generar Reporte Datos Basicos de la Iniciativa-->
+		<action path="/reportes/iniciativas/datosBasicos" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReporteIniciativaDatosBasicosAction" scope="request" name="reporteForm" parameter="reporteIniciativaDatosBasicos"></action>
 		
+		<!-- Mapeo del Action: Generar Reporte Datos Basicos de la Iniciativa-->
+		<action path="/reportes/iniciativas/datosBasicosPdf" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReporteIniciativaDatosBasicosPdf"></action>
 		
-		
+		<!-- Mapeo del Action: Generar Reporte Datos Basicos de la Iniciativa-->
+		<action path="/reportes/iniciativas/datosBasicosXls" type="com.visiongc.app.strategos.web.struts.reportes.actions.ReporteIniciativaDatosBasicosXls"></action>
+					
 		
 		
 		<!-- Mapeo del Action: Pantalla de Iniciativas -->

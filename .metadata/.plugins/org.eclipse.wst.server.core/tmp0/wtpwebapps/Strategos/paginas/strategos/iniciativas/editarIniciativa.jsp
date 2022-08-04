@@ -147,7 +147,8 @@
 					armarResultadosEspecificos();
 					activarBloqueoEspera();
 					window.document.editarIniciativaForm.submit();
-															
+								
+																				
 				}				
 			}
 			

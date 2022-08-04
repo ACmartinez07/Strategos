@@ -97,6 +97,7 @@ public class GraficoForm extends EditarObjetoForm
 	private List<Indicador> indicadores;
 	private Boolean esReporteGrafico = false;
 	private Long reporteId;
+	private Boolean desdeInstrumento;
 	
 	// Campos para presentacion Ejecutiva
 	private Long vistaId;
@@ -1084,6 +1085,7 @@ public class GraficoForm extends EditarObjetoForm
 		this.url = null;
 		this.ultimoPeriodo = null;
 		this.esReporteGrafico = false;
+		this.desdeInstrumento = false;
 		
 		// Configuracion
 		this.objetoId = null;
@@ -1103,6 +1105,14 @@ public class GraficoForm extends EditarObjetoForm
 		this.frecuenciasCompatibles = new ArrayList<Frecuencia>();
 	}
 	
+	public Boolean getDesdeInstrumento() {
+		return desdeInstrumento;
+	}
+
+	public void setDesdeInstrumento(Boolean desdeInstrumento) {
+		this.desdeInstrumento = desdeInstrumento;
+	}
+
 	public static class GraficoTipo
 	{
 		private static final byte TIPO_LINEA = 1;

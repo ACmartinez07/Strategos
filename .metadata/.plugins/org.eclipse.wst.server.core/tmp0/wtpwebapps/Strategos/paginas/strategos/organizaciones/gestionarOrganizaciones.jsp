@@ -42,17 +42,20 @@
 			
 			function nuevo() 
 			{				
-				abrirVentanaModal('<html:rewrite action="/organizaciones/crearOrganizacion"/>', "OrganizacionAdd", 950, 600);
+				//abrirVentanaModal('<html:rewrite action="/organizaciones/crearOrganizacion"/>', "OrganizacionAdd", 950, 600);
+				window.location.href='<html:rewrite action="/organizaciones/crearOrganizacion" />';
 			}
 			
 			function modificar() 
 			{
 				<logic:equal name="gestionarOrganizacionesForm" property="editarForma" value="true">					
-					abrirVentanaModal('<html:rewrite action="/organizaciones/modificarOrganizacion"/>?organizacionId=<bean:write name="organizacion" property="organizacionId" scope="session" />', "OrganizacionEdit", 950, 600);
+					//abrirVentanaModal('<html:rewrite action="/organizaciones/modificarOrganizacion"/>?organizacionId=<bean:write name="organizacion" property="organizacionId" scope="session" />', "OrganizacionEdit", 950, 600);
+					window.location.href='<html:rewrite action="/organizaciones/modificarOrganizacion" />?organizacionId=<bean:write name="organizacion" property="organizacionId" scope="session" />';
 				</logic:equal>
 				<logic:notEqual name="gestionarOrganizacionesForm" property="editarForma" value="true">
 					<logic:equal name="gestionarOrganizacionesForm" property="verForma" value="true">						
-						abrirVentanaModal('<html:rewrite action="/organizaciones/verOrganizacion"/>?organizacionId=<bean:write name="organizacion" property="organizacionId" scope="session" />', "OrganizacionEdit", 950, 600);
+						//abrirVentanaModal('<html:rewrite action="/organizaciones/verOrganizacion"/>?organizacionId=<bean:write name="organizacion" property="organizacionId" scope="session" />', "OrganizacionEdit", 950, 600);
+						window.location.href='<html:rewrite action="/organizaciones/verOrganizacion" />?organizacionId=<bean:write name="organizacion" property="organizacionId" scope="session" />';
 					</logic:equal>
 				</logic:notEqual>
 			}

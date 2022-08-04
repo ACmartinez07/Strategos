@@ -133,6 +133,8 @@ public class GraficoAction extends VgcAction
 		Long claseId = ((request.getParameter("claseId") != null && request.getParameter("claseId") != "") ? Long.parseLong(request.getParameter("claseId")) : null);
 		Long planId = ((request.getParameter("planId") != null && request.getParameter("planId") != "") ? Long.parseLong(request.getParameter("planId")) : null);
 		String onFuncion = ((request.getParameter("onFuncion") != null && request.getParameter("onFuncion") != "") ? request.getParameter("onFuncion") : null);
+		Boolean desdeInstrumento = ((request.getParameter("desdeInstrumento") != null && request.getParameter("desdeInstrumento") != "" ) ? Boolean.parseBoolean( request.getParameter("desdeInstrumento")) : null);
+		
 		
 
 		if (onFuncion != null && onFuncion.equals("onAplicar"))
@@ -176,6 +178,12 @@ public class GraficoAction extends VgcAction
 		}
 		
 		GraficoForm graficoForm = (GraficoForm)form;
+				
+		if(desdeInstrumento != null && desdeInstrumento == true) {
+			graficoForm.setDesdeInstrumento(true);
+		}else
+			graficoForm.setDesdeInstrumento(false);
+				
 		
 		graficoForm.setShowDuppont(false);
 		graficoForm.setIndicadorId(null);

@@ -998,14 +998,12 @@ public class StrategosIniciativasServiceImpl extends StrategosServiceImpl implem
 			resultado = persistenceSession.deleteReferenciasRelacionalesIniciativa(iniciativa.getIniciativaId());
 
 			if (resultado == 10000) {
-				dependencias = persistenceSession.getDependenciasIniciativa(iniciativa);
-
+				dependencias = persistenceSession.getDependenciasIniciativa(iniciativa);				
 				for (Iterator<?> i = dependencias.iterator(); i.hasNext();) {
-					listaObjetosRelacionados = (List) i.next();
-					System.out.print("\ncaso #1" + listaObjetosRelacionados);
-					System.out.print("\ncaso #2" + listaObjetosRelacionados.get(0).toString() );
+					listaObjetosRelacionados = (List) i.next();					
 					if ((listaObjetosRelacionados.size() > 0)
 							&& ((listaObjetosRelacionados.get(0) instanceof PryActividad))) {
+						
 						StrategosPryActividadesService strategosPryActividadesService = StrategosServiceFactory
 								.getInstance().openStrategosPryActividadesService(this);
 
@@ -1044,7 +1042,7 @@ public class StrategosIniciativasServiceImpl extends StrategosServiceImpl implem
 						}
 						strategosPrdProductosService.close();
 					} else if ((listaObjetosRelacionados.size() > 0)
-							&& ((listaObjetosRelacionados.get(0) instanceof ClaseIndicadores))) {
+							&& ((listaObjetosRelacionados.get(0) instanceof ClaseIndicadores))) {						
 						StrategosClasesIndicadoresService strategosClasesIndicadoresService = StrategosServiceFactory
 								.getInstance().openStrategosClasesIndicadoresService(this);
 
@@ -1102,13 +1100,13 @@ public class StrategosIniciativasServiceImpl extends StrategosServiceImpl implem
 				transActiva = true;
 			}
 
-			dependencias = persistenceSession.getDependenciasCiclicasIniciativa(iniciativa);
-
+			dependencias = persistenceSession.getDependenciasCiclicasIniciativa(iniciativa);			
 			for (Iterator i = dependencias.iterator(); i.hasNext();) {
 				listaObjetosRelacionados = (List) i.next();
 
 				if ((listaObjetosRelacionados.size() > 0)
 						&& ((listaObjetosRelacionados.get(0) instanceof ClaseIndicadores))) {
+	
 					StrategosClasesIndicadoresService strategosClasesIndicadoresService = StrategosServiceFactory
 							.getInstance().openStrategosClasesIndicadoresService(this);
 

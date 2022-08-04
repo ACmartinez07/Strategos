@@ -15,9 +15,7 @@
 		<form-bean name="seleccionarCooperantesForm" type="com.visiongc.framework.web.struts.forms.SelectorListaForm" />
 		<form-bean name="seleccionarOrganizacionForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.SelectorOrganizacionForm" />
 		<form-bean name="editarCooperantesForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.EditarCooperantesForm" />
-		<form-bean name="editarTiposConvenioForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.EditarTiposConvenioForm" />
-		
-		
+		<form-bean name="editarTiposConvenioForm" type="com.visiongc.app.strategos.web.struts.instrumentos.forms.EditarTiposConvenioForm" />		
 	</form-beans>
 
 	<!-- Definiciones: Global Forward -->
@@ -37,6 +35,10 @@
 		<forward name="editarInstrumentos" path="/paginas/strategos/instrumentos/editarInstrumentos.jsp" />
 		<forward name="reporteInstrumentoEjecucion" path="/paginas/strategos/instrumentos/resumidaEjecucion.jsp" />
 		<forward name="reporteInstrumentoEjecucionDetalle" path="/paginas/strategos/instrumentos/resumidaEjecucionDetalle.jsp" />
+		<forward name="reporteProyectosAsociados" path="/paginas/strategos/instrumentos/reporteProyectosAsociados.jsp" />
+		
+		<forward name="asignarPesosInstrumentos" path="/paginas/strategos/instrumentos/asignarPesos.jsp" />
+		<forward name="calcularIndicadores" path="/paginas/strategos/instrumentos/calcularIndicadores.jsp" />
 								
 	</global-forwards>
 
@@ -160,14 +162,31 @@
 		
 		<!-- Mapeo del Action: Generar Reporte Detalle Xls de la Ejecucion-->
 		<action path="/instrumentos/reporteInstrumentoDetalleXls" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteInstrumentoXls"></action>
-
+		
+		<!-- Mapeo del Action: Generar Reporte Proyectos Asociados-->
+		<action path="/instrumentos/reporteProyectosAsociados" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteProyectosAsociadosAction" scope="request" name="reporteForm" parameter="reporteProyectosAsociados"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte Proyectos Asociados PDF-->
+		<action path="/instrumentos/reporteProyectosAsociadosPdf" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteProyectosAsociadosPdf"></action>
+		
+		<!-- Mapeo del Action: Generar Reporte Proyectos Asociados Excel-->
+		<action path="/instrumentos/reporteProyectosAsociadosXls" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.ReporteProyectosAsociadosXls"></action>
 
 		<!-- Mapeo del Action: Seleccionar Organizacion -->
 		<action path="/instrumentos/seleccionarOrganizacion" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.SeleccionarOrganizacionAction" scope="session" name="seleccionarOrganizacionForm" parameter="seleccionarOrganizacion">
 			<set-property property="secure" value="false" />
 			<forward name="seleccionarOrganizacion" path="/paginas/strategos/instrumentos/seleccionarOrganizacion.jsp" />
 		</action>
-				
+		
+		<!-- Mapeo del Action: Generar Reporte Proyectos Asociados-->
+		<action path="/instrumentos/asignarPesos" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.AsignarPesosIniciativasInstrumentoAction" scope="request" name="editarInstrumentosForm" parameter="asignarPesosInstrumentos"></action>
+		
+		<!-- Mapeo del Action: Calcular indicadores -->
+		<action path="/instrumentos/calcularIndicadores" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.CalcularIndicadoresAction" scope="session" input="calcularIndicadores" parameter="calcularIndicadores" name="editarInstrumentosForm"></action>
+					
+		<!-- Mapeo del Action: Generar Reporte de Resumido Pdf de la Iniciativa Ejecucion-->
+		<action path="/instrumentos/calcularIndicadoresEjecucion" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.CalcularIndicadoresEjecucionAction" name="editarInstrumentosForm" scope="session" parameter="calcularIndicadores"></action>
+		
 	</action-mappings>
 
 </struts-config>

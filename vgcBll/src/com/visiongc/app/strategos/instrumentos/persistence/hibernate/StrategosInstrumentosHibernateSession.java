@@ -217,8 +217,7 @@ public class StrategosInstrumentosHibernateSession extends StrategosHibernateSes
 	  {
 	    ListaMap dependenciasCiclicas = new ListaMap();
 	    
-	    Criteria consulta = null;
-	    
+	    Criteria consulta = null;	    
 	    if (instrumento.getClaseId() != null)
 	    {
 	      consulta = session.createCriteria(ClaseIndicadores.class);

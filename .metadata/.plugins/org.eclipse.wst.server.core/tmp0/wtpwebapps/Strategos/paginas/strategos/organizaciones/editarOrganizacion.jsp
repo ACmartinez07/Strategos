@@ -56,8 +56,7 @@
 			function cancelar() 
 			{
 				window.document.editarOrganizacionForm.action = '<html:rewrite action="/organizaciones/cancelarGuardarOrganizacion"/>';
-				window.document.editarOrganizacionForm.submit();	
-				this.close();
+				window.document.editarOrganizacionForm.submit();				
 			}
 
 			function validar(forma) 

@@ -77,7 +77,8 @@ public class GestionarInstrumentosAction extends VgcAction
 		
 		
 		Long instrumentoId = null;
-		Long indicadorId = null;		
+		Long indicadorId = null;	
+		Long claseId = null;
 		if (request.getParameter("instrumentoId") != null && request.getParameter("instrumentoId") != "")
 			instrumentoId = Long.parseLong(request.getParameter("instrumentoId"));
 		else if (instrumentoSeleccionadoId != null)
@@ -204,7 +205,9 @@ public class GestionarInstrumentosAction extends VgcAction
 				}
 				gestionarInstrumentosForm.setSeleccionados(instrumentoId.toString());	
 				indicadorId = obtenerIndicadorId(instrumentoId.toString(), paginaInstrumentos, gestionarInstrumentosForm);
-				gestionarInstrumentosForm.setIndicadorId(indicadorId.toString());			
+				claseId = obtenerClaseId(instrumentoId.toString(),paginaInstrumentos, gestionarInstrumentosForm);
+				if(indicadorId != null)
+					gestionarInstrumentosForm.setIndicadorId(indicadorId.toString());			
 			}
 			else
 			{
@@ -221,7 +224,9 @@ public class GestionarInstrumentosAction extends VgcAction
 				if (instrumentoEnLaLista) {
 					instrumentoIdFocus = new Long(gestionarInstrumentosForm.getSeleccionados());	
 					indicadorId = obtenerIndicadorId(instrumentoIdFocus.toString(), paginaInstrumentos, gestionarInstrumentosForm);
-					gestionarInstrumentosForm.setIndicadorId(indicadorId.toString());			
+					claseId = obtenerClaseId(instrumentoId.toString(),paginaInstrumentos, gestionarInstrumentosForm);
+					if(indicadorId != null)
+						gestionarInstrumentosForm.setIndicadorId(indicadorId.toString());						
 				}
 				else
 				{
@@ -232,7 +237,9 @@ public class GestionarInstrumentosAction extends VgcAction
 					
 					gestionarInstrumentosForm.setSeleccionados(instrumentoId.toString());
 					indicadorId = obtenerIndicadorId(instrumentoId.toString(), paginaInstrumentos, gestionarInstrumentosForm);
-					gestionarInstrumentosForm.setIndicadorId(indicadorId.toString());					
+					claseId = obtenerClaseId(instrumentoId.toString(),paginaInstrumentos, gestionarInstrumentosForm);
+					if(indicadorId != null)
+						gestionarInstrumentosForm.setIndicadorId(indicadorId.toString());				
 				}
 			}
 
@@ -318,15 +325,29 @@ public class GestionarInstrumentosAction extends VgcAction
 	
 	private Long obtenerIndicadorId(String instrumentoId, PaginaLista paginaInstrumentos, GestionarInstrumentosForm gestionarInstrumentosForm){
 		Long indicadorId = null;		
-		Long instru = Long.parseLong(instrumentoId);
+		Long instru = Long.parseLong(instrumentoId);		
 		for (Iterator<Instrumentos> iter = paginaInstrumentos.getLista().iterator(); iter.hasNext(); ) 
 		{
 			Instrumentos instrumento = (Instrumentos)iter.next();
 			if (instrumento.getInstrumentoId().longValue() == instru.longValue())
 			{
-				indicadorId = instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento());									
+				indicadorId = instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento());			
 			}
 		}	
 		return indicadorId;
+	}
+	
+	private Long obtenerClaseId(String instrumentoId, PaginaLista paginaInstrumentos, GestionarInstrumentosForm gestionarInstrumentosForm){
+		Long claseId = null;
+		Long instru = Long.parseLong(instrumentoId);		
+		for (Iterator<Instrumentos> iter = paginaInstrumentos.getLista().iterator(); iter.hasNext(); ) 
+		{
+			Instrumentos instrumento = (Instrumentos)iter.next();
+			if (instrumento.getInstrumentoId().longValue() == instru.longValue())
+			{
+				claseId = instrumento.getClaseId();			
+			}
+		}
+		return claseId;
 	}
 }

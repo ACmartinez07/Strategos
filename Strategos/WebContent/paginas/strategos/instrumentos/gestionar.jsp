@@ -232,10 +232,21 @@
 	}
 	
 	function verGraficoIndicador() 
-	{
+	{							
 		var grafico = new Grafico();
-		grafico.url = '<html:rewrite action="/graficos/grafico"/>';		
-		grafico.ShowForm(true, document.gestionarInstrumentosForm.indicadorId.value, 'Indicador', '<bean:write name="gestionarInstrumentosForm" property="claseId"/>');						
+		grafico.url = '<html:rewrite action="/graficos/grafico"/>?indicadorId='+ document.gestionarInstrumentosForm.indicadorId.value + '&desdeInstrumento=true' +'&funcion=' + 'indicador';
+		grafico.ShowForm(true, document.gestionarInstrumentosForm.indicadorId.value, 'Indicador');
+	}
+	
+	function calcularIndicadores(){
+		if ((document.gestionarInstrumentosForm.seleccionados.value == null) || (document.gestionarInstrumentosForm.seleccionados.value == "")) 
+		{
+			alert('<vgcutil:message key="jsp.seleccionar.noseleccion" />');
+			return;
+		}
+		
+		var url = document.gestionarInstrumentosForm.seleccionados.value;
+		abrirVentanaModal('<html:rewrite action="/instrumentos/calcularIndicadores" />?id=' + url, "calcularIndicadores", 490, 450);
 	}
 	
 </script>
@@ -249,7 +260,7 @@
 	<html:hidden property="tipoOrden" />
 	<html:hidden property="seleccionados" />
 	<html:hidden property="indicadorId" />
-	<html:hidden property="seleccionadoId" />		
+	<html:hidden property="seleccionadoId" />	
 
 	<vgcinterfaz:contenedorForma idContenedor="body-instrumentos">
 
@@ -349,7 +360,13 @@
 					<vgcinterfaz:barraHerramientasBotonTitulo>
 						<vgcutil:message key="menu.ver.filtro" />
 					</vgcinterfaz:barraHerramientasBotonTitulo>
-				</vgcinterfaz:barraHerramientasBoton>					
+				</vgcinterfaz:barraHerramientasBoton>	
+				<vgcinterfaz:barraHerramientasSeparador />
+				<vgcinterfaz:barraHerramientasBoton nombreImagen="calculo" pathImagenes="/paginas/strategos/indicadores/imagenes/barraHerramientas/" nombre="calcularIndicadores" onclick="javascript:calcularIndicadores();">
+					<vgcinterfaz:barraHerramientasBotonTitulo>
+						<vgcutil:message key="jsp.gestionarindicadores.barraherramientas.calcular" />
+					</vgcinterfaz:barraHerramientasBotonTitulo>
+				</vgcinterfaz:barraHerramientasBoton>				
 
 				<vgcinterfaz:barraHerramientasBoton permisoId="INDICADOR_EVALUAR_GRAFICO_GRAFICO" nombreImagen="grafico" pathImagenes="/paginas/strategos/indicadores/imagenes/barraHerramientas/" nombre="graficoIndicadorInstrumento" onclick="javascript:verGraficoIndicador();">
 					<vgcinterfaz:barraHerramientasBotonTitulo>

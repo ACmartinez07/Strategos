@@ -129,7 +129,7 @@ public class StrategosClasesIndicadoresServiceImpl
 		ClaseIndicadores clase = new ClaseIndicadores();
 
 		clase.setClaseId(new Long(0L));
-		clase.setPadreId(padreId);
+		clase.setPadreId(padreId);		
 		clase.setNombre(nombre);
 		clase.setOrganizacionId(organizacionId);
 		clase.setDescripcion(null);

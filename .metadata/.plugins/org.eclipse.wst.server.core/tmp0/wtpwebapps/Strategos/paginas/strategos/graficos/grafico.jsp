@@ -95,8 +95,9 @@
 
 			function cancelar() 
 			{
+				
 				window.document.graficoForm.action = '<html:rewrite action="/graficos/grafico"/>?cancelar=true';
-				window.document.graficoForm.submit();			
+				window.document.graficoForm.submit();				
 			}
 			
 			function changeContent(tablecell)

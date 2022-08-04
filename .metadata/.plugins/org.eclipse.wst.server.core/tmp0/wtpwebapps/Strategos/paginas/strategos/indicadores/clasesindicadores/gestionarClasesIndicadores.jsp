@@ -50,17 +50,20 @@
 
 	function nuevoClaseIndicadores() 
 	{		
-		abrirVentanaModal('<html:rewrite action="/indicadores/clasesindicadores/crearClaseIndicadores"/>', 'ClaseIndicadoresAdd', 680, 420);	
+		//abrirVentanaModal('<html:rewrite action="/indicadores/clasesindicadores/crearClaseIndicadores"/>', 'ClaseIndicadoresAdd', 680, 420);
+		window.location.href='<html:rewrite action="/indicadores/clasesindicadores/crearClaseIndicadores" />';		
 	}
 
 	function modificarClaseIndicadores() 
 	{
 		<logic:equal scope="session" name="editarClase" value="true">
-			abrirVentanaModal('<html:rewrite action="/indicadores/clasesindicadores/modificarClaseIndicadores"/>?claseId=<bean:write name="claseIndicadores" property="claseId" scope="session" />', 'ClaseIndicadoresAdd', 680, 420);
+			//abrirVentanaModal('<html:rewrite action="/indicadores/clasesindicadores/modificarClaseIndicadores"/>?claseId=<bean:write name="claseIndicadores" property="claseId" scope="session" />', 'ClaseIndicadoresAdd', 680, 420);
+			window.location.href='<html:rewrite action="/indicadores/clasesindicadores/modificarClaseIndicadores" />?claseId=<bean:write name="claseIndicadores" property="claseId" scope="session" />';
 		</logic:equal>
 		<logic:notEqual scope="session" name="editarClase" value="true">
 			<logic:equal scope="session" name="verClase" value="true">
-				abrirVentanaModal('<html:rewrite action="/indicadores/clasesindicadores/verClaseIndicadores"/>?claseId=<bean:write name="claseIndicadores" property="claseId" scope="session" />', 'ClaseIndicadoresAdd', 680, 420);			
+				//abrirVentanaModal('<html:rewrite action="/indicadores/clasesindicadores/verClaseIndicadores"/>?claseId=<bean:write name="claseIndicadores" property="claseId" scope="session" />', 'ClaseIndicadoresAdd', 680, 420);
+				window.location.href='<html:rewrite action="/indicadores/clasesindicadores/verClaseIndicadores" />?claseId=<bean:write name="claseIndicadores" property="claseId" scope="session" />';
 			</logic:equal>
 		</logic:notEqual>
 	}

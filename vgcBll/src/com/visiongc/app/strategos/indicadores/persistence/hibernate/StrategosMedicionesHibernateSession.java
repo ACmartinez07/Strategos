@@ -1123,7 +1123,7 @@ public class StrategosMedicionesHibernateSession extends StrategosHibernateSessi
     
     double valorAcumulado = 0.0;
     
-    int tamaño=mediciones.size();
+    int tamano=mediciones.size();
     int cont=0;
     
     for (Iterator<Medicion> iter = mediciones.iterator(); iter.hasNext();)
@@ -1158,7 +1158,7 @@ public class StrategosMedicionesHibernateSession extends StrategosHibernateSessi
         medicion = med;
       }
       
-      if(tamaño == cont){
+      if(tamano == cont){
     	  valorAcumulado=valorAcumulado+ med.getValor(); 
       }
     }

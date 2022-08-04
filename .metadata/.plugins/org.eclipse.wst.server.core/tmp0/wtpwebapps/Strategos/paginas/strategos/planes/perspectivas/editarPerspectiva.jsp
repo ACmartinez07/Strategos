@@ -58,8 +58,7 @@
 			function cancelar() 
 			{
 				window.document.editarPerspectivaForm.action = '<html:rewrite action="/planes/perspectivas/cancelarGuardarPerspectiva"/>';
-				window.document.editarPerspectivaForm.submit();	
-				this.close();
+				window.document.editarPerspectivaForm.submit();					
 			}
 
 			function validar(forma) 

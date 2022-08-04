@@ -95,8 +95,9 @@
 
 			function cancelar() 
 			{
+				
 				window.document.graficoForm.action = '<html:rewrite action="/graficos/grafico"/>?cancelar=true';
-				window.document.graficoForm.submit();			
+				window.document.graficoForm.submit();				
 			}
 			
 			function changeContent(tablecell)
@@ -2474,7 +2475,14 @@
 				
 					<%-- Botón Regresar --%>
 					<vgcinterfaz:contenedorFormaBotonRegresar>
-					javascript:cancelar()
+					
+					<logic:equal name="graficoForm" property="desdeInstrumento" value="true">
+						javascript:irAtras(2)
+					</logic:equal>
+					
+					<logic:notEqual name="graficoForm" property="desdeInstrumento" value="true">
+						javascript:cancelar()
+					</logic:notEqual>					
 					</vgcinterfaz:contenedorFormaBotonRegresar>
 				
 				</logic:notEqual>

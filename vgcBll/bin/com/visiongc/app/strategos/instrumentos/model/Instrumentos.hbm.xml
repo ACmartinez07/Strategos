@@ -31,7 +31,8 @@
 		<property name="areasCargo" type="java.lang.String" column="areas_cargo" length="500"/>
 		<property name="nombreReposnsableAreas" type="java.lang.String" column="nombre_responsable_areas" length="250"/>
 		<property name="responsableCgi" type="java.lang.String" column="responsable_cgi" length="250"/>
-		<property name="observaciones" type="java.lang.String" column="observaciones" length="2500"/>	
+		<property name="observaciones" type="java.lang.String" column="observaciones" length="2500"/>
+		<property name="claseId" type="java.lang.Long" column="clase_id" />	
 		
 		<!-- Asociación uno a uno para Estatus -->
 		<many-to-one name="cooperante" class="com.visiongc.app.strategos.instrumentos.model.Cooperante" lazy="false" fetch="join" column="cooperante_id" unique="true" insert="false" update="false"></many-to-one>
