@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping  SYSTEM "../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Modificado por: Kerwin Arias (28/08/2012) -->
+
+<hibernate-mapping>
+	<!-- 
+		Created by the Middlegen Hibernate plugin 2.1
+		
+		http://boss.bekk.no/boss/middlegen/
+		http://www.hibernate.org/
+	-->
+
+	<class name="com.visiongc.framework.model.Lock" table="afw_lock">
+
+		<composite-id name="pk" class="com.visiongc.framework.model.LockPK">
+			<key-property name="objetoId" column="objeto_id" type="java.lang.Long" />
+			<key-property name="tipo" column="tipo" type="java.lang.String" length="100" />
+		</composite-id>
+
+		<property name="instancia" type="java.lang.String" column="instancia" not-null="true" length="100" />
+		<property name="timeStamp" type="java.sql.Timestamp" column="time_stamp" length="8" />
+
+	</class>
+
+</hibernate-mapping>

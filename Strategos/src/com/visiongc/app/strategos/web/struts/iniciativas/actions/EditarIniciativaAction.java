@@ -19,6 +19,7 @@ import com.visiongc.commons.struts.action.VgcAction;
 import com.visiongc.commons.util.FechaUtil;
 import com.visiongc.commons.util.PaginaLista;
 import com.visiongc.commons.web.NavigationBar;
+import com.visiongc.framework.model.Usuario;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -94,12 +95,15 @@ public class EditarIniciativaAction extends VgcAction
 				editarIniciativaForm.setOrganizacionId(organizacion.getOrganizacionId());
 				editarIniciativaForm.setOrganizacionNombre(organizacion.getNombre());
 				
-				
+				/*Usuario usuario = new Usuario();
+				usuario = getUsuarioConectado(request);*/
+							
 				editarIniciativaForm.setBloqueado(iniciativa.getSoloLectura());
-				if (editarIniciativaForm.getBloqueado())
+							
+				if (editarIniciativaForm.getBloqueado())	
 					bloqueado = true;
 				
-				if (editarIniciativaForm.getBloqueado().booleanValue())
+				if (editarIniciativaForm.getBloqueado().booleanValue())					
 					messages.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage("action.editarregistro.sololectura"));
 
 				if (bloqueado) 

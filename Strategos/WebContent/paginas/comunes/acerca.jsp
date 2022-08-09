@@ -158,23 +158,23 @@
 					<tr>
 						<td align="right"><vgcutil:message key="jsp.acerca.licencia.company" /></td>
 						
-						<!-- 
+						 
 						<td colspan="2"><input type="text" class="cuadroTexto" size="40" disabled value="Defensoria del Pueblo" /></td>
-						--> 
 						
+						<!--
 						<td colspan="2"><input type="text" class="cuadroTexto" size="40" disabled value="<bean:write scope='session' name='licencia' property='companyName' />" /></td>
-						
+						--> 
 						
 					</tr>
 					<tr>
 						<td align="right"><vgcutil:message key="jsp.acerca.licencia.serial" /></td>
 						
-						 <!-- 
+						  
 						<td colspan="2"><input type="text" class="cuadroTexto" size="15" disabled value="0" /></td>
-						-->
 						
+						<!--
 						<td colspan="2"><input type="text" class="cuadroTexto" size="15" disabled value="<bean:write scope='session' name='licencia' property='serial' />" /></td>
-						
+						-->
 						
 					</tr>
 					<logic:notEqual scope="session" name="licencia" property="expiracion" value="">
@@ -186,12 +186,12 @@
 					<tr>
 						<td align="right"><vgcutil:message key="jsp.acerca.licencia.tipo" /></td>
 						
-						<!-- 
+						 
 						<td colspan="2"><input type="text" class="cuadroTexto" size="15" disabled value="Full Licenciamento" /></td>
-					 	-->
 					 	
+					 	<!--
 						<td colspan="2"><input type="text" class="cuadroTexto" size="15" disabled value="<bean:write scope='session' name='licencia' property='tipo' />" /></td>
-						
+						-->
 						
 					</tr>
 				</logic:notEmpty>

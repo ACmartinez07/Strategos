@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../hibernate-mapping-3.0.dtd"  >
+
+<!-- Modificado por: Kerwin Arias (06/04/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.framework.auditoria.model.AuditoriaEvento" table="afw_auditoria_evento">
+
+		<composite-id name="pk" class="com.visiongc.framework.auditoria.model.AuditoriaEventoPK">
+			<key-property name="fecha" column="fecha" type="java.sql.Timestamp" />
+			<key-property name="instanciaId" column="instancia_id" type="java.lang.String" />
+			<key-property name="tipoEvento" column="tipo_evento" type="java.lang.Byte" />
+		</composite-id>
+
+		<property name="objetoId" type="java.lang.Long" column="objeto_id" />
+
+		<property name="instanciaNombre" type="java.lang.String" column="instancia_nombre" not-null="true" />
+
+		<property name="usuarioId" type="java.lang.Long" column="usuario_id" />
+
+		<set name="atributosString" lazy="true" fetch="join" inverse="true" cascade="persist, merge, save-update, delete, delete-orphan">
+			<key>
+				<column name="fecha" />
+				<column name="instancia_id" />
+				<column name="tipo_evento" />
+			</key>
+			<one-to-many class="com.visiongc.framework.auditoria.model.AuditoriaString" />
+		</set>
+
+		<set name="atributosMemo" lazy="true" fetch="join" inverse="true" cascade="persist, merge, save-update, delete, delete-orphan">
+			<key>
+				<column name="fecha" />
+				<column name="instancia_id" />
+				<column name="tipo_evento" />
+			</key>
+			<one-to-many class="com.visiongc.framework.auditoria.model.AuditoriaMemo" />
+		</set>
+
+		<set name="atributosFecha" lazy="true" fetch="join" inverse="true" cascade="persist, merge, save-update, delete, delete-orphan">
+			<key>
+				<column name="fecha" />
+				<column name="instancia_id" />
+				<column name="tipo_evento" />
+			</key>
+			<one-to-many class="com.visiongc.framework.auditoria.model.AuditoriaFecha" />
+		</set>
+
+		<set name="atributosEntero" lazy="true" fetch="join" inverse="true" cascade="persist, merge, save-update, delete, delete-orphan">
+			<key>
+				<column name="fecha" />
+				<column name="instancia_id" />
+				<column name="tipo_evento" />
+			</key>
+			<one-to-many class="com.visiongc.framework.auditoria.model.AuditoriaEntero" />
+		</set>
+
+		<set name="atributosFlotante" lazy="true" fetch="join" inverse="true" cascade="persist, merge, save-update, delete, delete-orphan">
+			<key>
+				<column name="fecha" />
+				<column name="instancia_id" />
+				<column name="tipo_evento" />
+			</key>
+			<one-to-many class="com.visiongc.framework.auditoria.model.AuditoriaFlotante" />
+		</set>
+
+		<!-- bi-directional many-to-one association to ObjetoAudibtable -->
+		<many-to-one name="objetoAuditable" class="com.visiongc.framework.auditoria.model.ObjetoAuditable" lazy="false" fetch="join" insert="false" update="false">
+			<column name="objeto_id" />
+		</many-to-one>
+
+		<!-- bi-directional many-to-one association to Usuario -->
+		<many-to-one name="usuario" class="com.visiongc.framework.model.Usuario" lazy="false" fetch="join" insert="false" update="false">
+			<column name="usuario_id" />
+		</many-to-one>
+
+	</class>
+</hibernate-mapping>

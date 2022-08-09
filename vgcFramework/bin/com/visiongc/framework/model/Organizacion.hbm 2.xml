@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Modificado por: Kerwin Arias (28/08/2012) -->
+
+<hibernate-mapping>
+
+	<subclass name="com.visiongc.framework.model.Organizacion" extends="com.visiongc.framework.model.OrganizacionBasica" discriminator-value="null">
+
+		<!-- Associations -->
+
+		<!-- bi-directional one-to-many association to UsuarioGrupo -->
+		<set name="UsuarioGrupos" lazy="true" inverse="true">
+			<key>
+				<column name="organizacion_id" />
+			</key>
+			<one-to-many class="com.visiongc.framework.model.UsuarioGrupo" />
+		</set>
+
+		<!-- bi-directional one-to-many association to Organizacion -->
+		<set name="hijos" lazy="true" inverse="true" order-by="nombre">
+			<key>
+				<column name="padre_id" />
+			</key>
+			<one-to-many class="com.visiongc.framework.model.Organizacion" />
+		</set>
+
+		<!-- bi-directional many-to-one association to Organizacion -->
+		<many-to-one name="padre" class="com.visiongc.framework.model.Organizacion" not-null="false" insert="false" update="false">
+			<column name="padre_id" />
+		</many-to-one>
+
+	</subclass>
+
+</hibernate-mapping>

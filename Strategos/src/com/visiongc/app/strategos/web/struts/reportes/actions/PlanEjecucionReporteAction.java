@@ -97,13 +97,12 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 		reporte.clear();
 
 		// Obtencion del request
-		//String tipo = (request.getParameter("tipo"));
-		String tipo = "1";
+		String tipo = (request.getParameter("tipo"));
+
 		String ano = (request.getParameter("ano"));
-		//String estatus = (request.getParameter("estatus"));
-		String estatus = "1";		
-		//String todos = (request.getParameter("todos"));
-		String todos =  "1";
+		String estatus = (request.getParameter("estatus"));
+		String todos = (request.getParameter("todos"));
+
 		Font fuente = getConfiguracionPagina(request).getFuente();
 
 		/* Parametros para el reporte */
@@ -122,9 +121,11 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 		reporte.setAnoFinal(request.getParameter("anoFinal"));
 		reporte.setAlcance(request.getParameter("alcance") != null ? Byte.parseByte(request.getParameter("alcance"))
 				: reporte.getAlcancePlan());
-		reporte.setAno(2022);
-		reporte.setTipo(Long.parseLong(tipo));
-		reporte.setEstatus(estatus);
+		if (!source.equals("Plan")) {
+			reporte.setAno(Integer.parseInt(ano));
+			reporte.setTipo(Long.parseLong(tipo));
+			reporte.setEstatus(estatus);
+		}
 		// Visualizar Objetivos
 		reporte.setVisualizarObjetivo((request.getParameter("visualizarObjetivo") != null
 				? (request.getParameter("visualizarObjetivo").equals("1") ? true : false)
@@ -202,34 +203,219 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 		font.setStyle(Font.BOLD);
 		fontBold.setSize(VgcFormatoReporte.TAMANO_FUENTE_TITULO);
 		fontBold.setStyle(Font.BOLD);
-		
-		TablaPDF tabla = null;
-		tabla = new TablaPDF(getConfiguracionPagina(request), request);
-		
-		Paragraph texto = new Paragraph("Filtros del reporte: ", font);
-		documento.add(texto);
-		documento.add(lineaEnBlanco(fuente));
-		crearTablaFiltros(tabla, mensajes, reporte, documento, request, todos, fuente);
-		documento.add(tabla.getTabla());
-		
-		documento.add(lineaEnBlanco(fuente));
-		documento.add(lineaEnBlanco(fuente));
 
 		if (source.equals("Plan"))
-			todos = "";
-		// EjecucionPlan(reporte, documento, request, mensajes, source);
-		else if (source.equals("Iniciativa") || source.equals("IniciativaGeneral") || source.equals("IniciativaPlan"))
+			EjecucionPlan(reporte, documento, request, mensajes, source);
+		else if (source.equals("Iniciativa") || source.equals("IniciativaGeneral") || source.equals("IniciativaPlan")) {
+			TablaPDF tabla = null;
+			tabla = new TablaPDF(getConfiguracionPagina(request), request);
+
+			Paragraph texto = new Paragraph("Filtros del reporte: ", font);
+			documento.add(texto);
+			documento.add(lineaEnBlanco(fuente));
+			crearTablaFiltros(tabla, mensajes, reporte, documento, request, todos, fuente);
+			documento.add(tabla.getTabla());
+
+			documento.add(lineaEnBlanco(fuente));
+			documento.add(lineaEnBlanco(fuente));
 			EjecucionIniciativa(reporte, documento, request, mensajes, source, todos, fuente);
+		}
 
 	}
 
+	private void EjecucionPlan(ReporteForm reporte, Document documento, HttpServletRequest request,
+			MessageResources mensajes, String source) throws Exception {
+		StrategosPerspectivasService strategosPerspectivasService = StrategosServiceFactory.getInstance()
+				.openStrategosPerspectivasService();
+		StrategosIndicadoresService strategosIndicadoresService = StrategosServiceFactory.getInstance()
+				.openStrategosIndicadoresService();
+		StrategosMedicionesService strategosMedicionesService = StrategosServiceFactory.getInstance()
+				.openStrategosMedicionesService();
+
+		Plan plan = (Plan) strategosPerspectivasService.load(Plan.class, reporte.getPlanId());
+
+		reporte.setPlantillaPlanes((PlantillaPlanes) strategosPerspectivasService.load(PlantillaPlanes.class,
+				new Long(plan.getMetodologiaId())));
+
+		// Raiz del plan
+		lineas = 2;
+		tamanoPagina = inicioTamanoPagina;
+		Perspectiva perspectiva = null;
+		if (reporte.getAlcance().byteValue() == reporte.getAlcanceObjetivo().byteValue())
+			perspectiva = (Perspectiva) strategosPerspectivasService.load(Perspectiva.class,
+					reporte.getObjetoSeleccionadoId());
+		else
+			perspectiva = strategosPerspectivasService.getPerspectivaRaiz(reporte.getPlanId());
+
+		StrategosPlanesService strategosPlanesService = StrategosServiceFactory.getInstance()
+				.openStrategosPlanesService();
+		ConfiguracionPlan configuracionPlan = strategosPlanesService.getConfiguracionPlan();
+		strategosPlanesService.close();
+		perspectiva.setConfiguracionPlan(configuracionPlan);
+
+		Font font = new Font(getConfiguracionPagina(request).getCodigoFuente());
+		Font fontBold = new Font(getConfiguracionPagina(request).getCodigoFuente());
+
+		// Nombre de la Organizacion, plan y periodo del reporte
+		font.setSize(VgcFormatoReporte.TAMANO_FUENTE_TITULO);
+		font.setStyle(Font.BOLD);
+		fontBold.setSize(VgcFormatoReporte.TAMANO_FUENTE_TITULO);
+		fontBold.setStyle(Font.BOLD);
+
+		Paragraph texto = new Paragraph(
+				mensajes.getMessage("jsp.reportes.plan.ejecucion.plantilla.organizacion") + " : "
+						+ ((OrganizacionStrategos) request.getSession().getAttribute("organizacion")).getNombre(),
+				font);
+		texto.setAlignment(Element.ALIGN_CENTER);
+		documento.add(texto);
+		lineas = getNumeroLinea((lineas + 5), inicioLineas);
+
+		texto = new Paragraph(mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.titulo.rango") + " : "
+				+ PeriodoUtil.getMesNombre(Byte.parseByte(reporte.getMesInicial())) + "/"
+				+ PeriodoUtil.getMesNombre(Byte.parseByte(reporte.getMesFinal())) + " -- "
+				+ (reporte.getAnoInicial().equals(reporte.getAnoFinal()) ? reporte.getAnoInicial()
+						: (reporte.getAnoInicial() + "/" + reporte.getAnoFinal())),
+				font);
+		texto.setAlignment(Element.ALIGN_CENTER);
+		documento.add(texto);
+		lineas = getNumeroLinea((lineas + 5), inicioLineas);
+
+		Integer nivel = 0;
+		if (perspectiva.getPadreId() == null || perspectiva.getPadreId() == 0L)
+			texto = new Paragraph(mensajes.getMessage("jsp.reportes.plan.ejecucion.plantilla.plan") + " : "
+					+ perspectiva.getNombreCompleto(), fontBold);
+		else {
+			Perspectiva perspectivaRaiz = strategosPerspectivasService.getPerspectivaRaiz(reporte.getPlanId());
+			perspectivaRaiz.setConfiguracionPlan(configuracionPlan);
+			nivel = buscarNivelPerspectiva(0, perspectivaRaiz.getPerspectivaId(), perspectiva.getPerspectivaId(),
+					strategosPerspectivasService);
+			texto = new Paragraph(getNombrePerspectiva(reporte, (nivel != null ? nivel : 1)) + " : "
+					+ perspectiva.getNombreCompleto(), fontBold);
+		}
+		texto.setAlignment(Element.ALIGN_CENTER);
+		documento.add(texto);
+		lineas = getNumeroLinea((lineas + 5), inicioLineas);
+
+		font.setSize(8);
+		font.setStyle(Font.NORMAL);
+		fontBold.setSize(8);
+		fontBold.setStyle(Font.BOLD);
+
+		Map<String, Object> filtros = new HashMap<String, Object>();
+
+		filtros.put("padreId", perspectiva.getPerspectivaId());
+		String[] orden = new String[1];
+		String[] tipoOrden = new String[1];
+		orden[0] = "nombre";
+		tipoOrden[0] = "asc";
+		List<Perspectiva> perspectivas = strategosPerspectivasService.getPerspectivas(orden, tipoOrden, filtros);
+
+		if (perspectivas.size() > 0) {
+			if (perspectiva.getPadreId() == null || perspectiva.getPadreId() == 0L)
+				nivel = 0;
+			else
+				nivel++;
+
+			for (Iterator<Perspectiva> iter = perspectivas.iterator(); iter.hasNext();) {
+				Perspectiva perspectivaHija = (Perspectiva) iter.next();
+				perspectivaHija.setConfiguracionPlan(configuracionPlan);
+
+				// nombre de la perspectiva primer nivel
+				if (lineas >= tamanoPagina) {
+					lineas = inicioLineas;
+					tamanoPagina = inicioTamanoPagina;
+					saltarPagina(documento, false, font, null, null, request);
+				}
+				if (reporte.getVisualizarObjetivoAlerta()) {
+					int numeroColumnas = 1;
+					if (configuracionPlan.getPlanObjetivoAlertaAnualMostrar())
+						numeroColumnas++;
+					if (configuracionPlan.getPlanObjetivoAlertaParcialMostrar())
+						numeroColumnas++;
+
+					String[][] columnas = new String[numeroColumnas][2];
+					for (int f = 0; f < numeroColumnas; f++) {
+						if (f == (numeroColumnas - 1))
+							columnas[f][0] = "100";
+						else
+							columnas[f][0] = "2";
+						columnas[f][1] = "";
+					}
+
+					TablaBasicaPDF tab = crearTabla(true, true, columnas, reporte, font, mensajes, documento, request);
+
+					Byte alerta = null;
+
+					if (configuracionPlan.getPlanObjetivoAlertaAnualMostrar()) {
+						String url = obtenerCadenaRecurso(request);
+						alerta = perspectivaHija.getAlertaAnual();
+						if (alerta == null)
+							tab.agregarCelda("");
+						else if (alerta.byteValue() == AlertaIndicador.getAlertaRoja().byteValue())
+							tab.agregarCelda(Image.getInstance(
+									new URL(url + "/paginas/strategos/indicadores/imagenes/alertaRoja.gif")));
+						else if (alerta.byteValue() == AlertaIndicador.getAlertaVerde().byteValue())
+							tab.agregarCelda(Image.getInstance(
+									new URL(url + "/paginas/strategos/indicadores/imagenes/alertaVerde.gif")));
+						else if (alerta.byteValue() == AlertaIndicador.getAlertaAmarilla().byteValue())
+							tab.agregarCelda(Image.getInstance(
+									new URL(url + "/paginas/strategos/indicadores/imagenes/alertaAmarilla.gif")));
+					}
+
+					if (configuracionPlan.getPlanObjetivoAlertaParcialMostrar()) {
+						String url = obtenerCadenaRecurso(request);
+						alerta = perspectivaHija.getAlertaParcial();
+						if (alerta == null)
+							tab.agregarCelda("");
+						else if (alerta.byteValue() == AlertaIndicador.getAlertaRoja().byteValue())
+							tab.agregarCelda(Image.getInstance(
+									new URL(url + "/paginas/strategos/indicadores/imagenes/alertaRoja.gif")));
+						else if (alerta.byteValue() == AlertaIndicador.getAlertaVerde().byteValue())
+							tab.agregarCelda(Image.getInstance(
+									new URL(url + "/paginas/strategos/indicadores/imagenes/alertaVerde.gif")));
+						else if (alerta.byteValue() == AlertaIndicador.getAlertaAmarilla().byteValue())
+							tab.agregarCelda(Image.getInstance(
+									new URL(url + "/paginas/strategos/indicadores/imagenes/alertaAmarilla.gif")));
+					}
+					tab.agregarCelda(
+							getNombrePerspectiva(reporte, (nivel + 1)) + " : " + perspectivaHija.getNombreCompleto());
+					lineas = getNumeroLinea(lineas, inicioLineas);
+					documento.add(tab.getTabla());
+					if (lineas >= tamanoPagina) {
+						lineas = inicioLineas;
+						tamanoPagina = inicioTamanoPagina;
+						saltarPagina(documento, false, font, null, null, request);
+					}
+				} else {
+					texto = new Paragraph(
+							getNombrePerspectiva(reporte, (nivel + 1)) + " : " + perspectivaHija.getNombreCompleto(),
+							font);
+					texto.setAlignment(Element.ALIGN_LEFT);
+					documento.add(texto);
+					lineas = getNumeroLinea(lineas, inicioLineas);
+				}
+
+				buildReporte((nivel + 1), reporte, font, source, perspectivaHija, documento, configuracionPlan,
+						strategosMedicionesService, strategosIndicadoresService, strategosPerspectivasService, mensajes,
+						request);
+
+			}
+		} else
+			dibujarInformacionPerspectiva(nivel, reporte, font, source, perspectiva, documento,
+					strategosMedicionesService, strategosIndicadoresService, strategosPerspectivasService, mensajes,
+					request);
+
+		strategosPerspectivasService.close();
+		strategosIndicadoresService.close();
+		strategosMedicionesService.close();
+	}
+
 	private void EjecucionIniciativa(ReporteForm reporte, Document documento, HttpServletRequest request,
-			MessageResources mensajes, String source, String todos, Font fuente)
-			throws Exception {
-		
+			MessageResources mensajes, String source, String todos, Font fuente) throws Exception {
+
 		Font fontTitulos = new Font(getConfiguracionPagina(request).getCodigoFuente());
 		fontTitulos.setSize(14);
-		fontTitulos.setStyle(Font.BOLD);	 	
+		fontTitulos.setStyle(Font.BOLD);
 		Integer nivel = 0;
 		inicioTamanoPagina = lineasxPagina(fuente);
 		tamanoPagina = inicioTamanoPagina;
@@ -245,7 +431,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 					.openStrategosOrganizacionesService();
 
 			Map<String, Object> filtros = new HashMap<String, Object>();
-			//font.setStyle(Font.NORMAL);
+			// font.setStyle(Font.NORMAL);
 
 			List<OrganizacionStrategos> organizaciones = organizacionservice
 					.getOrganizaciones(0, 0, "organizacionId", "ASC", true, filtros).getLista();
@@ -379,7 +565,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 							else {
 								documento.add(lineaEnBlanco(fuente));
 
-								fontTitulos.setColor(0, 0, 255);								
+								fontTitulos.setColor(0, 0, 255);
 								texto = new Paragraph(mensajes.getMessage(
 										"jsp.reportes.plan.ejecucion.reporte.indicadores.nomediciones",
 										reporte.getPlantillaPlanes().getNombreIniciativaSingular().toLowerCase()),
@@ -402,7 +588,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 									.getOrganizacionId());
 
 					if (org != null) {
-						// Nombre de la Organizacion, plan y periodo del reporte												
+						// Nombre de la Organizacion, plan y periodo del reporte
 						Paragraph textoOrg = new Paragraph("Organización: " + org.getNombre(), fontTitulos);
 						textoOrg.setAlignment(Element.ALIGN_LEFT);
 						documento.add(textoOrg);
@@ -606,7 +792,8 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 							OrganizacionStrategos organizacion = (OrganizacionStrategos) iter.next();
 							if (organizacion != null) {
 								// Nombre de la Organizacion, plan y periodo del reporte
-								Paragraph textoOrg = new Paragraph("Organización: " + organizacion.getNombre(), fontTitulos);
+								Paragraph textoOrg = new Paragraph("Organización: " + organizacion.getNombre(),
+										fontTitulos);
 								textoOrg.setAlignment(Element.ALIGN_LEFT);
 								documento.add(textoOrg);
 								documento.add(lineaEnBlanco(getConfiguracionPagina(request).getFuente()));
@@ -726,7 +913,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 									Paragraph texto = new Paragraph(
 											reporte.getPlantillaPlanes().getNombreIniciativaSingular() + " : "
 													+ iniciativa.getNombre(),
-													fontTitulos);
+											fontTitulos);
 									texto.setAlignment(Element.ALIGN_LEFT);
 									texto.setIndentationLeft(16);
 									documento.add(texto);
@@ -747,7 +934,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 												reporte.getVisualizarIniciativasAlerta(), fuente, mensajes,
 												strategosMedicionesService, strategosIndicadoresService, documento,
 												request);
-									else {										
+									else {
 										fontTitulos.setColor(0, 0, 255);
 										texto = new Paragraph(mensajes.getMessage(
 												"jsp.reportes.plan.ejecucion.reporte.iniciativas.nomediciones",
@@ -758,7 +945,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 										documento.add(texto);
 										fontTitulos.setColor(0, 0, 0);
 									}
-									if (reporte.getVisualizarActividad())										
+									if (reporte.getVisualizarActividad())
 										dibujarInformacionActividad(reporte, fuente, fontTitulos, iniciativa, documento,
 												strategosMedicionesService, strategosIndicadoresService, mensajes,
 												request);
@@ -787,18 +974,18 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 
 	}
 
-	private void dibujarInformacionActividad(ReporteForm reporte, Font font, Font fontTitulos, Iniciativa iniciativa, Document documento,
-			StrategosMedicionesService strategosMedicionesService,
+	private void dibujarInformacionActividad(ReporteForm reporte, Font font, Font fontTitulos, Iniciativa iniciativa,
+			Document documento, StrategosMedicionesService strategosMedicionesService,
 			StrategosIndicadoresService strategosIndicadoresService, MessageResources mensajes,
 			HttpServletRequest request) throws Exception {
-		
+
 		StrategosMetasService strategosMetasService = StrategosServiceFactory.getInstance().openStrategosMetasService();
 		StrategosPryActividadesService strategosPryActividadesService = StrategosServiceFactory.getInstance()
 				.openStrategosPryActividadesService();
 
 		Map<String, Object> filtros = new HashMap<String, Object>();
-		Paragraph texto;		
-		
+		Paragraph texto;
+
 		filtros = new HashMap<String, Object>();
 		filtros.put("proyectoId", iniciativa.getProyectoId());
 		List<PryActividad> actividades = strategosPryActividadesService
@@ -820,7 +1007,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 				// Dibujar Informacion de la Iniciativa
 				crearTablaActividad(reporte, actividad, indicador, font, mensajes, documento, request, tabla);
 
-				//TODO
+				// TODO
 			}
 			documento.add(lineaEnBlanco(getConfiguracionPagina(request).getFuente()));
 			documento.add(tabla.getTabla());
@@ -864,7 +1051,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 				texto.setAlignment(Element.ALIGN_LEFT);
 				texto.setIndentationLeft(16);
 				documento.add(texto);
-				//TODO
+				// TODO
 
 				// Crear tabla del Indicador
 				if (medicionesEjecutado.size() != 0)
@@ -874,7 +1061,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 							false, false, false, reporte.getVisualizarActividadAlerta(), font, mensajes,
 							strategosMedicionesService, strategosIndicadoresService, documento, request);
 				else {
-					//TODO
+					// TODO
 					fontTitulos.setColor(0, 0, 255);
 					texto = new Paragraph(
 							mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.actividades.nomediciones",
@@ -888,7 +1075,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 				}
 			}
 		} else {
-			//TODO
+			// TODO
 			fontTitulos.setColor(0, 0, 255);
 			texto = new Paragraph(mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.noactividades",
 					reporte.getPlantillaPlanes().getNombreActividadPlural().toLowerCase(),
@@ -965,7 +1152,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 				tabla.agregarCelda(
 						Image.getInstance(new URL(url + "/paginas/strategos/indicadores/imagenes/alertaAmarilla.gif")));
 		}
-		if(iniciativa.getResponsableSeguimiento() != null )
+		if (iniciativa.getResponsableSeguimiento() != null)
 			tabla.agregarCelda(iniciativa.getResponsableSeguimiento().getNombre());
 		else
 			tabla.agregarCelda("  ");
@@ -1112,7 +1299,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 				string = new StringBuilder();
 				string.append(PeriodoUtil.convertirPeriodoToTexto(medicion.getMedicionId().getPeriodo(),
 						indicador.getFrecuencia(), medicion.getMedicionId().getAno()));
-				
+
 				columnas[contador][1] = string.toString();
 			} else
 				columnas[contador][1] = PeriodoUtil.convertirPeriodoToTexto(medicion.getMedicionId().getPeriodo(),
@@ -1329,10 +1516,10 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 
 		if (!tablaIniciada)
 			documento.add(tabla.getTabla());
-			documento.add(lineaEnBlanco(getConfiguracionPagina(request).getFuente()));
-			documento.add(lineaEnBlanco(getConfiguracionPagina(request).getFuente()));
+		documento.add(lineaEnBlanco(getConfiguracionPagina(request).getFuente()));
+		documento.add(lineaEnBlanco(getConfiguracionPagina(request).getFuente()));
 	}
-	
+
 	private TablaBasicaPDF crearTabla(boolean newTable, boolean isInformativo, String[][] columnas, ReporteForm reporte,
 			Font font, MessageResources mensajes, Document documento, HttpServletRequest request) throws Exception {
 		Color colorLetra = null;
@@ -1364,8 +1551,8 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 
 		lineas = getNumeroLinea((lineas + (isInformativo ? 0 : 3)), inicioLineas);
 		if ((lineas + maxLineasAntesTabla) >= tamanoPagina) {
-			lineas = inicioLineas;			
-			tamanoPagina = inicioTamanoPagina;			
+			lineas = inicioLineas;
+			tamanoPagina = inicioTamanoPagina;
 			tabla = crearTabla(false, isInformativo, columnas, reporte, font, mensajes, documento, request);
 		}
 
@@ -1381,7 +1568,7 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 
 		return tabla;
 	}
-	
+
 	private String obtenerCadenaRecurso(HttpServletRequest request) {
 		String result = null;
 		if (request.getServerPort() == 80 && request.getScheme().equals("http")) {
@@ -1506,9 +1693,10 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 		}
 		return nombre;
 	}
-	
-	private TablaPDF crearTablaFiltros(TablaPDF tabla, MessageResources mensajes, ReporteForm reporte,  Document documento, HttpServletRequest request,  String todos, Font fuente) throws Exception {
-					
+
+	private TablaPDF crearTablaFiltros(TablaPDF tabla, MessageResources mensajes, ReporteForm reporte,
+			Document documento, HttpServletRequest request, String todos, Font fuente) throws Exception {
+
 		String tipo = obtenerTipo(reporte.getTipo());
 		String estatus = obtenerEstatus(reporte.getEstatus());
 		String anio = "";
@@ -1518,17 +1706,18 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 			anio = "Todos";
 		}
 
-		Paragraph texto = new Paragraph( PeriodoUtil.getMesNombre(Byte.parseByte(reporte.getMesInicial())) + "/"
+		Paragraph texto = new Paragraph(PeriodoUtil.getMesNombre(Byte.parseByte(reporte.getMesInicial())) + "/"
 				+ PeriodoUtil.getMesNombre(Byte.parseByte(reporte.getMesFinal())) + " -- "
 				+ (reporte.getAnoInicial().equals(reporte.getAnoFinal()) ? reporte.getAnoInicial()
-						: (reporte.getAnoInicial() + "/" + reporte.getAnoFinal())), fuente);
-		
+						: (reporte.getAnoInicial() + "/" + reporte.getAnoFinal())),
+				fuente);
+
 		int[] columnas = new int[4];
 		columnas[0] = 20;
 		columnas[1] = 15;
 		columnas[2] = 10;
 		columnas[3] = 15;
-		
+
 		tabla.setAmplitudTabla(100);
 		tabla.crearTabla(columnas);
 		tabla.setColorFondo(128, 128, 128);
@@ -1536,22 +1725,370 @@ public class PlanEjecucionReporteAction extends VgcReporteBasicoAction {
 		tabla.setTamanoFont(12);
 		tabla.setFormatoFont(Font.BOLD);
 		tabla.setAlineacionHorizontal(1);
-	
+
 		tabla.agregarCelda(mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.titulo.rango"));
 		tabla.agregarCelda(mensajes.getMessage("action.reporte.estatus.iniciativa.nombre.tipo"));
 		tabla.agregarCelda(mensajes.getMessage("jsp.editariniciativa.ficha.estatus"));
 		tabla.agregarCelda(mensajes.getMessage("jsp.gestionariniciativas.filtro.anio"));
-		
+
 		tabla.setColorFondo(255, 255, 255);
 		tabla.setColorLetra(0, 0, 0);
 		tabla.setTamanoFont(10);
 		tabla.setFormatoFont(Font.NORMAL);
-		
+
 		tabla.agregarCelda(texto);
 		tabla.agregarCelda(tipo);
 		tabla.agregarCelda(estatus);
 		tabla.agregarCelda(anio);
-		
-		return tabla;		
+
+		return tabla;
+	}
+
+	private void buildReporte(int nivel, ReporteForm reporte, Font font, String source, Perspectiva perspectiva,
+			Document documento, ConfiguracionPlan configuracionPlan,
+			StrategosMedicionesService strategosMedicionesService,
+			StrategosIndicadoresService strategosIndicadoresService,
+			StrategosPerspectivasService strategosPerspectivasService, MessageResources mensajes,
+			HttpServletRequest request) throws Exception {
+		// Lista de perspectivas del primer nivel
+		Paragraph texto;
+		Map<String, Object> filtros = new HashMap<String, Object>();
+
+		filtros.put("padreId", perspectiva.getPerspectivaId());
+		String[] orden = new String[1];
+		String[] tipoOrden = new String[1];
+		orden[0] = "nombre";
+		tipoOrden[0] = "asc";
+		List<Perspectiva> perspectivas = strategosPerspectivasService.getPerspectivas(orden, tipoOrden, filtros);
+
+		if (perspectivas.size() > 0) {
+			for (Iterator<Perspectiva> iter = perspectivas.iterator(); iter.hasNext();) {
+				Perspectiva perspectivaHija = (Perspectiva) iter.next();
+				perspectivaHija.setConfiguracionPlan(configuracionPlan);
+
+				// nombre de la perspectiva primer nivel
+				if (lineas >= tamanoPagina) {
+					lineas = inicioLineas;
+					tamanoPagina = inicioTamanoPagina;
+					saltarPagina(documento, false, font, null, null, request);
+				}
+				if (reporte.getVisualizarObjetivoAlerta()) {
+					int numeroColumnas = 1;
+					if (configuracionPlan.getPlanObjetivoAlertaAnualMostrar())
+						numeroColumnas++;
+					if (configuracionPlan.getPlanObjetivoAlertaParcialMostrar())
+						numeroColumnas++;
+
+					String[][] columnas = new String[numeroColumnas][2];
+					for (int f = 0; f < numeroColumnas; f++) {
+						if (f == (numeroColumnas - 1))
+							columnas[f][0] = "100";
+						else
+							columnas[f][0] = "2";
+						columnas[f][1] = "";
+					}
+
+					TablaBasicaPDF tab = crearTabla(true, true, columnas, reporte, font, mensajes, documento, request);
+
+					Byte alerta = null;
+
+					if (configuracionPlan.getPlanObjetivoAlertaAnualMostrar()) {
+						alerta = perspectivaHija.getAlertaAnual();
+
+						String url = obtenerCadenaRecurso(request);
+
+						if (alerta == null)
+							tab.agregarCelda("");
+						else if (alerta.byteValue() == AlertaIndicador.getAlertaRoja().byteValue())
+							tab.agregarCelda(Image.getInstance(
+									new URL(url + "/paginas/strategos/indicadores/imagenes/alertaRoja.gif")));
+						else if (alerta.byteValue() == AlertaIndicador.getAlertaVerde().byteValue())
+							tab.agregarCelda(Image.getInstance(
+									new URL(url + "/paginas/strategos/indicadores/imagenes/alertaVerde.gif")));
+						else if (alerta.byteValue() == AlertaIndicador.getAlertaAmarilla().byteValue())
+							tab.agregarCelda(Image.getInstance(
+									new URL(url + "/paginas/strategos/indicadores/imagenes/alertaAmarilla.gif")));
+					}
+
+					if (configuracionPlan.getPlanObjetivoAlertaParcialMostrar()) {
+						alerta = perspectivaHija.getAlertaParcial();
+
+						String url = obtenerCadenaRecurso(request);
+
+						if (alerta == null)
+							tab.agregarCelda("");
+						else if (alerta.byteValue() == AlertaIndicador.getAlertaRoja().byteValue())
+							tab.agregarCelda(Image.getInstance(
+									new URL(url + "/paginas/strategos/indicadores/imagenes/alertaRoja.gif")));
+						else if (alerta.byteValue() == AlertaIndicador.getAlertaVerde().byteValue())
+							tab.agregarCelda(Image.getInstance(
+									new URL(url + "/paginas/strategos/indicadores/imagenes/alertaVerde.gif")));
+						else if (alerta.byteValue() == AlertaIndicador.getAlertaAmarilla().byteValue())
+							tab.agregarCelda(Image.getInstance(
+									new URL(url + "/paginas/strategos/indicadores/imagenes/alertaAmarilla.gif")));
+					}
+					tab.agregarCelda(
+							getNombrePerspectiva(reporte, (nivel + 1)) + " : " + perspectivaHija.getNombreCompleto());
+					lineas = getNumeroLinea(lineas, inicioLineas);
+					documento.add(tab.getTabla());
+					if (lineas >= tamanoPagina) {
+						lineas = inicioLineas;
+						tamanoPagina = inicioTamanoPagina;
+						saltarPagina(documento, false, font, null, null, request);
+					}
+				} else {
+					documento.add(lineaEnBlanco(font));
+					lineas = getNumeroLinea(lineas, inicioLineas);
+					if ((lineas + maxLineasAntesTabla) >= tamanoPagina) {
+						lineas = inicioLineas;
+						tamanoPagina = inicioTamanoPagina;
+						saltarPagina(documento, false, font, null, null, request);
+					}
+
+					texto = new Paragraph(
+							getNombrePerspectiva(reporte, (nivel + 1)) + " : " + perspectivaHija.getNombreCompleto(),
+							font);
+					texto.setAlignment(Element.ALIGN_LEFT);
+					documento.add(texto);
+					lineas = getNumeroLinea(lineas, inicioLineas);
+					if (lineas >= tamanoPagina) {
+						lineas = inicioLineas;
+						tamanoPagina = inicioTamanoPagina;
+						saltarPagina(documento, false, font, null, null, request);
+					}
+
+					documento.add(lineaEnBlanco(font));
+					lineas = getNumeroLinea(lineas, inicioLineas);
+					if ((lineas + maxLineasAntesTabla) >= tamanoPagina) {
+						lineas = inicioLineas;
+						tamanoPagina = inicioTamanoPagina;
+						saltarPagina(documento, false, font, null, null, request);
+					}
+				}
+
+				buildReporte((nivel + 1), reporte, font, source, perspectivaHija, documento, configuracionPlan,
+						strategosMedicionesService, strategosIndicadoresService, strategosPerspectivasService, mensajes,
+						request);
+			}
+		} else
+			dibujarInformacionPerspectiva(nivel, reporte, font, source, perspectiva, documento,
+					strategosMedicionesService, strategosIndicadoresService, strategosPerspectivasService, mensajes,
+					request);
+	}
+
+	private void dibujarInformacionPerspectiva(int nivel, ReporteForm reporte, Font font, String source,
+			Perspectiva perspectiva, Document documento, StrategosMedicionesService strategosMedicionesService,
+			StrategosIndicadoresService strategosIndicadoresService,
+			StrategosPerspectivasService strategosPerspectivasService, MessageResources mensajes,
+			HttpServletRequest request) throws Exception {
+		Paragraph texto;
+		List<PerspectivaEstado> estadosParciales = null;
+		List<PerspectivaEstado> estadosAnuales = null;
+
+		Indicador indicador = null;
+		if (perspectiva.getNlParIndicadorId() != null) {
+			indicador = (Indicador) strategosIndicadoresService.load(Indicador.class,
+					new Long(perspectiva.getNlParIndicadorId()));
+
+			LapsoTiempo lapsoTiempoEnPeriodos = PeriodoUtil.getLapsoTiempoEnPeriodosPorMes(
+					((Integer) (Integer.parseInt(reporte.getAnoInicial()))).intValue(),
+					((Integer) (Integer.parseInt(reporte.getAnoFinal()))).intValue(),
+					((Integer) (Integer.parseInt(reporte.getMesInicial()))).intValue(),
+					((Integer) (Integer.parseInt(reporte.getMesFinal()))).intValue(),
+					indicador.getFrecuencia().byteValue());
+			int periodoInicio = lapsoTiempoEnPeriodos.getPeriodoInicio().intValue();
+			int periodoFin = periodoInicio;
+			if (lapsoTiempoEnPeriodos.getPeriodoFin() != null)
+				periodoFin = lapsoTiempoEnPeriodos.getPeriodoFin().intValue();
+
+			estadosParciales = strategosPerspectivasService.getPerspectivaEstados(perspectiva.getPerspectivaId(),
+					TipoIndicadorEstado.getTipoIndicadorEstadoParcial(), Integer.parseInt(reporte.getAnoInicial()),
+					Integer.parseInt(reporte.getAnoFinal()), periodoInicio, periodoFin);
+			estadosAnuales = strategosPerspectivasService.getPerspectivaEstados(perspectiva.getPerspectivaId(),
+					TipoIndicadorEstado.getTipoIndicadorEstadoAnual(), Integer.parseInt(reporte.getAnoInicial()),
+					Integer.parseInt(reporte.getAnoFinal()), periodoInicio, periodoFin);
+		} else {
+			estadosParciales = new ArrayList<PerspectivaEstado>();
+			estadosAnuales = new ArrayList<PerspectivaEstado>();
+		}
+
+		// Crea tabla con estados y alertas
+		if (estadosParciales.size() == 0 && estadosAnuales.size() == 0) {
+			documento.add(lineaEnBlanco(font));
+			lineas = getNumeroLinea(lineas, inicioLineas);
+			if ((lineas + maxLineasAntesTabla) >= tamanoPagina) {
+				lineas = inicioLineas;
+				tamanoPagina = inicioTamanoPagina;
+				saltarPagina(documento, false, font, null, null, request);
+			}
+
+			font.setColor(0, 0, 255);
+			texto = new Paragraph(mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.noestados",
+					getNombrePerspectiva(reporte, (nivel))), font);
+			texto.setIndentationLeft(50);
+			documento.add(texto);
+			font.setColor(0, 0, 0);
+			lineas = getNumeroLinea(lineas, inicioLineas);
+			if (lineas >= tamanoPagina) {
+				lineas = inicioLineas;
+				tamanoPagina = inicioTamanoPagina;
+				saltarPagina(documento, false, font, null, null, request);
+			}
+
+			documento.add(lineaEnBlanco(font));
+			lineas = getNumeroLinea(lineas, inicioLineas);
+			if ((lineas + maxLineasAntesTabla) >= tamanoPagina) {
+				lineas = inicioLineas;
+				tamanoPagina = inicioTamanoPagina;
+				saltarPagina(documento, false, font, null, null, request);
+			}
+		} else {
+			if (reporte.getVisualizarObjetivo())
+				crearTablaPerspectiva(reporte, perspectiva, indicador, estadosParciales, estadosAnuales, font, mensajes,
+						strategosMedicionesService, strategosIndicadoresService, documento, request);
+		}
+
+		if (lineas >= tamanoPagina) {
+			lineas = inicioLineas;
+			tamanoPagina = inicioTamanoPagina;
+			saltarPagina(documento, false, font, null, null, request);
+		}
+	}
+
+	private void crearTablaPerspectiva(ReporteForm reporte, Perspectiva perspectiva, Indicador indicador,
+			List<PerspectivaEstado> estadosParciales, List<PerspectivaEstado> estadosAnuales, Font font,
+			MessageResources mensajes, StrategosMedicionesService strategosMedicionesService,
+			StrategosIndicadoresService strategosIndicadoresService, Document documento, HttpServletRequest request)
+			throws Exception {
+		if (lineas >= tamanoPagina) {
+			lineas = inicioLineas;
+			tamanoPagina = inicioTamanoPagina;
+			saltarPagina(documento, false, font, null, null, request);
+		}
+		StrategosVistasDatosService strategosVistasDatosService = StrategosServiceFactory.getInstance()
+				.openStrategosVistasDatosService();
+
+		String[][] columnas = new String[estadosParciales.size() + 1][2];
+		int contador = 0;
+		columnas[contador][0] = "8";
+		columnas[contador][1] = mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.columna.periodo");
+
+		for (Iterator<PerspectivaEstado> iter = estadosParciales.iterator(); iter.hasNext();) {
+			contador++;
+			PerspectivaEstado estadoParcial = (PerspectivaEstado) iter.next();
+			columnas[contador][0] = "8";
+			columnas[contador][1] = PeriodoUtil.convertirPeriodoToTexto(estadoParcial.getPk().getPeriodo(),
+					perspectiva.getFrecuencia(), estadoParcial.getPk().getAno());
+		}
+
+		boolean tablaIniciada = false;
+		TablaBasicaPDF tabla = crearTabla(true, false, columnas, reporte, font, mensajes, documento, request);
+		StringBuilder string;
+
+		if (reporte.getVisualizarObjetivoEstadoParcial()) {
+			string = new StringBuilder();
+			string.append(mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.columna.estadoparcial"));
+			string.append("\n");
+			string.append("\n");
+
+			tabla.agregarCelda(string.toString());
+			for (Iterator<PerspectivaEstado> iter = estadosParciales.iterator(); iter.hasNext();) {
+				PerspectivaEstado estadoParcial = (PerspectivaEstado) iter.next();
+				Double valor = estadoParcial.getEstado();
+				if (valor != null && valor > 100D)
+					valor = 100D;
+
+				tabla.agregarCelda((estadoParcial.getEstado() != null ? VgcFormatter.formatearNumero(valor) : ""));
+			}
+
+			lineas = getNumeroLinea((lineas + 3), inicioLineas);
+			if ((lineas + maxLineasAntesTabla) >= tamanoPagina) {
+				lineas = inicioLineas;
+				documento.add(tabla.getTabla());
+				tamanoPagina = inicioTamanoPagina;
+				saltarPagina(documento, false, font, tabla.getTabla().columns(), null, request);
+				tabla = crearTabla(false, false, columnas, reporte, font, mensajes, documento, request);
+				tablaIniciada = true;
+			}
+		}
+
+		if (reporte.getVisualizarObjetivoEstadoAnual()) {
+			tablaIniciada = false;
+
+			string = new StringBuilder();
+			string.append(mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.columna.estadoanual"));
+			string.append("\n");
+			string.append("\n");
+			tabla.agregarCelda(string.toString());
+
+			for (Iterator<PerspectivaEstado> iter = estadosAnuales.iterator(); iter.hasNext();) {
+				PerspectivaEstado estadoParcial = (PerspectivaEstado) iter.next();
+
+				Double valor = estadoParcial.getEstado();
+				if (valor != null && valor > 100D)
+					valor = 100D;
+				tabla.agregarCelda((estadoParcial.getEstado() != null ? VgcFormatter.formatearNumero(valor) : ""));
+			}
+
+			lineas = getNumeroLinea((lineas + 3), inicioLineas);
+			if ((lineas + maxLineasAntesTabla) >= tamanoPagina) {
+				lineas = inicioLineas;
+				documento.add(tabla.getTabla());
+				tamanoPagina = inicioTamanoPagina;
+				saltarPagina(documento, false, font, tabla.getTabla().columns(), null, request);
+				tabla = crearTabla(false, false, columnas, reporte, font, mensajes, documento, request);
+				tablaIniciada = true;
+			}
+		}
+
+		if (reporte.getVisualizarObjetivoAlerta()) {
+			tablaIniciada = false;
+			string = new StringBuilder();
+			string.append(mensajes.getMessage("jsp.reportes.plan.ejecucion.reporte.columna.alerta.parcial"));
+			string.append("\n");
+			string.append("\n");
+			tabla.agregarCelda(string.toString());
+
+			for (int i = 0; i < (estadosParciales.size()); i++) {
+				PerspectivaEstado medicion = (PerspectivaEstado) estadosParciales.get(i);
+				String alerta = strategosVistasDatosService.getValorDimensiones(
+						TipoVariable.getTipoVariableAlerta().toString(),
+						medicion.getPk().getPeriodo() + "_" + medicion.getPk().getAno(),
+						medicion.getPk().getPeriodo() + "_" + medicion.getPk().getAno(),
+						indicador.getIndicadorId().toString(), reporte.getPlanId().toString(), null, false);
+
+				String url = obtenerCadenaRecurso(request);
+
+				if (alerta == null)
+					tabla.agregarCelda("");
+				else if (alerta.equals("0"))
+					tabla.agregarCelda(
+							Image.getInstance(new URL(url + "/paginas/strategos/indicadores/imagenes/alertaRoja.gif")));
+				else if (alerta.equals("2"))
+					tabla.agregarCelda(Image
+							.getInstance(new URL(url + "/paginas/strategos/indicadores/imagenes/alertaVerde.gif")));
+				else if (alerta.equals("3"))
+					tabla.agregarCelda(Image
+							.getInstance(new URL(url + "/paginas/strategos/indicadores/imagenes/alertaAmarilla.gif")));
+				else if (alerta.equals("1"))
+					tabla.agregarCelda(Image
+							.getInstance(new URL(url + "/paginas/strategos/indicadores/imagenes/alertaBlanca.gif")));
+			}
+
+			lineas = getNumeroLinea((lineas + 3), inicioLineas);
+			if ((lineas + maxLineasAntesTabla) >= tamanoPagina) {
+				lineas = inicioLineas;
+				documento.add(tabla.getTabla());
+				tamanoPagina = inicioTamanoPagina;
+				saltarPagina(documento, false, font, tabla.getTabla().columns(), null, request);
+				tabla = crearTabla(false, false, columnas, reporte, font, mensajes, documento, request);
+				tablaIniciada = true;
+			}
+		}
+
+		strategosVistasDatosService.close();
+
+		if (!tablaIniciada)
+			documento.add(tabla.getTabla());
 	}
 }

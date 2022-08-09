@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Modificado por: Kerwin Arias (28/08/2012) -->
+
+<hibernate-mapping>
+	<!-- 
+		Created by the Middlegen Hibernate plugin 2.1
+		
+		http://boss.bekk.no/boss/middlegen/
+		http://www.hibernate.org/
+	-->
+
+	<class name="com.visiongc.framework.model.OrganizacionBasica" table="organizacion">
+
+		<id name="organizacionId" type="java.lang.Long" column="organizacion_id">
+			<generator class="assigned" />
+		</id>
+
+		<discriminator column="subclase" type="java.lang.String" />
+
+		<property name="padreId" type="java.lang.Long" column="padre_id" length="10" insert="true" update="true" />
+
+		<property name="nombre" type="java.lang.String" column="nombre" not-null="true" length="50" />
+
+		<property name="direccion" type="java.lang.String" column="direccion" length="150" />
+
+		<property name="creado" type="java.sql.Timestamp" column="creado" length="8" />
+
+		<property name="modificado" type="java.sql.Timestamp" column="modificado" length="8" />
+
+		<property name="creadoId" type="java.lang.Long" column="creado_id" length="10" />
+
+		<property name="modificadoId" type="java.lang.Long" column="modificado_id" length="10" />
+
+	</class>
+
+</hibernate-mapping>
