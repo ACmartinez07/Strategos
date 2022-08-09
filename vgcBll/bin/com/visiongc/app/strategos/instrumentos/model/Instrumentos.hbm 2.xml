@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto Reporte de la Base de Datos -->
+<!-- Creado por: Andres Caucali (08/08/2021) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.instrumentos.model.Instrumentos" table="instrumentos">
+
+		<!-- Atributo clave de responsable -->
+		<id name="instrumentoId" type="java.lang.Long" column="instrumento_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para  responsable -->
+		<property name="nombreCorto" type="java.lang.String" column="nombre_corto" length="50"/>
+		<property name="nombreInstrumento" type="java.lang.String" column="nombre_instrumento" length="2500"/>
+		<property name="objetivoInstrumento" type="java.lang.String" column="objetivo_instrumento" length="2500"/>
+		<property name="productos" type="java.lang.String" column="productos" length="2500"/>
+		<property name="cooperanteId" type="java.lang.Long" column="cooperante_id" />
+		<property name="tiposConvenioId" type="java.lang.Long" column="tipos_convenio_id" />
+		<property name="anio" type="java.lang.String" column="anio" length="4" />
+		<property name="instrumentoMarco" type="java.lang.String" column="instrumento_marco" length="2500"/>
+		<property name="fechaInicio" type="java.util.Date" column="fecha_inicio" />
+		<property name="fechaTerminacion" type="java.util.Date" column="fecha_terminacion" />
+		<property name="fechaProrroga" type="java.util.Date" column="fecha_prorroga" />
+		<property name="recursosPesos" type="java.lang.Double" column="recursos_pesos" />
+		<property name="recursosDolares" type="java.lang.Double" column="recursos_dolares" />
+		<property name="nombreEjecutante" type="java.lang.String" column="nombre_ejecutante" length="250"/>
+		<property name="estatus" type="java.lang.Byte" column="estatus" />
+		<property name="areasCargo" type="java.lang.String" column="areas_cargo" length="500"/>
+		<property name="nombreReposnsableAreas" type="java.lang.String" column="nombre_responsable_areas" length="250"/>
+		<property name="responsableCgi" type="java.lang.String" column="responsable_cgi" length="250"/>
+		<property name="observaciones" type="java.lang.String" column="observaciones" length="2500"/>
+		<property name="claseId" type="java.lang.Long" column="clase_id" />	
+		
+		<!-- Asociación uno a uno para Estatus -->
+		<many-to-one name="cooperante" class="com.visiongc.app.strategos.instrumentos.model.Cooperante" lazy="false" fetch="join" column="cooperante_id" unique="true" insert="false" update="false"></many-to-one>
+		
+		<!-- Asociación uno a uno para Estatus -->
+		<many-to-one name="tipoConvenio" class="com.visiongc.app.strategos.instrumentos.model.TipoConvenio" lazy="false" fetch="join" column="tipos_convenio_id" unique="true" insert="false" update="false"></many-to-one>
+		
+		<!-- Asociación uno a muchos para IniciativaIndicadores -->
+		<set name="instrumentoIndicadores" fetch="select" lazy="true" inverse="true" cascade="none">
+			<key>
+				<column name="instrumento_id" />
+			</key>
+			<one-to-many class="com.visiongc.app.strategos.instrumentos.model.IndicadorInstrumento" />
+		</set>
+		
+		
+	</class>
+</hibernate-mapping>

@@ -68,14 +68,14 @@ public class FrameworkHibernateSession extends VgcHibernateSession
     }
 
     public boolean verificarUsuarioPermiso(long usuarioId, long organizacionId, String permisoId)
-    {
+    {    	
         if(permisoId == null)
             return false;
         Session session = getHibernateSession();
         String sql = (new StringBuilder("SELECT COUNT(AFW_PERMISO_GRUPO.PERMISO_ID) AS TOTAL FROM AFW_PERMISO_GRUPO, AFW_USUARIO_GRUPO WHERE AFW_PERMISO_GRUPO.GRUPO_ID=AFW_USUARIO_GRUPO.GRUPO_ID AND AFW_PERMISO_GRUPO.PERMISO_ID='")).append(permisoId).append("' AND ").append("AFW_USUARIO_GRUPO.USUARIO_ID=").append(usuarioId).toString();
         if(organizacionId != 0L)
             sql = (new StringBuilder(String.valueOf(sql))).append(" AND ").append("AFW_USUARIO_GRUPO.ORGANIZACION_ID=").append(organizacionId).toString();
-        Integer nroPermisos = (Integer)session.createSQLQuery(sql).addScalar("TOTAL", Hibernate.INTEGER).uniqueResult();
+        Integer nroPermisos = (Integer)session.createSQLQuery(sql).addScalar("TOTAL", Hibernate.INTEGER).uniqueResult();        
         return nroPermisos.intValue() > 0;
     }
 

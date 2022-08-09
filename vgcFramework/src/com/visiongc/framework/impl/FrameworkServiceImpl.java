@@ -101,7 +101,7 @@ public class FrameworkServiceImpl extends VgcAbstractService
     }
 
     public boolean usuarioTienePermiso(long usuarioId, boolean isAdmin, long ObjetoId, String permisoId, String organizacionId)
-    {
+    {    	
         if(isAdmin)
             return true;
         long orgId = 0L;
@@ -111,7 +111,7 @@ public class FrameworkServiceImpl extends VgcAbstractService
         {
             return true;
         } else
-        {
+        {        	
             boolean res = persistenceSession.verificarUsuarioPermiso(usuarioId, orgId, permisoId);
             return res;
         }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto IndicadorPlan de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (03/10/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.app.strategos.planes.model.IndicadorPlan" table="indicador_por_plan">
+
+		<!-- Atributo clave de IndicadorPlan -->
+		<composite-id name="pk" class="com.visiongc.app.strategos.planes.model.IndicadorPlanPK">
+			<key-property name="planId" column="plan_id" type="java.lang.Long"/>
+			<key-property name="indicadorId" column="indicador_id" type="java.lang.Long"/>			
+		</composite-id>
+
+		<!-- Atributos del objeto conceptual para  IndicadorPlan -->
+		<property name="peso" type="java.lang.Double" column="peso"/>
+		<property name="crecimiento" type="java.lang.Byte" column="crecimiento" />
+		<property name="tipoMedicion" type="java.lang.Byte" column="tipo_medicion" />
+
+		<!-- Asociación muchos a uno para Plan -->
+		<many-to-one name="plan" class="com.visiongc.app.strategos.planes.model.Plan" unique="true" insert="false" update="false">
+			<column name="plan_id" />
+		</many-to-one>
+		
+		<!-- Asociación muchos a uno para Indicador -->
+		<many-to-one name="indicador" class="com.visiongc.app.strategos.indicadores.model.Indicador" unique="true" insert="false" update="false">
+			<column name="indicador_id" />
+		</many-to-one>		
+
+	</class>
+
+</hibernate-mapping>

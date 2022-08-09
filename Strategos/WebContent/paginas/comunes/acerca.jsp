@@ -169,7 +169,7 @@
 					<tr>
 						<td align="right"><vgcutil:message key="jsp.acerca.licencia.serial" /></td>
 						
-						 <!-- 
+						<!--  
 						<td colspan="2"><input type="text" class="cuadroTexto" size="15" disabled value="0" /></td>
 						-->
 						

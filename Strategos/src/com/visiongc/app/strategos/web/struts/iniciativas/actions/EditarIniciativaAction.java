@@ -19,6 +19,12 @@ import com.visiongc.commons.struts.action.VgcAction;
 import com.visiongc.commons.util.FechaUtil;
 import com.visiongc.commons.util.PaginaLista;
 import com.visiongc.commons.web.NavigationBar;
+import com.visiongc.framework.FrameworkService;
+import com.visiongc.framework.impl.FrameworkServiceFactory;
+import com.visiongc.framework.model.Configuracion;
+import com.visiongc.framework.model.ConfiguracionUsuario;
+import com.visiongc.framework.model.Usuario;
+import com.visiongc.framework.model.UsuarioGrupo;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,10 +80,14 @@ public class EditarIniciativaAction extends VgcAction
 		
 		boolean verForm = getPermisologiaUsuario(request).tienePermiso("INICIATIVA_VIEWALL") || (portafolioId != null && portafolioId != 0L) ;
 		boolean editarForm = getPermisologiaUsuario(request).tienePermiso("INICIATIVA_EDIT") && (portafolioId == null || (portafolioId != null && portafolioId == 0L));
+		boolean editInstrumentos = getPermisologiaUsuario(request).tienePermiso("INICIATIVA_EDIT_COOPERACION");
+				
 		boolean bloqueado = false;
 		Long estatusId = null;
 		
 		StrategosIniciativasService strategosIniciativasService = StrategosServiceFactory.getInstance().openStrategosIniciativasService();
+		FrameworkService frameworkService = FrameworkServiceFactory.getInstance().openFrameworkService();
+		
 
 		List<?> anos = null;
 
@@ -92,14 +102,14 @@ public class EditarIniciativaAction extends VgcAction
 				OrganizacionStrategos organizacion = (OrganizacionStrategos)strategosIniciativasService.load(OrganizacionStrategos.class, new Long(iniciativa.getOrganizacionId()));
 				iniciativa.setOrganizacion(organizacion);
 				editarIniciativaForm.setOrganizacionId(organizacion.getOrganizacionId());
-				editarIniciativaForm.setOrganizacionNombre(organizacion.getNombre());
-				
-				
+				editarIniciativaForm.setOrganizacionNombre(organizacion.getNombre());																	
+								
 				editarIniciativaForm.setBloqueado(iniciativa.getSoloLectura());
-				if (editarIniciativaForm.getBloqueado())
+				
+				if (editarIniciativaForm.getBloqueado())	
 					bloqueado = true;
 				
-				if (editarIniciativaForm.getBloqueado().booleanValue())
+				if (editarIniciativaForm.getBloqueado().booleanValue())					
 					messages.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage("action.editarregistro.sololectura"));
 
 				if (bloqueado) 
@@ -107,7 +117,7 @@ public class EditarIniciativaAction extends VgcAction
 					editarIniciativaForm.setBloqueado(new Boolean(true));
 					messages.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage("action.editarregistro.bloqueado"));
 				}
-
+				
 				editarIniciativaForm.setNombre(iniciativa.getNombre());
 				editarIniciativaForm.setNombreLargo(iniciativa.getNombreLargo());
 				editarIniciativaForm.setTipoAlerta(iniciativa.getTipoAlerta());
@@ -187,7 +197,7 @@ public class EditarIniciativaAction extends VgcAction
 				}
 				editarIniciativaForm.setAno(ano);
 				editarIniciativaForm.setResultadoEspecificoIniciativa(resultadosEspecificos);
-				editarIniciativaForm.setBloqueado(iniciativa.getOrganizacionId().longValue() != new Long((String)request.getSession().getAttribute("organizacionId")).longValue());
+				editarIniciativaForm.setBloqueado(iniciativa.getOrganizacionId().longValue() != new Long((String)request.getSession().getAttribute("organizacionId")).longValue() && !editInstrumentos);
 				editarIniciativaForm.setTipoMedicion(iniciativa.getTipoMedicion());
 				editarIniciativaForm.setEliminarMediciones(false);
 				editarIniciativaForm.setEstatusId(iniciativa.getEstatusId());
@@ -317,6 +327,8 @@ public class EditarIniciativaAction extends VgcAction
 		
 		strategosIniciativasService.close();
 
+		
+		if(!editInstrumentos) {
 		if (!bloqueado && verForm && !editarForm)
 		{
 			messages.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage("action.editarregistro.sololectura"));
@@ -324,7 +336,7 @@ public class EditarIniciativaAction extends VgcAction
 		}
 		else if (!bloqueado && !verForm && !editarForm)
 			messages.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage("action.editarregistro.sinpermiso"));
-    
+		}
 		saveMessages(request, messages);
 		
 		return forward;

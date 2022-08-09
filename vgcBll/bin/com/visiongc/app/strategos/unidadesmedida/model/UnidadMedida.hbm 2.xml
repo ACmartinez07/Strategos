@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto UnidadMedida de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (08/04/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.unidadesmedida.model.UnidadMedida" table="unidad">
+
+		<!-- Atributo clave de  unidadId  -->
+		<id name="unidadId" type="java.lang.Long" column="unidad_id">
+			<generator class="assigned" />
+		</id>
+
+		<!-- Atributos del objeto conceptual para  unidad de medida  -->
+		<property name="nombre" type="java.lang.String" column="nombre" />
+		<property name="tipo" type="com.visiongc.commons.persistence.hibernate.CustomBooleanType" column="tipo" />
+
+	</class>
+
+</hibernate-mapping>

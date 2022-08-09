@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto MemoIniciativa de la Base de Datos -->
+<!-- Modificado por: Kerwin Arias (18/04/2012) -->
+
+<hibernate-mapping>
+
+	<class name="com.visiongc.app.strategos.iniciativas.model.MemoIniciativa" table="iniciativa_objeto">
+
+		<!-- Atributo clave de MemoIniciativas -->
+		<id name="iniciativaId" type="java.lang.Long" column="iniciativa_id">
+			<generator class="assigned"></generator>
+		</id>
+
+		<!-- Atributos del objeto conceptual -->
+		<property name="descripcion" column="objeto" type="java.lang.String" />
+		<property name="resultado" column="resultado" type="java.lang.String" />
+	
+	</class>
+
+</hibernate-mapping>

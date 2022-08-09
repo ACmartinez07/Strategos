@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
+
+<!-- Descripción: Mapeo de un objeto PrdSeguimientoProducto de la Base de Datos -->
+<!-- Creado por: Kerwin Arias (09/12/2012) -->
+
+<hibernate-mapping>
+	<class name="com.visiongc.app.strategos.planificacionseguimiento.model.PrdSeguimientoProducto" table="prd_seg_producto">
+
+		<!-- Atributo clave -->
+		<composite-id name="pk" class="com.visiongc.app.strategos.planificacionseguimiento.model.PrdSeguimientoProductoPK">
+			<key-property name="iniciativaId" column="iniciativa_id" type="java.lang.Long" />
+			<key-property name="productoId" column="producto_id" type="java.lang.Long" />
+			<key-property name="ano" column="ano" type="java.lang.Integer" />
+			<key-property name="periodo" column="periodo" type="java.lang.Integer" />
+		</composite-id>
+
+		<!-- Atributos del objeto conceptual para PrdProducto -->
+		<property name="fechaInicio" type="java.util.Date" column="fecha_ini" />
+		<property name="fechaFin" type="java.util.Date" column="fecha_fin" />
+		<property name="alerta" type="java.lang.Byte" column="alerta" />
+
+		<!-- Asociación muchos a uno para Responsable -->
+		<many-to-one name="producto" class="com.visiongc.app.strategos.planificacionseguimiento.model.PrdProducto" lazy="false" fetch="join" column="producto_id" unique="true" insert="false" update="false"></many-to-one>
+
+	</class>
+
+</hibernate-mapping>
