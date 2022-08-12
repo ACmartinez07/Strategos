@@ -11,7 +11,7 @@
 
 <tiles:insert definition="doc.modalWindowLayout" flush="true">
 
-	<%-- Título --%>
+	<%-- Tï¿½tulo --%>
 	<tiles:put name="title" type="String">
 		<vgcutil:message key="jsp.acerca.titulo" />
 	</tiles:put>
@@ -21,7 +21,7 @@
 
 		<vgcinterfaz:contenedorForma width="450px" height="670px" bodyCellpadding="10" marginTop="5px" >
 			
-			<%-- Título --%>
+			<%-- Tï¿½tulo --%>
 			<vgcinterfaz:contenedorFormaTitulo>
 				..:: <vgcutil:message key="jsp.acerca.titulo" />
 			</vgcinterfaz:contenedorFormaTitulo>
@@ -158,12 +158,12 @@
 					<tr>
 						<td align="right"><vgcutil:message key="jsp.acerca.licencia.company" /></td>
 						
-						<!-- 
+						 
 						<td colspan="2"><input type="text" class="cuadroTexto" size="40" disabled value="Defensoria del Pueblo" /></td>
-						--> 
 						
+						<!--
 						<td colspan="2"><input type="text" class="cuadroTexto" size="40" disabled value="<bean:write scope='session' name='licencia' property='companyName' />" /></td>
-						
+						--> 
 						
 					</tr>
 					<tr>
@@ -171,10 +171,10 @@
 						
 						<!--  
 						<td colspan="2"><input type="text" class="cuadroTexto" size="15" disabled value="0" /></td>
-						-->
 						
+						<!--
 						<td colspan="2"><input type="text" class="cuadroTexto" size="15" disabled value="<bean:write scope='session' name='licencia' property='serial' />" /></td>
-						
+						-->
 						
 					</tr>
 					<logic:notEqual scope="session" name="licencia" property="expiracion" value="">
@@ -186,12 +186,12 @@
 					<tr>
 						<td align="right"><vgcutil:message key="jsp.acerca.licencia.tipo" /></td>
 						
-						<!-- 
+						 
 						<td colspan="2"><input type="text" class="cuadroTexto" size="15" disabled value="Full Licenciamento" /></td>
-					 	-->
 					 	
+					 	<!--
 						<td colspan="2"><input type="text" class="cuadroTexto" size="15" disabled value="<bean:write scope='session' name='licencia' property='tipo' />" /></td>
-						
+						-->
 						
 					</tr>
 				</logic:notEmpty>
