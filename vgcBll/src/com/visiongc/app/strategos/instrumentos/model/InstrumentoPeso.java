@@ -9,11 +9,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 public class InstrumentoPeso implements Serializable {
 	static final long serialVersionUID = 0L;
 	private Long instrumentoId;
-	private Long anio;
+	private String anio;
 	private Double peso;
 	private Instrumentos instrumento;
 
-	public InstrumentoPeso(Long instrumentoId, Long anio, Double peso) {
+	public InstrumentoPeso(Long instrumentoId, String anio, Double peso) {
 		this.setInstrumentoId(instrumentoId);
 		this.setAnio(anio);
 		this.setPeso(peso);
@@ -30,11 +30,11 @@ public class InstrumentoPeso implements Serializable {
 		this.instrumentoId = instrumentoId;
 	}
 
-	public Long getAnio() {
+	public String getAnio() {
 		return anio;
 	}
 
-	public void setAnio(Long anio) {
+	public void setAnio(String anio) {
 		this.anio = anio;
 	}
 

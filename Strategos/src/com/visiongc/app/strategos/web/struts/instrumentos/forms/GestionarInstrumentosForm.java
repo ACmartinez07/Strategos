@@ -38,6 +38,7 @@ public class GestionarInstrumentosForm  extends VisorListaForm
 	private String claseId;
 	private String indicadorId;		
 	private String source;
+	private Double peso;
 	
 	
 	
@@ -233,5 +234,13 @@ public class GestionarInstrumentosForm  extends VisorListaForm
 		filtro.setCondicion(CondicionType.getFiltroCondicionActivo());
 		filtro.setNombre(null);
 		this.setFiltro(filtro);
+	}
+
+	public Double getPeso() {
+		return peso;
+	}
+
+	public void setPeso(Double peso) {
+		this.peso = peso;
 	}
 }

@@ -37,7 +37,9 @@
 		<forward name="reporteInstrumentoEjecucionDetalle" path="/paginas/strategos/instrumentos/resumidaEjecucionDetalle.jsp" />
 		<forward name="reporteProyectosAsociados" path="/paginas/strategos/instrumentos/reporteProyectosAsociados.jsp" />
 		
-		<forward name="asignarPesosInstrumentos" path="/paginas/strategos/instrumentos/asignarPesos.jsp" />
+		<forward name="asignarPesosInstrumentosIniciativas" path="/paginas/strategos/instrumentos/asignarPesos.jsp" />
+		<forward name="asignarPesosInstrumentos" path="/paginas/strategos/instrumentos/asignarPesosInstrumentos.jsp" />
+		
 		<forward name="calcularIndicadores" path="/paginas/strategos/instrumentos/calcularIndicadores.jsp" />
 								
 	</global-forwards>
@@ -179,7 +181,9 @@
 		</action>
 		
 		<!-- Mapeo del Action: Generar Reporte Proyectos Asociados-->
-		<action path="/instrumentos/asignarPesos" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.AsignarPesosIniciativasInstrumentoAction" scope="request" name="editarInstrumentosForm" parameter="asignarPesosInstrumentos"></action>
+		<action path="/instrumentos/asignarPesos" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.AsignarPesosIniciativasInstrumentoAction" scope="request" name="editarInstrumentosForm" parameter="asignarPesosInstrumentosIniciativas"></action>
+		<!-- Mapeo del Action: Generar Reporte Proyectos Asociados-->
+		<action path="/instrumentos/asignarPesosInstrumentos" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.AsignarPesosInstrumentosAction" scope="request" name="editarInstrumentosForm" parameter="asignarPesosInstrumentos"></action>
 		
 		<!-- Mapeo del Action: Calcular indicadores -->
 		<action path="/instrumentos/calcularIndicadores" type="com.visiongc.app.strategos.web.struts.instrumentos.actions.CalcularIndicadoresAction" scope="session" input="calcularIndicadores" parameter="calcularIndicadores" name="editarInstrumentosForm"></action>

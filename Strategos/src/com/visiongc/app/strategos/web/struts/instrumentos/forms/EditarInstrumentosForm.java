@@ -6,7 +6,10 @@ import java.util.List;
 import com.visiongc.app.strategos.iniciativas.model.util.TipoProyecto;
 import com.visiongc.app.strategos.instrumentos.model.Cooperante;
 import com.visiongc.app.strategos.instrumentos.model.TipoConvenio;
+import com.visiongc.commons.util.CondicionType;
 import com.visiongc.framework.web.struts.forms.EditarObjetoForm;
+import com.visiongc.framework.web.struts.forms.FiltroForm;
+import com.visiongc.framework.web.struts.forms.VisorListaForm;
 
 public class EditarInstrumentosForm extends EditarObjetoForm
 {
@@ -390,7 +393,6 @@ public class EditarInstrumentosForm extends EditarObjetoForm
 		this.responsableCgi = null;
 		this.observaciones = null;
 		this.cooperante = null;
-		this.tipoConvenio = null;
-	}
-
+		this.tipoConvenio = null;				
+	}	
 }

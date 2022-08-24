@@ -81,8 +81,7 @@ public class AsignarPesosIniciativasInstrumentoAction extends VgcAction{
 	    	}
 	    		    		    	
 	    	editarInstrumentosForm.setNombreCorto(instrumento.getNombreCorto());
-	    	
-	    	paginaIniciativas = new PaginaLista();
+	    		    	
 	    	paginaIniciativas.setLista(instrumentoIniciativas);
 	    	paginaIniciativas.setTamanoSetPaginas(5);
 	    	
