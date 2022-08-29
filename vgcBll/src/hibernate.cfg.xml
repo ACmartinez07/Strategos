@@ -107,6 +107,7 @@
 		<mapping resource="com/visiongc/app/strategos/instrumentos/model/TipoConvenio.hbm.xml" /> 
 		<mapping resource="com/visiongc/app/strategos/instrumentos/model/InstrumentoIniciativa.hbm.xml" />
 		<mapping resource="com/visiongc/app/strategos/instrumentos/model/IndicadorInstrumento.hbm.xml" />
+		<mapping resource="com/visiongc/app/strategos/instrumentos/model/InstrumentoPeso.hbm.xml" />
 		
 
 		<!-- Plan Cuentas -->

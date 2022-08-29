@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping SYSTEM "../../../../../../hibernate-mapping-3.0.dtd" >
 
+<!-- Descripción: Mapeo de un objeto InstrumentoPeso de la Base de Datos -->
+<!-- Modificado por: Andres Martinez (17/08/2022) -->
+
 <hibernate-mapping>
 
 	<class name="com.visiongc.app.strategos.instrumentos.model.InstrumentoPeso" table="instrumento_peso">
 	
+		<!-- Atributo clave de InstrumentoPeso -->
 		<id name="instrumentoId" type="java.lang.Long" column="instrumento_id">
 			<generator class="assigned"></generator>			
 		</id>
 		
-		<property name="anio" column="ano" type="java.lang.long" />
+		<!-- Atributos del objeto conceptual -->
+		<property name="anio" column="ano" type="java.lang.String" />
 		<property name="peso" column="peso" type="java.lang.Double" />
 	</class>
 

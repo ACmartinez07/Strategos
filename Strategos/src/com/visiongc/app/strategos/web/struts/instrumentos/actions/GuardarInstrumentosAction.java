@@ -80,8 +80,9 @@ public class GuardarInstrumentosAction extends VgcAction {
 		} else {
 			nuevo = true;
 			instrumento = new Instrumentos();
-			instrumento.setInstrumentoId(new Long(0L));
-			//instrumento.setInstrumentoPeso(new InstrumentoPeso());
+			instrumento.setInstrumentoId(new Long(0L));	
+			instrumento.setInstrumentoPeso(new InstrumentoPeso());	
+			
 		}
 
 		instrumento.setAnio(editarInstrumentosForm.getAnio());
@@ -135,11 +136,11 @@ public class GuardarInstrumentosAction extends VgcAction {
 			instrumento.setCooperanteId(null);
 		}
 		
-		/*if((editarInstrumentosForm.getNombreCorto() != null) && (!editarInstrumentosForm.getNombreCorto().equals(""))){
+		if((editarInstrumentosForm.getNombreCorto() != null) && (!editarInstrumentosForm.getNombreCorto().equals(""))){
 			instrumento.getInstrumentoPeso().setAnio(editarInstrumentosForm.getAnio());
 		}else if(instrumento.getInstrumentoPeso() != null){
 			instrumento.getInstrumentoPeso().setAnio(null);
-		}*/
+		}
 
 		instrumento.setInstrumentoMarco(editarInstrumentosForm.getInstrumentoMarco());
 		instrumento.setNombreCorto(editarInstrumentosForm.getNombreCorto());

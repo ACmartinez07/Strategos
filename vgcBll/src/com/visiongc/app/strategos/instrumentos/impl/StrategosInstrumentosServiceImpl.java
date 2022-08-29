@@ -275,7 +275,12 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 
 					resultado = 10003;
 				} else {
-					instrumento.setInstrumentoId(new Long(persistenceSession.getUniqueId()));					
+					instrumento.setInstrumentoId(new Long(persistenceSession.getUniqueId()));
+					System.out.print("\n\n" + instrumento.getInstrumentoPeso()+ "\n\n");
+					if(instrumento.getInstrumentoPeso() != null) {
+						instrumento.getInstrumentoPeso().setInstrumentoId(instrumento.getInstrumentoId());
+					}
+					
 					resultado = saveClaseIndicadores(instrumento, usuario);
 
 					if (resultado == 10000) {

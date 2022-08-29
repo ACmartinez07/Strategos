@@ -315,13 +315,14 @@ public class Instrumentos implements Serializable {
 	public void setTipoMedicion(Byte tipoMedicion) {
 		this.tipoMedicion = tipoMedicion;
 	}
-	
+
 	public InstrumentoPeso getInstrumentoPeso() {
 		return instrumentoPeso;
 	}
-	
+
 	public void setInstrumentoPeso(InstrumentoPeso instrumentoPeso) {
 		this.instrumentoPeso = instrumentoPeso;
 	}
 
+		
 }

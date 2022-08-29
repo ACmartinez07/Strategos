@@ -34,6 +34,9 @@
 		<property name="observaciones" type="java.lang.String" column="observaciones" length="2500"/>
 		<property name="claseId" type="java.lang.Long" column="clase_id" />	
 		
+		<!-- Asociación uno a uno para InstrumentoPeso -->
+		<one-to-one name="instrumentoPeso" class="com.visiongc.app.strategos.instrumentos.model.InstrumentoPeso" cascade="persist, merge, save-update, delete"></one-to-one>		
+		
 		<!-- Asociación uno a uno para Estatus -->
 		<many-to-one name="cooperante" class="com.visiongc.app.strategos.instrumentos.model.Cooperante" lazy="false" fetch="join" column="cooperante_id" unique="true" insert="false" update="false"></many-to-one>
 		
@@ -48,8 +51,7 @@
 			<one-to-many class="com.visiongc.app.strategos.instrumentos.model.IndicadorInstrumento" />
 		</set>
 		
-		<!-- Asociación uno a uno para InstrumentoPeso -->
-		<one-to-one name="instrumentoPeso" class="com.visiongc.app.strategos.instrumentos.model.IntrumentoPeso" cascade="persist, merge, save-update, delete"></one-to-one>
+		
 		
 	</class>
 </hibernate-mapping>
