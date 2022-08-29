@@ -3,6 +3,7 @@ package com.visiongc.app.strategos.instrumentos;
 import com.visiongc.app.strategos.StrategosService;
 import com.visiongc.app.strategos.instrumentos.model.IndicadorInstrumento;
 import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativa;
+import com.visiongc.app.strategos.instrumentos.model.InstrumentoPeso;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.app.strategos.instrumentos.model.util.ConfiguracionInstrumento;
 import com.visiongc.commons.util.PaginaLista;
@@ -24,6 +25,8 @@ public abstract interface StrategosInstrumentosService
   public abstract int desasociarInstrumento(Long paramLong1, Long paramLong2, Usuario paramUsuario);  
   
   public abstract List<InstrumentoIniciativa> getIniciativasInstrumento(Long paramLong);
+  
+  public abstract List<InstrumentoPeso> getInstrumentoPeso(String paramString);
   
   public abstract int saveIniciativaInstrumento(List<InstrumentoIniciativa> paramList, Usuario paramUsuario);
   

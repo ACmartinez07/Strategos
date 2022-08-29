@@ -14,6 +14,7 @@ import com.visiongc.app.strategos.indicadores.model.ClaseIndicadores;
 import com.visiongc.app.strategos.iniciativas.model.Iniciativa;
 import com.visiongc.app.strategos.instrumentos.model.Cooperante;
 import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativa;
+import com.visiongc.app.strategos.instrumentos.model.InstrumentoPeso;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosCooperantesPersistenceSession;
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosInstrumentosPersistenceSession;
@@ -147,6 +148,13 @@ public class StrategosInstrumentosHibernateSession extends StrategosHibernateSes
 	public List<InstrumentoIniciativa> getIniciativasInstrumento(Long instrumentoId) {
 		Query consulta = session.createQuery("select instrumentoIniciativa from InstrumentoIniciativa instrumentoIniciativa where instrumentoIniciativa.pk.instrumentoId = :instrumentoId");
 		consulta.setLong("instrumentoId", instrumentoId.longValue());
+		
+		return consulta.list();
+	}
+	
+	public List<InstrumentoPeso> getInstrumentoPeso(String anio){
+		Query consulta = session.createQuery("select instrumentoPeso from InstrumentoPeso instrumentoPeso where instrumentoPeso.anio = :anio");
+		consulta.setString("anio", anio);
 		
 		return consulta.list();
 	}

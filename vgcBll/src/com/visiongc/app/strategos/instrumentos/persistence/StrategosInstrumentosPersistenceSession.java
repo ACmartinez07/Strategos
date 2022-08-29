@@ -8,6 +8,7 @@ import com.visiongc.commons.util.ListaMap;
 import com.visiongc.commons.util.PaginaLista;
 import com.visiongc.framework.model.Usuario;
 import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativa;
+import com.visiongc.app.strategos.instrumentos.model.InstrumentoPeso;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 
 public abstract interface StrategosInstrumentosPersistenceSession extends StrategosPersistenceSession{
@@ -15,6 +16,8 @@ public abstract interface StrategosInstrumentosPersistenceSession extends Strate
 	  public abstract PaginaLista getInstrumentos(int paramInt1, int paramInt2, String paramString1, String paramString2, boolean paramBoolean, Map paramMap);
 	  
 	  public abstract List<InstrumentoIniciativa> getIniciativasInstrumento(Long paramLong);
+	  
+	  public abstract List<InstrumentoPeso> getInstrumentoPeso(String paramString);
 	  
 	  public abstract int updatePesos(InstrumentoIniciativa paramInstrumentoIniciativa, Usuario paramUsuario);
 	  

@@ -39,6 +39,7 @@ import com.visiongc.app.strategos.instrumentos.StrategosInstrumentosService;
 import com.visiongc.app.strategos.instrumentos.model.IndicadorInstrumento;
 import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativa;
 import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativaPK;
+import com.visiongc.app.strategos.instrumentos.model.InstrumentoPeso;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.app.strategos.instrumentos.model.util.ConfiguracionInstrumento;
 import com.visiongc.app.strategos.instrumentos.persistence.StrategosInstrumentosPersistenceSession;
@@ -71,6 +72,10 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 
 		return this.persistenceSession.getInstrumentos(pagina, tamanoPagina, orden, tipoOrden, getTotal, filtros);
 
+	}
+	
+	public List<InstrumentoPeso> getInstrumentoPeso(String anio){
+		return persistenceSession.getInstrumentoPeso(anio);
 	}
 
 	public int deleteInstrumentos(Instrumentos instrumento, Usuario usuario) {
@@ -461,6 +466,8 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 	public List<InstrumentoIniciativa> getIniciativasInstrumento(Long instrumentoId) {
 		return persistenceSession.getIniciativasInstrumento(instrumentoId);
 	}
+	
+	
 
 	public int saveIniciativaInstrumento(List<InstrumentoIniciativa> instrumentoIniciativas, Usuario usuario) {
 

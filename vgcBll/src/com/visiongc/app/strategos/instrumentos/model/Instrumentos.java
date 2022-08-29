@@ -44,6 +44,7 @@ public class Instrumentos implements Serializable {
 	private Byte tipoMedicion;
 	
 	private InstrumentoPeso instrumentoPeso;
+	private Double peso;
 
 	private Set<IndicadorInstrumento> instrumentoIndicadores;
 
@@ -322,6 +323,14 @@ public class Instrumentos implements Serializable {
 
 	public void setInstrumentoPeso(InstrumentoPeso instrumentoPeso) {
 		this.instrumentoPeso = instrumentoPeso;
+	}
+
+	public Double getPeso() {
+		return peso;
+	}
+
+	public void setPeso(Double peso) {
+		this.peso = peso;
 	}
 
 		

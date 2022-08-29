@@ -21,17 +21,106 @@
 
 		<%-- Funciones JavaScript locales de la página Jsp --%>
 		<script type="text/javascript">
-			
-		console.log()
+		
+			var _setCloseParent = false;
+		
 			function cancelar() {
 				window.close();
 			}
 			
-			function aceptar(){				
+			function onClose()
+			{
+				if (_setCloseParent)
+					cancelar();
+			}
+			
+			function validar() 
+			{
+				if (!actualizarPesoTotal(true)) 
+					return false;	
+				
+				if (document.editarInstrumentosForm.pesoTotal.value != '') 
+				{
+					if (parseInt(document.editarInstrumentosForm.pesoTotal.value) == 100) 
+						return true;
+					else if (parseInt(document.editarInstrumentosForm.pesoTotal.value) >= 100)
+					{
+						alert('<vgcutil:message key="jsp.asignar.pesos.portafolio.mensaje.sumapesocienmayor" />');
+						return false;
+					}
+					else
+					{
+						alert('<vgcutil:message key="jsp.asignar.pesos.portafolio.mensaje.sumapesocienmenor" />');
+						return false;
+					}					
+				} 
+				else 
+					return true;
+			}
+			
+			function guardar(){	
+				if (validar()) 
+				{
+					window.document.editarInstrumentosForm.action='<html:rewrite action="/instrumentos/asignarPesosInstrumentos" />?anio=2022' + '&funcion=guardar';
+					window.document.editarInstrumentosForm.submit();
+				}
 			}
 			
 			function actualizar() 
-			{								
+			{		
+				window.document.editarInstrumentosForm.action='<html:rewrite action="/instrumentos/asignarPesosInstrumentos" />?anio=2022';
+				window.document.editarInstrumentosForm.submit();
+			}
+			
+			function actualizarPesoTotal(validar) 
+			{
+				var total = 0;
+				var hayPesos = false;
+				var totalIniciativas = 0;
+				var totalConPeso = 0;
+				for (var index = 0; index < window.document.editarInstrumentosForm.elements.length; index++) 
+				{
+					if (window.document.editarInstrumentosForm.elements[index].name.indexOf('pesoInstrumento') > -1) 
+					{
+						totalIniciativas++;
+						if ((window.document.editarInstrumentosForm.elements[index].value != null) && (window.document.editarInstrumentosForm.elements[index].value != '')) 
+						{
+							hayPesos = true;
+							total = total + convertirNumeroFormateadoToNumero(window.document.editarInstrumentosForm.elements[index].value, false);
+							totalConPeso++;
+						}
+					}
+				}
+	
+				if (hayPesos) 
+					window.document.editarInstrumentosForm.pesoTotal.value = formatearNumero(total, false, 2);
+				else 
+					window.document.editarInstrumentosForm.pesoTotal.value = '';
+				
+				if ((validar != null) && (validar == true)) 
+				{
+					if ((totalConPeso > 0) && (totalConPeso != totalIniciativas)) 
+					{
+						alert('<vgcutil:message key="jsp.asignar.pesos.portafolio.mensaje.sinpeso" />');
+						return false;
+					} 
+					else 
+						return true;
+				}
+				
+				function limpiarPesos() 
+				{
+					if (!confirm('<vgcutil:message key="jsp.asignar.pesos.portafolio.mensaje.confirmarlimpiarpesos" />')) 
+						return;
+					
+					for (var index = 0; index < window.document.editarInstrumentosForm.elements.length; index++) 
+					{
+						if (window.document.editarInstrumentosForm.elements[index].name.indexOf('pesoInstrumento') > -1) 
+							window.document.editarInstrumentosForm.elements[index].value = '';
+					}
+					
+					actualizarPesoTotal(false);
+				}
 			}
 		</script>
 
@@ -84,6 +173,9 @@
 							<vgcutil:message key="jsp.pagina.instrumentos.nombre" />
 						</vgcinterfaz:columnaVisorLista>
 									
+						<vgcinterfaz:columnaVisorLista nombre="peso" width="100px">
+							<vgcutil:message key="jsp.asignar.pesos.portafolio.columna.peso" />	
+						</vgcinterfaz:columnaVisorLista>
 					
 					
 					<vgcinterfaz:filasVisorLista nombreObjeto="instrumentos">
@@ -95,6 +187,19 @@
 							<bean:write name="instrumentos" property="nombreCorto" />
 						</vgcinterfaz:valorFilaColumnaVisorLista>
 											
+						<vgcinterfaz:valorFilaColumnaVisorLista nombre="peso" align="center">
+							<input
+								style="text-align: right" 
+								onkeypress="validarEntradaNumeroEventoOnKeyPress(this, event, 3, false);" 
+								onkeyup="validarEntradaNumeroEventoOnKeyUp(this, event, 3, false); actualizarPesoTotal();" 
+								onblur="validarEntradaNumeroEventoOnBlur(this, event, 3, false)" 
+								type="text" 
+								name="pesoInstrumento<bean:write name="instrumentos" property="instrumentoId" />"
+								value="<bean:write name="instrumentos" property="peso" />" 
+								class="cuadroTexto" 
+								size="10" 
+								maxlength="10" />
+						</vgcinterfaz:valorFilaColumnaVisorLista>
 						
 					</vgcinterfaz:filasVisorLista>					
 					</vgcinterfaz:visorLista>

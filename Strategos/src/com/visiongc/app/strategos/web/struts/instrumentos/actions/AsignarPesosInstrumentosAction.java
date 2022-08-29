@@ -19,7 +19,7 @@ import org.apache.struts.action.ActionMessages;
 import com.visiongc.app.strategos.impl.StrategosServiceFactory;
 import com.visiongc.app.strategos.instrumentos.StrategosInstrumentosService;
 import com.visiongc.app.strategos.instrumentos.model.InstrumentoIniciativa;
-//import com.visiongc.app.strategos.instrumentos.model.InstrumentoPeso;
+import com.visiongc.app.strategos.instrumentos.model.InstrumentoPeso;
 import com.visiongc.app.strategos.instrumentos.model.Instrumentos;
 import com.visiongc.app.strategos.util.StatusUtil;
 import com.visiongc.app.strategos.web.struts.iniciativas.forms.GestionarIniciativasForm;
@@ -89,6 +89,8 @@ public class AsignarPesosInstrumentosAction extends VgcAction {
 	    }
 	    
 	    PaginaLista paginaInstrumentos = strategosInstrumentosService.getInstrumentos(pagina, 30, atributoOrden, tipoOrden, true, filtros);
+	    	    
+	    List<InstrumentoPeso> instrumentoPeso = strategosInstrumentosService.getInstrumentoPeso(anio);	    
 	    
 	    if (paginaInstrumentos.getLista().size() > 0) 
 		{
@@ -97,7 +99,7 @@ public class AsignarPesosInstrumentosAction extends VgcAction {
 	    		String funcion = request.getParameter("funcion");
 	    		if (funcion.equals("guardar")) {	    			
 	    			int respuesta = VgcReturnCode.DB_OK;
-	    			//respuesta = guardarPesos(strategosInstrumentosService, editarInstrumentosForm, request);	
+	    			respuesta = guardarPesos(strategosInstrumentosService, editarInstrumentosForm, request);	
 	    			if (respuesta == VgcReturnCode.DB_OK)
 	    				editarInstrumentosForm.setStatus(StatusUtil.getStatusSuccess());
 		    	    else
@@ -124,23 +126,22 @@ public class AsignarPesosInstrumentosAction extends VgcAction {
 	}
 
 
-	/*private int guardarPesos(StrategosInstrumentosService strategosInstrumentosService, EditarInstrumentosForm editarInstrumentosForm, HttpServletRequest request ) throws Exception {
-		List<InstrumentoPeso> instrumentoPeso = new ArrayList<InstrumentoPeso>();
-		
-		
+	private int guardarPesos(StrategosInstrumentosService strategosInstrumentosService, EditarInstrumentosForm editarInstrumentosForm, HttpServletRequest request ) throws Exception {
+		List<InstrumentoPeso> instrumentoPesos = new ArrayList<InstrumentoPeso>();
 		Map<?, ?> nombresParametros = request.getParameterMap();
+		
 		for (Iterator<?> iter = nombresParametros.keySet().iterator(); iter.hasNext();) {
 			
 			String nombre = (String)iter.next();
 			int index = nombre.indexOf("pesoIniciativa");
 			
 			if(index > -1) {
-				InstrumentoPeso instrumentoPeso1 = new InstrumentoPeso();				
+				InstrumentoPeso instrumentoPeso = new InstrumentoPeso();				
 				if ((request.getParameter(nombre) != null) && (!request.getParameter(nombre).equals("")))
-					instrumentoPeso1.setPeso(new Double(VgcFormatter.parsearNumeroFormateado(request.getParameter(nombre))));				
-				instrumentoPeso.add(instrumentoPeso1);
+					instrumentoPeso.setPeso(new Double(VgcFormatter.parsearNumeroFormateado(request.getParameter(nombre))));				
+				instrumentoPesos.add(instrumentoPeso);
 			}
 		}
 		return 0;
-	}*/
+	}
 }
