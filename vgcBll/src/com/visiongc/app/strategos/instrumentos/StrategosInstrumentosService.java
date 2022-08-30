@@ -30,7 +30,11 @@ public abstract interface StrategosInstrumentosService
   
   public abstract int saveIniciativaInstrumento(List<InstrumentoIniciativa> paramList, Usuario paramUsuario);
   
+  public abstract int saveInstrumentoPeso(List<InstrumentoPeso> paramList, Usuario paramUsuario);
+  
   public abstract int updatePesos(InstrumentoIniciativa paramInstrumento, Usuario paramUsuario);
+  
+  public abstract int updatePesosInstrumentos(InstrumentoPeso paramInstrumentoPeso, Usuario paramUsuario);
      
   public abstract ConfiguracionInstrumento getConfiguracionInstrumento();
   

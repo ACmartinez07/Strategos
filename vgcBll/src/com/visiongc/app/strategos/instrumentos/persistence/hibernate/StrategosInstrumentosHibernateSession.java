@@ -185,6 +185,29 @@ public class StrategosInstrumentosHibernateSession extends StrategosHibernateSes
 		
 		return actualizados != 0 ? 10000 : 10001;
 	}
+	
+	public int updatePesosInstrumentos(InstrumentoPeso instrumentoPeso, Usuario ususario) {
+		String sql = "update InstrumentoPeso instrumentoPeso set instrumentoPeso.peso = :peso ";
+		String sqlNulo = "update InstrumentoPeso instrumentoPeso set instrumentoPeso.peso = null ";
+		
+		String sqlWhere = "where instrumentoPeso.instrumentoId = :instrumentoId";
+		
+		Query update = null;
+		if(instrumentoPeso.getPeso() != null) {			
+			update = session.createQuery(sql +sqlWhere);			
+		}else {
+			update = session.createQuery(sqlNulo + sqlWhere);
+		}
+		update.setLong("instrumentoId", instrumentoPeso.getInstrumentoId().longValue());
+		
+		if(instrumentoPeso.getPeso() != null) { 			
+			update.setDouble("peso", instrumentoPeso.getPeso().doubleValue());
+		}
+		
+		int actualizados = update.executeUpdate();
+		
+		return actualizados != 0 ? 10000 : 10001;
+	}
 
 	
 	public Instrumentos getValoresOriginales(Long instrumentoId) {

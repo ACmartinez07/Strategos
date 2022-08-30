@@ -109,6 +109,8 @@ public class AsignarPesosIniciativasInstrumentoAction extends VgcAction{
 		List<InstrumentoIniciativa> instrumentoIniciativas = new ArrayList<InstrumentoIniciativa>();
 		Map<?, ?> nombresParametros = request.getParameterMap();
 		
+		System.out.print("\n\n"+ nombresParametros + " \n\n");
+		
 		for (Iterator<?> iter = nombresParametros.keySet().iterator(); iter.hasNext();) {
 			
 			String nombre = (String)iter.next();

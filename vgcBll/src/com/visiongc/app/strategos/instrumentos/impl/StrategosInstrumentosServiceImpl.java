@@ -189,8 +189,6 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 		return resultado;
 	}
 	
-	
-	
 	private int deleteDependenciasCiclicasInstrumento(Instrumentos instrumento, Usuario usuario) {
 		boolean transActiva = false;
 		int resultado = 10000;
@@ -280,8 +278,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 
 					resultado = 10003;
 				} else {
-					instrumento.setInstrumentoId(new Long(persistenceSession.getUniqueId()));
-					System.out.print("\n\n" + instrumento.getInstrumentoPeso()+ "\n\n");
+					instrumento.setInstrumentoId(new Long(persistenceSession.getUniqueId()));					
 					if(instrumento.getInstrumentoPeso() != null) {
 						instrumento.getInstrumentoPeso().setInstrumentoId(instrumento.getInstrumentoId());
 					}
@@ -466,17 +463,65 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 	public List<InstrumentoIniciativa> getIniciativasInstrumento(Long instrumentoId) {
 		return persistenceSession.getIniciativasInstrumento(instrumentoId);
 	}
-	
-	
 
+	public int saveInstrumentoPeso(List<InstrumentoPeso> instrumentoPesos, Usuario usuario) {
+				
+		boolean transActiva = false;
+		int resultado = 10000;
+		String[] fieldNames = new String[1];
+		Object[] fieldValues = new Object[1];
+		try {			
+			if (!persistenceSession.isTransactionActive()) {
+				persistenceSession.beginTransaction();
+				transActiva = true;
+			}
+			
+			for (Iterator<InstrumentoPeso> iter = instrumentoPesos.iterator(); iter.hasNext();) {
+				InstrumentoPeso instrumentoPeso = (InstrumentoPeso) iter.next();				
+				fieldNames[0] = "instrumentoId";
+				fieldValues[0] = instrumentoPeso.getInstrumentoId();
+								
+				if(persistenceSession.existsObject(instrumentoPeso, fieldNames, fieldValues)) {					
+					resultado = persistenceSession.updatePesosInstrumentos(instrumentoPeso, usuario);
+					
+				}
+				if(resultado != 10000) {
+					break;
+				}
+				
+			}			
+			if(transActiva) {
+				if(resultado == 10000) {
+					persistenceSession.commitTransaction();
+				}else {
+					persistenceSession.rollbackTransaction();
+					transActiva = false;
+				}
+			}
+			
+		}catch (Throwable t) {
+			if (transActiva)
+				persistenceSession.rollbackTransaction();
+			throw new ChainedRuntimeException(t.getMessage(), t);
+		}
+
+		return resultado;
+	}
+	
+	public int updatePesosInstrumentos(InstrumentoPeso instrumentoPeso, Usuario usuario) {
+		return persistenceSession.updatePesosInstrumentos(instrumentoPeso, usuario);
+	}	
+	
 	public int saveIniciativaInstrumento(List<InstrumentoIniciativa> instrumentoIniciativas, Usuario usuario) {
 
+		
 		boolean transActiva = false;
 		int resultado = 10000;
 		String[] fieldNames = new String[2];
 		Object[] fieldValues = new Object[2];
 
 		try {
+			System.out.print("\n\n"+ instrumentoIniciativas + " \n\n");
 			if (!persistenceSession.isTransactionActive()) {
 				persistenceSession.beginTransaction();
 				transActiva = true;
@@ -815,4 +860,5 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 	public Instrumentos getValoresOriginales(Long instrumentoId) {
 		return persistenceSession.getValoresOriginales(instrumentoId);
 	}
+	
 }

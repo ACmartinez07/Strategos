@@ -95,7 +95,7 @@ public class AsignarPesosInstrumentosAction extends VgcAction {
 	    if (paginaInstrumentos.getLista().size() > 0) 
 		{
 	    	if (request.getParameter("funcion") != null) 
-		    {	    		
+		    {	    			    		
 	    		String funcion = request.getParameter("funcion");
 	    		if (funcion.equals("guardar")) {	    			
 	    			int respuesta = VgcReturnCode.DB_OK;
@@ -109,8 +109,7 @@ public class AsignarPesosInstrumentosAction extends VgcAction {
 						
 	    	for (Iterator<Instrumentos> iter = paginaInstrumentos.getLista().iterator(); iter.hasNext(); ) 
 			{
-	    		Instrumentos instrumento = (Instrumentos)iter.next();
-	    		System.out.print(instrumento.getNombreCorto());
+	    		Instrumentos instrumento = (Instrumentos)iter.next();	    		
 	    		editarInstrumentosForm.setNombreCorto(instrumento.getNombreCorto());
 			}		    	
 		}
@@ -128,20 +127,20 @@ public class AsignarPesosInstrumentosAction extends VgcAction {
 
 	private int guardarPesos(StrategosInstrumentosService strategosInstrumentosService, EditarInstrumentosForm editarInstrumentosForm, HttpServletRequest request ) throws Exception {
 		List<InstrumentoPeso> instrumentoPesos = new ArrayList<InstrumentoPeso>();
-		Map<?, ?> nombresParametros = request.getParameterMap();
-		
+		Map<?, ?> nombresParametros = request.getParameterMap();		
 		for (Iterator<?> iter = nombresParametros.keySet().iterator(); iter.hasNext();) {
 			
 			String nombre = (String)iter.next();
-			int index = nombre.indexOf("pesoIniciativa");
+			int index = nombre.indexOf("pesoInstrumento");
 			
 			if(index > -1) {
-				InstrumentoPeso instrumentoPeso = new InstrumentoPeso();				
+				InstrumentoPeso instrumentoPeso = new InstrumentoPeso();
+				instrumentoPeso.setInstrumentoId(new Long(nombre.substring("pesoInstrumento".length())));
 				if ((request.getParameter(nombre) != null) && (!request.getParameter(nombre).equals("")))
 					instrumentoPeso.setPeso(new Double(VgcFormatter.parsearNumeroFormateado(request.getParameter(nombre))));				
 				instrumentoPesos.add(instrumentoPeso);
 			}
 		}
-		return 0;
+		return strategosInstrumentosService.saveInstrumentoPeso(instrumentoPesos, getUsuarioConectado(request));
 	}
 }

@@ -28,4 +28,6 @@ public abstract interface StrategosInstrumentosPersistenceSession extends Strate
 	  public abstract ListaMap getDependenciasCiclicasInstrumento(Instrumentos paramInstrumento);
 	  
 	  public abstract ListaMap getDependenciasInstrumento(Instrumentos paramInstrumento);
+	  
+	  public abstract int updatePesosInstrumentos(InstrumentoPeso paramInstrumentoPeso, Usuario paramUsusario);
 }

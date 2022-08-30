@@ -61,7 +61,7 @@
 			function guardar(){	
 				if (validar()) 
 				{
-					window.document.editarInstrumentosForm.action='<html:rewrite action="/instrumentos/asignarPesosInstrumentos" />?anio=2022' + '&funcion=guardar';
+					window.document.editarInstrumentosForm.action='<html:rewrite action="/instrumentos/asignarPesosInstrumentos" />?anio=2022&funcion=guardar';
 					window.document.editarInstrumentosForm.submit();
 				}
 			}
