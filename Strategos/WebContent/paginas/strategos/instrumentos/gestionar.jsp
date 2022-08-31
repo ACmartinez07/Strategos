@@ -250,7 +250,7 @@
 	}
 	
 	function asignarPesosInstrumentos(){						
-		abrirVentanaModal('<html:rewrite action="/instrumentos/asignarPesosInstrumentos"/>?anio=2022', "instrumento", 710, 550);
+		abrirVentanaModal('<html:rewrite action="/instrumentos/asignarPesosInstrumentosParametros"/>', "instrumento", 710, 550);
 	}
 	
 </script>

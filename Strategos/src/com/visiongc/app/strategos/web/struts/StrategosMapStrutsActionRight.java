@@ -417,6 +417,8 @@ public class StrategosMapStrutsActionRight implements MapStrutsActionRight
 	    this.mapa.put(actionRight.getActionName(), actionRight);
 	    actionRight = new StrutsActionRight("instrumentos.asignarpesosinstrumentos", false, false, "INSTRUMENTOS_ASIGNARPESOS");
 	    this.mapa.put("instrumentos.asignarpesosinstrumentos", actionRight);
+	    actionRight = new StrutsActionRight("instrumentos.asignarpesosinstrumentosparametros", false, false, "INSTRUMENTOS_ASIGNARPESOS");
+	    this.mapa.put("instrumentos.asignarpesosinstrumentosparametros", actionRight);
 	   	    
 	    // mediciones
 	    actionRight = new StrutsActionRight("mediciones.configuraredicionmediciones", false, true, "INDICADOR_MEDICION");

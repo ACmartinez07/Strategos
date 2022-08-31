@@ -156,7 +156,7 @@
 							</td>
 							<td align="left"><vgcutil:message key="jsp.pagina.instrumentos.anio" /></td>
 							<td colspan="3" >
-								<html:text property="anio" size="5" maxlength="4" styleClass="cuadroTexto"/>
+								<html:text property="anio" size="5" maxlength="4" styleClass="cuadroTexto" disabled="true"/>
 							</td>						
 						</tr>
 					</table>
