@@ -27,8 +27,12 @@
 				window.close();
 			}
 														
-			function aceptar(){								
-				abrirVentanaModal('<html:rewrite action="/instrumentos/asignarPesosInstrumentos"/>?anio=' + document.editarInstrumentosForm.anio.value, "instrumento", 710, 550);				
+			function aceptar(){			
+				
+				var url = '?anio=' + document.editarInstrumentosForm.anio.value;
+				url = url + '&estatus=' +document.editarInstrumentosForm.estatus.value
+				
+				abrirVentanaModal('<html:rewrite action="/instrumentos/asignarPesosInstrumentos"/>' + url , "instrumento", 710, 550);				
 			}									
 		</script>
 
@@ -65,7 +69,7 @@
 								<td align="left"><vgcutil:message key="jsp.pagina.instrumentos.estatus" /></td>
 								<td>
 									<html:select property="estatus" styleClass="cuadroTexto" size="1" disabled="true">																								
-										<html:option value="1">
+										<html:option value="2">
 											<vgcutil:message key="jsp.pagina.instrumentos.estatus.ejecucion" />
 										</html:option>																							
 									</html:select>

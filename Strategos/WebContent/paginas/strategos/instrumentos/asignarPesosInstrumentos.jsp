@@ -61,14 +61,19 @@
 			function guardar(){	
 				if (validar()) 
 				{
-					window.document.editarInstrumentosForm.action='<html:rewrite action="/instrumentos/asignarPesosInstrumentos" />?anio=2022&funcion=guardar';
-					window.document.editarInstrumentosForm.submit();
-				}
+					var url = '?anio=' + document.editarInstrumentosForm.anio.value;
+					url = url + '&estatus=' +document.editarInstrumentosForm.estatus.value
+					url = url + '&funcion=guardar'
+					window.document.editarInstrumentosForm.action='<html:rewrite action="/instrumentos/asignarPesosInstrumentos" />' + url;
+					window.document.editarInstrumentosForm.submit();						
+				}				
 			}
 			
 			function actualizar() 
-			{		
-				window.document.editarInstrumentosForm.action='<html:rewrite action="/instrumentos/asignarPesosInstrumentos" />?anio=2022';
+			{
+				var url = '?anio=' + document.editarInstrumentosForm.anio.value;
+				url = url + '&estatus=' +document.editarInstrumentosForm.estatus.value
+				window.document.editarInstrumentosForm.action='<html:rewrite action="/instrumentos/asignarPesosInstrumentos" />' + url;
 				window.document.editarInstrumentosForm.submit();
 			}
 			
@@ -106,21 +111,21 @@
 					} 
 					else 
 						return true;
+				}								
+			}
+			
+			function limpiarPesos() 
+			{
+				if (!confirm('<vgcutil:message key="jsp.asignar.pesos.portafolio.mensaje.confirmarlimpiarpesos" />')) 
+					return;
+				
+				for (var index = 0; index < window.document.editarInstrumentosForm.elements.length; index++) 
+				{
+					if (window.document.editarInstrumentosForm.elements[index].name.indexOf('pesoInstrumento') > -1) 
+						window.document.editarInstrumentosForm.elements[index].value = '';
 				}
 				
-				function limpiarPesos() 
-				{
-					if (!confirm('<vgcutil:message key="jsp.asignar.pesos.portafolio.mensaje.confirmarlimpiarpesos" />')) 
-						return;
-					
-					for (var index = 0; index < window.document.editarInstrumentosForm.elements.length; index++) 
-					{
-						if (window.document.editarInstrumentosForm.elements[index].name.indexOf('pesoInstrumento') > -1) 
-							window.document.editarInstrumentosForm.elements[index].value = '';
-					}
-					
-					actualizarPesoTotal(false);
-				}
+				actualizarPesoTotal(false);
 			}
 		</script>
 
@@ -149,7 +154,7 @@
 							<td align="left"><vgcutil:message key="jsp.pagina.instrumentos.estatus" /></td>
 							<td>
 								<html:select property="estatus" styleClass="cuadroTexto" size="1" disabled="true">																								
-									<html:option value="1">
+									<html:option value="2">
 										<vgcutil:message key="jsp.pagina.instrumentos.estatus.ejecucion" />
 									</html:option>																							
 								</html:select>
@@ -178,13 +183,13 @@
 						</vgcinterfaz:columnaVisorLista>
 					
 					
-					<vgcinterfaz:filasVisorLista nombreObjeto="instrumentos">
+					<vgcinterfaz:filasVisorLista nombreObjeto="instrumentoPeso">
 		
 						<vgcinterfaz:visorListaFilaId>
-							<bean:write name="instrumentos" property="instrumentoId" />
+							<bean:write name="instrumentoPeso" property="instrumentoId" />
 						</vgcinterfaz:visorListaFilaId>																										
 						<vgcinterfaz:valorFilaColumnaVisorLista nombre="nombre">
-							<bean:write name="instrumentos" property="nombreCorto" />
+							<bean:write name="instrumentoPeso" property="instrumento.nombreInstrumento" />
 						</vgcinterfaz:valorFilaColumnaVisorLista>
 											
 						<vgcinterfaz:valorFilaColumnaVisorLista nombre="peso" align="center">
@@ -194,8 +199,8 @@
 								onkeyup="validarEntradaNumeroEventoOnKeyUp(this, event, 3, false); actualizarPesoTotal();" 
 								onblur="validarEntradaNumeroEventoOnBlur(this, event, 3, false)" 
 								type="text" 
-								name="pesoInstrumento<bean:write name="instrumentos" property="instrumentoId" />"
-								value="<bean:write name="instrumentos" property="peso" />" 
+								name="pesoInstrumento<bean:write name="instrumentoPeso" property="instrumentoId" />"
+								value="<bean:write name="instrumentoPeso" property="peso" />" 
 								class="cuadroTexto" 
 								size="10" 
 								maxlength="10" />

@@ -64,8 +64,9 @@ public class AsignarPesosIniciativasInstrumentoAction extends VgcAction{
 	    		String funcion = request.getParameter("funcion");
 	    		if (funcion.equals("guardar")) {	    			
 	    			int respuesta = VgcReturnCode.DB_OK;
-	    			respuesta = guardarPesos(strategosInstrumentosService, editarInstrumentosForm, request);	
-	    			if (respuesta == VgcReturnCode.DB_OK)
+	    			respuesta = guardarPesos(strategosInstrumentosService, editarInstrumentosForm, request);
+	    			
+	    			if (respuesta == VgcReturnCode.DB_OK)	    				
 	    				editarInstrumentosForm.setStatus(StatusUtil.getStatusSuccess());
 		    	    else
 		    	    	editarInstrumentosForm.setStatus(StatusUtil.getStatusInvalido());
@@ -107,9 +108,7 @@ public class AsignarPesosIniciativasInstrumentoAction extends VgcAction{
 	
 	private int guardarPesos(StrategosInstrumentosService strategosInstrumentosService, EditarInstrumentosForm editarInstrumentosForm, HttpServletRequest request ) throws Exception {			
 		List<InstrumentoIniciativa> instrumentoIniciativas = new ArrayList<InstrumentoIniciativa>();
-		Map<?, ?> nombresParametros = request.getParameterMap();
-		
-		System.out.print("\n\n"+ nombresParametros + " \n\n");
+		Map<?, ?> nombresParametros = request.getParameterMap();			
 		
 		for (Iterator<?> iter = nombresParametros.keySet().iterator(); iter.hasNext();) {
 			

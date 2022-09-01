@@ -52,67 +52,64 @@ public class AsignarPesosInstrumentosAction extends VgcAction {
 		String forward = mapping.getParameter();
 		
 		EditarInstrumentosForm editarInstrumentosForm = (EditarInstrumentosForm)form;
-		FiltroForm filtro = new FiltroForm();
+		StrategosInstrumentosService strategosInstrumentosService = StrategosServiceFactory.getInstance().openStrategosInstrumentosService();		
 		
 		String anio = request.getParameter("anio") != null ? request.getParameter("anio") : "";
 		String estatusSt = request.getParameter("estatus") != null ? request.getParameter("estatus") : "";
-		String nombreCorto = request.getParameter("nombreCorto") != null ? request.getParameter("nombreCorto") : "";
+		PaginaLista paginaInstrumentos  = new PaginaLista();
+		
 		Byte estatus = 0;
 		
 		if(estatusSt != null && estatusSt != "") {
 			estatus = Byte.valueOf(estatusSt);
+		}					
+		
+		List<InstrumentoPeso> instrumentoPesos = strategosInstrumentosService.getInstrumentoPeso(anio);
+		List<InstrumentoPeso> instrumentos = new ArrayList<InstrumentoPeso>();
+		
+		for(Iterator<InstrumentoPeso> iter = instrumentoPesos.iterator(); iter.hasNext();) {
+			InstrumentoPeso instrumentoPeso = (InstrumentoPeso)iter.next();						
+			Instrumentos instrumento = (Instrumentos) strategosInstrumentosService.load(Instrumentos.class, instrumentoPeso.getInstrumentoId());			
+			if(instrumento.getEstatus().byteValue() == estatus.byteValue()) {				
+				instrumentos.add(instrumentoPeso);
+			}						
 		}
-			
-		//editarInstrumentosForm.setFiltro(filtro);
-		editarInstrumentosForm.setNombreCorto(nombreCorto);	
-		editarInstrumentosForm.setAnio(anio);
 		
-		StrategosInstrumentosService strategosInstrumentosService = StrategosServiceFactory.getInstance().openStrategosInstrumentosService();
-		
-		Map<String, String> filtros = new HashMap<String, String>();
-	    int pagina = 0;
-	    String atributoOrden = null;
-	    String tipoOrden = null;
-
-	    if (atributoOrden == null) 
-	    	atributoOrden = "nombreCorto";
-	    if (tipoOrden == null) 
-	    	tipoOrden = "ASC";
-	    if (pagina < 1) 
-	    	pagina = 1;
-	    
-	    if ((editarInstrumentosForm.getNombreCorto() != null) && editarInstrumentosForm.getNombreCorto() != "") {
-	        filtros.put("nombreCorto", editarInstrumentosForm.getNombreCorto());
-	    }
-	    if ((editarInstrumentosForm.getAnio() != null) && editarInstrumentosForm.getAnio() != "") {
-	        filtros.put("anio", editarInstrumentosForm.getAnio());
-	    }
-	    
-	    PaginaLista paginaInstrumentos = strategosInstrumentosService.getInstrumentos(pagina, 30, atributoOrden, tipoOrden, true, filtros);
-	    	    
-	    List<InstrumentoPeso> instrumentoPeso = strategosInstrumentosService.getInstrumentoPeso(anio);	    
-	    
-	    if (paginaInstrumentos.getLista().size() > 0) 
+	    if (instrumentos.size() > 0) 
 		{
+	    	
 	    	if (request.getParameter("funcion") != null) 
 		    {	    			    		
 	    		String funcion = request.getParameter("funcion");
 	    		if (funcion.equals("guardar")) {	    			
 	    			int respuesta = VgcReturnCode.DB_OK;
-	    			respuesta = guardarPesos(strategosInstrumentosService, editarInstrumentosForm, request);	
+	    			respuesta = guardarPesos(strategosInstrumentosService, editarInstrumentosForm, request);
+	    			
 	    			if (respuesta == VgcReturnCode.DB_OK)
 	    				editarInstrumentosForm.setStatus(StatusUtil.getStatusSuccess());
 		    	    else
 		    	    	editarInstrumentosForm.setStatus(StatusUtil.getStatusInvalido());
 	    		}
-		    }
-						
-	    	for (Iterator<Instrumentos> iter = paginaInstrumentos.getLista().iterator(); iter.hasNext(); ) 
-			{
-	    		Instrumentos instrumento = (Instrumentos)iter.next();	    		
-	    		editarInstrumentosForm.setNombreCorto(instrumento.getNombreCorto());
-			}		    	
+		    }			
+	    	
+	    	editarInstrumentosForm.setAnio(anio);
+			editarInstrumentosForm.setEstatus(estatus);
+			
+		    paginaInstrumentos.setLista(instrumentos);
+		    paginaInstrumentos.setTamanoPagina(5);
 		}
+	    else {
+	    	if(editarInstrumentosForm != null) {
+	    		editarInstrumentosForm.clear();	   	
+	    		editarInstrumentosForm.setStatus(StatusUtil.getStatusInvalido());
+	    	}
+	    	ActionMessages messages = getMessages(request);
+	    	messages.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage("action.calcularregistro.noencontrado"));
+	    	saveMessages(request, messages);
+	    	
+	    	paginaInstrumentos.setLista(new ArrayList<InstrumentoPeso>());
+	    	paginaInstrumentos.setTamanoSetPaginas(5);
+	    }
 	    	    
 	    
 	    paginaInstrumentos.setTamanoSetPaginas(5);

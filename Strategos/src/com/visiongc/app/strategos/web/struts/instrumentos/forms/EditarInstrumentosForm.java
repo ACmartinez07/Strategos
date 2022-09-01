@@ -57,7 +57,6 @@ public class EditarInstrumentosForm extends EditarObjetoForm
 	private Long iniciativaId;
 	private String altoForma;
 
-	
 	public Byte getAlcance() {
 		return alcance;
 	}
@@ -394,5 +393,7 @@ public class EditarInstrumentosForm extends EditarObjetoForm
 		this.observaciones = null;
 		this.cooperante = null;
 		this.tipoConvenio = null;				
-	}	
+	}
+
+	
 }
