@@ -520,8 +520,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 		String[] fieldNames = new String[2];
 		Object[] fieldValues = new Object[2];
 
-		try {
-			System.out.print("\n\n"+ instrumentoIniciativas + " \n\n");
+		try {			
 			if (!persistenceSession.isTransactionActive()) {
 				persistenceSession.beginTransaction();
 				transActiva = true;

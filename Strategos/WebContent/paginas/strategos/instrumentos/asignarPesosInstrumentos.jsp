@@ -13,7 +13,7 @@
 
 	<%-- Titulo --%>
 	<tiles:put name="title" type="String">..:: <vgcutil:message
-			key="jsp.asignar.pesos.portafolio.titulo" />
+			key="jsp.asignar.pesos.instrumento.titulo" />
 	</tiles:put>
 
 	<%-- Cuerpo --%>
@@ -131,15 +131,19 @@
 
 		<%-- Funciones JavaScript externas de la página Jsp --%>
 		<jsp:include flush="true" page="/componentes/ajax/ajaxJs.jsp"></jsp:include>
+				
 
 		<%-- Representación de la Forma --%>
 		<html:form action="/instrumentos/asignarPesosInstrumentos" styleClass="formaHtml">
-					
+			
+			<html:hidden property="anio" />
+			<html:hidden property="estatus" />
+								
 			<vgcinterfaz:contenedorForma>
 
 				<%-- Título --%>
 				<vgcinterfaz:contenedorFormaTitulo>..:: <vgcutil:message
-						key="jsp.asignar.pesos.portafolio.titulo" />
+						key="jsp.asignar.pesos.instrumento.titulo" />
 				</vgcinterfaz:contenedorFormaTitulo>
 				
 				<%-- Botón Actualizar --%>
@@ -186,10 +190,10 @@
 					<vgcinterfaz:filasVisorLista nombreObjeto="instrumentoPeso">
 		
 						<vgcinterfaz:visorListaFilaId>
-							<bean:write name="instrumentoPeso" property="instrumentoId" />
+							<bean:write name="instrumentoPeso" property="instrumento.instrumentoId" />
 						</vgcinterfaz:visorListaFilaId>																										
 						<vgcinterfaz:valorFilaColumnaVisorLista nombre="nombre">
-							<bean:write name="instrumentoPeso" property="instrumento.nombreInstrumento" />
+							<bean:write name="instrumentoPeso" property="instrumento.nombreCorto" />
 						</vgcinterfaz:valorFilaColumnaVisorLista>
 											
 						<vgcinterfaz:valorFilaColumnaVisorLista nombre="peso" align="center">

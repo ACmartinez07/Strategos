@@ -13,7 +13,7 @@
 
 	<%-- Titulo --%>
 	<tiles:put name="title" type="String">..:: <vgcutil:message
-			key="jsp.asignar.pesos.portafolio.titulo" />
+			key="jsp.asignar.pesos.instrumento.titulo" />
 	</tiles:put>
 
 	<%-- Cuerpo --%>
@@ -39,7 +39,7 @@
 		<%-- Funciones JavaScript externas de la página Jsp --%>		
 
 		<%-- Representación de la Forma --%>
-		<html:form action="/instrumentos/asignarPesosInstrumentosParametros" styleClass="formaHtml">
+		<html:form action="/instrumentos/asignarPesosInstrumentosParametros" >
 					
 			<vgcinterfaz:contenedorForma width="460px" height="360px" bodyAlign="center" bodyValign="middle" bodyCellpadding="20">
 

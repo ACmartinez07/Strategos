@@ -70,23 +70,26 @@ public class AsignarPesosInstrumentosAction extends VgcAction {
 		for(Iterator<InstrumentoPeso> iter = instrumentoPesos.iterator(); iter.hasNext();) {
 			InstrumentoPeso instrumentoPeso = (InstrumentoPeso)iter.next();						
 			Instrumentos instrumento = (Instrumentos) strategosInstrumentosService.load(Instrumentos.class, instrumentoPeso.getInstrumentoId());			
-			if(instrumento.getEstatus().byteValue() == estatus.byteValue()) {				
+			if(instrumento.getEstatus().byteValue() == estatus.byteValue()) {	
+				instrumentoPeso.setInstrumento(instrumento);
 				instrumentos.add(instrumentoPeso);
 			}						
 		}
 		
 	    if (instrumentos.size() > 0) 
 		{
+	    	editarInstrumentosForm.clear();
 	    	
 	    	if (request.getParameter("funcion") != null) 
 		    {	    			    		
 	    		String funcion = request.getParameter("funcion");
 	    		if (funcion.equals("guardar")) {	    			
 	    			int respuesta = VgcReturnCode.DB_OK;
-	    			respuesta = guardarPesos(strategosInstrumentosService, editarInstrumentosForm, request);
-	    			
-	    			if (respuesta == VgcReturnCode.DB_OK)
+	    			respuesta = guardarPesos(strategosInstrumentosService, editarInstrumentosForm, request);	    			
+	    			if (respuesta == VgcReturnCode.DB_OK) {	    				
 	    				editarInstrumentosForm.setStatus(StatusUtil.getStatusSuccess());
+	    				StatusUtil.getStatusSuccess();
+	    			}
 		    	    else
 		    	    	editarInstrumentosForm.setStatus(StatusUtil.getStatusInvalido());
 	    		}
