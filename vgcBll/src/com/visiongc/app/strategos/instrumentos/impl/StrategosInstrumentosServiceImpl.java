@@ -306,8 +306,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 						idFieldValues)) {
 					resultado = 10003;
 				} else {
-					if (actualizarIndicador.booleanValue()) {
-						
+					if (actualizarIndicador.booleanValue()) {						
 						if (instrumento.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento()) != null) {
 							Instrumentos instrumentoOriginal = getValoresOriginales(instrumento.getInstrumentoId());						
 							if (instrumentoOriginal.getFrecuencia().byteValue() != instrumento.getFrecuencia().byteValue()) {
@@ -325,7 +324,7 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 								if (resultado == 10000) {
 									Long indicadorId = instrumento
 											.getIndicadorId(TipoFuncionIndicador.getTipoFuncionSeguimiento());
-									if (indicadorId != null) {
+									if (indicadorId != null) {										
 										indicador = (Indicador) strategosIndicadoresService.load(Indicador.class,
 												indicadorId);
 										configuracionInstrumento = getConfiguracionInstrumento();
@@ -359,6 +358,19 @@ public class StrategosInstrumentosServiceImpl extends StrategosServiceImpl imple
 								}	
 								strategosIndicadoresService.close();
 							}
+						}else {
+							resultado = saveClaseIndicadores(instrumento, usuario);
+
+							if (resultado == 10000) {										
+								ConfiguracionInstrumento configuracionInstrumento = getConfiguracionInstrumento();
+								resultado = saveIndicadorAutomatico(instrumento,TipoFuncionIndicador.getTipoFuncionSeguimiento(), configuracionInstrumento, usuario);																											
+							}					
+							if (resultado == 10000) {
+								resultado = persistenceSession.insert(instrumento, usuario);
+								if (resultado == 10000) {
+									resultado = asociarIndicador(instrumento, usuario);
+								}
+							}	
 						}
 					}
 					if (resultado == 10000) {

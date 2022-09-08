@@ -53,8 +53,7 @@ public class GuardarInstrumentosAction extends VgcAction {
 			cancelar = true;
 		else if ((ultimoTs != null) && (ultimoTs.equals(ts))) {
 			cancelar = true;
-		}
-		System.out.print(editarInstrumentosForm.getAnio());
+		}		
 		StrategosInstrumentosService strategosInstrumentosService = StrategosServiceFactory.getInstance()
 				.openStrategosInstrumentosService();
 

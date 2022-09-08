@@ -63,16 +63,15 @@ public class AsignarPesosInstrumentosAction extends VgcAction {
 		if(estatusSt != null && estatusSt != "") {
 			estatus = Byte.valueOf(estatusSt);
 		}					
-		
-		
-		
+						
 		List<InstrumentoPeso> instrumentoPesos = strategosInstrumentosService.getInstrumentoPeso(anio);
 		List<InstrumentoPeso> instrumentos = new ArrayList<InstrumentoPeso>();
 		
 		for(Iterator<InstrumentoPeso> iter = instrumentoPesos.iterator(); iter.hasNext();) {
 			InstrumentoPeso instrumentoPeso = (InstrumentoPeso)iter.next();						
-			Instrumentos instrumento = (Instrumentos) strategosInstrumentosService.load(Instrumentos.class, instrumentoPeso.getInstrumentoId());			
-			if(instrumento.getEstatus().byteValue() == estatus.byteValue()) {	
+			Instrumentos instrumento = (Instrumentos) strategosInstrumentosService.load(Instrumentos.class, instrumentoPeso.getInstrumentoId());
+			List<InstrumentoIniciativa> instrumentoIniciativas = strategosInstrumentosService.getIniciativasInstrumento(instrumento.getInstrumentoId());
+			if(instrumento.getEstatus().byteValue() == estatus.byteValue() && instrumentoIniciativas.size() > 0) {					
 				instrumentoPeso.setInstrumento(instrumento);
 				instrumentos.add(instrumentoPeso);
 			}						
@@ -105,12 +104,11 @@ public class AsignarPesosInstrumentosAction extends VgcAction {
 		}
 	    else {
 	    	if(editarInstrumentosForm != null) {
-	    		editarInstrumentosForm.clear();	   	
-	    		editarInstrumentosForm.setStatus(StatusUtil.getStatusInvalido());
+	    		editarInstrumentosForm.clear();	   		    		
+	    		editarInstrumentosForm.setAnio(anio);
+				editarInstrumentosForm.setEstatus(estatus);
 	    	}
-	    	ActionMessages messages = getMessages(request);
-	    	messages.add("org.apache.struts.action.GLOBAL_MESSAGE", new ActionMessage("action.calcularregistro.noencontrado"));
-	    	saveMessages(request, messages);
+	    	
 	    	
 	    	paginaInstrumentos.setLista(new ArrayList<InstrumentoPeso>());
 	    	paginaInstrumentos.setTamanoSetPaginas(5);

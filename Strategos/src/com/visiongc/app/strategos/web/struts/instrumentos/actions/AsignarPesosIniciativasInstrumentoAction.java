@@ -73,8 +73,7 @@ public class AsignarPesosIniciativasInstrumentoAction extends VgcAction{
 	    		}
 		    }
 	    	
-	    	List<InstrumentoIniciativa> instrumentoIniciativas = strategosInstrumentosService.getIniciativasInstrumento(instrumento.getInstrumentoId());
-	    	
+	    	List<InstrumentoIniciativa> instrumentoIniciativas = strategosInstrumentosService.getIniciativasInstrumento(instrumento.getInstrumentoId());	    	
 	    	for (Iterator<InstrumentoIniciativa> iter = instrumentoIniciativas.iterator(); iter.hasNext();) {
 	    		InstrumentoIniciativa instrumentoIniciativa = (InstrumentoIniciativa)iter.next();
 	    		Iniciativa iniciativa = (Iniciativa) strategosInstrumentosService.load(Iniciativa.class, instrumentoIniciativa.getIniciativa().getIniciativaId());
