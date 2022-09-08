@@ -135,9 +135,7 @@
 
 		<%-- Representación de la Forma --%>
 		<html:form action="/instrumentos/asignarPesosInstrumentos" styleClass="formaHtml">
-			
-			<html:hidden property="anio" />
-			<html:hidden property="estatus" />
+							
 								
 			<vgcinterfaz:contenedorForma>
 

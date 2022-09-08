@@ -54,7 +54,7 @@ public class GuardarInstrumentosAction extends VgcAction {
 		else if ((ultimoTs != null) && (ultimoTs.equals(ts))) {
 			cancelar = true;
 		}
-
+		System.out.print(editarInstrumentosForm.getAnio());
 		StrategosInstrumentosService strategosInstrumentosService = StrategosServiceFactory.getInstance()
 				.openStrategosInstrumentosService();
 
@@ -77,6 +77,9 @@ public class GuardarInstrumentosAction extends VgcAction {
 				&& (!editarInstrumentosForm.getInstrumentoId().equals(Long.valueOf("0")))) {
 			instrumento = (Instrumentos) strategosInstrumentosService.load(Instrumentos.class,
 					editarInstrumentosForm.getInstrumentoId());
+			instrumento.setInstrumentoPeso(new InstrumentoPeso());
+			instrumento.getInstrumentoPeso().setInstrumentoId(editarInstrumentosForm.getInstrumentoId());
+			
 		} else {
 			nuevo = true;
 			instrumento = new Instrumentos();
@@ -136,7 +139,7 @@ public class GuardarInstrumentosAction extends VgcAction {
 			instrumento.setCooperanteId(null);
 		}
 		
-		if((editarInstrumentosForm.getNombreCorto() != null) && (!editarInstrumentosForm.getNombreCorto().equals(""))){
+		if((editarInstrumentosForm.getAnio() != null) && (!editarInstrumentosForm.getAnio().equals(""))){
 			instrumento.getInstrumentoPeso().setAnio(editarInstrumentosForm.getAnio());
 		}else if(instrumento.getInstrumentoPeso() != null){
 			instrumento.getInstrumentoPeso().setAnio(null);

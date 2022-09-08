@@ -64,6 +64,8 @@ public class AsignarPesosInstrumentosAction extends VgcAction {
 			estatus = Byte.valueOf(estatusSt);
 		}					
 		
+		
+		
 		List<InstrumentoPeso> instrumentoPesos = strategosInstrumentosService.getInstrumentoPeso(anio);
 		List<InstrumentoPeso> instrumentos = new ArrayList<InstrumentoPeso>();
 		
@@ -74,7 +76,7 @@ public class AsignarPesosInstrumentosAction extends VgcAction {
 				instrumentoPeso.setInstrumento(instrumento);
 				instrumentos.add(instrumentoPeso);
 			}						
-		}
+		}				
 		
 	    if (instrumentos.size() > 0) 
 		{
@@ -93,8 +95,8 @@ public class AsignarPesosInstrumentosAction extends VgcAction {
 		    	    else
 		    	    	editarInstrumentosForm.setStatus(StatusUtil.getStatusInvalido());
 	    		}
-		    }			
-	    	
+		    }				    		    	
+			
 	    	editarInstrumentosForm.setAnio(anio);
 			editarInstrumentosForm.setEstatus(estatus);
 			

@@ -43,6 +43,7 @@
 		
 			function guardar() {				
 				if (validar(document.editarInstrumentosForm)) {
+					console.log(document.editarInstrumentosForm.anio.value);
 					window.document.editarInstrumentosForm.submit();					
 				}	
 			}

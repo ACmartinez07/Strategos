@@ -14,7 +14,7 @@
 		</id>
 		
 		<!-- Atributos del objeto conceptual -->
-		<property name="anio" column="ano" type="java.lang.String" />
+		<property name="anio" column="anio" type="java.lang.String" />
 		<property name="peso" column="peso" type="java.lang.Double" />
 	</class>
 
