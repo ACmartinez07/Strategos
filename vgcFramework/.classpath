@@ -28,5 +28,6 @@
 	<classpathentry exported="true" kind="lib" path="/Users/andresmartinez/Desktop/Strategos/Strategos/WebContent/WEB-INF/lib/jackson-mapper-lgpl-0.9.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="/Users/andresmartinez/Desktop/Strategos/Strategos/WebContent/WEB-INF/lib/vgcBll.jar"/>
 	<classpathentry exported="true" kind="lib" path="/vgcBll/lib/vgcCalcular.jar" sourcepath="/vgcCalcular"/>
+	<classpathentry kind="lib" path="lib/activation.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
